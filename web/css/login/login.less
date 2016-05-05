@@ -1,0 +1,104 @@
+@import "../core.less";
+
+body {
+	background: #eee url('/redefinio/img/login/bg.jpg') fixed no-repeat center;
+	background-size: cover;
+}
+
+#login {
+	.block {
+		background: #fff;
+		border-radius: 5px;
+		overflow: hidden;
+		padding: 0 15px;
+		margin-bottom: 15px;
+		margin-top: 100px;
+		
+		.inner {
+			padding: 0 25px;
+		}
+		
+		.header {
+			background: @main-red url('/redefinio/img/logo.png') no-repeat center;
+			background-size: 115px 19px;
+			height: 70px;
+		}
+		
+		h1 {
+			font-size: 22px;
+			font-weight: normal;
+			text-align: center;
+			margin: 35px 0;
+			color: #000;
+		}
+		
+		input {
+			width: 100%;
+			border: 1px solid @border;
+			border-radius: 3px;
+			height: 45px;
+			line-height: 46px;
+			font-size: 14px;
+			color: #000;
+			outline: none;
+			margin-bottom: 20px;
+			padding: 0 15px;
+			
+			&.correct {
+				background: url('/redefinio/img/login/correct.jpg') no-repeat right center;
+				background-size: 31px 16px;
+			}
+			
+			&:focus {
+				line-height: 47px;
+				border: 1px solid @border-focus;
+				padding: 0 15px;
+			}
+		}
+		
+		button {
+			text-transform: uppercase;
+			color: #fff;
+			background: @green;
+			height: 65px;
+			line-height: 65px;
+			padding: 0;
+			width: 100%;
+			border: 0;
+			border-radius: 3px;
+			font-size: 18px;
+			margin-bottom: 25px;
+			outline: none;
+			
+			&:hover {
+				background: @green-hover;
+			}
+			
+			&:active {
+				background: @green-active;
+			}
+		}
+		
+		.error {
+			background: @error;
+			border: 1px solid @error-border;
+			color: @main-red;
+			margin: 25px 0;
+			padding: 15px;
+			border-radius: 3px;
+		}
+	}
+	.forgot {
+		color: @main-text;
+	}
+	
+	.already {
+		text-align: center;
+	}
+	
+	.donthave {
+		text-align: right;
+	}
+}
+
+@import "responsive/login.less";

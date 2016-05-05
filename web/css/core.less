@@ -1,0 +1,277 @@
+@main-text: #666;
+@main-red: #ff6161;
+@main-red-hover: #ff6f6f;
+@main-red-active: #ee5252;
+@border: #d6e2ec;
+@border-focus: #98a8b5;
+@green: #1dce79;
+@green-hover: #1fde82;
+@green-active: #1bbf70;
+@error: #ffd7d7;
+@error-border: #ffa8a8;
+@btn: #ddd;
+@btn-hover: #e8e8e8;
+@btn-active: #ccc;
+@blue: #3181cc;
+@blue-hover: #3c8fdd;
+@blue-active: #3079bd;
+
+::-webkit-input-placeholder {
+   color: #97aec2;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #97aec2;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #97aec2;  
+}
+
+:-ms-input-placeholder {  
+   color: #97aec2;  
+}
+
+body {
+	background: #eee;
+	font-family: Montserrat;
+	color: @main-text;
+}
+
+a {
+	color: @main-red;
+	
+	&:hover, &:active, &:focus {
+		color: @main-red-hover;
+	}
+}
+
+.ml10 {
+	margin-left: 10px!important;
+}
+
+input {
+	height: 36px;
+	line-height: 36px;
+	border: 0;
+	border-radius: 3px;
+	padding: 0 10px;
+	font-size: 13px;
+	outline: none;
+	border: 1px solid @border;
+	box-sizing: border-box;
+}
+
+#fixedtop {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	z-index: 1;
+}
+
+.navbar {
+	background: @main-red;
+	color: #fff;
+	border-radius: 0;
+	border: 0;
+	margin: 0;
+	height: 60px;
+	z-index: 2;
+	
+	.navbar-brand {
+		background: #ee5252 url('../img/logo.png') no-repeat center;
+		background-size: 115px 19px;
+		width: 150px;
+		height: 60px;
+	}
+	
+	.navbar-nav {
+		li{
+			a {
+				color: #ffcfcf;
+				height: 60px;
+				line-height: 60px;
+				padding: 0 20px;
+				font-size: 13px;
+				&:hover {
+					color: #fff;
+				}
+			}
+			
+			&.active {
+				a {
+					color: #fff;
+					background: #ff8484;
+					
+					&:hover {
+						color: #fff;
+						background: #ff8484;
+					}
+				}
+			}
+			
+			&.profile {
+				background: #ee5252;
+			}
+		}
+	}
+	
+	.navbar-toggle {
+		border: none;
+		background: @main-red!important;
+		height: 60px;
+		padding: 0;
+		margin: 0 20px;
+		
+		.icon-bar {
+			background: #fff;
+		}
+	}
+}
+
+.navbar-collapse {
+	background: @main-red;
+	padding: 0;
+	margin: 0;
+	ul {
+		margin: 0;
+	}
+}
+
+#top {
+	height: 70px;
+	background: #fff;
+	border-bottom: 1px solid #eee;
+	
+	h1 {
+		color: #000;
+		font-size: 24px;
+		margin-top: 23px;
+		font-weight: bold;
+	}
+	
+	.btn {
+		margin-top: 15px;
+	}
+}
+
+.btn {
+	border-radius: 3px;
+	height: 36px;
+	line-height: 36px;
+	background-color: @btn;
+	color: @main-text;
+	padding: 0 20px 0 46px;
+	font-size: 13px;
+	
+	&:hover {
+		background-color: @btn-hover;
+	}
+	
+	&:active {
+		background-color: @btn-active;
+		box-shadow: none;
+	}
+	
+	&.btn-big {
+		height: 40px;
+		line-height: 40px;
+	}
+	
+	&.btn-green {
+		background-color: @green;
+		color: #fff;
+		
+		&:hover {
+			background-color: @green-hover;
+		}
+		
+		&:active {
+			background-color: @green-active;
+		}
+	}
+	
+	&.btn-text {
+		padding-left: 20px;
+	}
+	
+	&.btn-red {
+		background-color: @main-red;
+		color: #fff;
+		
+		&:hover {
+			background-color: @main-red-hover;
+		}
+		
+		&:active {
+			background-color: @main-red-active;
+		}
+	}
+	
+	&.btn-blue {
+		background-color: @blue;
+		color: #fff;
+		
+		&:hover {
+			background-color: @blue-hover;
+		}
+		
+		&:active {
+			background-color: @blue-active;
+		}
+	}
+	
+	&.btn-create {
+		background: @green url('../../img/btn-create.png') no-repeat 15px 11px;
+		background-size: 16px 16px
+	}
+	
+	&.btn-preview {
+		background-image: url('../img/btn-preview.png');
+	}
+	
+	&.btn-edit {
+		background-image: url('../img/btn-edit.png');
+		
+	}
+	
+	&.btn-delete {
+		background-image: url('../img/btn-delete.png');
+		padding: 0;
+		width: 46px;
+	}
+	
+	&.btn-pdf {
+		background-image: url('../img/btn-pdf.png');
+	}
+	
+	&.btn-tick {
+		background-image: url('../img/btn-tick.png');
+	}
+	
+	&.btn-template {
+		background-image: url('../img/btn-template.png');
+	}
+	
+	&.btn-colors {
+		background-image: url('../img/btn-colors.png');
+	}
+	
+	&.btn-close {
+		background-color: #fff;
+		background-image: url('../img/btn-close.png');
+		padding: 0;
+		width: 32px;
+	}
+	
+	background-repeat: no-repeat;
+	background-position: 15px 10px;
+	background-size: 16px 16px
+}
+
+
+.container-first {
+	margin-top: 130px;
+	padding-top: 30px;
+}

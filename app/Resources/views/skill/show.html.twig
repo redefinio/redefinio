@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Skill</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ skill.id }}</td>
+            </tr>
+            <tr>
+                <th>Skill</th>
+                <td>{{ skill.skill }}</td>
+            </tr>
+            <tr>
+                <th>Rate</th>
+                <td>{{ skill.rate }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('cv_show', { 'id': skill.Cv.Id }) }}">Back to the cv</a>
+        </li>
+        <li>
+            <a href="{{ path('skill_edit', { 'id': skill.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Education</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ education.id }}</td>
+            </tr>
+            <tr>
+                <th>Begin</th>
+                <td>{% if education.begin %}{{ education.begin|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>End</th>
+                <td>{% if education.end %}{{ education.end|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Degree</th>
+                <td>{{ education.degree }}</td>
+            </tr>
+            <tr>
+                <th>School</th>
+                <td>{{ education.school }}</td>
+            </tr>
+            <tr>
+                <th>About</th>
+                <td>{{ education.about }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('cv_show', { 'id': education.Cv.Id }) }}">Back to the cv</a>
+        </li>
+        <li>
+            <a href="{{ path('education_edit', { 'id': education.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

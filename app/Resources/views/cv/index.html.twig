@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>CV list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Url</th>
+                <th>Created_at</th>
+                <th>Full_name</th>
+                <th>Occupation</th>
+                <th>Location</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Summary</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cV in cVs %}
+            <tr>
+                <td><a href="{{ path('cv_show', { 'id': cV.id }) }}">{{ cV.id }}</a></td>
+                <td>{{ cV.title }}</td>
+                <td>{{ cV.url }}</td>
+                <td>{% if cV.createdat %}{{ cV.createdat|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ cV.fullname }}</td>
+                <td>{{ cV.occupation }}</td>
+                <td>{{ cV.location }}</td>
+                <td>{{ cV.phone }}</td>
+                <td>{{ cV.email }}</td>
+                <td>{{ cV.summary }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('cv_show', { 'id': cV.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('cv_edit', { 'id': cV.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('cv_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}
