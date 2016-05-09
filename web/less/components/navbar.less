@@ -1,0 +1,76 @@
+.navbar {
+  margin: 0;
+  padding: 0 30px;
+  line-height: 70px;
+  height: 70px;
+  background: #fff;
+  border: 0;
+  border-bottom: 1px solid #d3d8dd;
+  border-radius: 0;
+
+  .navbar-title {
+    margin: 0;
+    float: left;
+    line-height: 70px;
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .btn {
+    margin-left: 10px;
+    height: 40px;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 26px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    outline: 0 none;
+
+    &:hover {
+      opacity: .8;
+    }
+
+    &:focus, &:active, &:focus, &.active:focus {
+      outline: 0 none;
+    }
+
+    &.navbar-save {
+      background: #8ee6bc;
+      color: #c7f3de;
+    }
+
+    &.navbar-cancel {
+      background: white;
+      border: 2px solid #b5bfc7;
+      color: #777777;
+    }
+
+    &.navbar-download {
+      background: @baseColor;
+      color: white;
+    }
+
+    &.navbar-edit {
+      background: #b5bfc7;
+      color: white;
+    }
+
+    &.navbar-promotion {
+      margin-left: 0;
+      background: #ffe4e5;
+      border: 2px solid @baseColor;
+      color: @baseColor;
+
+      span {
+        @media (max-width: 767px) {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.navbar-actions {
+  float: right;
+}

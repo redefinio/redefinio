@@ -1,0 +1,62 @@
+/**
+ * Base application styles.
+ */
+
+body {
+  background-color: @bgColor;
+  font-family: @baseFont;
+  font-weight: 400;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+//TODO: Remove this class
+.clear {
+  clear:both;
+}
+
+.clearfix {
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+button {
+  &:focus {
+      outline: none;
+  }
+}
+
+[contenteditable=false] {
+  border: 2px dashed transparent;
+  word-break: break-all;
+}
+
+[contenteditable=true] {
+  border: 2px dashed transparent;
+  border-radius: 3px;
+  display: block;
+
+  &:hover,
+  &:focus {
+    border-color: #b5bfc7;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.container-fluid {
+  overflow: hidden;
+}
+
+.clear-left-padding {
+  padding-left: 0;
+}
+
+.clear-right-padding {
+  padding-right: 0;
+}

@@ -1,0 +1,93 @@
+#status-bar {
+  position: fixed;
+  overflow: hidden;
+  z-index: 9999;
+  top: 140px;
+  left: 0;
+  right: 351px;
+  height: 39px;
+  line-height: 39px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #fff;
+
+  &.is-active {
+    .status-bar-inner-wrapper {
+      transform: translateY(0px);
+    }
+  }
+
+  &.is-error {
+    background: #e45741;
+
+    .action {
+      background: #edba1f;
+    }
+  }
+
+  .status-bar-inner-wrapper {
+    transform: translateY(-39px);
+    background: #b5bfc7;
+    padding: 0 15px;
+    transition: transform 0.25s ease-in-out;
+  }
+
+  .message {}
+
+  .action {
+    background: #98a0a6;
+    padding: 4px 8px;
+    border-radius: 3px;
+    margin-left: 8px;
+    border: 0;
+    line-height: normal;
+  }
+
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    width: 39px;
+    height: 39px;
+    opacity: 1;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      border-radius: 2px;
+      transform: rotate(45deg);
+      display: block;
+      background: #fff;
+    }
+
+    &::before {
+      top: 18px;
+      left: 9px;
+      width: 20px;
+      height: 2px;
+    }
+
+    &::after {
+      top: 9px;
+      left: 18px;
+      width: 2px;
+      height: 20px;
+    }
+  }
+}
+
+@keyframes toggleStatusBar {
+  0% {
+    transform: translateY(0px) !important;
+  }
+
+  50% {
+    transform: translateY(-39px) !important;
+  }
+
+  100% {
+    transform: translateY(0px) !important;
+  }
+}

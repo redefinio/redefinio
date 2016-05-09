@@ -1,0 +1,26 @@
+body {
+  padding-top: 140px;
+}
+
+.resume-container {
+  padding: 38px;
+
+  &.resume-editing {
+    margin-right: 351px;   
+  }
+
+  &:not(.resume-editing) {
+    .editable-block {
+      border-color: transparent !important;
+    }
+  }
+}
+
+.resume {
+  background: white;
+  -webkit-box-shadow: 0 0 10px #e5e9eb;
+  -moz-box-shadow: 0 0 50px #e5e9eb;
+  box-shadow: 0 0 50px #e5e9eb;
+  max-width: 1170px;
+  margin: 0 auto;
+}

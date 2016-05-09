@@ -4,13 +4,50 @@
         <meta charset="UTF-8" />
         <title>{% block title %}redefin.io{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet/less" type="text/css" href="{{ asset('less/app.less') }}">
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <script src="{{ asset('js/less.min.js') }}"></script>
     </head>
+
     <body>
+        {% if app.user %}
+            <header class="header">
+                <div class="topbar">
+                    <a class="topbar-logo" href="{{ path('homepage') }}"><img alt="Logo" src="{{ asset('img/logo.png') }}"></a>
+                    <ul class="topbar-menu">
+                        <li class="topbar-listitem">
+                            <a href="{{ path('cv') }}">My résumé</a>
+                        </li>
+                    </ul>
+
+                    <ul class="topbar-right-menu">
+                        <li class="topbar-user">
+                            <span>{{ app.user }}</span>
+                            <img alt="Nopic" src="{{ asset('img/user.png') }}">
+                        </li>
+                        <li class="topbar-settings">
+                            <a href="{{ path('fos_user_profile_edit') }}">Settings</a>
+                        </li>
+                        <li class="topbar-logout">
+                            <a href="{{ path('fos_user_security_logout') }}">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar" data-reactid=".0.0.1">
+                    <h1 class="navbar-title" data-reactid=".0.0.1.0">My résumé</h1>
+                    <div class="navbar-actions" data-reactid=".0.0.1.1">
+                        <a href="#" class="btn navbar-edit">Edit</a>
+                        <button class="btn navbar-download">Download PDF</button>
+                    </div>
+                </div>
+            </header>
+        {% else %}
+
+        {% endif %}
+
         {% block body %}{% endblock %}
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         {% block javascripts %}{% endblock %}
