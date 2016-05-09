@@ -11,4 +11,17 @@
 {% endblock %}
 
 {% block body %}
+	<div id="template" class="resume-container">
+		<div id="loader" class="active">
+			<div class="signal"></div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+		<script type="text/javascript">
+			var templateUrl = "{{ path('cv_render_template', { 'id': cV.id }) }}";
+			var isEditing = false;
+		</script>
+  <script type="text/javascript" src="{{ asset('js/showTemplate.js') }}"></script>
 {% endblock %}

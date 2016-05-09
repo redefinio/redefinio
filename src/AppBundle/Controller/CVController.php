@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\CV;
 use AppBundle\Form\CVType;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * CV controller.
@@ -120,6 +121,26 @@ class CVController extends Controller
         }
 
         return $this->redirectToRoute('cv_index');
+    }
+
+    /**
+     * @Route("/{id}/template", name="cv_render_template")
+     * @Method("GET")
+     */
+    public function renderTemplateAction(Request $request, $id) {
+        $repository = $this->getDoctrine()->getRepository('AppBundle:CV');
+        $cv = $repository->findOneById($id);
+
+        if (!$cv) {
+            $response = new Response();
+            $response->setStatusCode(Response::HTTP_NOT_FOUND);
+
+            return $response;
+        }
+
+        
+        $cvRenderService = $this->get('cv_render');
+        return new Response($cvRenderService->getTemplateHtml($cv));
     }
 
     /**

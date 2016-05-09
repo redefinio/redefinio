@@ -11,4 +11,39 @@
 {% endblock %}
 
 {% block body %}
+	<div id="status-bar" class="is-active">
+		<div class="status-bar-inner-wrapper">
+			<span class="message">Block has been added</span>
+			<button class="action">Undo</button>
+			<button class="close"></button>
+		</div>
+	</div>
+
+	<div id="template" class="resume-container resume-editing">
+		<div id="loader" class="active">
+			<div class="signal"></div>
+		</div>
+	</div>
+
+	<aside id="sidebar" class="sidebar">
+    <div class="sidebar-block sidebar-templates">
+			<h3 class="sidebar-header">Templates</h3>
+			<div class="templates-list">
+			</div>
+		</div>
+
+		<div class="sidebar-block sidebar-themes">
+			<h3 class="sidebar-header">Themes</h3>
+			<div class="themes-list">
+			</div>
+		</div>
+	</aside>
+{% endblock %}
+
+{% block javascripts %}
+		<script type="text/javascript">
+			var templateUrl = "{{ path('cv_render_template', { 'id': cV.id }) }}";
+			var isEditing = true;
+		</script>
+  <script type="text/javascript" src="{{ asset('js/showTemplate.js') }}"></script>
 {% endblock %}
