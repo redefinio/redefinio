@@ -36,13 +36,8 @@
                         </li>
                     </ul>
                 </div>
-                <div class="navbar" data-reactid=".0.0.1">
-                    <h1 class="navbar-title" data-reactid=".0.0.1.0">My résumé</h1>
-                    <div class="navbar-actions" data-reactid=".0.0.1.1">
-                        <a href="#" class="btn navbar-edit">Edit</a>
-                        <button class="btn navbar-download">Download PDF</button>
-                    </div>
-                </div>
+                
+                {% block navbar %}{% endblock %}
             </header>
         {% else %}
 

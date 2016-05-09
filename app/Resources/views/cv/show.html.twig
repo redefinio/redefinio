@@ -1,91 +1,14 @@
 {% extends 'base.html.twig' %}
 
+{% block navbar %}
+    <div class="navbar">
+        <h1 class="navbar-title">My résumé</h1>
+        <div class="navbar-actions">
+            <a href="{{ path('cv_edit', { 'id': cV.id }) }}" class="btn navbar-edit">Edit</a>
+            <a href="#" class="btn navbar-download">Download PDF</a>
+        </div>
+    </div>
+{% endblock %}
+
 {% block body %}
-    <h1>CV</h1>
-
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ cV.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ cV.title }}</td>
-            </tr>
-            <tr>
-                <th>Url</th>
-                <td>{{ cV.url }}</td>
-            </tr>
-            <tr>
-                <th>Created_at</th>
-                <td>{% if cV.createdat %}{{ cV.createdat|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Full_name</th>
-                <td>{{ cV.fullname }}</td>
-            </tr>
-            <tr>
-                <th>Occupation</th>
-                <td>{{ cV.occupation }}</td>
-            </tr>
-            <tr>
-                <th>Location</th>
-                <td>{{ cV.location }}</td>
-            </tr>
-            <tr>
-                <th>Phone</th>
-                <td>{{ cV.phone }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ cV.email }}</td>
-            </tr>
-            <tr>
-                <th>Summary</th>
-                <td>{{ cV.summary }}</td>
-            </tr>
-            <tr>
-                <th>work experience</th>
-                {% for workExperience in cV.workExperiences%}
-                    <td><a href="{{ path('workexperience_edit', { 'id': cV.id }) }}">Koreguoti {{ workExperience.company }}</a></td>                    
-                {% endfor %}
-            </tr>
-            <tr>
-                <th>Education</th>
-                {% for education in cV.educations%}
-                    <td><a href="{{ path('education_edit', { 'id': cV.id }) }}">Koreguoti {{ education.degree }}</a></td>                    
-                {% endfor %}
-            </tr>
-            <tr>
-                <th>skills</th>
-                {% for skill in cV.skills%}
-                    <td><a href="{{ path('skill_edit', { 'id': cV.id }) }}">Koreguoti {{ skill.skill }}</a></td>                    
-                {% endfor %}
-            </tr>
-            <tr>
-                <th>certificates</th>
-                {% for certificate in cV.certificates%}
-                    <td><a href="{{ path('certificate_edit', { 'id': cV.id }) }}">Koreguoti {{ certificate.title }}</a></td>                    
-                {% endfor %}
-            </tr>
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('cv_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('cv_edit', { 'id': cV.id }) }}">Edit</a>
-        </li>
-        <li>
-            <a href="{{ path('workexperience_new', { 'id': cV.id }) }}">add work experience</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
 {% endblock %}

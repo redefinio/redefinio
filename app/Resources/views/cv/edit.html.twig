@@ -1,21 +1,14 @@
 {% extends 'base.html.twig' %}
 
+{% block navbar %}
+    <div class="navbar">
+        <h1 class="navbar-title">Editing my résumé</h1>
+        <div class="navbar-actions">
+            <a href="{{ path('cv_show', { 'id': cV.id }) }}" class="btn navbar-cancel">Cancel</a>
+            <a href="#" class="btn navbar-save">Save</a>
+        </div>
+    </div>
+{% endblock %}
+
 {% block body %}
-    <h1>CV edit</h1>
-
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('cv_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
 {% endblock %}
