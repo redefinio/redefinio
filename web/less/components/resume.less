@@ -6,7 +6,11 @@ body {
   padding: 38px;
 
   &.resume-editing {
-    margin-right: 351px;   
+    margin-right: 351px;  
+
+    #loader {
+      right: 351px;
+    } 
   }
 
   &:not(.resume-editing) {
@@ -29,7 +33,7 @@ body {
   background: @bgColor;
   position: fixed;
   top: 0;
-  right: 351px;
+  right: 0;
   bottom: 100%;
   left: 0;
   overflow: hidden;
