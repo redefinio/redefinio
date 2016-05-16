@@ -279,6 +279,16 @@
   border-radius: 3px;
   text-align: center;
 
+  &.is-active {
+    button {
+      display: none;
+    }
+    
+    .add-block-items {
+      display: block;
+    }
+  }
+
   button {
     color: #fff;
     font-size: 13px;
@@ -295,6 +305,7 @@
   list-style: none;
   margin: 25px 0 0;
   padding: 0;
+  display: none;
 
   li {
     width: 125px;
@@ -340,6 +351,16 @@
 
     .block-actions {
       display: block;
+      
+      .move,
+      .edit,
+      .delete {
+        display: none;
+      }
+
+      .save {
+        display: block;
+      }
     }
 
     .skills li {
@@ -402,6 +423,7 @@
     }
 
     .move {
+      display: block;
       cursor: move;
       display: block;
       width: 25px;
@@ -410,22 +432,21 @@
     }
 
     .edit {
+      display: block;
       padding-left: 20px;
       background: #b5bfc7 url('../img/icon-action-edit.png') no-repeat 4px center / 12px 12px;
     }
 
     .delete {
+      display: block;
      padding-left: 19px;
       background: #b5bfc7 url('../img/icon-action-delete.png') no-repeat 4px center / 11px 11px;
     }
 
     .save {
-      background-color: #1dce79;
-
-      img {
-        width: 14px;
-        height: 11px;
-      }
+      display: none;
+      padding-left: 22px;
+      background: #1dce79 url('../img/icon-action-save.png') no-repeat 4px center / 14px 11px;
     }
   }
 }
