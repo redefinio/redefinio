@@ -55,7 +55,7 @@ class LoadAllData implements FixtureInterface
         $block1_2->setTitle('Summary');
         $block1_2->setType(2);
         $block1_2->addTemplateSlot($templateSlot1_2);
-        $block1_2->setHtmlSource('<div class="item"><h2 class="title"><i class="glyphicon glyphicon-user"></i><span>Summary</span></h2><p>{{ text }}</p>
+        $block1_2->setHtmlSource('<div class="item" data-block-id="0" data-block-type="2" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-user"></i><span data-key="title">Summary</span></h2><p data-key="text">{{ text }}</p>
             </div>');
         $block1_2->setAvailableFields(
             json_encode(array(
@@ -67,7 +67,7 @@ class LoadAllData implements FixtureInterface
         $block1_3->setTitle('Experience');
         $block1_3->setType(3);
         $block1_3->addTemplateSlot($templateSlot1_2);
-        $block1_3->setHtmlSource('<div class="item"><h2 class="title"><i class="glyphicon glyphicon-briefcase"></i><span>Experience</span></h2><ul class="timeline">{{ blocks|raw }}</ul></div>');
+        $block1_3->setHtmlSource('<div class="item" data-block-id="0" data-block-type="3" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-briefcase"></i><span data-key="title">Experience</span></h2><ul class="timeline" data-key="blocks">{{ blocks|raw }}</ul></div>');
         $block1_3->setAvailableFields(
             json_encode(array(
                 'blocks'
@@ -78,7 +78,7 @@ class LoadAllData implements FixtureInterface
         $block1_3_1->setParent($block1_3);
         $block1_3_1->setTitle('Experience entry');
         $block1_3_1->setType(3);
-        $block1_3_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date">{{ date_from }} - {{ date_to }}</div><h3 class="position">{{ position }}</h3><h3 class="subtitle">{{ company }}</h3><h4>Redesigning</h4></div></li>');
+        $block1_3_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-key="date_from" data-is-child="true">{{ date_from }}</span> - <span data-key="date_to" data-is-child="true">{{ date_to }}</span></div><h3 class="position" data-key="position" data-is-child="true">{{ position }}</h3><h3 class="subtitle" data-key="company" data-is-child="true">{{ company }}</h3><h4>Redesigning</h4></div></li>');
         $block1_3_1->setAvailableFields(
             json_encode(array(
                 'date_from',

@@ -43,7 +43,7 @@ let prepareToEditTemplate = () => {
     addBlocks.push(new AddBlock(zones[i]));
   }
 
-	let blocks = document.getElementsByClassName('item');
+	let blocks = document.querySelectorAll('[data-block-id]');
 	let EditableBlocks = [];
 
 	for (let i = 0; i < blocks.length; i++) {
@@ -55,6 +55,7 @@ class EditableBlock {
   constructor(element) {
     this._element = element;
     this._isEditing = false;
+    this._hasAddMicroBlock = false;
 
     this._createControls();
   }
@@ -72,27 +73,35 @@ class EditableBlock {
     itemPlaceholder.innerHTML = this._element.innerHTML;
     blockWrapper.appendChild(itemPlaceholder);
 
-    let moveButton = document.createElement('button');
-    moveButton.classList.add('move');
-    blockActionsWrapper.appendChild(moveButton);
+    if (JSON.parse(this._element.getAttribute('data-is-draggable')) === true) {
+      let moveButton = document.createElement('button');
+      moveButton.classList.add('move');
+      blockActionsWrapper.appendChild(moveButton);
+    }
 
-    let editButton = document.createElement('button');
-    editButton.classList.add('edit');
-    editButton.innerHTML = 'Edit';
-    editButton.addEventListener('click', this.edit.bind(this), false);
-    blockActionsWrapper.appendChild(editButton);
+    if (JSON.parse(this._element.getAttribute('data-is-editable')) === true) {
+      let editButton = document.createElement('button');
+      editButton.classList.add('edit');
+      editButton.innerHTML = 'Edit';
+      editButton.addEventListener('click', this.edit.bind(this), false);
+      blockActionsWrapper.appendChild(editButton);
+    }
 
-    let deleteButton = document.createElement('button');
-    deleteButton.classList.add('delete');
-    deleteButton.innerHTML = 'Delete';
-    deleteButton.addEventListener('click', this.delete.bind(this), false);
-    blockActionsWrapper.appendChild(deleteButton);
+    if (JSON.parse(this._element.getAttribute('data-is-deletable')) === true) {
+      let deleteButton = document.createElement('button');
+      deleteButton.classList.add('delete');
+      deleteButton.innerHTML = 'Delete';
+      deleteButton.addEventListener('click', this.delete.bind(this), false);
+      blockActionsWrapper.appendChild(deleteButton);
+    }
 
-    let saveButton = document.createElement('button');
-    saveButton.classList.add('save');
-    saveButton.innerHTML = 'Save';
-    saveButton.addEventListener('click', this.save.bind(this), false);
-    blockActionsWrapper.appendChild(saveButton);
+    if (JSON.parse(this._element.getAttribute('data-is-editable')) === true) {
+      let saveButton = document.createElement('button');
+      saveButton.classList.add('save');
+      saveButton.innerHTML = 'Save';
+      saveButton.addEventListener('click', this.save.bind(this), false);
+      blockActionsWrapper.appendChild(saveButton);
+    }
 
     while (this._element.firstChild) {
         this._element.removeChild(this._element.firstChild);
@@ -107,11 +116,44 @@ class EditableBlock {
   }
 
   edit() {
+    let editableElements = this._element.querySelectorAll('[data-key]');
+    for (let el of editableElements) {
+      const key = el.getAttribute('data-key');
+      if(['skill', 'blocks'].indexOf(key) === -1) {
+        el.setAttribute('contenteditable', true);
+      }
+
+      if('blocks' === key && !this._hasAddMicroBlock) {
+        this._hasAddMicroBlock = true;
+          new AddMicroBlock(el);
+      }
+    }
+
     this._toggleEditing();
   }
 
   save() {
+    let editableElements = this._element.querySelectorAll('[data-key]');
+    for (let el of editableElements) {
+      if(['skill', 'blocks'].indexOf(el.getAttribute('data-key')) === -1) {
+        el.setAttribute('contenteditable', false);
+      }
+    }
+
     this._toggleEditing();
+
+    //Log saving info
+    for (let el of editableElements) {
+      //Disable logging block html data
+      if(el.getAttribute('data-key') !== 'blocks') {
+        if (JSON.parse(el.getAttribute('data-is-child')) === true) {
+          console.log({[el.getAttribute('data-key')]: el.innerHTML});  
+        }
+        else {
+          console.log({[el.getAttribute('data-key')]: el.innerHTML});  
+        }  
+      }
+    }
   }
 
   delete() {
@@ -234,3 +276,25 @@ class AddBlock {
     console.log(zoneName, type);
   }
 };
+
+class AddMicroBlock {
+  constructor(microBlockZone) {
+    this._element = null;
+
+    this._createAddMicroBlock(microBlockZone);
+  }
+
+  _createAddMicroBlock(microBlockZone) {
+    let blockWrapper = document.createElement('div');
+    blockWrapper.classList.add('add-micro-block');
+
+    let button = document.createElement('button');
+    button.innerHTML = 'Add Micro block';
+    blockWrapper.appendChild(button);
+
+    microBlockZone.parentNode.appendChild(blockWrapper);
+
+    this._element = blockWrapper;
+    console.log(this._element)
+  }
+}
