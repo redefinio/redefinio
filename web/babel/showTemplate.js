@@ -49,6 +49,78 @@ let prepareToEditTemplate = () => {
 	for (let i = 0; i < blocks.length; i++) {
 		EditableBlocks.push(new EditableBlock(blocks[i]));
 	}
+
+  $('[data-zone]').sortable({
+    connectWith: '[data-zone]',
+    items: '.item',
+    handle: '.move',
+    cancel: '',
+    helper: 'clone',
+    appendTo: 'body',
+    zIndex: 10000,
+    delay: 100,
+    placeholder: 'placeholder',
+    activate: (e, ui) => {
+      // console.log(e.type, e.target)
+      // console.log($(e.target).data('zoneBlockTypes'))
+    },
+    beforeStop: (e, ui) => {
+      // console.log(e.type, e.target)
+    },
+    change: (e, ui) => {
+      // console.log(e.type, e.target)
+    },
+    create: (e, ui) => {
+      // console.log(e.type, e.target)
+    },
+    deactivate: (e, ui) => {
+      // console.log(e.type, e.target)
+    },
+    out: (e, ui) => {
+      // console.log(e.type, e.target)
+    },
+    over: (e, ui) => {
+      // console.log(e.type, e.target)
+    },
+    receive: (e, ui) => {
+      // console.log(e.type, e.target, ui);
+
+      let type = $(ui.item).data('blockType');
+      let types = $(e.target).data('zoneBlockTypes').map((obj) => obj.type);
+
+      if (types.indexOf(type) === -1) {
+        $(ui.sender).sortable('cancel');
+      }
+
+      $('[data-zone]').sortable('enable');
+    },
+    remove: (e, ui) => {
+      // console.log(e.type, e.target)
+    },
+    sort: (e, ui) => {
+      // console.log(e.type, e.target)
+    },
+    start: (e, ui) => {
+      // console.log(e.type, e.target)
+
+      let type = $(ui.item).data('blockType');
+      let zones = $('[data-zone]');
+
+      for(let i = 0; i < zones.length; i++) {
+        let types = $(zones[i]).data('zoneBlockTypes').map((obj) => obj.type);
+
+        if (types.indexOf(type) === -1) {
+          $(zones[i]).sortable('disable');
+        }
+      }
+    },
+    stop: (e, ui) => {
+      // console.log(e.type, e.target)
+    },
+    update: (e, ui) => {
+      // console.log(e.type, e.target)
+    },
+  });
 }
 
 class EditableBlock {
@@ -117,15 +189,15 @@ class EditableBlock {
 
   edit() {
     let editableElements = this._element.querySelectorAll('[data-key]');
-    for (let el of editableElements) {
-      const key = el.getAttribute('data-key');
+    for (let i = 0; i < editableElements.length; i++) {
+      const key = editableElements[i].getAttribute('data-key');
       if(['skill', 'blocks'].indexOf(key) === -1) {
-        el.setAttribute('contenteditable', true);
+        editableElements[i].setAttribute('contenteditable', true);
       }
 
       if('blocks' === key && !this._hasAddMicroBlock) {
-        this._hasAddMicroBlock = true;
-          new AddMicroBlock(el);
+        this._hasAddMicroBlock = true; 
+          new AddMicroBlock(editableElements[i]);
       }
     }
 
@@ -134,26 +206,18 @@ class EditableBlock {
 
   save() {
     let editableElements = this._element.querySelectorAll('[data-key]');
-    for (let el of editableElements) {
-      if(['skill', 'blocks'].indexOf(el.getAttribute('data-key')) === -1) {
-        el.setAttribute('contenteditable', false);
+    for (let i = 0; i < editableElements.length; i++) {
+      if(['skill', 'blocks'].indexOf(editableElements[i].getAttribute('data-key')) === -1) {
+        editableElements[i].setAttribute('contenteditable', false);
+      }
+
+      //Data saving
+      if(editableElements[i].getAttribute('data-key') !== 'blocks') {
+        console.log({[editableElements[i].getAttribute('data-key')]: editableElements[i].innerHTML});  
       }
     }
 
     this._toggleEditing();
-
-    //Log saving info
-    for (let el of editableElements) {
-      //Disable logging block html data
-      if(el.getAttribute('data-key') !== 'blocks') {
-        if (JSON.parse(el.getAttribute('data-is-child')) === true) {
-          console.log({[el.getAttribute('data-key')]: el.innerHTML});  
-        }
-        else {
-          console.log({[el.getAttribute('data-key')]: el.innerHTML});  
-        }  
-      }
-    }
   }
 
   delete() {

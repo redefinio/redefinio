@@ -1,5 +1,3 @@
-"use strict";
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -57,6 +55,82 @@ var prepareToEditTemplate = function prepareToEditTemplate() {
   for (var _i = 0; _i < blocks.length; _i++) {
     EditableBlocks.push(new EditableBlock(blocks[_i]));
   }
+
+  $('[data-zone]').sortable({
+    connectWith: '[data-zone]',
+    items: '.item',
+    handle: '.move',
+    cancel: '',
+    helper: 'clone',
+    appendTo: 'body',
+    zIndex: 10000,
+    delay: 100,
+    placeholder: 'placeholder',
+    activate: function activate(e, ui) {
+      // console.log(e.type, e.target)
+      // console.log($(e.target).data('zoneBlockTypes'))
+    },
+    beforeStop: function beforeStop(e, ui) {
+      // console.log(e.type, e.target)
+    },
+    change: function change(e, ui) {
+      // console.log(e.type, e.target)
+    },
+    create: function create(e, ui) {
+      // console.log(e.type, e.target)
+    },
+    deactivate: function deactivate(e, ui) {
+      // console.log(e.type, e.target)
+    },
+    out: function out(e, ui) {
+      // console.log(e.type, e.target)
+    },
+    over: function over(e, ui) {
+      // console.log(e.type, e.target)
+    },
+    receive: function receive(e, ui) {
+      // console.log(e.type, e.target, ui);
+
+      var type = $(ui.item).data('blockType');
+      var types = $(e.target).data('zoneBlockTypes').map(function (obj) {
+        return obj.type;
+      });
+
+      if (types.indexOf(type) === -1) {
+        $(ui.sender).sortable('cancel');
+      }
+
+      $('[data-zone]').sortable('enable');
+    },
+    remove: function remove(e, ui) {
+      // console.log(e.type, e.target)
+    },
+    sort: function sort(e, ui) {
+      // console.log(e.type, e.target)
+    },
+    start: function start(e, ui) {
+      // console.log(e.type, e.target)
+
+      var type = $(ui.item).data('blockType');
+      var zones = $('[data-zone]');
+
+      for (var _i2 = 0; _i2 < zones.length; _i2++) {
+        var types = $(zones[_i2]).data('zoneBlockTypes').map(function (obj) {
+          return obj.type;
+        });
+
+        if (types.indexOf(type) === -1) {
+          $(zones[_i2]).sortable('disable');
+        }
+      }
+    },
+    stop: function stop(e, ui) {
+      // console.log(e.type, e.target)
+    },
+    update: function update(e, ui) {
+      // console.log(e.type, e.target)
+    }
+  });
 };
 
 var EditableBlock = function () {
@@ -131,36 +205,15 @@ var EditableBlock = function () {
     key: "edit",
     value: function edit() {
       var editableElements = this._element.querySelectorAll('[data-key]');
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        for (var _iterator = editableElements[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var el = _step.value;
-
-          var key = el.getAttribute('data-key');
-          if (['skill', 'blocks'].indexOf(key) === -1) {
-            el.setAttribute('contenteditable', true);
-          }
-
-          if ('blocks' === key && !this._hasAddMicroBlock) {
-            this._hasAddMicroBlock = true;
-            new AddMicroBlock(el);
-          }
+      for (var i = 0; i < editableElements.length; i++) {
+        var key = editableElements[i].getAttribute('data-key');
+        if (['skill', 'blocks'].indexOf(key) === -1) {
+          editableElements[i].setAttribute('contenteditable', true);
         }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
+
+        if ('blocks' === key && !this._hasAddMicroBlock) {
+          this._hasAddMicroBlock = true;
+          new AddMicroBlock(editableElements[i]);
         }
       }
 
@@ -170,67 +223,18 @@ var EditableBlock = function () {
     key: "save",
     value: function save() {
       var editableElements = this._element.querySelectorAll('[data-key]');
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
-
-      try {
-        for (var _iterator2 = editableElements[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var el = _step2.value;
-
-          if (['skill', 'blocks'].indexOf(el.getAttribute('data-key')) === -1) {
-            el.setAttribute('contenteditable', false);
-          }
+      for (var i = 0; i < editableElements.length; i++) {
+        if (['skill', 'blocks'].indexOf(editableElements[i].getAttribute('data-key')) === -1) {
+          editableElements[i].setAttribute('contenteditable', false);
         }
-      } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion2 && _iterator2.return) {
-            _iterator2.return();
-          }
-        } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
-          }
+
+        //Data saving
+        if (editableElements[i].getAttribute('data-key') !== 'blocks') {
+          console.log(_defineProperty({}, editableElements[i].getAttribute('data-key'), editableElements[i].innerHTML));
         }
       }
 
       this._toggleEditing();
-
-      //Log saving info
-      var _iteratorNormalCompletion3 = true;
-      var _didIteratorError3 = false;
-      var _iteratorError3 = undefined;
-
-      try {
-        for (var _iterator3 = editableElements[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-          var _el = _step3.value;
-
-          //Disable logging block html data
-          if (_el.getAttribute('data-key') !== 'blocks') {
-            if (JSON.parse(_el.getAttribute('data-is-child')) === true) {
-              console.log(_defineProperty({}, _el.getAttribute('data-key'), _el.innerHTML));
-            } else {
-              console.log(_defineProperty({}, _el.getAttribute('data-key'), _el.innerHTML));
-            }
-          }
-        }
-      } catch (err) {
-        _didIteratorError3 = true;
-        _iteratorError3 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion3 && _iterator3.return) {
-            _iterator3.return();
-          }
-        } finally {
-          if (_didIteratorError3) {
-            throw _iteratorError3;
-          }
-        }
-      }
     }
   }, {
     key: "delete",
@@ -345,13 +349,13 @@ var AddBlock = function () {
       zonesList.classList.add('add-block-items', 'clearfix');
       blockWrapper.appendChild(zonesList);
 
-      var _iteratorNormalCompletion4 = true;
-      var _didIteratorError4 = false;
-      var _iteratorError4 = undefined;
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
 
       try {
         var _loop = function _loop() {
-          var type = _step4.value;
+          var type = _step.value;
 
           var listItem = document.createElement('li');
           listItem.addEventListener('click', function () {
@@ -371,20 +375,20 @@ var AddBlock = function () {
           zonesList.appendChild(listItem);
         };
 
-        for (var _iterator4 = zoneTypes[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+        for (var _iterator = zoneTypes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           _loop();
         }
       } catch (err) {
-        _didIteratorError4 = true;
-        _iteratorError4 = err;
+        _didIteratorError = true;
+        _iteratorError = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion4 && _iterator4.return) {
-            _iterator4.return();
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
           }
         } finally {
-          if (_didIteratorError4) {
-            throw _iteratorError4;
+          if (_didIteratorError) {
+            throw _iteratorError;
           }
         }
       }

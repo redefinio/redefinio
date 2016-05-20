@@ -330,9 +330,17 @@
   }
 }
 
+.ui-sortable-helper {
+  background: #fff;
+
+  .editable-block {
+  border: 2px solid #b5bfc7;
+  }
+}
+
 .editable-block {
   background: #fff;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
   position: relative;
   border: 2px solid transparent;
   border-radius: 3px;
@@ -530,4 +538,21 @@
   text-align: center;
   font-size: 12px;
   color: #999;
+}
+
+.placeholder {
+  border: 2px dashed #b5bfc7;
+  width: 100%;
+  height: 100px;
+  margin-bottom: 15px;
+}
+
+.ui-sortable-helper {
+
+}
+
+.ui-sortable-disabled {
+  .placeholder {
+    display: none !important;
+  }
 }
