@@ -41,7 +41,7 @@ class LoadAllData implements FixtureInterface
         $block1_1->setTitle('Personal info headline');
         $block1_1->setType(1);
         $block1_1->addTemplateSlot($templateSlot1_1);
-        $block1_1->setHtmlSource('<div class="container"><div class="row"><div class="col-xs-12"><div id="top"><div class="big-title pull-left"><h1 class="title">{{ first_name }} <span>{{ last_name }}</span></h1><h3 class="subtitle">{{ title }}</h3></div><div class="contacts pull-right"><a href="mailto:{{ email }}">{{ email }}</a> <a href="tel:{{ phone }}">{{ phone }}</a></div><div class="clear"></div></div></div></div></div>');
+        $block1_1->setHtmlSource('<div class="container"><div class="row"><div class="col-xs-12"><div class="item" data-block-id="0" data-block-type="1" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"><div id="top"><div class="big-title pull-left"><h1 class="title"><span data-key="first_name">{{ first_name }}</span> <span data-key="last_name">{{ last_name }}</span></h1><h3 class="subtitle" data-key="title">{{ title }}</h3></div><div class="contacts pull-right"><a href="mailto:{{ email }}" data-key="email">{{ email }}</a> <a href="tel:{{ phone }}" data-key="phone">{{ phone }}</a></div><div class="clear"></div></div></div></div></div></div>');
         $block1_1->setAvailableFields(json_encode(array(
                 'first_name',
                 'last_name',
