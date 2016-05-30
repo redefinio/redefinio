@@ -65,6 +65,10 @@ class Template
         $this->template_slots = new ArrayCollection();
     }
 
+    public function __toString() {
+        return $this->getTitle();
+    }
+
     /**
      * Get id
      *
