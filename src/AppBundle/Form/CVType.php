@@ -16,6 +16,7 @@ class CVType extends AbstractType
     {
         $builder
             ->add('title')
+            ->add('template')
             ->add('url')
             ->add('full_name')
             ->add('occupation')

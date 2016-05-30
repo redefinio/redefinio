@@ -42,20 +42,24 @@ class CVController extends Controller
      */
     public function newAction(Request $request)
     {
-        $cV = new CV();        
-        $form = $this->createForm('AppBundle\Form\CVType', $cV);
+        $cv = new CV();        
+        $form = $this->createForm('AppBundle\Form\CVType', $cv);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($cV);
+            if (!$this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
+                throw $this->createAccessDeniedException();
+            }
+            $cv->setUser($this->getUser());
+            $em->persist($cv);
             $em->flush();
 
-            return $this->redirectToRoute('cv_show', array('id' => $cV->getId()));
+            return $this->redirectToRoute('cv_show', array('id' => $cv->getId()));
         }
 
         return $this->render('cv/new.html.twig', array(
-            'cV' => $cV,
+            'cV' => $cv,
             'form' => $form->createView(),
         ));
     }
