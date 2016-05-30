@@ -160,6 +160,12 @@ class LoadAllData implements FixtureInterface
         $cv1->setTitle('My great cv');
         $cv1->setUrl('my_great_cv');
         $cv1->setTemplate($template1);
+        $cv1->setFullName('Albinas Anusauskas');
+        $cv1->setOccupation('Kokybės užtikrintojas');
+        $cv1->setLocation('Kavarskas, Lietuva');
+        $cv1->setEmail($user1->getEmail());
+        $cv1->setPhone('37 11 10');
+        $cv1->setSummary('Trumpai apie nieką.');
         $manager->persist($cv1);
 
         $blockData1_1 = new BlockData();
