@@ -10,4 +10,15 @@ namespace AppBundle\Repository;
  */
 class BlockRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function getHtml($template_id, $block_type) {
+		return $this->getEntityManager()->createQueryBuilder('b')
+			->select('b.html_source')
+			->from('AppBundle\Entity\Block', 'b')
+    		->where('b.type = :type')
+    		->andWhere('b.template = :template')
+		    ->setParameter('type', $block_type)
+		    ->setParameter('template', $template_id)
+		    ->setMaxResults(1)
+		    ->getQuery()->getSingleScalarResult();
+	}
 }

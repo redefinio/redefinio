@@ -13,6 +13,17 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Block
 {
+    const TYPE_FIXED = 0;
+    const TYPE_TEXT = 1;
+    const TYPE_SKILLS = 2;
+    const TYPE_SKILLS_INNER = 3;
+    const TYPE_EXPERIENCE = 4;
+    const TYPE_EXPERIENCE_INNER = 5;
+    const TYPE_EDUCATION = 6;
+    const TYPE_EDUCATION_INNER = 7;
+    const TYPE_CERTIFICATES = 8;
+    const TYPE_CERTIFICATES_INNER = 9;
+
     /**
      * @var int
      *
@@ -32,6 +43,12 @@ class Block
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      */
     private $parent;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Template", inversedBy="blocks")
+     * @ORM\JoinColumn(name="template_id", referencedColumnName="id")
+     */
+    private $template;
 
     /**
      * @ORM\OneToMany(targetEntity="BlockData", mappedBy="block")
@@ -308,5 +325,29 @@ class Block
     public function getAvailableFields()
     {
         return $this->available_fields;
+    }
+
+    /**
+     * Set template
+     *
+     * @param \AppBundle\Entity\Template $template
+     *
+     * @return Block
+     */
+    public function setTemplate(\AppBundle\Entity\Template $template = null)
+    {
+        $this->template = $template;
+
+        return $this;
+    }
+
+    /**
+     * Get template
+     *
+     * @return \AppBundle\Entity\Template
+     */
+    public function getTemplate()
+    {
+        return $this->template;
     }
 }
