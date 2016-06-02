@@ -405,11 +405,25 @@ var AddBlock = function () {
   }, {
     key: "_addBlock",
     value: function _addBlock(zoneName, type) {
+      var templateId = 1;
       this._element.classList.remove('is-active');
 
-      window.statusBar.showMessage("You have just added " + type.name + " block");
+      $.ajax({
+        url: location.protocol + "//" + location.host + "/api/block/" + templateId + "/" + type.type,
+        success: function success(data) {
+          var block = decodeURIComponent(JSON.parse(data).data).replace(/\+/g, ' ');
+          // console.log(`[data-type="${zoneName}"]`);
+          $("[data-zone=\"" + zoneName + "\"]").find('.add-block').before(block);
+        },
 
-      console.log(zoneName, type);
+        complete: function complete() {
+          window.statusBar.showMessage("You have just added " + type.name + " block");
+        },
+
+        error: function error() {}
+      });
+
+      // console.log(zoneName, type);
     }
   }]);
 
@@ -423,24 +437,44 @@ var AddMicroBlock = function () {
     _classCallCheck(this, AddMicroBlock);
 
     this._element = null;
-
+    this._templateId = 1;
+    this._blockId = microBlockZone.dataset.blocksType;
     this._createAddMicroBlock(microBlockZone);
   }
 
   _createClass(AddMicroBlock, [{
     key: "_createAddMicroBlock",
     value: function _createAddMicroBlock(microBlockZone) {
+      var _this3 = this;
+
       var blockWrapper = document.createElement('div');
       blockWrapper.classList.add('add-micro-block');
 
       var button = document.createElement('button');
       button.innerHTML = 'Add Micro block';
+      button.addEventListener('click', function () {
+        return _this3._addMicroBlock(_this3, microBlockZone);
+      }, false);
       blockWrapper.appendChild(button);
 
       microBlockZone.parentNode.appendChild(blockWrapper);
 
       this._element = blockWrapper;
-      console.log(this._element);
+    }
+  }, {
+    key: "_addMicroBlock",
+    value: function _addMicroBlock(ids, blck) {
+      $.ajax({
+        url: location.protocol + "//" + location.host + "/api/block/" + ids._templateId + "/" + ids._blockId,
+        success: function success(data) {
+          var block = decodeURIComponent(JSON.parse(data).data).replace(/\+/g, ' ');
+          $(blck).append(block);
+        },
+
+        complete: function complete() {},
+
+        error: function error() {}
+      });
     }
   }]);
 

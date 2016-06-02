@@ -197,7 +197,7 @@ class EditableBlock {
 
       if('blocks' === key && !this._hasAddMicroBlock) {
         this._hasAddMicroBlock = true; 
-          new AddMicroBlock(editableElements[i]);
+        new AddMicroBlock(editableElements[i]);
       }
     }
 
@@ -333,18 +333,33 @@ class AddBlock {
   }
 
   _addBlock(zoneName, type) {
+    let templateId = 1;
     this._element.classList.remove('is-active');
 
-    window.statusBar.showMessage(`You have just added ${type.name} block`)
+    $.ajax({
+      url: `${location.protocol}//${location.host}/api/block/${templateId}/${type.type}`,
+      success: (data) => {
+        let block = decodeURIComponent(JSON.parse(data).data).replace(/\+/g, ' ');
+        // console.log(`[data-type="${zoneName}"]`);
+        $(`[data-zone="${zoneName}"]`).find('.add-block').before(block);
+      },
 
-    console.log(zoneName, type);
+      complete: () => {
+        window.statusBar.showMessage(`You have just added ${type.name} block`)
+      },
+
+      error: () => {}
+    });
+
+    // console.log(zoneName, type);
   }
 };
 
 class AddMicroBlock {
   constructor(microBlockZone) {
     this._element = null;
-
+    this._templateId = 1;
+    this._blockId = microBlockZone.dataset.blocksType;
     this._createAddMicroBlock(microBlockZone);
   }
 
@@ -354,11 +369,25 @@ class AddMicroBlock {
 
     let button = document.createElement('button');
     button.innerHTML = 'Add Micro block';
+    button.addEventListener('click', () => this._addMicroBlock(this, microBlockZone), false);
     blockWrapper.appendChild(button);
 
     microBlockZone.parentNode.appendChild(blockWrapper);
 
     this._element = blockWrapper;
-    console.log(this._element)
+  }
+
+  _addMicroBlock(ids, blck) {
+    $.ajax({
+      url: `${location.protocol}//${location.host}/api/block/${ids._templateId}/${ids._blockId}`,
+      success: (data) => {
+        let block = decodeURIComponent(JSON.parse(data).data).replace(/\+/g, ' ');
+        $(blck).append(block);
+      },
+
+      complete: () => {},
+
+      error: () => {}
+    });
   }
 }
