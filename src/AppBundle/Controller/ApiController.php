@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use Doctrine\ORM\ORMException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,9 +21,20 @@ class ApiController extends Controller
     public function blockHtmlAction($template_id, $block_type) {
         $em = $this->getDoctrine()->getManager();
         try {
-            $html = $em->getRepository('AppBundle:Block')->getHTML($template_id, $block_type);
-        } catch(\Exception $e) {
-            return new Response(json_encode(array('error' => 'Not found')), Response::HTTP_NOT_FOUND);    
+            $result = $em->getRepository('AppBundle:Block')->getHTML($template_id, $block_type);
+            // only 1 block should be returned
+            $result = $result[0];
+            $id = $result['id'];
+            $html = $result['html_source'];
+        } catch(ORMException $e) {
+            return new Response(json_encode(array('error' => $e->getMessage())), Response::HTTP_NOT_FOUND);
+        }
+        try {
+            $result = $em->getRepository('AppBundle:Block')->getChildHTML($template_id, $id);
+            $result = $result[0];
+            $cHtml = $result['html_source'];
+            $html = str_replace('{{ blocks|raw }}', $cHtml, $html);
+        } catch(ORMException $e) {
         }
         return new Response(json_encode(array('data' => urlencode($html))));
     }

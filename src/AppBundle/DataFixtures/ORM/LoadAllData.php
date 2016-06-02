@@ -42,7 +42,7 @@ class LoadAllData implements FixtureInterface
         $block1_1->setType(Block::TYPE_FIXED);
         $block1_1->addTemplateSlot($templateSlot1_1);
         $block1_1->setTemplate($template1);
-        $block1_1->setHtmlSource('<div class="container"><div class="row"><div class="col-xs-12"><div class="item" data-block-id="0" data-block-type=“'.Block::TYPE_FIXED.'” data-is-draggable="false" data-is-editable="true" data-is-deletable="false"><div id="top"><div class="big-title pull-left"><h1 class="title"><span data-key="first_name">{{ first_name }}</span> <span data-key="last_name">{{ last_name }}</span></h1><h3 class="subtitle" data-key="title">{{ title }}</h3></div><div class="contacts pull-right"><a href="mailto:{{ email }}" data-key="email">{{ email }}</a> <a href="tel:{{ phone }}" data-key="phone">{{ phone }}</a></div><div class="clear"></div></div></div></div></div></div>');
+        $block1_1->setHtmlSource('<div class="container"><div class="row"><div class="col-xs-12"><div class="item" data-block-id="0" data-block-type=“'.Block::TYPE_FIXED.'” data-is-draggable="false" data-is-editable="true" data-is-deletable="false"><div id="top"><div class="big-title pull-left"><h1 class="title"><span data-key="first_name" data-placeholder="John">{{ first_name }}</span> <span data-key="last_name" data-placeholder="Doe">{{ last_name }}</span></h1><h3 class="subtitle" data-key="title" data-placeholder="Your title">{{ title }}</h3></div><div class="contacts pull-right"><a href="mailto:{{ email }}" data-key="email" data-placeholder="john@example.com">{{ email }}</a> <a href="tel:{{ phone }}" data-key="phone" data-placeholder="Your phone">{{ phone }}</a></div><div class="clear"></div></div></div></div></div></div>');
         $block1_1->setAvailableFields(json_encode(array(
                 'first_name',
                 'last_name',
@@ -57,7 +57,7 @@ class LoadAllData implements FixtureInterface
         $block1_2->setType(Block::TYPE_TEXT);
         $block1_2->addTemplateSlot($templateSlot1_2);
         $block1_2->setTemplate($template1);
-        $block1_2->setHtmlSource('<div class="item" data-block-id="0" data-block-type=“'.Block::TYPE_TEXT.'” data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-user"></i><span data-key="title">Summary</span></h2><p data-key="text">{{ text }}</p>
+        $block1_2->setHtmlSource('<div class="item" data-block-id="0" data-block-type=“'.Block::TYPE_TEXT.'” data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-user"></i><span data-key="title">Summary</span></h2><p data-key="text" data-placeholder="Text goes here">{{ text }}</p>
             </div>');
         $block1_2->setAvailableFields(
             json_encode(array(
@@ -82,7 +82,7 @@ class LoadAllData implements FixtureInterface
         $block1_3_1->setTitle('Experience entry');
         $block1_3_1->setType(Block::TYPE_EXPERIENCE_INNER);
         $block1_3_1->setTemplate($template1);
-        $block1_3_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-key="date_from" data-is-child="true">{{ date_from }}</span> - <span data-key="date_to" data-is-child="true">{{ date_to }}</span></div><h3 class="position" data-key="position" data-is-child="true">{{ position }}</h3><h3 class="subtitle" data-key="company" data-is-child="true">{{ company }}</h3><h4>Redesigning</h4></div></li>');
+        $block1_3_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-key="date_from" data-placeholder="Date from" data-is-child="true">{{ date_from }}</span> - <span data-key="date_to" data-placeholder="Date to" data-is-child="true">{{ date_to }}</span></div><h3 class="position" data-key="position" data-placeholder="Position" data-is-child="true">{{ position }}</h3><h3 class="subtitle" data-key="company" data-placeholder="Company" data-is-child="true">{{ company }}</h3><h4>Redesigning</h4></div></li>');
         $block1_3_1->setAvailableFields(
             json_encode(array(
                 'date_from',
