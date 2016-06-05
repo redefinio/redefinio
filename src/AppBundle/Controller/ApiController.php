@@ -31,11 +31,15 @@ class ApiController extends Controller
         }
         try {
             $result = $em->getRepository('AppBundle:Block')->getChildHTML($template_id, $id);
-            $result = $result[0];
-            $cHtml = $result['html_source'];
-            $html = str_replace('{{ blocks|raw }}', $cHtml, $html);
+            
+            if(count($result) != 0) {
+                $result = $result[0];
+                $cHtml = $result['html_source'];
+                $html = str_replace('{{ blocks|raw }}', $cHtml, $html);
+            }
         } catch(ORMException $e) {
         }
+
         return new Response(json_encode(array('data' => urlencode($html))));
     }
 
