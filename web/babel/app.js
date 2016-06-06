@@ -215,6 +215,7 @@ class Block {
     this._childBlockType = null;
     
     this._createControls();
+    this._enableMicroBlockDragNDrop();
 
     if ($(block).find('[data-key="blocks"]').length != 0) {
       this._childBlockType = $(block).find('[data-key="blocks"]')[0].dataset.childBlockType  
@@ -270,6 +271,33 @@ class Block {
     }
      
     this._element.appendChild(blockWrapper);
+  }
+
+  _enableMicroBlockDragNDrop() {
+    $('[data-key="blocks"]').sortable({
+      // connectWith: '',
+      items: '> div, > li',
+      // handle: '.move',
+      // cancel: '',
+      // helper: 'clone',
+      appendTo: 'body',
+      zIndex: 10000,
+      delay: 100,
+      placeholder: 'placeholder',
+      activate: (e, ui) => {},
+      beforeStop: (e, ui) => {},
+      change: (e, ui) => {},
+      create: (e, ui) => {},
+      deactivate: (e, ui) => {},
+      out: (e, ui) => {},
+      over: (e, ui) => {},
+      receive: (e, ui) => {},
+      remove: (e, ui) => {},
+      sort: (e, ui) => {},
+      start: (e, ui) => {},
+      stop: (e, ui) => {},
+      update: (e, ui) => {}
+    });
   }
 
   _createAddBlock() {
