@@ -9,7 +9,7 @@ module.exports = function(grunt) {
         },
         dist: {
             files: {
-                'web/js/showTemplate.js': 'web/babel/showTemplate.js'
+                'web/js/app.js': 'web/babel/app.js'
             }
         }
     },
