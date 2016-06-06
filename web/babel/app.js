@@ -163,7 +163,7 @@ class Zone {
     $(this._element).sortable({
       connectWith: '[data-zone]',
       items: '.item',
-      handle: '.move',
+      handle: '.move-block',
       cancel: '',
       helper: 'clone',
       appendTo: 'body',
@@ -215,10 +215,12 @@ class Block {
     this._childBlockType = null;
     
     this._createControls();
-    this._enableMicroBlockDragNDrop();
 
     if ($(block).find('[data-key="blocks"]').length != 0) {
       this._childBlockType = $(block).find('[data-key="blocks"]')[0].dataset.childBlockType  
+
+      this._createMicroBlockControls();
+      this._enableMicroBlockDragNDrop();
       this._createAddBlock();
     }
   }
@@ -238,7 +240,7 @@ class Block {
 
     if (JSON.parse(this._element.getAttribute('data-is-draggable')) === true) {
       let moveButton = document.createElement('button');
-      moveButton.classList.add('move');
+      moveButton.classList.add('move', 'move-block');
       blockActionsWrapper.appendChild(moveButton);
     }
 
@@ -273,12 +275,31 @@ class Block {
     this._element.appendChild(blockWrapper);
   }
 
+  _createMicroBlockControls() {
+    $('[data-key="blocks"] > div, [data-key="blocks"] > li').addClass('editable-micro-block');
+
+    let blockActionsWrapper = document.createElement('div');
+  blockActionsWrapper.classList.add('block-actions');
+
+    let moveButton = document.createElement('button');
+    moveButton.classList.add('move', 'move-micro-block');
+    blockActionsWrapper.appendChild(moveButton);
+
+    let deleteButton = document.createElement('button');
+    deleteButton.classList.add('delete');
+    deleteButton.innerHTML = 'Delete';
+    deleteButton.addEventListener('click', this.delete.bind(this), false);
+    blockActionsWrapper.appendChild(deleteButton);
+
+    $('[data-key="blocks"] > div, [data-key="blocks"] > li').append(blockActionsWrapper);
+  }
+
   _enableMicroBlockDragNDrop() {
     $('[data-key="blocks"]').sortable({
       // connectWith: '',
       items: '> div, > li',
-      // handle: '.move',
-      // cancel: '',
+      handle: '.move-micro-block',
+      cancel: '',
       // helper: 'clone',
       appendTo: 'body',
       zIndex: 10000,
