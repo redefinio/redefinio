@@ -82,7 +82,7 @@ class LoadAllData implements FixtureInterface
         $block1_3_1->setTitle('Experience entry');
         $block1_3_1->setType(Block::TYPE_EXPERIENCE_INNER);
         $block1_3_1->setTemplate($template1);
-        $block1_3_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-key="date_from" data-placeholder="Date from" data-is-child="true">{{ date_from }}</span> - <span data-key="date_to" data-placeholder="Date to" data-is-child="true">{{ date_to }}</span></div><h3 class="position" data-key="position" data-placeholder="Position" data-is-child="true">{{ position }}</h3><h3 class="subtitle" data-key="company" data-placeholder="Company" data-is-child="true">{{ company }}</h3><h4>Redesigning</h4></div></li>');
+        $block1_3_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-key="date_from" data-placeholder="Date from">{{ date_from }}</span> - <span data-key="date_to" data-placeholder="Date to">{{ date_to }}</span></div><h3 class="position" data-key="position" data-placeholder="Position">{{ position }}</h3><h3 class="subtitle" data-key="company" data-placeholder="Company" data-is-child="true">{{ company }}</h3><h4>Redesigning</h4></div></li>');
         $block1_3_1->setAvailableFields(
             json_encode(array(
                 'date_from',
@@ -97,7 +97,7 @@ class LoadAllData implements FixtureInterface
         $block1_4->setType(Block::TYPE_EDUCATION);
         $block1_4->addTemplateSlot($templateSlot1_2);
         $block1_4->setTemplate($template1);
-        $block1_4->setHtmlSource('<div class="item" data-block-type="'.Block::TYPE_EDUCATION.'"><h2 class="title"><i class="glyphicon glyphicon-education"></i><span>Education</span></h2><ul class="timeline">{{ blocks|raw }}</ul></div>');
+        $block1_4->setHtmlSource('<div class="item" data-block-id="0" data-block-type="'.Block::TYPE_EDUCATION.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-education"></i><span data-key="title">Education</span></h2><ul class="timeline" data-child-block-type="'.Block::TYPE_EDUCATION_INNER.'" data-key="blocks">{{ blocks|raw }}</ul></div>');
         $block1_4->setAvailableFields(
             json_encode(array(
                 'blocks'
@@ -109,7 +109,7 @@ class LoadAllData implements FixtureInterface
         $block1_4_1->setTitle('Education entry');
         $block1_4_1->setType(Block::TYPE_EDUCATION_INNER);
         $block1_4_1->setTemplate($template1);
-        $block1_4_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date">{{ date_from }} - {{ date_to }}</div><h3 class="position">{{ position }}</h3><h3 class="subtitle">{{ company }}</h3><h4>Redesigning</h4></div></li>');
+        $block1_4_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-key="date_from">{{ date_from }}</span> - <span data-key="date_to">{{ date_to }}</span></div><h3 class="position" data-key="position">{{ position }}</h3><h3 class="subtitle" data-key="company">{{ company }}</h3><h4>Redesigning</h4></div></li>');
         $block1_4_1->setAvailableFields(
             json_encode(array(
                 'date_from',
@@ -124,8 +124,8 @@ class LoadAllData implements FixtureInterface
         $block1_5->setType(Block::TYPE_SKILLS);
         $block1_5->addTemplateSlot($templateSlot1_3);
         $block1_5->setTemplate($template1);
-        $block1_5->setHtmlSource('<div class="item" data-block-type="'.Block::TYPE_SKILLS.'">
-              <h2 class="title"><i class="glyphicon glyphicon-tasks"></i><span>Skills</span></h2>{{ blocks|raw }}</div>');
+        $block1_5->setHtmlSource('<div class="item" data-block-id="0" data-block-type="'.Block::TYPE_SKILLS.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true">
+              <h2 class="title"><i class="glyphicon glyphicon-tasks"></i><span data-key="title">Skills</span></h2><div data-child-block-type="'.Block::TYPE_SKILLS_INNER.'" data-key="blocks">{{ blocks|raw }}</div></div>');
         $block1_5->setAvailableFields(
             json_encode(array(
                 'blocks'
@@ -137,7 +137,7 @@ class LoadAllData implements FixtureInterface
         $block1_5_1->setTitle('Skills/languages entry');
         $block1_5_1->setType(Block::TYPE_SKILLS_INNER);
         $block1_5_1->setTemplate($template1);
-        $block1_5_1->setHtmlSource('<div class="skills-group"><label>{{ title }}</label><ul class="skills">{% if skill > 0 %}{% for i in 1..skill %}<li class="completed"></li>{% endfor %}{% endif %}{% if skill < 10 %}{% for i in 1..(10-skill) %}<li></li>{% endfor %}{% endif %}</ul></div>');
+        $block1_5_1->setHtmlSource('<div class="skills-group"><label data-key="title">{{ title }}</label><ul class="skills">{% if skill > 0 %}{% for i in 1..skill %}<li class="completed"></li>{% endfor %}{% endif %}{% if skill < 10 %}{% for i in 1..(10-skill) %}<li></li>{% endfor %}{% endif %}</ul></div>');
         $block1_5_1->setAvailableFields(
             json_encode(array(
                 'title',
@@ -150,8 +150,8 @@ class LoadAllData implements FixtureInterface
         $block1_6->setType(Block::TYPE_SKILLS);
         $block1_6->addTemplateSlot($templateSlot1_3);
         $block1_6->setTemplate($template1);
-        $block1_6->setHtmlSource('<div class="item" data-block-type="'.Block::TYPE_SKILLS.'">
-              <h2 class="title"><i class="glyphicon glyphicon-book"></i><span>Languages</span></h2>{{ blocks|raw }}</div>');
+        $block1_6->setHtmlSource('<div class="item" data-block-id="0" data-block-type="'.Block::TYPE_SKILLS.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true">
+              <h2 class="title"><i class="glyphicon glyphicon-book"></i><span data-key="title">Languages</span></h2><div data-child-block-type="'.Block::TYPE_SKILLS_INNER.'" data-key="blocks">{{ blocks|raw }}</div></div>');
         $block1_6->setAvailableFields(
             json_encode(array(
                 'blocks'
