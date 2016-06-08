@@ -4,7 +4,7 @@
     <div class="navbar">
         <h1 class="navbar-title">Editing my résumé</h1>
         <div class="navbar-actions">
-            <a href="{{ path('cv_show', { 'id': cV.id }) }}" class="btn navbar-cancel">Cancel</a>
+            <a href="{{ path('cv_show', { 'id': cv.id }) }}" class="btn navbar-cancel">Cancel</a>
             <a href="#" class="btn navbar-save">Save</a>
         </div>
     </div>
@@ -50,6 +50,7 @@
 		<div class="sidebar-block sidebar-themes">
 			<h3 class="sidebar-header">Themes</h3>
 			<div class="themes-list">
+        {% for theme in cv.template.themes %}
         <div class="themes-listitem">
           <div class="theme-container" style="background:#F1F5F8;">
             <div class="theme" style="background:#FFFFFF;">
@@ -62,6 +63,7 @@
             </div>
           </div>
         </div>
+        {% endfor %}
 			</div>
 		</div>
 	</aside>
@@ -69,7 +71,7 @@
 
 {% block javascripts %}
 		<script type="text/javascript">
-			var templateUrl = "{{ path('cv_render_template', { 'id': cV.id }) }}";
+			var templateUrl = "{{ path('cv_render_template', { 'id': cv.id }) }}";
 			var isEditing = true;
       var templateId = 1;
 		</script>

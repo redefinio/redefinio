@@ -103,7 +103,7 @@ class CVController extends Controller
         $templates = $em->getRepository('AppBundle:Template')->findAll();
 
         return $this->render('cv/edit.html.twig', array(
-            'cV' => $cV,
+            'cv' => $cV,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'templates' => $templates
