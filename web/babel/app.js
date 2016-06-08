@@ -153,7 +153,9 @@ class Zone {
     this._addBlock.classList.remove('is-active');
 
     API.getBlock(type.type, (block) => {
-      $(`[data-zone="${zoneName}"]`).find('.add-block').before(block);
+      let newBlock = $(block)[0];
+      $(`[data-zone="${zoneName}"]`).find('.add-block').before(newBlock);
+      new Block(newBlock);
 
       window.statusBar.showMessage(`You have just added ${type.name} block`);
     });
@@ -217,7 +219,8 @@ class Block {
     this._createControls();
 
     if ($(block).find('[data-key="blocks"]').length != 0) {
-      this._childBlockType = $(block).find('[data-key="blocks"]')[0].dataset.childBlockType  
+      console.log("You have children!");
+      this._childBlockType = $(block).find('[data-key="blocks"]')[0].dataset.childBlockType;
 
       this._createMicroBlockControls();
       this._enableMicroBlockDragNDrop();
@@ -279,7 +282,7 @@ class Block {
     $('[data-key="blocks"] > div, [data-key="blocks"] > li').addClass('editable-micro-block');
 
     let blockActionsWrapper = document.createElement('div');
-  blockActionsWrapper.classList.add('block-actions');
+    blockActionsWrapper.classList.add('block-actions');
 
     let moveButton = document.createElement('button');
     moveButton.classList.add('move', 'move-micro-block');
@@ -291,6 +294,7 @@ class Block {
     deleteButton.addEventListener('click', this.delete.bind(this), false);
     blockActionsWrapper.appendChild(deleteButton);
 
+    $('[data-key="blocks"] > div, [data-key="blocks"] > li').remove('.block-actions');
     $('[data-key="blocks"] > div, [data-key="blocks"] > li').append(blockActionsWrapper);
   }
 
@@ -335,6 +339,7 @@ class Block {
   _addMicroBlock() {
     API.getBlock(this._childBlockType, (block) => {
       $(this._element).find('[data-key="blocks"]').append(block);
+      this._createMicroBlockControls();
     });
   }
 
