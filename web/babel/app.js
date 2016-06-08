@@ -154,6 +154,7 @@ class Zone {
 
     API.getBlock(type.type, (block) => {
       let newBlock = $(block)[0];
+
       $(`[data-zone="${zoneName}"]`).find('.add-block').before(newBlock);
       new Block(newBlock);
 
@@ -217,6 +218,7 @@ class Block {
     this._childBlockType = null;
     
     this._createControls();
+    this._fixPlaceholders();
 
     if ($(block).find('[data-key="blocks"]').length != 0) {
       console.log("You have children!");
@@ -276,6 +278,18 @@ class Block {
     }
      
     this._element.appendChild(blockWrapper);
+  }
+
+  _fixPlaceholders() {
+    let placeholders = $(this._element).find('[data-placeholder]');
+      for(let i = 0; i < placeholders.length; i++) {
+        let el = $(placeholders[i])[0];
+        let placeholder = el.dataset.placeholder;
+        console.log(el.innerHTML)
+        if(el.innerHTML.indexOf('{{') > -1) {
+          $(el).html(placeholder);
+        }
+      }
   }
 
   _createMicroBlockControls() {
@@ -340,6 +354,7 @@ class Block {
     API.getBlock(this._childBlockType, (block) => {
       $(this._element).find('[data-key="blocks"]').append(block);
       this._createMicroBlockControls();
+      this._fixPlaceholders();
     });
   }
 
