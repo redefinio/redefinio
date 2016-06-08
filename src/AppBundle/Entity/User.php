@@ -37,10 +37,6 @@ class User extends BaseUser
     public function setEmail($email) {
         parent::setEmail($email);
         parent::setUsername($email);
-        parent::setUsernameCanonical($email);
-        $this->setEmailCanonical($email);
-        $this->setUsername($email);
-        $this->setUsernameCanonical($email);
     }
 
     /**

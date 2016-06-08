@@ -29,8 +29,9 @@
     <div class="sidebar-block sidebar-templates">
 			<h3 class="sidebar-header">Templates</h3>
 			<div class="templates-list">
+        {% for template in templates %}
         <div class="templates-listitem">
-          <div class="template" data-template-id="{# template.id #}">
+          <div class="template" data-template-id="{{ template.id }}">
             {# {% if template.free %} #}
             <span class="price-indicator">
               <span class="price-indicator-title">Free</span>
@@ -39,9 +40,10 @@
 
             <span class="check-icon">
             <img src="{{ asset('img/check.png') }}" alt="Icon"></span>
-            <img class="template-image" src="{{ asset('img/dummy_template.png') }}" alt="Template">
+            <img class="template-image" src="{{ asset('img/dummy_template.png') }}" alt="Template" title="{{ template.title }}">
           </div>
         </div>
+        {% endfor %}
 			</div>
 		</div>
 
