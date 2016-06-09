@@ -221,7 +221,6 @@ class Block {
     this._fixPlaceholders();
 
     if ($(block).find('[data-key="blocks"]').length != 0) {
-      console.log("You have children!");
       this._childBlockType = $(block).find('[data-key="blocks"]')[0].dataset.childBlockType;
 
       this._createMicroBlockControls();
@@ -285,7 +284,6 @@ class Block {
       for(let i = 0; i < placeholders.length; i++) {
         let el = $(placeholders[i])[0];
         let placeholder = el.dataset.placeholder;
-        console.log(el.innerHTML)
         if(el.innerHTML.indexOf('{{') > -1) {
           $(el).html(placeholder);
         }
@@ -305,7 +303,7 @@ class Block {
     let deleteButton = document.createElement('button');
     deleteButton.classList.add('delete');
     deleteButton.innerHTML = 'Delete';
-    deleteButton.addEventListener('click', this.delete.bind(this), false);
+    $(deleteButton).on('click', this.deleteMicroBlock.bind(this));
     blockActionsWrapper.appendChild(deleteButton);
 
     $('[data-key="blocks"] > div, [data-key="blocks"] > li').remove('.block-actions');
@@ -355,6 +353,15 @@ class Block {
       $(this._element).find('[data-key="blocks"]').append(block);
       this._createMicroBlockControls();
       this._fixPlaceholders();
+
+      //TODO: refactor edit function
+      let editableElements = this._element.querySelectorAll('[data-key]');
+    for (let i = 0; i < editableElements.length; i++) {
+      const key = editableElements[i].getAttribute('data-key');
+      if(['skill', 'blocks'].indexOf(key) === -1) {
+        editableElements[i].setAttribute('contenteditable', true);
+      }
+    }
     });
   }
 
@@ -384,7 +391,7 @@ class Block {
 
       //Data saving
       if(editableElements[i].getAttribute('data-key') !== 'blocks') {
-        console.log({[editableElements[i].getAttribute('data-key')]: editableElements[i].innerHTML});  
+        console.log({[editableElements[i].getAttribute('data-key')]: editableElements[i].innerHTML});
       }
     }
 
@@ -395,6 +402,10 @@ class Block {
     this._element.parentNode.removeChild(this._element);
     
     window.statusBar.showMessage('You have just deleted block');
+  }
+
+  deleteMicroBlock(e) {
+    $(e.target).parent().parent().detach();
   }
 };
 
