@@ -356,12 +356,12 @@ class Block {
 
       //TODO: refactor edit function
       let editableElements = this._element.querySelectorAll('[data-key]');
-    for (let i = 0; i < editableElements.length; i++) {
-      const key = editableElements[i].getAttribute('data-key');
-      if(['skill', 'blocks'].indexOf(key) === -1) {
-        editableElements[i].setAttribute('contenteditable', true);
+      for (let i = 0; i < editableElements.length; i++) {
+        const key = editableElements[i].getAttribute('data-key');
+        if(['skill', 'blocks'].indexOf(key) === -1) {
+          editableElements[i].setAttribute('contenteditable', true);
+        }
       }
-    }
     });
   }
 
@@ -374,8 +374,26 @@ class Block {
     let editableElements = this._element.querySelectorAll('[data-key]');
     for (let i = 0; i < editableElements.length; i++) {
       const key = editableElements[i].getAttribute('data-key');
-      if(['skill', 'blocks'].indexOf(key) === -1) {
+      if(['blocks'].indexOf(key) === -1) {
         editableElements[i].setAttribute('contenteditable', true);
+      }
+    }
+
+    // console.log($(this._element).find('.skills'))
+   
+
+    let sliders = $(this._element).find('.skills'); //.after(slider);
+    for(let i = 0; i < sliders.length; i++) {
+      // console.log($(sliders[i]).parent().find('.slider').length)
+      if($(sliders[i]).parent().find('.slider').length === 0) {
+        let slider = document.createElement('div');
+        slider.classList.add('slider');
+        $(slider).slider({
+          range: 'max',
+          min: 0,
+          max: 10
+        });
+        $(sliders[i]).after(slider);
       }
     }
 
@@ -384,16 +402,42 @@ class Block {
 
   save() {
     let editableElements = this._element.querySelectorAll('[data-key]');
+
+    //Data saving
+    let counter = 0;
+    let data = {};
+    data['blockId'] = this._element.dataset.blockId;
+    data['fields'] = {};
     for (let i = 0; i < editableElements.length; i++) {
-      if(['skill', 'blocks'].indexOf(editableElements[i].getAttribute('data-key')) === -1) {
+      if(['blocks'].indexOf(editableElements[i].getAttribute('data-key')) === -1) {
         editableElements[i].setAttribute('contenteditable', false);
       }
 
-      //Data saving
       if(editableElements[i].getAttribute('data-key') !== 'blocks') {
-        console.log({[editableElements[i].getAttribute('data-key')]: editableElements[i].innerHTML});
+        if(data['fields']['blocks'] !== undefined) {  
+          const keysCount = $(this._element).find('[data-key="blocks"]').find('[data-key]');
+          const sameKeysCount = $(this._element).find('[data-key="blocks"]').find('[data-key="' + keysCount[0].getAttribute('data-key') + '"]')
+          // console.log(keysCount.length, sameKeysCount.length);
+          let obj = {};
+          for(let j = 0; j < (keysCount.length / sameKeysCount.length); j++) {
+            obj[editableElements[i + j].getAttribute('data-key')] = editableElements[i + j].innerHTML;  
+            // console.log(i, j);
+          }
+
+          i+= keysCount.length / sameKeysCount.length - 1;
+          // console.log(obj);
+          data['fields']['blocks'].push(obj);
+        }
+        else {
+          data['fields'][editableElements[i].getAttribute('data-key')] = editableElements[i].innerHTML;  
+        }
+      }
+      else {
+        data['fields']['blocks'] = [];
       }
     }
+
+    console.log(data);
 
     this._toggleEditing();
   }
@@ -428,6 +472,18 @@ const API = {
         let block = decodeURIComponent(JSON.parse(data).data).replace(/\+/g, ' ');
 
         cb(block);
+      },
+      complete: () => {},
+      error: () => {}
+    });
+  },
+
+  saveBlock: (block, cb) => {
+    $.ajax({
+      url: `${location.protocol}//${location.host}/api/block/`,
+      method: 'POST',
+      success: (data) => {
+        cb(true);
       },
       complete: () => {},
       error: () => {}
