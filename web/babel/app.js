@@ -438,6 +438,9 @@ class Block {
     }
 
     console.log(data);
+    API.saveBlock(data, () => {
+
+    });
 
     this._toggleEditing();
   }
@@ -482,6 +485,7 @@ const API = {
     $.ajax({
       url: `${location.protocol}//${location.host}/api/block/`,
       method: 'POST',
+      data: block,
       success: (data) => {
         cb(true);
       },
