@@ -58,8 +58,16 @@ class BlockData
      */
     private $data;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="position", type="integer")
+     */
+    private $position;
+
     public function __construct() {
         $this->children = new ArrayCollection();
+        $this->position = 1;
     }
 
     /**
