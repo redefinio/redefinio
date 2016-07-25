@@ -159,7 +159,7 @@ class LoadAllData implements FixtureInterface
         $manager->persist($block1_6);
 
         $user1 = new User();
-        $user1->setUsername();
+        $user1->setUsername('TestauskasUsername');
         $user1->setEmail('testinis.meska@example.com');
         $user1->setPlainPassword('test');
         $user1->setEnabled(true);        
