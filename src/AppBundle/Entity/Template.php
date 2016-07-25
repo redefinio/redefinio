@@ -38,6 +38,11 @@ class Template
     private $template_slots;
 
     /**
+     * @ORM\OneToMany(targetEntity="Block", mappedBy="template")
+     */
+    private $blocks;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
