@@ -35,6 +35,7 @@ class TemplateSlot
 
     /**
      * @ORM\OneToMany(targetEntity="BlockData", mappedBy="template_slot")
+     * @ORM\OrderBy({"position" = "ASC"})
      */
     private $block_datas;
 
