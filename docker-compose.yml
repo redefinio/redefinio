@@ -1,0 +1,18 @@
+mysql:
+  image: mariadb
+  environment:
+    MYSQL_DATABASE: redefine
+    #MYSQL_USER: devdb
+    #MYSQL_PASSWORD: devdb
+    MYSQL_ROOT_PASSWORD: root
+  volumes:
+    - ./docker/mysql/data:/var/lib/mysql
+
+php:
+  build: docker/php
+  volumes:
+    - ./:/var/www/
+  ports:
+    - "8080:80"
+  links:
+    - mysql
