@@ -16,4 +16,4 @@
 /web/bundles/
 
 /node_modules/
-/docker/data/*
+/docker/mysql/data/*
