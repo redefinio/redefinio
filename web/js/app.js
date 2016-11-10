@@ -557,6 +557,8 @@ var API = {
   },
 
   saveBlock: function saveBlock(block, cb) {
+    block.cvId = cvId;
+
     $.ajax({
       url: location.protocol + "//" + location.host + "/api/block/",
       method: 'POST',

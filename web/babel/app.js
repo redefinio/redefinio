@@ -482,6 +482,8 @@ const API = {
   },
 
   saveBlock: (block, cb) => {
+    block.cvId = cvId;
+    
     $.ajax({
       url: `${location.protocol}//${location.host}/api/block/`,
       method: 'POST',
