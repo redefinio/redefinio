@@ -479,6 +479,7 @@ var Block = function () {
       var counter = 0;
       var data = {};
       data['blockId'] = this._element.dataset.blockId;
+      data['blockTYpe'] = this._element.dataset.blockType;
       data['fields'] = {};
       for (var i = 0; i < editableElements.length; i++) {
         if (['blocks'].indexOf(editableElements[i].getAttribute('data-key')) === -1) {

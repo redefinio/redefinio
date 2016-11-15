@@ -407,6 +407,7 @@ class Block {
     let counter = 0;
     let data = {};
     data['blockId'] = this._element.dataset.blockId;
+    data['blockTYpe'] = this._element.dataset.blockType;
     data['fields'] = {};
     for (let i = 0; i < editableElements.length; i++) {
       if(['blocks'].indexOf(editableElements[i].getAttribute('data-key')) === -1) {
