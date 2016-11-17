@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Entity\BlockData;
 
 /**
  * API controller.
@@ -41,6 +42,31 @@ class ApiController extends Controller
         }
 
         return new Response(json_encode(array('data' => urlencode($html))));
+    }
+
+    /**
+     * @Route("/block/{cv_id}/{block_id}", name="api_block_post", requirements={"cv_id": "\d+", "block_id": "\d+"})
+     * @Method({"POST"})
+     */
+    public function blockAction($cv_id, $block_id) {
+        $em = $this->getDoctrine()->getManager();
+        $cv = $em->getRepository('AppBundle:CV')->find($cv_id); 
+        if (!$cv) return new Response(json_encode(array('error' => 'CV not found')), Response::HTTP_NOT_FOUND);
+        if ($block_id === 0) {
+            $block = new BlockData();
+            $block->setCV($cv);
+        } else {
+            $block = $em->getRepository('AppBundle:BlockData')->find($block_id); 
+        }
+        if (!$block) if (!$cv) return new Response(json_encode(array('error' => 'Block not found')), Response::HTTP_NOT_FOUND);
+        
+        // koki bloka gauname
+        // validuoti gautus duomenis
+        // issaugoti pakeitimus
+        $em->persist($block);
+        $em->flush();
+
+        return new Response();
     }
 
 }
