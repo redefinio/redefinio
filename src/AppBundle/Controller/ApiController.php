@@ -45,20 +45,26 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/block/{cv_id}/{template_slot_id}/{data_id}", name="api_block_post", requirements={"cv_id": "\d+", "block_id": "\d+"})
+     * @Route("/block/{cv_id}/{template_slot_id}/{data_id}", name="api_block_post", requirements={"cv_id": "\d+", "template_slot_id": "\d+", "data_id": "\d+"})
      * @Method({"POST"})
      */
     public function blockAction($cv_id, $template_slot_id, $data_id) {
         $em = $this->getDoctrine()->getManager();
         $cv = $em->getRepository('AppBundle:CV')->find($cv_id); 
         if (!$cv) return new Response(json_encode(array('error' => 'CV not found')), Response::HTTP_NOT_FOUND);
-        if ($block_id === 0) {
-            $block = new BlockData();
-            $block->setCV($cv);
+        $slot = $em->getRepository('AppBundle:TemplateSlot')->find($template_slot_id); 
+        if (!$slot) return new Response(json_encode(array('error' => 'TemplateSlot not found')), Response::HTTP_NOT_FOUND);
+        if ($cv != $slot->getCV()) return new Response(json_encode(array('error' => 'CV and TemplateSlot do not match')), Response::HTTP_NOT_FOUND);
+
+        if ($data_id === 0) {
+            $data = new BlockData();
+            $data->setCV($cv);
+            $data->setTemplateSlot($slot);
         } else {
-            $block = $em->getRepository('AppBundle:BlockData')->find($data_id); 
+            $data = $em->getRepository('AppBundle:BlockData')->find($data_id); 
+            $data->setTemplateSlot($slot);
         }
-        if (!$block) if (!$cv) return new Response(json_encode(array('error' => 'Block not found')), Response::HTTP_NOT_FOUND);
+        if (!$data) return new Response(json_encode(array('error' => 'BlockData not found')), Response::HTTP_NOT_FOUND);
         
         // koki bloka gauname
         // validuoti gautus duomenis
