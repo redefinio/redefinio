@@ -45,10 +45,10 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/block/{cv_id}/{block_id}", name="api_block_post", requirements={"cv_id": "\d+", "block_id": "\d+"})
+     * @Route("/block/{cv_id}/{template_slot_id}/{data_id}", name="api_block_post", requirements={"cv_id": "\d+", "block_id": "\d+"})
      * @Method({"POST"})
      */
-    public function blockAction($cv_id, $block_id) {
+    public function blockAction($cv_id, $template_slot_id, $data_id) {
         $em = $this->getDoctrine()->getManager();
         $cv = $em->getRepository('AppBundle:CV')->find($cv_id); 
         if (!$cv) return new Response(json_encode(array('error' => 'CV not found')), Response::HTTP_NOT_FOUND);
@@ -56,7 +56,7 @@ class ApiController extends Controller
             $block = new BlockData();
             $block->setCV($cv);
         } else {
-            $block = $em->getRepository('AppBundle:BlockData')->find($block_id); 
+            $block = $em->getRepository('AppBundle:BlockData')->find($data_id); 
         }
         if (!$block) if (!$cv) return new Response(json_encode(array('error' => 'Block not found')), Response::HTTP_NOT_FOUND);
         
