@@ -18,6 +18,7 @@ class ApiController extends Controller
 {
     /**
      * @Route("/block/{template_id}/{block_type}", name="api_block_html")
+     * @Method({"GET"})
      */
     public function blockHtmlAction($template_id, $block_type) {
         $em = $this->getDoctrine()->getManager();
