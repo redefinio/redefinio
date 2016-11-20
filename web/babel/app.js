@@ -486,7 +486,7 @@ const API = {
     block.cvId = cvId;
     
     $.ajax({
-      url: `${location.protocol}//${location.host}/api/block/`,
+      url: `${location.protocol}//${location.host}/api/block/${window.templateId}/${block.blockId}`,
       method: 'POST',
       data: block,
       success: (data) => {
