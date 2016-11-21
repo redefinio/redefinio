@@ -47,7 +47,7 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/block/{cv_id}/{template_slot_id}/{data_id}", name="api_block_post", requirements={"cv_id": "\d+", "template_slot_id": "\d+", "data_id": "\d+"})
+     * @Route("/block/{cv_id}/{template_slot_id}/{data_id}", name="api_block_post", requirements={"cv_id": "\d+", "data_id": "\d+"})
      * @Method({"POST"})
      */
     public function blockAction($cv_id, $template_slot_id, $data_id) {
