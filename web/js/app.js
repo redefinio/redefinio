@@ -35,7 +35,7 @@ var prepareToEditTemplate = function prepareToEditTemplate() {
   window.statusBar = new StatusBar(statusBarDom);
 
   //Setup zones
-  var zones = $('[data-zone]');
+  var zones = $('[data-zone-block-types]');
   for (var i = 0; i < zones.length; i++) {
     new Zone(zones[i]);
   }
@@ -481,6 +481,7 @@ var Block = function () {
       var data = {};
       data['blockId'] = this._element.dataset.blockId;
       data['blockType'] = this._element.dataset.blockType;
+      data['zone'] = $(this._element).parent().data('zone');
       data['fields'] = {};
       for (var i = 0; i < editableElements.length; i++) {
         if (['blocks'].indexOf(editableElements[i].getAttribute('data-key')) === -1) {
@@ -562,7 +563,7 @@ var API = {
     block.cvId = cvId;
 
     $.ajax({
-      url: location.protocol + "//" + location.host + "/api/block/" + window.templateId + "/" + block.blockId,
+      url: location.protocol + "//" + location.host + "/api/block/" + window.cvId + "/" + block.zone + "/" + block.blockId,
       method: 'POST',
       data: block,
       success: function success(data) {

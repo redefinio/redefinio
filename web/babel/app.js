@@ -31,7 +31,7 @@ let prepareToEditTemplate = () => {
   window.statusBar = new StatusBar(statusBarDom);
 
   //Setup zones
-  let zones = $('[data-zone]');
+  let zones = $('[data-zone-block-types]');
   for (let i = 0; i < zones.length; i++) {
     new Zone(zones[i]);
   }
@@ -408,6 +408,7 @@ class Block {
     let data = {};
     data['blockId'] = this._element.dataset.blockId;
     data['blockType'] = this._element.dataset.blockType;
+    data['zone'] = $(this._element).parent().data('zone'); 
     data['fields'] = {};
     for (let i = 0; i < editableElements.length; i++) {
       if(['blocks'].indexOf(editableElements[i].getAttribute('data-key')) === -1) {
@@ -486,7 +487,7 @@ const API = {
     block.cvId = cvId;
     
     $.ajax({
-      url: `${location.protocol}//${location.host}/api/block/${window.templateId}/${block.blockId}`,
+      url: `${location.protocol}//${location.host}/api/block/${window.cvId}/${block.zone}/${block.blockId}`,
       method: 'POST',
       data: block,
       success: (data) => {
