@@ -453,6 +453,7 @@ var Block = function () {
 
       // console.log($(this._element).find('.skills'))
 
+
       var sliders = $(this._element).find('.skills'); //.after(slider);
       for (var _i2 = 0; _i2 < sliders.length; _i2++) {
         // console.log($(sliders[i]).parent().find('.slider').length)

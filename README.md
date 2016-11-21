@@ -1,5 +1,12 @@
-Symfony Standard Edition
+Redefin.io
 ========================
+
+Developing
+--------------
+
+  * Install backend dependencies `composer install`
+  * Install frontend build dependencies `npm install` or `yarn`
+  * Build assets `grunt build`
 
 Welcome to the Symfony Standard Edition - a fully-functional Symfony2
 application that you can use as the skeleton for your new applications.
