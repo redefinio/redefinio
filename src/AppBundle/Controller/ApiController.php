@@ -23,25 +23,39 @@ class ApiController extends Controller
      */
     public function blockHtmlAction($template_id, $block_type) {
         $em = $this->getDoctrine()->getManager();
-        try {
-            $result = $em->getRepository('AppBundle:Block')->getHTML($template_id, $block_type);
-            // only 1 block should be returned
-            $result = $result[0];
-            $id = $result['id'];
-            $html = $result['html_source'];
-        } catch(ORMException $e) {
-            return new Response(json_encode(array('error' => $e->getMessage())), Response::HTTP_NOT_FOUND);
+
+        $block = $em->getRepository('AppBundle:Block')->createQueryBuilder('b')
+            ->where('b.template = :template')
+            ->andWhere('b.type = :type')
+            ->setParameter('type', $block_type)
+            ->setParameter('template', $template_id)
+            ->getQuery()->getOneOrNullResult();
+
+        if (!$block) {
+            return new Response(json_encode(array('error' => 'Block not found')), Response::HTTP_NOT_FOUND);
         }
-        try {
-            $result = $em->getRepository('AppBundle:Block')->getChildHTML($template_id, $id);
-            
-            if(count($result) != 0) {
-                $result = $result[0];
-                $cHtml = $result['html_source'];
-                $html = str_replace('{{ blocks|raw }}', $cHtml, $html);
-            }
-        } catch(ORMException $e) {
+        $twig = $this->container->get('twig');
+        $template = $twig->createTemplate($block->getHtmlSource());
+        // set default parameters for the template
+        $parameters = json_decode($block->getAvailableFields(), true);
+        // pass BlockData object itself to the template in order to print out its id or other needed attributes
+        $parameters['block_data'] = new BlockData();
+        
+        $child = $em->getRepository('AppBundle:Block')->createQueryBuilder('b')
+            ->where('b.template = :template')
+            ->andWhere('b.parent = :block')
+            ->setParameter('block', $block)
+            ->setParameter('template', $template_id)
+            ->getQuery()->getOneOrNullResult();
+
+        // if data has embedded child data, generate template for each of them and include in parent template
+        if ($child) {
+            $childTemplate = $twig->createTemplate($child->getBlock()->getHtmlSource());
+            $childrenString .= $childTemplate->render(json_decode($child->getAvailableFields(), true));
+            // if template is parent it must define 'blocks' variable where all children template will be inserted.
+            $parameters['blocks'] = $childrenString;
         }
+        $html .= $template->render($parameters);
 
         return new Response(json_encode(array('data' => urlencode($html))));
     }
