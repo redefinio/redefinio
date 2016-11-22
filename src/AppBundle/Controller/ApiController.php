@@ -50,7 +50,7 @@ class ApiController extends Controller
 
         // if data has embedded child data, generate template for each of them and include in parent template
         if ($child) {
-            $childTemplate = $twig->createTemplate($child->getBlock()->getHtmlSource());
+            $childTemplate = $twig->createTemplate($child->getHtmlSource());
             $childrenString .= $childTemplate->render(json_decode($child->getAvailableFields(), true));
             // if template is parent it must define 'blocks' variable where all children template will be inserted.
             $parameters['blocks'] = $childrenString;
