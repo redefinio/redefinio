@@ -42,7 +42,7 @@ class LoadAllData implements FixtureInterface
         $block1_1->setType(Block::TYPE_FIXED);
         $block1_1->addTemplateSlot($templateSlot1_1);
         $block1_1->setTemplate($template1);
-        $block1_1->setHtmlSource('<div class="container"><div class="row"><div class="col-xs-12" data-zone="static"><div class="item" data-block-id="0" data-block-type="'.Block::TYPE_FIXED.'" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"><div id="top"><div class="big-title pull-left"><h1 class="title"><span data-key="first_name" data-placeholder="John">{{ first_name }}</span> <span data-key="last_name" data-placeholder="Doe">{{ last_name }}</span></h1><h3 class="subtitle" data-key="title" data-placeholder="Your title">{{ title }}</h3></div><div class="contacts pull-right"><a href="mailto:{{ email }}" data-key="email" data-placeholder="john@example.com">{{ email }}</a> <a href="tel:{{ phone }}" data-key="phone" data-placeholder="Your phone">{{ phone }}</a></div><div class="clear"></div></div></div></div></div></div>');
+        $block1_1->setHtmlSource('<div class="container"><div class="row"><div class="col-xs-12" data-zone="static"><div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.Block::TYPE_FIXED.'" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"><div id="top"><div class="big-title pull-left"><h1 class="title"><span data-key="first_name" data-placeholder="John">{{ first_name }}</span> <span data-key="last_name" data-placeholder="Doe">{{ last_name }}</span></h1><h3 class="subtitle" data-key="title" data-placeholder="Your title">{{ title }}</h3></div><div class="contacts pull-right"><a href="mailto:{{ email }}" data-key="email" data-placeholder="john@example.com">{{ email }}</a> <a href="tel:{{ phone }}" data-key="phone" data-placeholder="Your phone">{{ phone }}</a></div><div class="clear"></div></div></div></div></div></div>');
         $block1_1->setAvailableFields(json_encode(array(
                 'first_name',
                 'last_name',
@@ -57,7 +57,7 @@ class LoadAllData implements FixtureInterface
         $block1_2->setType(Block::TYPE_TEXT);
         $block1_2->addTemplateSlot($templateSlot1_2);
         $block1_2->setTemplate($template1);
-        $block1_2->setHtmlSource('<div class="item" data-block-id="0" data-block-type="'.Block::TYPE_TEXT.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-user"></i><span data-key="title">Summary</span></h2><p data-key="text" data-placeholder="Text goes here">{{ text }}</p>
+        $block1_2->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.Block::TYPE_TEXT.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-user"></i><span data-key="title">Summary</span></h2><p data-key="text" data-placeholder="Text goes here">{{ text }}</p>
             </div>');
         $block1_2->setAvailableFields(
             json_encode(array(
@@ -70,7 +70,7 @@ class LoadAllData implements FixtureInterface
         $block1_3->setType(Block::TYPE_EXPERIENCE);
         $block1_3->addTemplateSlot($templateSlot1_2);
         $block1_3->setTemplate($template1);
-        $block1_3->setHtmlSource('<div class="item" data-block-id="0" data-block-type="'.Block::TYPE_EXPERIENCE.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-briefcase"></i><span data-key="title">Experience</span></h2><ul class="timeline" data-child-block-type="'.Block::TYPE_EXPERIENCE_INNER.'" data-key="blocks">{{ blocks|raw }}</ul></div>');
+        $block1_3->setHtmlSource('<div class="item" data-block-id={{ block_data.id }}" data-block-type="'.Block::TYPE_EXPERIENCE.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-briefcase"></i><span data-key="title">Experience</span></h2><ul class="timeline" data-child-block-type="'.Block::TYPE_EXPERIENCE_INNER.'" data-key="blocks">{{ blocks|raw }}</ul></div>');
         $block1_3->setAvailableFields(
             json_encode(array(
                 'blocks'
@@ -97,7 +97,7 @@ class LoadAllData implements FixtureInterface
         $block1_4->setType(Block::TYPE_EDUCATION);
         $block1_4->addTemplateSlot($templateSlot1_2);
         $block1_4->setTemplate($template1);
-        $block1_4->setHtmlSource('<div class="item" data-block-id="0" data-block-type="'.Block::TYPE_EDUCATION.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-education"></i><span data-key="title">Education</span></h2><ul class="timeline" data-child-block-type="'.Block::TYPE_EDUCATION_INNER.'" data-key="blocks">{{ blocks|raw }}</ul></div>');
+        $block1_4->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.Block::TYPE_EDUCATION.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-education"></i><span data-key="title">Education</span></h2><ul class="timeline" data-child-block-type="'.Block::TYPE_EDUCATION_INNER.'" data-key="blocks">{{ blocks|raw }}</ul></div>');
         $block1_4->setAvailableFields(
             json_encode(array(
                 'blocks'
@@ -124,7 +124,7 @@ class LoadAllData implements FixtureInterface
         $block1_5->setType(Block::TYPE_SKILLS);
         $block1_5->addTemplateSlot($templateSlot1_3);
         $block1_5->setTemplate($template1);
-        $block1_5->setHtmlSource('<div class="item" data-block-id="0" data-block-type="'.Block::TYPE_SKILLS.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true">
+        $block1_5->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.Block::TYPE_SKILLS.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true">
               <h2 class="title"><i class="glyphicon glyphicon-tasks"></i><span data-key="title">Skills</span></h2><div data-child-block-type="'.Block::TYPE_SKILLS_INNER.'" data-key="blocks">{{ blocks|raw }}</div></div>');
         $block1_5->setAvailableFields(
             json_encode(array(
@@ -150,7 +150,7 @@ class LoadAllData implements FixtureInterface
         $block1_6->setType(Block::TYPE_SKILLS);
         $block1_6->addTemplateSlot($templateSlot1_3);
         $block1_6->setTemplate($template1);
-        $block1_6->setHtmlSource('<div class="item" data-block-id="0" data-block-type="'.Block::TYPE_SKILLS.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true">
+        $block1_6->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.Block::TYPE_SKILLS.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true">
               <h2 class="title"><i class="glyphicon glyphicon-book"></i><span data-key="title">Languages</span></h2><div data-child-block-type="'.Block::TYPE_SKILLS_INNER.'" data-key="blocks">{{ blocks|raw }}</div></div>');
         $block1_6->setAvailableFields(
             json_encode(array(

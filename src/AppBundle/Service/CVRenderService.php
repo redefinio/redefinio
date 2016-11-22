@@ -29,6 +29,8 @@ class CVRenderService {
 			foreach ($slot->getBlockDatas() as $data) {
 				$template = $this->twig->createTemplate($data->getBlock()->getHtmlSource());
 				$parameters = json_decode($data->getData(), true);
+				// pass BlockData object itself to the template in order to print out its id or other needed attributes
+				$parameters['block_data'] = $data;
 				// if data has embedded child data, generate template for each of them and include in parent template
 				if (count($data->getChildren()) > 0) {
 					$childrenString = '';

@@ -67,16 +67,25 @@ class ApiController extends Controller
             $data = new BlockData();
             $data->setCV($cv);
             $data->setTemplateSlot($slot);
-            // what kind of block needs to be created
-            $block_type = $request->get('blockType', null); 
+            // get the block from available in template by block type
+            $block_type = $request->get('blockType', null);
+            $block = $em->getRepository('AppBundle:Block')->createQueryBuilder('b')
+                ->where('b.type = :type')
+                ->andWhere('b.template = :template')
+                ->setParameter('type', $block_type)
+                ->setParameter('template', $cv->getTemplate())
+                ->getQuery()->getOneOrNullResult();
         } else {
             $data = $em->getRepository('AppBundle:BlockData')->find($data_id); 
             $data->setTemplateSlot($slot);
+            $block = $data->getBlock();
         }
         if (!$data) return new Response(json_encode(array('error' => 'BlockData not found')), Response::HTTP_NOT_FOUND);
+        if (!$block) return new Response(json_encode(array('error' => 'Block not found')), Response::HTTP_NOT_FOUND);
+        $data->setBlock($block);
         
         // validuoti gautus duomenis
-        
+        $data->setData(json_encode($request->get('fields', array())));
         $em->persist($data);
         $em->flush();
 
