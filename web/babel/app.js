@@ -485,9 +485,21 @@ const API = {
 
   saveBlock: (block, cb) => {
     block.cvId = cvId;
-    
-    $.ajax({
-      url: `${location.protocol}//${location.host}/api/block/${window.cvId}/${block.zone}/${block.blockId}`,
+
+    if (block.blockId !== 0) {
+      $.ajax({
+        url: `${location.protocol}//${location.host}/api/block/${window.cvId}/${block.zone}/${block.blockId}`,
+        method: 'PUT',
+        data: block,
+        success: (data) => {
+          cb(true);
+        },
+        complete: () => {},
+        error: () => {}
+      });
+    } else {
+      $.ajax({
+      url: `${location.protocol}//${location.host}/api/block/${window.cvId}/${block.zone}`,
       method: 'POST',
       data: block,
       success: (data) => {
@@ -496,5 +508,6 @@ const API = {
       complete: () => {},
       error: () => {}
     });
+    }
   }
 }

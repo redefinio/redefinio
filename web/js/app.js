@@ -562,16 +562,29 @@ var API = {
   saveBlock: function saveBlock(block, cb) {
     block.cvId = cvId;
 
-    $.ajax({
-      url: location.protocol + "//" + location.host + "/api/block/" + window.cvId + "/" + block.zone + "/" + block.blockId,
-      method: 'POST',
-      data: block,
-      success: function success(data) {
-        cb(true);
-      },
-      complete: function complete() {},
-      error: function error() {}
-    });
+    if (block.blockId !== 0) {
+      $.ajax({
+        url: location.protocol + "//" + location.host + "/api/block/" + window.cvId + "/" + block.zone + "/" + block.blockId,
+        method: 'PUT',
+        data: block,
+        success: function success(data) {
+          cb(true);
+        },
+        complete: function complete() {},
+        error: function error() {}
+      });
+    } else {
+      $.ajax({
+        url: location.protocol + "//" + location.host + "/api/block/" + window.cvId + "/" + block.zone,
+        method: 'POST',
+        data: block,
+        success: function success(data) {
+          cb(true);
+        },
+        complete: function complete() {},
+        error: function error() {}
+      });
+    }
   }
 };
 //# sourceMappingURL=app.js.map
