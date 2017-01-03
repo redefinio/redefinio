@@ -1,8 +1,8 @@
 #status-bar {
   position: fixed;
   overflow: hidden;
-  z-index: 9999;
-  top: 140px;
+  z-index: 9998;
+  top: 101px;
   left: 0;
   right: 351px;
   height: 39px;
@@ -10,10 +10,11 @@
   font-weight: 600;
   font-size: 13px;
   color: #fff;
+  transition: top 0.25s ease-in-out;
 
   &.is-active {
+    top: 140px;
     .status-bar-inner-wrapper {
-      transform: translateY(0px);
     }
   }
 
@@ -28,10 +29,8 @@
   }
 
   .status-bar-inner-wrapper {
-    transform: translateY(-39px);
     background: #b5bfc7;
     padding: 0 15px;
-    transition: transform 0.25s ease-in-out;
   }
 
   .message {}
