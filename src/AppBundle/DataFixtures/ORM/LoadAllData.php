@@ -145,19 +145,6 @@ class LoadAllData implements FixtureInterface
             )));
         $manager->persist($block1_5_1);
 
-        $block1_6 = new Block();
-        $block1_6->setTitle('Languages');
-        $block1_6->setType(Block::TYPE_SKILLS);
-        $block1_6->addTemplateSlot($templateSlot1_3);
-        $block1_6->setTemplate($template1);
-        $block1_6->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.Block::TYPE_SKILLS.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true">
-              <h2 class="title"><i class="glyphicon glyphicon-book"></i><span data-key="title">Languages</span></h2><div data-child-block-type="'.Block::TYPE_SKILLS_INNER.'" data-key="blocks">{{ blocks|raw }}</div></div>');
-        $block1_6->setAvailableFields(
-            json_encode(array(
-                'blocks'
-            )));
-        $manager->persist($block1_6);
-
         $user1 = new User();
         $user1->setUsername('TestauskasUsername');
         $user1->setEmail('testinis.meska@example.com');
