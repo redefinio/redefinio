@@ -70,7 +70,7 @@ class LoadAllData implements FixtureInterface
         $block1_3->setType(Block::TYPE_EXPERIENCE);
         $block1_3->addTemplateSlot($templateSlot1_2);
         $block1_3->setTemplate($template1);
-        $block1_3->setHtmlSource('<div class="item" data-block-id={{ block_data.id }}" data-block-type="'.Block::TYPE_EXPERIENCE.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-briefcase"></i><span data-key="title">Experience</span></h2><ul class="timeline" data-child-block-type="'.Block::TYPE_EXPERIENCE_INNER.'" data-key="blocks">{{ blocks|raw }}</ul></div>');
+        $block1_3->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.Block::TYPE_EXPERIENCE.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-briefcase"></i><span data-key="title">Experience</span></h2><ul class="timeline" data-child-block-type="'.Block::TYPE_EXPERIENCE_INNER.'" data-key="blocks">{{ blocks|raw }}</ul></div>');
         $block1_3->setAvailableFields(
             json_encode(array(
                 'blocks'
@@ -329,7 +329,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_6 = new BlockData();
         $blockData1_6->setCV($cv1);
         $blockData1_6->setTemplateSlot($templateSlot1_3);
-        $blockData1_6->setBlock($block1_6);
+        $blockData1_6->setBlock($block1_5);
         $blockData1_6->setData(json_encode(array(
                 'blocks' => ''
             )));
