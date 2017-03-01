@@ -34,7 +34,7 @@ class ApiController extends Controller
         if (!$block) {
             return new Response(json_encode(array('error' => 'Block not found')), Response::HTTP_NOT_FOUND);
         }
-
+        //$twig = $this->container->get('twig');
         $twig = new \Twig_Environment(new \Twig_Loader_Array(), array(
             'cache' => false,
         ));
