@@ -479,7 +479,7 @@ var Block = function () {
       //Data saving
       var counter = 0;
       var data = {};
-      data['blockId'] = this._element.dataset.blockId;
+      data['blockId'] = this._element.dataset.blockId || 0;
       data['blockType'] = this._element.dataset.blockType;
       data['zone'] = $(this._element).parent().data('zone');
       data['fields'] = {};

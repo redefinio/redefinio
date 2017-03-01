@@ -406,7 +406,7 @@ class Block {
     //Data saving
     let counter = 0;
     let data = {};
-    data['blockId'] = this._element.dataset.blockId;
+    data['blockId'] = this._element.dataset.blockId || 0;
     data['blockType'] = this._element.dataset.blockType;
     data['zone'] = $(this._element).parent().data('zone'); 
     data['fields'] = {};
