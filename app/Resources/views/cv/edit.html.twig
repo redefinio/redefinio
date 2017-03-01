@@ -81,7 +81,7 @@
       var apiUrl = location.protocol + "//" + location.host + "/app_dev.php/api";
 			var templateUrl = "{{ path('cv_render_template', { 'id': cv.id }) }}";
 			var isEditing = true;
-      var templateId = 1;
+      var templateId = {{ cv.template.id }};
       var cvId = {{ cv.id }};
 		</script>
   <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
