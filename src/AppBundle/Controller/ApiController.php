@@ -34,8 +34,13 @@ class ApiController extends Controller
         if (!$block) {
             return new Response(json_encode(array('error' => 'Block not found')), Response::HTTP_NOT_FOUND);
         }
-        $twig = $this->container->get('twig');
+
+        $twig = new \Twig_Environment(new \Twig_Loader_Array(), array(
+            'cache' => false,
+        ));
+
         $template = $twig->createTemplate($block->getHtmlSource());
+
         // set default parameters for the template
         $parameters = json_decode($block->getAvailableFields(), true);
         // pass BlockData object itself to the template in order to print out its id or other needed attributes
@@ -51,11 +56,12 @@ class ApiController extends Controller
         // if data has embedded child data, generate template for each of them and include in parent template
         if ($child) {
             $childTemplate = $twig->createTemplate($child->getHtmlSource());
-            $childrenString .= $childTemplate->render(json_decode($child->getAvailableFields(), true));
+            $childrenString = $childTemplate->render(json_decode($child->getAvailableFields(), true));
             // if template is parent it must define 'blocks' variable where all children template will be inserted.
             $parameters['blocks'] = $childrenString;
         }
-        $html .= $template->render($parameters);
+
+        $html = $template->render($parameters);
 
         return new Response(json_encode(array('data' => urlencode($html))));
     }
