@@ -203,7 +203,9 @@ class Zone {
           $(ui.sender).sortable('cancel');
         }
 
-        $('[data-zone]').sortable('enable');
+        if ($(zones[i]).hasClass('ui-sortable')) {
+          $('[data-zone]').sortable('enable');
+        }
       },
       remove: (e, ui) => {},
       sort: (e, ui) => {},
@@ -212,9 +214,12 @@ class Zone {
         let zones = $('[data-zone]');
 
         for(let i = 0; i < zones.length; i++) {
-          let types = $(zones[i]).data('zoneBlockTypes').map((obj) => obj.type);
+          let types = [];
+          if ($(zones[i]).data('zoneBlockTypes') !== undefined) {
+            types = $(zones[i]).data('zoneBlockTypes').map((obj) => obj.type);
+          }
 
-          if (types.indexOf(type) === -1) {
+          if (types.indexOf(type) === -1 && $(zones[i]).hasClass('ui-sortable')) {
             $(zones[i]).sortable('disable');
           }
         }

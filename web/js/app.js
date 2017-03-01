@@ -51,14 +51,14 @@ var prepareToEditTemplate = function prepareToEditTemplate() {
 
   //Setup zones
   var zones = $('[data-zone-block-types]');
-  for (var i = 0; i < zones.length; i++) {
-    new Zone(zones[i]);
+  for (var _i = 0; _i < zones.length; _i++) {
+    new Zone(zones[_i]);
   }
 
   //Setup blocks
   var blocks = $('[data-block-id]');
-  for (var _i = 0; _i < blocks.length; _i++) {
-    new Block(blocks[_i]);
+  for (var _i2 = 0; _i2 < blocks.length; _i2++) {
+    new Block(blocks[_i2]);
   }
 };
 
@@ -257,7 +257,9 @@ var Zone = function () {
             $(ui.sender).sortable('cancel');
           }
 
-          $('[data-zone]').sortable('enable');
+          if ($(zones[i]).hasClass('ui-sortable')) {
+            $('[data-zone]').sortable('enable');
+          }
         },
         remove: function remove(e, ui) {},
         sort: function sort(e, ui) {},
@@ -265,13 +267,16 @@ var Zone = function () {
           var type = $(ui.item).data('blockType');
           var zones = $('[data-zone]');
 
-          for (var i = 0; i < zones.length; i++) {
-            var types = $(zones[i]).data('zoneBlockTypes').map(function (obj) {
-              return obj.type;
-            });
+          for (var _i3 = 0; _i3 < zones.length; _i3++) {
+            var types = [];
+            if ($(zones[_i3]).data('zoneBlockTypes') !== undefined) {
+              types = $(zones[_i3]).data('zoneBlockTypes').map(function (obj) {
+                return obj.type;
+              });
+            }
 
-            if (types.indexOf(type) === -1) {
-              $(zones[i]).sortable('disable');
+            if (types.indexOf(type) === -1 && $(zones[_i3]).hasClass('ui-sortable')) {
+              $(zones[_i3]).sortable('disable');
             }
           }
         },
@@ -360,8 +365,8 @@ var Block = function () {
     key: '_fixPlaceholders',
     value: function _fixPlaceholders() {
       var placeholders = $(this._element).find('[data-placeholder]');
-      for (var i = 0; i < placeholders.length; i++) {
-        var el = $(placeholders[i])[0];
+      for (var _i4 = 0; _i4 < placeholders.length; _i4++) {
+        var el = $(placeholders[_i4])[0];
         var placeholder = el.dataset.placeholder;
         if (el.innerHTML.indexOf('{{') > -1) {
           $(el).html(placeholder);
@@ -441,10 +446,10 @@ var Block = function () {
 
         //TODO: refactor edit function
         var editableElements = _this3._element.querySelectorAll('[data-key]');
-        for (var i = 0; i < editableElements.length; i++) {
-          var key = editableElements[i].getAttribute('data-key');
+        for (var _i5 = 0; _i5 < editableElements.length; _i5++) {
+          var key = editableElements[_i5].getAttribute('data-key');
           if (['skill', 'blocks'].indexOf(key) === -1) {
-            editableElements[i].setAttribute('contenteditable', true);
+            editableElements[_i5].setAttribute('contenteditable', true);
           }
         }
       });
@@ -459,10 +464,10 @@ var Block = function () {
     key: 'edit',
     value: function edit() {
       var editableElements = this._element.querySelectorAll('[data-key]');
-      for (var i = 0; i < editableElements.length; i++) {
-        var key = editableElements[i].getAttribute('data-key');
+      for (var _i6 = 0; _i6 < editableElements.length; _i6++) {
+        var key = editableElements[_i6].getAttribute('data-key');
         if (['blocks'].indexOf(key) === -1) {
-          editableElements[i].setAttribute('contenteditable', true);
+          editableElements[_i6].setAttribute('contenteditable', true);
         }
       }
 
@@ -470,9 +475,9 @@ var Block = function () {
 
 
       var sliders = $(this._element).find('.skills'); //.after(slider);
-      for (var _i2 = 0; _i2 < sliders.length; _i2++) {
+      for (var _i7 = 0; _i7 < sliders.length; _i7++) {
         // console.log($(sliders[i]).parent().find('.slider').length)
-        if ($(sliders[_i2]).parent().find('.slider').length === 0) {
+        if ($(sliders[_i7]).parent().find('.slider').length === 0) {
           var slider = document.createElement('div');
           slider.classList.add('slider');
           $(slider).slider({
@@ -480,7 +485,7 @@ var Block = function () {
             min: 0,
             max: 10
           });
-          $(sliders[_i2]).after(slider);
+          $(sliders[_i7]).after(slider);
         }
       }
 
@@ -498,27 +503,27 @@ var Block = function () {
       data['blockType'] = this._element.dataset.blockType;
       data['zone'] = $(this._element).parent().data('zone');
       data['fields'] = {};
-      for (var i = 0; i < editableElements.length; i++) {
-        if (['blocks'].indexOf(editableElements[i].getAttribute('data-key')) === -1) {
-          editableElements[i].setAttribute('contenteditable', false);
+      for (var _i8 = 0; _i8 < editableElements.length; _i8++) {
+        if (['blocks'].indexOf(editableElements[_i8].getAttribute('data-key')) === -1) {
+          editableElements[_i8].setAttribute('contenteditable', false);
         }
 
-        if (editableElements[i].getAttribute('data-key') !== 'blocks') {
+        if (editableElements[_i8].getAttribute('data-key') !== 'blocks') {
           if (data['fields']['blocks'] !== undefined) {
             var keysCount = $(this._element).find('[data-key="blocks"]').find('[data-key]');
             var sameKeysCount = $(this._element).find('[data-key="blocks"]').find('[data-key="' + keysCount[0].getAttribute('data-key') + '"]');
             // console.log(keysCount.length, sameKeysCount.length);
             var obj = {};
             for (var j = 0; j < keysCount.length / sameKeysCount.length; j++) {
-              obj[editableElements[i + j].getAttribute('data-key')] = editableElements[i + j].innerHTML;
+              obj[editableElements[_i8 + j].getAttribute('data-key')] = editableElements[_i8 + j].innerHTML;
               // console.log(i, j);
             }
 
-            i += keysCount.length / sameKeysCount.length - 1;
+            _i8 += keysCount.length / sameKeysCount.length - 1;
             // console.log(obj);
             data['fields']['blocks'].push(obj);
           } else {
-            data['fields'][editableElements[i].getAttribute('data-key')] = editableElements[i].innerHTML;
+            data['fields'][editableElements[_i8].getAttribute('data-key')] = editableElements[_i8].innerHTML;
           }
         } else {
           data['fields']['blocks'] = [];
