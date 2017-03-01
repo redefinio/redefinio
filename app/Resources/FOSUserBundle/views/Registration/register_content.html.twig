@@ -1,0 +1,30 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div id="login" class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+    <div class="block">
+        <div class="row">
+            <div class="header col-xs-12"></div>
+        </div>
+        <div class="row">
+            <div class="inner">
+                <h1>Sign Up to Get Your Account</h1>
+			    {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+			    	{{ form_errors(form.username) }}
+			    	{{ form_widget(form.username, { 'attr': {'placeholder': 'Username'} }) }}
+
+			    	{{ form_errors(form.email) }}
+			    	{{ form_widget(form.email, { 'attr': {'placeholder': 'Email'} }) }}
+
+			    	{{ form_errors(form.plainPassword) }}
+			    	{{ form_widget(form.plainPassword, { 'attr': {'placeholder': 'Password'} }) }}
+
+			    	{{ form_widget(form) }}
+			        <button type="submit" id="_submit" name="_submit">{{ 'registration.submit'|trans }}</button>
+			    {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    <div class="already">
+        Already have an account? <a href="{{ path('fos_user_security_login') }}">Login!</a>
+    </div>
+</div>
