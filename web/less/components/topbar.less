@@ -7,17 +7,17 @@
   color: #ffcfcf;
 
   a {
-    color: #ffcfcf;
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
 
     &:hover {
-      opacity: .85;
+      color: rgba(255, 255, 255, 1);
     }
   }
 
   .topbar-logo {
     padding: 0 20px;
-    background: #ff624a;
+    background: rgba(0, 0, 0, .05);
     float: left;
 
     img {
@@ -98,5 +98,69 @@
         background: url(../img/icon-logout.png) no-repeat left center / auto 20px;
       }
     }
+  }
+}
+
+.navbar {
+  position: relative;
+}
+
+.edit-url-group {
+  // width: 350px;
+  position: absolute;
+  left: 50%;
+  transform: translate( -50%, -50%);
+  top: 50%;
+
+  .edit-url {
+    // width: 250px;
+    height: 40px;
+    float: left;
+    border: 2px solid #b5bfc7;
+    padding: 0 10px;
+    line-height: 36px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-right: 0;
+  }
+
+  .edit-url-btn {
+    // width: 100px;
+    float: left;
+    margin: 0 !important;
+    background-color: #b5bfc7;
+    color: #fff;
+    border-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .text-copied {
+    margin-left: 5px;
+    position: absolute;
+    top: 30px;
+    left: 100%;
+    opacity: 0;
+
+    img {
+      width: 8px;
+      margin-left: 4px;
+    }
+    
+    &.active {
+      animation: copied 0.5s linear;
+    }
+  }
+}
+
+@keyframes copied {
+  50% {
+    top: 7px;
+    opacity: 1;
+  }
+
+  100% {
+    top: -16px;
+    opacity: 0;
   }
 }

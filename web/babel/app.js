@@ -2,6 +2,21 @@ document.addEventListener("DOMContentLoaded", (e) => {
   loadTemplate();
 });
 
+$('.edit-url-btn').on('click', () => {
+  var copyTextarea = document.querySelector('.edit-url');
+  copyTextarea.select();
+
+  try {
+    var successful = document.execCommand('copy');
+    var msg = successful ? 'successful' : 'unsuccessful';
+
+    $('.text-copied').addClass('active');
+    setTimeout(function() {
+      $('.text-copied').removeClass('active');
+    }, 500);
+  } catch (err) {}
+});
+
 let loadTemplate = () => {
   API.getCv((data) => {
     let domParser = new DOMParser();
@@ -275,19 +290,19 @@ class Block {
     while (this._element.firstChild) {
       this._element.removeChild(this._element.firstChild);
     }
-     
+
     this._element.appendChild(blockWrapper);
   }
 
   _fixPlaceholders() {
     let placeholders = $(this._element).find('[data-placeholder]');
-      for(let i = 0; i < placeholders.length; i++) {
-        let el = $(placeholders[i])[0];
-        let placeholder = el.dataset.placeholder;
-        if(el.innerHTML.indexOf('{{') > -1) {
-          $(el).html(placeholder);
-        }
+    for(let i = 0; i < placeholders.length; i++) {
+      let el = $(placeholders[i])[0];
+      let placeholder = el.dataset.placeholder;
+      if(el.innerHTML.indexOf('{{') > -1) {
+        $(el).html(placeholder);
       }
+    }
   }
 
   _createMicroBlockControls() {
@@ -380,7 +395,7 @@ class Block {
     }
 
     // console.log($(this._element).find('.skills'))
-   
+
 
     let sliders = $(this._element).find('.skills'); //.after(slider);
     for(let i = 0; i < sliders.length; i++) {
@@ -499,15 +514,15 @@ const API = {
       });
     } else {
       $.ajax({
-      url: `${apiUrl}/block/${window.cvId}/${block.zone}`,
-      method: 'POST',
-      data: block,
-      success: (data) => {
-        cb(true);
-      },
-      complete: () => {},
-      error: () => {}
-    });
+        url: `${apiUrl}/block/${window.cvId}/${block.zone}`,
+        method: 'POST',
+        data: block,
+        success: (data) => {
+          cb(true);
+        },
+        complete: () => {},
+        error: () => {}
+      });
     }
   }
 }
