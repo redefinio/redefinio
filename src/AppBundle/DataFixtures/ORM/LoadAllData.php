@@ -9,6 +9,7 @@ use AppBundle\Entity\Block;
 use AppBundle\Entity\User;
 use AppBundle\Entity\CV;
 use AppBundle\Entity\BlockData;
+use AppBundle\Entity\Theme;
 
 class LoadAllData implements FixtureInterface
 {
@@ -154,6 +155,56 @@ class LoadAllData implements FixtureInterface
         $user1->setPlainPassword('test');
         $user1->setEnabled(true);        
         $manager->persist($user1);
+
+        $theme1_1 = new Theme();
+        $theme1_1->setTemplate($template1);
+        $theme1_1->setBackgroundColor('455969');
+        $theme1_1->setPageColor('ffffff');
+        $theme1_1->setTitleColor('000000');
+        $theme1_1->setParagraphColor('777777');
+        $theme1_1->setPrimaryColor('288dd5');
+        $theme1_1->setCssSource('1_1.css');
+        $manager->persist($theme1_1);
+
+        $theme1_2 = new Theme();
+        $theme1_2->setTemplate($template1);
+        $theme1_2->setBackgroundColor('f1f5f8');
+        $theme1_2->setPageColor('ffffff');
+        $theme1_2->setTitleColor('000000');
+        $theme1_2->setParagraphColor('777777');
+        $theme1_2->setPrimaryColor('288dd5');
+        $theme1_2->setCssSource('1_2.css');
+        $manager->persist($theme1_2);
+
+        $theme1_3 = new Theme();
+        $theme1_3->setTemplate($template1);
+        $theme1_3->setBackgroundColor('333111');
+        $theme1_3->setPageColor('555000');
+        $theme1_3->setTitleColor('555000');
+        $theme1_3->setParagraphColor('555000');
+        $theme1_3->setPrimaryColor('555000');
+        $theme1_3->setCssSource('byrka.css');
+        $manager->persist($theme1_3);
+
+        $theme1_4 = new Theme();
+        $theme1_4->setTemplate($template1);
+        $theme1_4->setBackgroundColor('333111');
+        $theme1_4->setPageColor('555000');
+        $theme1_4->setTitleColor('555000');
+        $theme1_4->setParagraphColor('555000');
+        $theme1_4->setPrimaryColor('555000');
+        $theme1_4->setCssSource('byrka.css');
+        $manager->persist($theme1_4);
+
+        $theme1_5 = new Theme();
+        $theme1_5->setTemplate($template1);
+        $theme1_5->setBackgroundColor('333111');
+        $theme1_5->setPageColor('555000');
+        $theme1_5->setTitleColor('555000');
+        $theme1_5->setParagraphColor('555000');
+        $theme1_5->setPrimaryColor('555000');
+        $theme1_5->setCssSource('byrka.css');
+        $manager->persist($theme1_5);        
 
         $cv1 = new CV();
         $cv1->setUser($user1);

@@ -257,4 +257,28 @@ class BlockData
     {
         return $this->parent;
     }
+
+    /**
+     * Set position
+     *
+     * @param integer $position
+     *
+     * @return BlockData
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
 }

@@ -30,9 +30,37 @@ class Theme
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="background_color", type="string", length=6)
      */
-    private $title;
+    private $background_color;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="page_color", type="string", length=6)
+     */
+    private $page_color;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title_color", type="string", length=6)
+     */
+    private $title_color;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="paragraph_color", type="string", length=6)
+     */
+    private $paragraph_color;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="primary_color", type="string", length=6)
+     */
+    private $primary_color;
 
     /**
      * @var css_source
@@ -48,6 +76,10 @@ class Theme
      */
     private $created_at;
 
+    public function __construct() {
+        $this->created_at = new \DateTime();
+    }
+
     /**
      * Get id
      *
@@ -56,30 +88,6 @@ class Theme
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return Theme
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
     }
 
     /**
@@ -152,5 +160,125 @@ class Theme
     public function getCssSource()
     {
         return $this->css_source;
+    }
+
+    /**
+     * Set backgroundColor
+     *
+     * @param string $backgroundColor
+     *
+     * @return Theme
+     */
+    public function setBackgroundColor($backgroundColor)
+    {
+        $this->background_color = $backgroundColor;
+
+        return $this;
+    }
+
+    /**
+     * Get backgroundColor
+     *
+     * @return string
+     */
+    public function getBackgroundColor()
+    {
+        return $this->background_color;
+    }
+
+    /**
+     * Set pageColor
+     *
+     * @param string $pageColor
+     *
+     * @return Theme
+     */
+    public function setPageColor($pageColor)
+    {
+        $this->page_color = $pageColor;
+
+        return $this;
+    }
+
+    /**
+     * Get pageColor
+     *
+     * @return string
+     */
+    public function getPageColor()
+    {
+        return $this->page_color;
+    }
+
+    /**
+     * Set titleColor
+     *
+     * @param string $titleColor
+     *
+     * @return Theme
+     */
+    public function setTitleColor($titleColor)
+    {
+        $this->title_color = $titleColor;
+
+        return $this;
+    }
+
+    /**
+     * Get titleColor
+     *
+     * @return string
+     */
+    public function getTitleColor()
+    {
+        return $this->title_color;
+    }
+
+    /**
+     * Set paragraphColor
+     *
+     * @param string $paragraphColor
+     *
+     * @return Theme
+     */
+    public function setParagraphColor($paragraphColor)
+    {
+        $this->paragraph_color = $paragraphColor;
+
+        return $this;
+    }
+
+    /**
+     * Get paragraphColor
+     *
+     * @return string
+     */
+    public function getParagraphColor()
+    {
+        return $this->paragraph_color;
+    }
+
+    /**
+     * Set primaryColor
+     *
+     * @param string $primaryColor
+     *
+     * @return Theme
+     */
+    public function setPrimaryColor($primaryColor)
+    {
+        $this->primary_color = $primaryColor;
+
+        return $this;
+    }
+
+    /**
+     * Get primaryColor
+     *
+     * @return string
+     */
+    public function getPrimaryColor()
+    {
+        return $this->primary_color;
     }
 }

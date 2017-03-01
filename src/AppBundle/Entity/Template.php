@@ -258,4 +258,38 @@ class Template
     {
         return $this->templatePath;
     }
+
+    /**
+     * Add block
+     *
+     * @param \AppBundle\Entity\Block $block
+     *
+     * @return Template
+     */
+    public function addBlock(\AppBundle\Entity\Block $block)
+    {
+        $this->blocks[] = $block;
+
+        return $this;
+    }
+
+    /**
+     * Remove block
+     *
+     * @param \AppBundle\Entity\Block $block
+     */
+    public function removeBlock(\AppBundle\Entity\Block $block)
+    {
+        $this->blocks->removeElement($block);
+    }
+
+    /**
+     * Get blocks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBlocks()
+    {
+        return $this->blocks;
+    }
 }
