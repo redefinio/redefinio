@@ -82,13 +82,14 @@ class LoadAllData implements FixtureInterface
         $block1_3_1->setTitle('Experience entry');
         $block1_3_1->setType(Block::TYPE_EXPERIENCE_INNER);
         $block1_3_1->setTemplate($template1);
-        $block1_3_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-key="date_from" data-placeholder="Date from">{{ date_from }}</span> - <span data-key="date_to" data-placeholder="Date to">{{ date_to }}</span></div><h3 class="position" data-key="position" data-placeholder="Position">{{ position }}</h3><h3 class="subtitle" data-key="company" data-placeholder="Company" data-is-child="true">{{ company }}</h3><h4>Redesigning</h4></div></li>');
+        $block1_3_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-key="date_from" data-placeholder="Date from">{{ date_from }}</span> - <span data-key="date_to" data-placeholder="Date to">{{ date_to }}</span></div><h3 class="position" data-key="position" data-placeholder="Position">{{ position }}</h3><h3 class="subtitle" data-key="company" data-placeholder="Company" data-is-child="true">{{ company }}</h3><h4 data-placeholder="Description" data-key="description">{{ description }}</h4></div></li>');
         $block1_3_1->setAvailableFields(
             json_encode(array(
                 'date_from',
                 'date_to',
                 'position',
-                'company'
+                'company',
+                'description'
             )));
         $manager->persist($block1_3_1);
 
@@ -109,13 +110,14 @@ class LoadAllData implements FixtureInterface
         $block1_4_1->setTitle('Education entry');
         $block1_4_1->setType(Block::TYPE_EDUCATION_INNER);
         $block1_4_1->setTemplate($template1);
-        $block1_4_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-key="date_from">{{ date_from }}</span> - <span data-key="date_to">{{ date_to }}</span></div><h3 class="position" data-key="position">{{ position }}</h3><h3 class="subtitle" data-key="company">{{ company }}</h3><h4>Redesigning</h4></div></li>');
+        $block1_4_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-key="date_from">{{ date_from }}</span> - <span data-key="date_to">{{ date_to }}</span></div><h3 class="position" data-key="position">{{ position }}</h3><h3 class="subtitle" data-key="company">{{ company }}</h3><h4 data-key="description">{{ description }}</h4></div></li>');
         $block1_4_1->setAvailableFields(
             json_encode(array(
                 'date_from',
                 'date_to',
                 'position',
-                'company'
+                'company',
+                'description'
             )));
         $manager->persist($block1_4_1);
 
@@ -204,7 +206,8 @@ class LoadAllData implements FixtureInterface
                 'date_from' => '2014 June',
                 'date_to' => 'present',
                 'position' => 'Senior UI/UX designer',
-                'company' => 'MailerLite'
+                'company' => 'MailerLite',
+                'description' => 'Padsobniku dirbau'
             )));
         $manager->persist($blockData1_3_1);
 
@@ -216,7 +219,8 @@ class LoadAllData implements FixtureInterface
                 'date_from' => '2014 June',
                 'date_to' => 'present',
                 'position' => 'Senior UI/UX designer',
-                'company' => 'MailerLite'
+                'company' => 'MailerLite',
+                'description' => 'Padsobniku dirbau'
             )));
         $manager->persist($blockData1_3_2);
 
@@ -228,7 +232,8 @@ class LoadAllData implements FixtureInterface
                 'date_from' => '2014 June',
                 'date_to' => 'present',
                 'position' => 'Senior UI/UX designer',
-                'company' => 'MailerLite'
+                'company' => 'MailerLite',
+                'description' => 'Padsobniku dirbau'
             )));
         $manager->persist($blockData1_3_3);
 
@@ -249,7 +254,8 @@ class LoadAllData implements FixtureInterface
                 'date_from' => '2014 June',
                 'date_to' => 'present',
                 'position' => 'Senior UI/UX designer',
-                'company' => 'MailerLite'
+                'company' => 'MailerLite',
+                'description' => 'Padsobniku dirbau'
             )));
         $manager->persist($blockData1_4_1);
 
@@ -261,7 +267,8 @@ class LoadAllData implements FixtureInterface
                 'date_from' => '2014 June',
                 'date_to' => 'present',
                 'position' => 'Senior UI/UX designer',
-                'company' => 'MailerLite'
+                'company' => 'MailerLite',
+                'description' => 'Padsobniku dirbau'
             )));
         $manager->persist($blockData1_4_2);
 
@@ -273,7 +280,8 @@ class LoadAllData implements FixtureInterface
                 'date_from' => '2014 June',
                 'date_to' => 'present',
                 'position' => 'Senior UI/UX designer',
-                'company' => 'MailerLite'
+                'company' => 'MailerLite',
+                'description' => 'Padsobniku dirbau'
             )));
         $manager->persist($blockData1_4_3);
 
