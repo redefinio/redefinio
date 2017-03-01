@@ -472,7 +472,7 @@ const API = {
 
   getBlock: (type, cb) => {
     $.ajax({
-      url: `${location.protocol}//${location.host}/api/block/${window.templateId}/${type}`,
+      url: `${apiUrl}/block/${window.templateId}/${type}`,
       success: (data) => {
         let block = decodeURIComponent(JSON.parse(data).data).replace(/\+/g, ' ');
 
@@ -488,7 +488,7 @@ const API = {
 
     if (block.blockId !== 0) {
       $.ajax({
-        url: `${location.protocol}//${location.host}/api/block/${window.cvId}/${block.zone}/${block.blockId}`,
+        url: `${apiUrl}/block/${window.cvId}/${block.zone}/${block.blockId}`,
         method: 'PUT',
         data: block,
         success: (data) => {
@@ -499,7 +499,7 @@ const API = {
       });
     } else {
       $.ajax({
-      url: `${location.protocol}//${location.host}/api/block/${window.cvId}/${block.zone}`,
+      url: `${apiUrl}/block/${window.cvId}/${block.zone}`,
       method: 'POST',
       data: block,
       success: (data) => {
