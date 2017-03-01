@@ -57,10 +57,11 @@ class LoadAllData implements FixtureInterface
         $block1_2->setType(Block::TYPE_TEXT);
         $block1_2->addTemplateSlot($templateSlot1_2);
         $block1_2->setTemplate($template1);
-        $block1_2->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.Block::TYPE_TEXT.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-user"></i><span data-key="title">Summary</span></h2><p data-key="text" data-placeholder="Text goes here">{{ text }}</p>
+        $block1_2->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.Block::TYPE_TEXT.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-user"></i><span data-key="title" data-placeholder="Title">{{ title }}</span></h2><p data-key="text" data-placeholder="Text goes here">{{ text }}</p>
             </div>');
         $block1_2->setAvailableFields(
             json_encode(array(
+                'title',
                 'text'
             )));
         $manager->persist($block1_2);
@@ -185,6 +186,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_2->setTemplateSlot($templateSlot1_2);
         $blockData1_2->setBlock($block1_2);
         $blockData1_2->setData(json_encode(array(
+                'title' => 'Summary',
                 'text' => 'Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
             )));
         $manager->persist($blockData1_2);
