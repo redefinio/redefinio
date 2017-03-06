@@ -23,26 +23,6 @@ class CV
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="WorkExperience", mappedBy="cv")
-     */
-    private $workExperiences;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Education", mappedBy="cv")
-     */
-    private $educations;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Skill", mappedBy="cv")
-     */
-    private $skills;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Certificate", mappedBy="cv")
-     */
-    private $certificates;
-
-    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="cvs")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
@@ -53,6 +33,12 @@ class CV
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id", nullable=false)
      */
     private $template;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Theme", inversedBy="cvs")
+     * @ORM\JoinColumn(name="theme_id", referencedColumnName="id", nullable=false)
+     */
+    private $theme;
 
     /**
      * @ORM\OneToMany(targetEntity="BlockData", mappedBy="cv")
@@ -439,139 +425,28 @@ class CV
         return $this->summary;
     }
 
+
     /**
-     * Add workExperience
+     * Set theme
      *
-     * @param \AppBundle\Entity\WorkExperience $workExperience
+     * @param \AppBundle\Entity\Theme $theme
      *
      * @return CV
      */
-    public function addWorkExperience(\AppBundle\Entity\WorkExperience $workExperience)
+    public function setTheme(\AppBundle\Entity\Theme $theme)
     {
-        $this->workExperiences[] = $workExperience;
+        $this->theme = $theme;
 
         return $this;
     }
 
     /**
-     * Remove workExperience
+     * Get theme
      *
-     * @param \AppBundle\Entity\WorkExperience $workExperience
+     * @return \AppBundle\Entity\Theme
      */
-    public function removeWorkExperience(\AppBundle\Entity\WorkExperience $workExperience)
+    public function getTheme()
     {
-        $this->workExperiences->removeElement($workExperience);
-    }
-
-    /**
-     * Get workExperiences
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getWorkExperiences()
-    {
-        return $this->workExperiences;
-    }
-
-    /**
-     * Add education
-     *
-     * @param \AppBundle\Entity\Education $education
-     *
-     * @return CV
-     */
-    public function addEducation(\AppBundle\Entity\Education $education)
-    {
-        $this->educations[] = $education;
-
-        return $this;
-    }
-
-    /**
-     * Remove education
-     *
-     * @param \AppBundle\Entity\Education $education
-     */
-    public function removeEducation(\AppBundle\Entity\Education $education)
-    {
-        $this->educations->removeElement($education);
-    }
-
-    /**
-     * Get educations
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEducations()
-    {
-        return $this->educations;
-    }
-
-    /**
-     * Add skill
-     *
-     * @param \AppBundle\Entity\Skill $skill
-     *
-     * @return CV
-     */
-    public function addSkill(\AppBundle\Entity\Skill $skill)
-    {
-        $this->skills[] = $skill;
-
-        return $this;
-    }
-
-    /**
-     * Remove skill
-     *
-     * @param \AppBundle\Entity\Skill $skill
-     */
-    public function removeSkill(\AppBundle\Entity\Skill $skill)
-    {
-        $this->skills->removeElement($skill);
-    }
-
-    /**
-     * Get skills
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSkills()
-    {
-        return $this->skills;
-    }
-
-    /**
-     * Add certificate
-     *
-     * @param \AppBundle\Entity\Certificate $certificate
-     *
-     * @return CV
-     */
-    public function addCertificate(\AppBundle\Entity\Certificate $certificate)
-    {
-        $this->certificates[] = $certificate;
-
-        return $this;
-    }
-
-    /**
-     * Remove certificate
-     *
-     * @param \AppBundle\Entity\Certificate $certificate
-     */
-    public function removeCertificate(\AppBundle\Entity\Certificate $certificate)
-    {
-        $this->certificates->removeElement($certificate);
-    }
-
-    /**
-     * Get certificates
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCertificates()
-    {
-        return $this->certificates;
+        return $this->theme;
     }
 }

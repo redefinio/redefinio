@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +27,11 @@ class Theme
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id")
      */
     private $template;
+
+    /**
+     * @ORM\OneToMany(targetEntity="CV", mappedBy="theme")
+     */
+    private $cvs;
 
     /**
      * @var string
@@ -78,6 +84,7 @@ class Theme
 
     public function __construct() {
         $this->created_at = new \DateTime();
+        $this->cvs = new ArrayCollection();
     }
 
     /**
@@ -280,5 +287,39 @@ class Theme
     public function getPrimaryColor()
     {
         return $this->primary_color;
+    }
+
+    /**
+     * Add cv
+     *
+     * @param \AppBundle\Entity\CV $cv
+     *
+     * @return Theme
+     */
+    public function addCv(\AppBundle\Entity\CV $cv)
+    {
+        $this->cvs[] = $cv;
+
+        return $this;
+    }
+
+    /**
+     * Remove cv
+     *
+     * @param \AppBundle\Entity\CV $cv
+     */
+    public function removeCv(\AppBundle\Entity\CV $cv)
+    {
+        $this->cvs->removeElement($cv);
+    }
+
+    /**
+     * Get cvs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCvs()
+    {
+        return $this->cvs;
     }
 }

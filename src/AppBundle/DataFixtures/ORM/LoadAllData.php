@@ -211,6 +211,7 @@ class LoadAllData implements FixtureInterface
         $cv1->setTitle('My great cv');
         $cv1->setUrl('my_great_cv');
         $cv1->setTemplate($template1);
+        $cv1->setTheme($theme1_1);
         $cv1->setFullName('Albinas Anusauskas');
         $cv1->setOccupation('Kokybės užtikrintojas');
         $cv1->setLocation('Kavarskas, Lietuva');

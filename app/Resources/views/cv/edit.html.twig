@@ -59,14 +59,14 @@
 			<div class="themes-list">
         {% for theme in cv.template.themes %}
         <div class="themes-listitem">
-          <div class="theme-container" style="background:#F1F5F8;">
+          <div class="theme-container" style="background: #{{ cv.theme.backgroundColor }};">
             <div class="theme" style="background:#FFFFFF;">
               <span class="check-icon">
                 <img src="{{ asset('img/check.png') }}" alt="Icon">
               </span>
-              <span class="theme-palette" style="background:#343434;"></span>
-              <span class="theme-palette" style="background:#A3A3A3;"></span>
-              <span class="theme-palette" style="background:#3D98D9;"></span>
+              <span class="theme-palette" style="background:#{{ cv.theme.titleColor }};"></span>
+              <span class="theme-palette" style="background:#{{ cv.theme.paragraphColor }};"></span>
+              <span class="theme-palette" style="background:#{{ cv.theme.primaryColor }};"></span>
             </div>
           </div>
         </div>
