@@ -75,6 +75,7 @@ class LoadAllData implements FixtureInterface
         $block1_3->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.Block::TYPE_EXPERIENCE.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-briefcase"></i><span data-key="title">Experience</span></h2><ul class="timeline" data-child-block-type="'.Block::TYPE_EXPERIENCE_INNER.'" data-key="blocks">{{ blocks|raw }}</ul></div>');
         $block1_3->setAvailableFields(
             json_encode(array(
+                'title',
                 'blocks'
             )));
         $manager->persist($block1_3);
@@ -103,6 +104,7 @@ class LoadAllData implements FixtureInterface
         $block1_4->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.Block::TYPE_EDUCATION.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-education"></i><span data-key="title">Education</span></h2><ul class="timeline" data-child-block-type="'.Block::TYPE_EDUCATION_INNER.'" data-key="blocks">{{ blocks|raw }}</ul></div>');
         $block1_4->setAvailableFields(
             json_encode(array(
+                'title',
                 'blocks'
             )));
         $manager->persist($block1_4);
@@ -132,6 +134,7 @@ class LoadAllData implements FixtureInterface
               <h2 class="title"><i class="glyphicon glyphicon-tasks"></i><span data-key="title">Skills</span></h2><div data-child-block-type="'.Block::TYPE_SKILLS_INNER.'" data-key="blocks">{{ blocks|raw }}</div></div>');
         $block1_5->setAvailableFields(
             json_encode(array(
+                'title',
                 'blocks'
             )));
         $manager->persist($block1_5);

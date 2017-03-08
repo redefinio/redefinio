@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Entity\Block;
 use AppBundle\Entity\BlockData;
 
 /**
@@ -99,7 +100,30 @@ class ApiController extends Controller
         $data->setBlock($block);
         
         // validuoti gautus duomenis
-        $data->setData(json_encode($request->get('fields', array())));
+        $formData = $request->get('fields', array());
+        if (isset($formData['blocks']) && (
+            $block_type == Block::TYPE_SKILLS || 
+            $block_type == Block::TYPE_EXPERIENCE || 
+            $block_type == Block::TYPE_EDUCATION || 
+            $block_type == Block::TYPE_CERTIFICATES
+        )) {
+            $block_child = $em->getRepository('AppBundle:Block')->createQueryBuilder('b')
+                ->where('b.parent = :parent')
+                ->andWhere('b.template = :template')
+                ->setParameter('parent', $block)
+                ->setParameter('template', $cv->getTemplate())
+                ->getQuery()->getOneOrNullResult();
+            if (!$block_child) return new Response(json_encode(array('error' => 'Block child not found for parent - '.$block->getId())), Response::HTTP_NOT_FOUND);
+            foreach($formData['blocks'] as $inner_data) {
+                $data_child = new BlockData();
+                $data_child->setCv($cv);
+                $data_child->setParent($data);
+                $data_child->setBlock($block_child);
+                $data_child->setData(json_encode($inner_data));
+                $em->persist($data_child);
+            }
+        }
+        $data->setData(json_encode($formData));
         $em->persist($data);
         $em->flush();
 
