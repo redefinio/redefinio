@@ -149,7 +149,8 @@ class ApiController extends Controller
             ->setParameter('template', $cv->getTemplate())
             ->getQuery()->getOneOrNullResult(); 
         // Fixed blocks do not need template slot provided because they are always in the same position and can not be moved anywhere
-        if ($data->getBlock()->getType() != Block::TYPE_FIXED && !$slot) return new Response(json_encode(array('error' => 'TemplateSlot not found')), Response::HTTP_NOT_FOUND);
+        $block_type = $data->getBlock()->getType();
+        if ($block_type != Block::TYPE_FIXED && !$slot) return new Response(json_encode(array('error' => 'TemplateSlot not found')), Response::HTTP_NOT_FOUND);
         if ($slot && $cv->getTemplate() != $slot->getTemplate()) return new Response(json_encode(array('error' => 'CV and TemplateSlot do not match')), Response::HTTP_NOT_FOUND);
         if ($slot) {
             $data->setTemplateSlot($slot);
@@ -158,7 +159,36 @@ class ApiController extends Controller
         if (!$block) return new Response(json_encode(array('error' => 'Block not found')), Response::HTTP_NOT_FOUND);
         
         // validuoti gautus duomenis
-        $data->setData(json_encode($request->get('fields', array())));
+        $formData = $request->get('fields', array());
+        if (isset($formData['blocks']) && (
+            $block_type == Block::TYPE_SKILLS || 
+            $block_type == Block::TYPE_EXPERIENCE || 
+            $block_type == Block::TYPE_EDUCATION || 
+            $block_type == Block::TYPE_CERTIFICATES
+        )) {
+            $block_child = $em->getRepository('AppBundle:Block')->createQueryBuilder('b')
+                ->where('b.parent = :parent')
+                ->andWhere('b.template = :template')
+                ->setParameter('parent', $block)
+                ->setParameter('template', $cv->getTemplate())
+                ->getQuery()->getOneOrNullResult();
+            if (!$block_child) return new Response(json_encode(array('error' => 'Block child not found for parent - '.$block->getId())), Response::HTTP_NOT_FOUND);
+            // we are doing hard reset of all child records, so delete old ones
+            $em->createQueryBuilder()
+                ->delete('AppBundle:BlockData', 'b')
+                ->where('b.parent = :parent')
+                ->setParameter(':parent', $data)
+                ->getQuery()->execute();
+            foreach($formData['blocks'] as $inner_data) {
+                $data_child = new BlockData();
+                $data_child->setCv($cv);
+                $data_child->setParent($data);
+                $data_child->setBlock($block_child);
+                $data_child->setData(json_encode($inner_data));
+                $em->persist($data_child);
+            }
+        }
+        $data->setData(json_encode($formData));
         $em->persist($data);
         $em->flush();
 
