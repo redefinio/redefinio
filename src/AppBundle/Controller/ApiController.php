@@ -138,18 +138,22 @@ class ApiController extends Controller
         $em = $this->getDoctrine()->getManager();
         $cv = $em->getRepository('AppBundle:CV')->find($cv_id); 
         if (!$cv) return new Response(json_encode(array('error' => 'CV not found')), Response::HTTP_NOT_FOUND);
+
+        $data = $em->getRepository('AppBundle:BlockData')->find($data_id); 
+        if (!$data) return new Response(json_encode(array('error' => 'BlockData not found')), Response::HTTP_NOT_FOUND);
+
         $slot = $em->getRepository('AppBundle:TemplateSlot')->createQueryBuilder('ts')
             ->where('ts.wildcard = :wildcard')
             ->andWhere('ts.template = :template')
             ->setParameter('wildcard', $template_slot_id)
             ->setParameter('template', $cv->getTemplate())
             ->getQuery()->getOneOrNullResult(); 
-        if (!$slot) return new Response(json_encode(array('error' => 'TemplateSlot not found')), Response::HTTP_NOT_FOUND);
-        if ($cv->getTemplate() != $slot->getTemplate()) return new Response(json_encode(array('error' => 'CV and TemplateSlot do not match')), Response::HTTP_NOT_FOUND);
-
-        $data = $em->getRepository('AppBundle:BlockData')->find($data_id); 
-        if (!$data) return new Response(json_encode(array('error' => 'BlockData not found')), Response::HTTP_NOT_FOUND);
-        $data->setTemplateSlot($slot);
+        // Fixed blocks do not need template slot provided because they are always in the same position and can not be moved anywhere
+        if ($data->getBlock()->getType() != Block::TYPE_FIXED && !$slot) return new Response(json_encode(array('error' => 'TemplateSlot not found')), Response::HTTP_NOT_FOUND);
+        if ($slot && $cv->getTemplate() != $slot->getTemplate()) return new Response(json_encode(array('error' => 'CV and TemplateSlot do not match')), Response::HTTP_NOT_FOUND);
+        if ($slot) {
+            $data->setTemplateSlot($slot);
+        }
         $block = $data->getBlock();
         if (!$block) return new Response(json_encode(array('error' => 'Block not found')), Response::HTTP_NOT_FOUND);
         
