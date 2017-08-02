@@ -9,8 +9,6 @@
             <div class="inner">
                 <h1>Sign Up to Get Your Account</h1>
 			    {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-			    	{{ form_errors(form.username) }}
-			    	{{ form_row(form.username, { 'attr': {'label': 'Username'} }) }}
 
 			    	{{ form_errors(form.email) }}
 			    	{{ form_row(form.email, { 'attr': {'label': 'Email'} }) }}

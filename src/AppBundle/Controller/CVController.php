@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * CV controller.
  *
- * @Route("/cv")
+ * @Route("/")
  */
 class CVController extends Controller
 {
