@@ -14,8 +14,12 @@
                 {% endif %}
                 <h1>Log in to Your Account</h1>
                 <form action="{{ path("fos_user_security_check") }}" method="post">
-                    <input id="username" name="_username" value="{{ last_username }}" required="required" placeholder="Email" class="correct" />
-                    <input type="password" id="password" name="_password" required="required" placeholder="Password" />
+                    <label for="username">Email</label>
+                    <input id="username" name="_username" value="{{ last_username }}" required="required" class="correct" />
+                    
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="_password" required="required" />
+                    
                     <button type="submit" id="_submit" name="_submit">{{ 'security.login.submit'|trans }}</button>
                     {% if csrf_token %}
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />

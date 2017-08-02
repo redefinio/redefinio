@@ -10,13 +10,13 @@
                 <h1>Sign Up to Get Your Account</h1>
 			    {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
 			    	{{ form_errors(form.username) }}
-			    	{{ form_widget(form.username, { 'attr': {'placeholder': 'Username'} }) }}
+			    	{{ form_row(form.username, { 'attr': {'label': 'Username'} }) }}
 
 			    	{{ form_errors(form.email) }}
-			    	{{ form_widget(form.email, { 'attr': {'placeholder': 'Email'} }) }}
+			    	{{ form_row(form.email, { 'attr': {'label': 'Email'} }) }}
 
 			    	{{ form_errors(form.plainPassword) }}
-			    	{{ form_widget(form.plainPassword, { 'attr': {'placeholder': 'Password'} }) }}
+			    	{{ form_widget(form.plainPassword, { 'attr': {'label': 'Password'} }) }}
 
 			    	{{ form_widget(form) }}
 			        <button type="submit" id="_submit" name="_submit">{{ 'registration.submit'|trans }}</button>
