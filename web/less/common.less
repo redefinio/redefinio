@@ -8,6 +8,7 @@ body {
   font-weight: 400;
   font-size: 14px;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 //TODO: Remove this class
@@ -49,8 +50,6 @@ button {
     border-color: #b5bfc7;
   }
 
-
-
   &:focus {
     outline: none;
   }
@@ -66,4 +65,32 @@ button {
 
 .clear-right-padding {
   padding-right: 0;
+}
+
+#loader {
+  background: @bgColor;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 100%;
+  left: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: bottom 0s 0.25s, opacity 0.25s ease-in-out;
+
+  &.active {
+    bottom: 0;
+    opacity: 1;
+  }
+
+  .signal {
+    width: 40px;
+    height: 40px;
+    left: 50%;
+    margin: -20px 0 0 -20px;
+    position: absolute;
+    top: 50%;
+    background: url("@{images}/loader.gif") no-repeat center;
+    background-size: 40px 40px;
+  }
 }
