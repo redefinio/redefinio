@@ -38,6 +38,7 @@ class ApiController extends Controller
 
     }
 
+
     /**
      * @Route("/block/{template_id}/{block_type}", name="api_block_html")
      * @Method({"GET"})
