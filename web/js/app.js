@@ -68,23 +68,38 @@ var StatusBar = function () {
 
     this._element = element[0];
 
+<<<<<<< HEAD
+=======
+    var _timer;
+>>>>>>> 36e39ed67adcb24d7e3042b1dc46d5326088fafd
+    var _undoChanges = false;
+
     var closeButton = this._element.querySelector('.close');
     closeButton.addEventListener('click', this._hide.bind(this), false);
 
+    var undoButton = this._element.querySelector('.action');
+    undoButton.addEventListener('click', this._undo.bind(this), false);
+
     this._isActive = false;
-    this._animationTimeoutId = null;
   }
 
   _createClass(StatusBar, [{
     key: 'showMessage',
     value: function showMessage(message) {
+      var _this = this;
+
       this._element.classList.remove('is-error');
 
       var messageEl = this._element.querySelector('.message');
       messageEl.innerHTML = message;
-      // this._element.querySelector('.action')
-
       this._show();
+
+      return new Promise(function (resolve, reject) {
+        _timer = setTimeout(function () {
+          _this._hide();
+          resolve();
+        }, 5000);
+      });
     }
   }, {
     key: 'showError',
@@ -97,33 +112,42 @@ var StatusBar = function () {
       this._show();
     }
   }, {
-    key: '_showBar',
-    value: function _showBar() {
+    key: '_show',
+    value: function _show() {
+<<<<<<< HEAD
+      var _this = this;
+
       this._element.classList.add('is-active');
       this._isActive = true;
 
-      clearTimeout(this._animationTimeoutId);
-      this._animationTimeoutId = setTimeout(this._hide.bind(this), 5000);
-    }
-  }, {
-    key: '_show',
-    value: function _show() {
-      var _this = this;
-
-      if (this._isActive) {
-        new Promise(function (resolve, reject) {
+      return new Promise(function (resolve, reject) {
+        _this._undoChanges;
+        setTimeout(function () {
           _this._hide();
-          setTimeout(resolve, 250);
-        }).then(this._showBar.bind(this));
-      } else {
-        this._showBar();
-      }
+          resolve('Promise A win!');
+        }, 5000);
+      });
+=======
+      this._element.classList.add('is-active');
+      this._isActive = true;
+>>>>>>> 36e39ed67adcb24d7e3042b1dc46d5326088fafd
     }
   }, {
     key: '_hide',
     value: function _hide() {
       this._element.classList.remove('is-active');
       this._isActive = false;
+    }
+  }, {
+    key: '_undo',
+    value: function _undo() {
+<<<<<<< HEAD
+      this._hide();
+      this._undoChanges = true;
+=======
+      window.clearTimeout(_timer);
+      this._hide();
+>>>>>>> 36e39ed67adcb24d7e3042b1dc46d5326088fafd
     }
   }]);
 
@@ -556,9 +580,30 @@ var Block = function () {
   }, {
     key: 'delete',
     value: function _delete() {
-      this._element.parentNode.removeChild(this._element);
+      var blockId = this._element.getAttribute('data-block-id');
+<<<<<<< HEAD
 
-      window.statusBar.showMessage('You have just deleted block');
+      // this._element.parentNode.removeChild(this._element);
+
+      // API.deleteBlock(blockId, () => {
+      //   console.log("success???");
+      // });
+
+      // window.statusBar.showMessage('You have just deleted block');
+      window.statusBar._show().then(function (arg) {
+        console.log('qqq', arg);
+      }, function (err) {
+        // failed
+        console.log('failed', err);
+=======
+      var element = this._element;
+
+      window.statusBar.showMessage('You have just deleted block').then(function () {
+        API.deleteBlock(blockId, function () {
+          element.parentNode.removeChild(element);
+        });
+>>>>>>> 36e39ed67adcb24d7e3042b1dc46d5326088fafd
+      });
     }
   }, {
     key: 'deleteMicroBlock',
@@ -616,6 +661,20 @@ var API = {
         url: apiUrl + '/block/' + window.cvId + '/' + block.zone,
         method: 'POST',
         data: block,
+        success: function success(data) {
+          cb(true);
+        },
+        complete: function complete() {},
+        error: function error() {}
+      });
+    }
+  },
+
+  deleteBlock: function deleteBlock(blockId, cb) {
+    if (blockId !== undefined) {
+      $.ajax({
+        url: apiUrl + '/block/' + blockId,
+        method: 'DELETE',
         success: function success(data) {
           cb(true);
         },
