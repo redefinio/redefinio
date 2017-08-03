@@ -18,6 +18,26 @@ use AppBundle\Entity\BlockData;
  */
 class ApiController extends Controller
 {
+
+
+    /**
+     * @Route("/block/{block_id}", name="api_block_delete")
+     * @Method("DELETE")
+     */
+    public function deleteBlock($block_id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $blockData = $em->getRepository('AppBundle:BlockData')->find($block_id);
+
+        if ($this->isUserOwnBlock($blockData)) {
+            $em->remove($blockData);
+            $em->flush();
+        }
+
+        return new Response();
+
+    }
+
     /**
      * @Route("/block/{template_id}/{block_type}", name="api_block_html")
      * @Method({"GET"})
@@ -193,6 +213,16 @@ class ApiController extends Controller
         $em->flush();
 
         return new Response();
+    }
+
+    private function isUserOwnBlock(BlockData $blockData) {
+        $cv = $this->getDoctrine()->getManager()->getRepository('AppBundle:CV')->findOneById($blockData->getCv()->getId());
+
+        if (is_null($cv)) {
+            return false;
+        }
+
+        return $cv->getUser()->getId() === $this->getUser()->getId();
     }
 
 }
