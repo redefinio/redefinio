@@ -61,12 +61,16 @@ let prepareToEditTemplate = () => {
 class StatusBar {
   constructor(element) {
     this._element = element[0];
+    
+    var _undoChanges = false;
 
     let closeButton = this._element.querySelector('.close');
     closeButton.addEventListener('click', this._hide.bind(this), false);
+    
+    let undoButton = this._element.querySelector('.action');
+    undoButton.addEventListener('click', this._undo.bind(this), false);
 
     this._isActive = false;
-    this._animationTimeoutId = null;
   }
 
   showMessage(message) {
@@ -74,8 +78,6 @@ class StatusBar {
 
     let messageEl = this._element.querySelector('.message');
     messageEl.innerHTML = message;
-    // this._element.querySelector('.action')
-
     this._show();
   }
 
@@ -88,29 +90,27 @@ class StatusBar {
     this._show();
   }
 
-  _showBar() {
+  _show() {
     this._element.classList.add('is-active');
     this._isActive = true;
-
-    clearTimeout(this._animationTimeoutId);
-    this._animationTimeoutId = setTimeout(this._hide.bind(this), 5000);
-  }
-
-  _show() {
-    if(this._isActive) {
-      new Promise((resolve, reject) => {
+    
+    return new Promise((resolve, reject) => {
+      this._undoChanges
+      setTimeout(() => {        
         this._hide();
-        setTimeout(resolve, 250);
-      }).then(this._showBar.bind(this));
-    }
-    else {
-      this._showBar();
-    }
+        resolve('Promise A win!');
+      }, 5000)
+    });
   }
 
   _hide() {
     this._element.classList.remove('is-active');
     this._isActive = false;
+  }
+  
+  _undo() {
+    this._hide();
+    this._undoChanges = true;
   }
 }
 
@@ -471,9 +471,22 @@ class Block {
   }
 
   delete() {
-    this._element.parentNode.removeChild(this._element);
+    let blockId = this._element.getAttribute('data-block-id');
     
-    window.statusBar.showMessage('You have just deleted block');
+    // this._element.parentNode.removeChild(this._element);
+    
+    // API.deleteBlock(blockId, () => {
+    //   console.log("success???");
+    // });
+    
+    // window.statusBar.showMessage('You have just deleted block');
+    window.statusBar._show().then(function (arg) {
+      console.log('qqq', arg);
+    }, function(err) {
+      // failed
+      console.log('failed', err);
+    });
+
   }
 
   deleteMicroBlock(e) {
@@ -525,6 +538,20 @@ const API = {
         url: `${apiUrl}/block/${window.cvId}/${block.zone}`,
         method: 'POST',
         data: block,
+        success: (data) => {
+          cb(true);
+        },
+        complete: () => {},
+        error: () => {}
+      });
+    }
+  },
+  
+  deleteBlock: (blockId, cb) => {
+    if (blockId !== undefined) {
+      $.ajax({
+        url: `${apiUrl}/block/${blockId}`,
+        method: 'DELETE',
         success: (data) => {
           cb(true);
         },
