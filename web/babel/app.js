@@ -62,7 +62,7 @@ class StatusBar {
   constructor(element) {
     this._element = element[0];
     
-    var _undoChanges = false;
+    var _timer;
 
     let closeButton = this._element.querySelector('.close');
     closeButton.addEventListener('click', this._hide.bind(this), false);
@@ -79,6 +79,13 @@ class StatusBar {
     let messageEl = this._element.querySelector('.message');
     messageEl.innerHTML = message;
     this._show();
+    
+    return new Promise((resolve, reject) => {  
+      _timer = setTimeout(() => {        
+        this._hide();
+        resolve();
+      }, 5000);
+    });
   }
 
   showError(error) {
@@ -93,14 +100,6 @@ class StatusBar {
   _show() {
     this._element.classList.add('is-active');
     this._isActive = true;
-    
-    return new Promise((resolve, reject) => {
-      this._undoChanges
-      setTimeout(() => {        
-        this._hide();
-        resolve('Promise A win!');
-      }, 5000)
-    });
   }
 
   _hide() {
@@ -109,8 +108,9 @@ class StatusBar {
   }
   
   _undo() {
+    window.clearTimeout(_timer);
     this._hide();
-    this._undoChanges = true;
+    
   }
 }
 
@@ -489,19 +489,12 @@ class Block {
 
   delete() {
     let blockId = this._element.getAttribute('data-block-id');
-    
-    // this._element.parentNode.removeChild(this._element);
-    
-    // API.deleteBlock(blockId, () => {
-    //   console.log("success???");
-    // });
-    
-    // window.statusBar.showMessage('You have just deleted block');
-    window.statusBar._show().then(function (arg) {
-      console.log('qqq', arg);
-    }, function(err) {
-      // failed
-      console.log('failed', err);
+    var element = this._element;
+
+    window.statusBar.showMessage('You have just deleted block').then(function () {
+      API.deleteBlock(blockId, () => {
+        element.parentNode.removeChild(element);  
+      });
     });
 
   }

@@ -68,6 +68,10 @@ var StatusBar = function () {
 
     this._element = element[0];
 
+<<<<<<< HEAD
+=======
+    var _timer;
+>>>>>>> 36e39ed67adcb24d7e3042b1dc46d5326088fafd
     var _undoChanges = false;
 
     var closeButton = this._element.querySelector('.close');
@@ -82,11 +86,20 @@ var StatusBar = function () {
   _createClass(StatusBar, [{
     key: 'showMessage',
     value: function showMessage(message) {
+      var _this = this;
+
       this._element.classList.remove('is-error');
 
       var messageEl = this._element.querySelector('.message');
       messageEl.innerHTML = message;
       this._show();
+
+      return new Promise(function (resolve, reject) {
+        _timer = setTimeout(function () {
+          _this._hide();
+          resolve();
+        }, 5000);
+      });
     }
   }, {
     key: 'showError',
@@ -101,6 +114,7 @@ var StatusBar = function () {
   }, {
     key: '_show',
     value: function _show() {
+<<<<<<< HEAD
       var _this = this;
 
       this._element.classList.add('is-active');
@@ -113,6 +127,10 @@ var StatusBar = function () {
           resolve('Promise A win!');
         }, 5000);
       });
+=======
+      this._element.classList.add('is-active');
+      this._isActive = true;
+>>>>>>> 36e39ed67adcb24d7e3042b1dc46d5326088fafd
     }
   }, {
     key: '_hide',
@@ -123,8 +141,13 @@ var StatusBar = function () {
   }, {
     key: '_undo',
     value: function _undo() {
+<<<<<<< HEAD
       this._hide();
       this._undoChanges = true;
+=======
+      window.clearTimeout(_timer);
+      this._hide();
+>>>>>>> 36e39ed67adcb24d7e3042b1dc46d5326088fafd
     }
   }]);
 
@@ -558,6 +581,7 @@ var Block = function () {
     key: 'delete',
     value: function _delete() {
       var blockId = this._element.getAttribute('data-block-id');
+<<<<<<< HEAD
 
       // this._element.parentNode.removeChild(this._element);
 
@@ -571,6 +595,14 @@ var Block = function () {
       }, function (err) {
         // failed
         console.log('failed', err);
+=======
+      var element = this._element;
+
+      window.statusBar.showMessage('You have just deleted block').then(function () {
+        API.deleteBlock(blockId, function () {
+          element.parentNode.removeChild(element);
+        });
+>>>>>>> 36e39ed67adcb24d7e3042b1dc46d5326088fafd
       });
     }
   }, {
