@@ -29,8 +29,10 @@ class ApiController extends Controller
 
         $blockData = $em->getRepository('AppBundle:BlockData')->find($block_id);
 
-        $em->remove($blockData);
-        $em->flush();
+        if ($this->isUserOwnBlock($blockData)) {
+            $em->remove($blockData);
+            $em->flush();
+        }
 
         return new Response();
 
