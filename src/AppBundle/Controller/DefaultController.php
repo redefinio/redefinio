@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: svidleo
+ * Date: 03/08/2017
+ * Time: 11:23
+ */
 
 namespace AppBundle\Controller;
 
@@ -22,9 +28,9 @@ class DefaultController extends Controller
      */
     public function cvAction()
     {
-    	$repository = $this->getDoctrine()->getRepository('AppBundle:CV');
-    	$cv = $repository->createQueryBuilder('p')->setMaxResults(1)->getQuery()->getOneOrNullResult();
-    	$cvRenderService = $this->get('cv_render');
+        $repository = $this->getDoctrine()->getRepository('AppBundle:CV');
+        $cv = $repository->createQueryBuilder('p')->setMaxResults(1)->getQuery()->getOneOrNullResult();
+        $cvRenderService = $this->get('cv_render');
 
         return new Response($cvRenderService->getTemplateHtml($cv));
     }
