@@ -408,12 +408,25 @@ class Block {
       if($(sliders[i]).parent().find('.slider').length === 0) {
         let slider = document.createElement('div');
         slider.classList.add('slider');
+        let value = $(sliders[i]).parent('.skills-group').attr('data-value');
         $(slider).slider({
           range: 'max',
           min: 0,
-          max: 10
+          max: 10,
+          value: value,
+          slide: function( event, ui ) {
+              var value = ui.value;
+              console.log(ui)
+              console.log("Event")
+              console.log(event)
+              $(ui).addClass("hello")
+              $(this).parent(".skills-group").attr("data-value", ui.value);
+              console.log($(this).parent(".skills-group"));
+          }
         });
+
         $(sliders[i]).after(slider);
+
       }
     }
 
@@ -430,10 +443,9 @@ class Block {
     data['blockType'] = this._element.dataset.blockType;
     data['zone'] = $(this._element).parent().data('zone'); 
     data['fields'] = {};
+
+
     for (let i = 0; i < editableElements.length; i++) {
-      if(['blocks'].indexOf(editableElements[i].getAttribute('data-key')) === -1) {
-        editableElements[i].setAttribute('contenteditable', false);
-      }
 
       if(editableElements[i].getAttribute('data-key') !== 'blocks') {
         if(data['fields']['blocks'] !== undefined) {  
@@ -442,7 +454,9 @@ class Block {
           // console.log(keysCount.length, sameKeysCount.length);
           let obj = {};
           for(let j = 0; j < (keysCount.length / sameKeysCount.length); j++) {
-            obj[editableElements[i + j].getAttribute('data-key')] = editableElements[i + j].innerHTML;  
+            let dataValue = (editableElements[i + j].getAttribute('data-value'))? editableElements[i + j].getAttribute('data-value'): editableElements[i + j].innerHTML;
+            let dataKey = editableElements[i + j].getAttribute('data-key');
+            obj[dataKey] = dataValue;
             // console.log(i, j);
           }
 
@@ -457,6 +471,12 @@ class Block {
       else {
         data['fields']['blocks'] = [];
       }
+    }
+
+    for (let z = 0; z < editableElements.length; z++) {
+        if (['blocks'].indexOf(editableElements[z].getAttribute('data-key')) === -1) {
+            editableElements[z].setAttribute('contenteditable', false);
+        }
     }
 
     console.log(data);

@@ -8,29 +8,39 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\CV;
 use AppBundle\Form\CVType;
+use AppBundle\Service\CvService;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * CV controller.
  *
- * @Route("/cv")
+ * @Route("/")
  */
 class CVController extends Controller
 {
+
+    protected $cvService;
     /**
      * Lists all CV entities.
      *
-     * @Route("/", name="cv_index")
+     * @Route("/cv", name="cv_index")
      * @Method("GET")
+     * @return Response
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        $template = 'cv/show.html.twig';
 
-        $cVs = $em->getRepository('AppBundle:CV')->findAll();
+        $this->cvService = $this->get(CvService::class);
 
-        return $this->render('cv/index.html.twig', array(
-            'cVs' => $cVs,
+        $userCv = $this->cvService->getUserCv($this->getUser());
+
+        if (is_null($userCv)) {
+            $template = 'cv/create.html.twig';
+        }
+
+        return $this->render($template, array(
+            'cV' => $userCv
         ));
     }
 
@@ -61,22 +71,6 @@ class CVController extends Controller
         return $this->render('cv/new.html.twig', array(
             'cV' => $cv,
             'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * Finds and displays a CV entity.
-     *
-     * @Route("/{id}", name="cv_show")
-     * @Method("GET")
-     */
-    public function showAction(CV $cV)
-    {
-        $deleteForm = $this->createDeleteForm($cV);
-
-        return $this->render('cv/show.html.twig', array(
-            'cV' => $cV,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 

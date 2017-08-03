@@ -11,7 +11,7 @@
         </div>
 
         <div class="navbar-actions">
-            <a href="{{ path('cv_show', { 'id': cv.id }) }}" class="btn navbar-cancel">Cancel</a>
+            <a href="{{ path('cv_index') }}" class="btn navbar-cancel">Cancel</a>
             <a href="#" class="btn navbar-save">Save</a>
         </div>
     </div>
@@ -59,14 +59,14 @@
 			<div class="themes-list">
         {% for theme in cv.template.themes %}
         <div class="themes-listitem">
-          <div class="theme-container" style="background: #{{ cv.theme.backgroundColor }};">
-            <div class="theme" style="background:#FFFFFF;">
+          <div class="theme-container" style="background: #{{ theme.backgroundColor }};">
+            <div class="theme">
               <span class="check-icon">
                 <img src="{{ asset('img/check.png') }}" alt="Icon">
               </span>
-              <span class="theme-palette" style="background:#{{ cv.theme.titleColor }};"></span>
-              <span class="theme-palette" style="background:#{{ cv.theme.paragraphColor }};"></span>
-              <span class="theme-palette" style="background:#{{ cv.theme.primaryColor }};"></span>
+              <span class="theme-palette" style="background:#{{ theme.titleColor }};"></span>
+              <span class="theme-palette" style="background:#{{ theme.paragraphColor }};"></span>
+              <span class="theme-palette" style="background:#{{ theme.primaryColor }};"></span>
             </div>
           </div>
         </div>

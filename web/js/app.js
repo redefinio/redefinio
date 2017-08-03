@@ -480,11 +480,23 @@ var Block = function () {
         if ($(sliders[_i7]).parent().find('.slider').length === 0) {
           var slider = document.createElement('div');
           slider.classList.add('slider');
+          var value = $(sliders[_i7]).parent('.skills-group').attr('data-value');
           $(slider).slider({
             range: 'max',
             min: 0,
-            max: 10
+            max: 10,
+            value: value,
+            slide: function slide(event, ui) {
+              var value = ui.value;
+              console.log(ui);
+              console.log("Event");
+              console.log(event);
+              $(ui).addClass("hello");
+              $(this).parent(".skills-group").attr("data-value", ui.value);
+              console.log($(this).parent(".skills-group"));
+            }
           });
+
           $(sliders[_i7]).after(slider);
         }
       }
@@ -503,10 +515,8 @@ var Block = function () {
       data['blockType'] = this._element.dataset.blockType;
       data['zone'] = $(this._element).parent().data('zone');
       data['fields'] = {};
+
       for (var _i8 = 0; _i8 < editableElements.length; _i8++) {
-        if (['blocks'].indexOf(editableElements[_i8].getAttribute('data-key')) === -1) {
-          editableElements[_i8].setAttribute('contenteditable', false);
-        }
 
         if (editableElements[_i8].getAttribute('data-key') !== 'blocks') {
           if (data['fields']['blocks'] !== undefined) {
@@ -515,7 +525,9 @@ var Block = function () {
             // console.log(keysCount.length, sameKeysCount.length);
             var obj = {};
             for (var j = 0; j < keysCount.length / sameKeysCount.length; j++) {
-              obj[editableElements[_i8 + j].getAttribute('data-key')] = editableElements[_i8 + j].innerHTML;
+              var dataValue = editableElements[_i8 + j].getAttribute('data-value') ? editableElements[_i8 + j].getAttribute('data-value') : editableElements[_i8 + j].innerHTML;
+              var dataKey = editableElements[_i8 + j].getAttribute('data-key');
+              obj[dataKey] = dataValue;
               // console.log(i, j);
             }
 
@@ -527,6 +539,12 @@ var Block = function () {
           }
         } else {
           data['fields']['blocks'] = [];
+        }
+      }
+
+      for (var z = 0; z < editableElements.length; z++) {
+        if (['blocks'].indexOf(editableElements[z].getAttribute('data-key')) === -1) {
+          editableElements[z].setAttribute('contenteditable', false);
         }
       }
 
