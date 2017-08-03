@@ -144,7 +144,7 @@ class LoadAllData implements FixtureInterface
         $block1_5_1->setTitle('Skills/languages entry');
         $block1_5_1->setType(Block::TYPE_SKILLS_INNER);
         $block1_5_1->setTemplate($template1);
-        $block1_5_1->setHtmlSource('<div class="skills-group"><label data-key="title">{{ title }}</label><ul class="skills">{% if skill > 0 %}{% for i in 1..skill %}<li class="completed"></li>{% endfor %}{% endif %}{% if skill < 10 %}{% for i in 1..(10-skill) %}<li></li>{% endfor %}{% endif %}</ul></div>');
+        $block1_5_1->setHtmlSource('<div class="skills-group" data-key="skill" data-value="{{ skill }}"><label data-key="title">{{ title }}</label><ul class="skills">{% if skill > 0 %}{% for i in 1..skill %}<li class="completed"></li>{% endfor %}{% endif %}{% if skill < 10 %}{% for i in 1..(10-skill) %}<li></li>{% endfor %}{% endif %}</ul></div>');
         $block1_5_1->setAvailableFields(
             json_encode(array(
                 'title',
