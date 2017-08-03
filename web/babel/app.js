@@ -430,10 +430,13 @@ class Block {
     data['blockType'] = this._element.dataset.blockType;
     data['zone'] = $(this._element).parent().data('zone'); 
     data['fields'] = {};
+
     for (let i = 0; i < editableElements.length; i++) {
-      if(['blocks'].indexOf(editableElements[i].getAttribute('data-key')) === -1) {
-        editableElements[i].setAttribute('contenteditable', false);
-      }
+        if (['blocks'].indexOf(editableElements[i].getAttribute('data-key')) === -1) {
+            editableElements[i].setAttribute('contenteditable', false);
+        }
+    }
+    for (let i = 0; i < editableElements.length; i++) {
 
       if(editableElements[i].getAttribute('data-key') !== 'blocks') {
         if(data['fields']['blocks'] !== undefined) {  
@@ -442,7 +445,7 @@ class Block {
           // console.log(keysCount.length, sameKeysCount.length);
           let obj = {};
           for(let j = 0; j < (keysCount.length / sameKeysCount.length); j++) {
-            obj[editableElements[i + j].getAttribute('data-key')] = editableElements[i + j].innerHTML;  
+            obj[editableElements[i + j].getAttribute('data-key')] = editableElements[i + j].innerHTML;
             // console.log(i, j);
           }
 

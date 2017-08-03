@@ -503,27 +503,30 @@ var Block = function () {
       data['blockType'] = this._element.dataset.blockType;
       data['zone'] = $(this._element).parent().data('zone');
       data['fields'] = {};
+
       for (var _i8 = 0; _i8 < editableElements.length; _i8++) {
         if (['blocks'].indexOf(editableElements[_i8].getAttribute('data-key')) === -1) {
           editableElements[_i8].setAttribute('contenteditable', false);
         }
+      }
+      for (var _i9 = 0; _i9 < editableElements.length; _i9++) {
 
-        if (editableElements[_i8].getAttribute('data-key') !== 'blocks') {
+        if (editableElements[_i9].getAttribute('data-key') !== 'blocks') {
           if (data['fields']['blocks'] !== undefined) {
             var keysCount = $(this._element).find('[data-key="blocks"]').find('[data-key]');
             var sameKeysCount = $(this._element).find('[data-key="blocks"]').find('[data-key="' + keysCount[0].getAttribute('data-key') + '"]');
             // console.log(keysCount.length, sameKeysCount.length);
             var obj = {};
             for (var j = 0; j < keysCount.length / sameKeysCount.length; j++) {
-              obj[editableElements[_i8 + j].getAttribute('data-key')] = editableElements[_i8 + j].innerHTML;
+              obj[editableElements[_i9 + j].getAttribute('data-key')] = editableElements[_i9 + j].innerHTML;
               // console.log(i, j);
             }
 
-            _i8 += keysCount.length / sameKeysCount.length - 1;
+            _i9 += keysCount.length / sameKeysCount.length - 1;
             // console.log(obj);
             data['fields']['blocks'].push(obj);
           } else {
-            data['fields'][editableElements[_i8].getAttribute('data-key')] = editableElements[_i8].innerHTML;
+            data['fields'][editableElements[_i9].getAttribute('data-key')] = editableElements[_i9].innerHTML;
           }
         } else {
           data['fields']['blocks'] = [];
