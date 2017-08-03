@@ -18,6 +18,24 @@ use AppBundle\Entity\BlockData;
  */
 class ApiController extends Controller
 {
+
+
+    /**
+     * @Route("/block/{block_id}", name="api_block_delete")
+     * @Method("DELETE")
+     */
+    public function deleteBlock($block_id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $blockData = $em->getRepository('AppBundle:BlockData')->find($block_id);
+
+        $em->remove($blockData);
+        $em->flush();
+
+        return new Response();
+
+    }
+
     /**
      * @Route("/block/{template_id}/{block_type}", name="api_block_html")
      * @Method({"GET"})
