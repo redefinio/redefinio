@@ -29,14 +29,13 @@ class ApiController extends Controller
 
         $blockData = $em->getRepository('AppBundle:BlockData')->find($block_id);
 
-        if ($this->isUserOwnBlock($blockData)) {
-            $em->remove($blockData);
-            $em->flush();
-        }
+        $em->remove($blockData);
+        $em->flush();
 
         return new Response();
 
     }
+
 
     /**
      * @Route("/block/{template_id}/{block_type}", name="api_block_html")
