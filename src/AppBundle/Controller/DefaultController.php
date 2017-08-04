@@ -20,18 +20,6 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render('default/index.html.twig', array());
-    }
-
-    /**
-     * @Route("/cv", name="cv")
-     */
-    public function cvAction()
-    {
-        $repository = $this->getDoctrine()->getRepository('AppBundle:CV');
-        $cv = $repository->createQueryBuilder('p')->setMaxResults(1)->getQuery()->getOneOrNullResult();
-        $cvRenderService = $this->get('cv_render');
-
-        return new Response($cvRenderService->getTemplateHtml($cv));
+        return $this->redirectToRoute('cv_index');
     }
 }

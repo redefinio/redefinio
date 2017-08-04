@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * CV controller.
  *
- * @Route("/")
+ * @Route("/cv")
  */
 class CVController extends Controller
 {
@@ -23,7 +23,7 @@ class CVController extends Controller
     /**
      * Lists all CV entities.
      *
-     * @Route("/cv", name="cv_index")
+     * @Route("/", name="cv_index")
      * @Method("GET")
      * @return Response
      */
