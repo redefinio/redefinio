@@ -21,7 +21,7 @@ class RedirectAfterRegistrationSubscriber implements EventSubscriberInterface
 
     public function onRegistrationSuccess(FormEvent $event)
     {
-        $url = $this->router->generate('cv');
+        $url = $this->router->generate('cv_index');
         $event->setResponse(new RedirectResponse($url));
     }
 

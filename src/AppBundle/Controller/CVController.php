@@ -18,8 +18,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class CVController extends Controller
 {
-
-    protected $cvService;
     /**
      * Lists all CV entities.
      *
