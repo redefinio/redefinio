@@ -399,12 +399,8 @@ class Block {
       }
     }
 
-    // console.log($(this._element).find('.skills'))
-
-
-    let sliders = $(this._element).find('.skills'); //.after(slider);
+    let sliders = $(this._element).find('.skills');
     for(let i = 0; i < sliders.length; i++) {
-      // console.log($(sliders[i]).parent().find('.slider').length)
       if($(sliders[i]).parent().find('.slider').length === 0) {
         let slider = document.createElement('div');
         slider.classList.add('slider');
@@ -416,17 +412,11 @@ class Block {
           value: value,
           slide: function( event, ui ) {
               var value = ui.value;
-              console.log(ui)
-              console.log("Event")
-              console.log(event)
-              $(ui).addClass("hello")
               $(this).parent(".skills-group").attr("data-value", ui.value);
-              console.log($(this).parent(".skills-group"));
           }
         });
 
         $(sliders[i]).after(slider);
-
       }
     }
 
@@ -451,17 +441,16 @@ class Block {
         if(data['fields']['blocks'] !== undefined) {  
           const keysCount = $(this._element).find('[data-key="blocks"]').find('[data-key]');
           const sameKeysCount = $(this._element).find('[data-key="blocks"]').find('[data-key="' + keysCount[0].getAttribute('data-key') + '"]')
-          // console.log(keysCount.length, sameKeysCount.length);
+
           let obj = {};
           for(let j = 0; j < (keysCount.length / sameKeysCount.length); j++) {
             let dataValue = (editableElements[i + j].getAttribute('data-value'))? editableElements[i + j].getAttribute('data-value'): editableElements[i + j].innerHTML;
             let dataKey = editableElements[i + j].getAttribute('data-key');
             obj[dataKey] = dataValue;
-            // console.log(i, j);
           }
 
           i+= keysCount.length / sameKeysCount.length - 1;
-          // console.log(obj);
+
           data['fields']['blocks'].push(obj);
         }
         else {
@@ -479,7 +468,6 @@ class Block {
         }
     }
 
-    console.log(data);
     API.saveBlock(data, () => {
 
     });
