@@ -59,6 +59,12 @@ class BlockData
     private $data;
 
     /**
+     * @ORM\ManyToMany(targetEntity="CvData", inversedBy="block_datas")
+     * @ORM\JoinTable(name="blockdata_cvdata")
+     */
+    private $cv_datas;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="position", type="integer")
@@ -67,6 +73,7 @@ class BlockData
 
     public function __construct() {
         $this->children = new ArrayCollection();
+        $this->cv_datas = new ArrayCollection();
         $this->position = 1;
     }
 
@@ -281,4 +288,26 @@ class BlockData
     {
         return $this->position;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCvDatas()
+    {
+        return $this->cv_datas;
+    }
+
+    /**
+     * @param mixed $cv_datas
+     *
+     * @return BlockData
+     */
+    public function setCvDatas($cv_datas)
+    {
+        $this->cv_datas = $cv_datas;
+
+        return $this;
+    }
+
+
 }
