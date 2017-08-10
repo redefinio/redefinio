@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link href="{{ asset('templates/standart/css/main.css') }}" rel="stylesheet">
+</head>
+
+<body>
+<div class="container">
+    <div class="wrapper">
+        <div class="sidebar">
+            <div class="person">
+                <div class="photo">
+                    <img src="assets/img/photo.jpg" alt="">
+                </div>
+                <div class="name">Ignė Stalmokaitė</div>
+                <div class="statusquo">Senior PHP Developer</div>
+            </div>
+
+            <div class="group item">
+                <div class="group title">Key profile</div>
+                <div class="group content">
+                    Specialities: event management, report drafting, internship at the Permanent International Secretariat of the Council of the Baltic Sea States, experienced networker in multi-cultural environment, studying, working and volunteering activities in Lithuania, Finland, Sweden and Poland,  result-driven, Can-Do attitude, EU Port Policy analysis. Research interests: maritime affairs; marine environmental governance, sustainable development, ports and seaport innovations.
+                </div>
+            </div>
+
+            <div class="group item">
+                <div class="group title">Skills</div>
+                <div class="group content">
+                    <div class="blocks indicator">
+                        <div>
+                            <div class="title">Laravel</div>
+                            <div class="bar">
+                                <div class="progress" style="width: 95%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="title">Symfony</div>
+                            <div class="bar">
+                                <div class="progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="title">MySQL</div>
+                            <div class="bar">
+                                <div class="progress" style="width: 70%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="title">HTML/CSS</div>
+                            <div class="bar">
+                                <div class="progress" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group item">
+                <div class="group title">Languages</div>
+                <div class="group content">
+                    <div class="blocks indicator">
+                        <div>
+                            <div class="title">Lithuanian</div>
+                            <div class="bar">
+                                <div class="progress" style="width: 100%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="title">English</div>
+                            <div class="bar">
+                                <div class="progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="title">Russian</div>
+                            <div class="bar">
+                                <div class="progress" style="width: 15%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group item">
+                <div class="group title">Contact Info</div>
+                <div class="group content">
+                    <div>
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        Bäckgårdvägen 45, 2tr 14341 Vårby, Stockholm
+                    </div>
+                    <div>
+                        <i class="fa fa-phone" aria-hidden="true"></i>
+                        +46 73 7864355
+                    </div>
+                    <div>
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                        igne.stalmokaite@gmail.com
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="group item">
+                <div class="group title">Working Experience</div>
+                <div class="group content">
+                    <div class="blocks timeline">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 date">
+                                2015 - present
+                            </div>
+                            <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
+                                <div class="title">Senior PHP Developer</div>
+                                <div class="company">Veleza</div>
+                                <div class="description">
+                                    Veleza is a brand new way to discover your next skin care product purchase. Through a beautiful and simple to use mobile app consumers can receive reliable recommendations on skin care products matching their skin type and personal preferences.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 date">
+                                2014 - 2015
+                            </div>
+                            <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
+                                <div class="title">PHP Developer</div>
+                                <div class="company">Voltera</div>
+                                <div class="description">
+                                    CRM with an integration of various third party systems.<br>
+                                    Yii framework, MySQL / MS-SQL, Bootstrap, jQuery.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 date">
+                                2011 - 2014
+                            </div>
+                            <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
+                                <div class="title">PHP Developer</div>
+                                <div class="company">Arena-Tournament</div>
+                                <div class="description">
+                                    PHP Programmer, making in-game data viable via web application.<br>
+                                    MVC programming pattern and framework built by Arena-Tournament staff which includes custom MySQL query builders and data processing systems.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group item">
+                <div class="group title">Education</div>
+                <div class="group content">
+                    <div class="blocks timeline">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 date">
+                                2014 - 2018
+                            </div>
+                            <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
+                                <div class="title">University of Turku</div>
+                                <div class="company">Master’s degree, programme in Baltic Sea Region Studies</div>
+                                <div class="description">
+                                    Interdisciplinary programme with a regional focus. Key BSR related courses: BSR environment and energy related challenges, cultural dialogues, cross-border cooperation, regional innovation policies, international relations, history and practical Baltic Sea regional cooperation.<br>
+                                    Specialisation: Baltic Sea maritime affairs and seaport innovations.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 date">
+                                2009 - 2014
+                            </div>
+                            <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
+                                <div class="title">Vilnius Užupis Gymnasium</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group item">
+                <div class="group title">Certificates</div>
+                <div class="group content">
+                    <div class="blocks timeline">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 date">
+                                2006 - 2010
+                            </div>
+                            <div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
+                                <div class="title">NKKM</div>
+                                <div class="company">Web programmer, Web developer</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -46,6 +46,11 @@ class CV
     private $block_datas;
 
     /**
+     * @ORM\OneToMany(targetEntity="CvData", mappedBy="cv")
+     */
+    private $cv_datas;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
@@ -449,4 +454,22 @@ class CV
     {
         return $this->theme;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCvDatas()
+    {
+        return $this->cv_datas;
+    }
+
+    /**
+     * @param mixed $cv_datas
+     */
+    public function setCvDatas($cv_datas)
+    {
+        $this->cv_datas = $cv_datas;
+    }
+
+
 }
