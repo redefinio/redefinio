@@ -38,9 +38,9 @@ class Template
     private $template_slots;
 
     /**
-     * @ORM\OneToMany(targetEntity="Block", mappedBy="template")
+     * @ORM\OneToMany(targetEntity="BlockTemplate", mappedBy="template")
      */
-    private $blocks;
+    private $blockTemplates;
 
     /**
      * @var string
@@ -262,13 +262,13 @@ class Template
     /**
      * Add block
      *
-     * @param \AppBundle\Entity\Block $block
+     * @param \AppBundle\Entity\BlockTemplate $block
      *
      * @return Template
      */
-    public function addBlock(\AppBundle\Entity\Block $block)
+    public function addBlockTemplate(\AppBundle\Entity\BlockTemplate $block)
     {
-        $this->blocks[] = $block;
+        $this->blockTemplates[] = $block;
 
         return $this;
     }
@@ -276,11 +276,11 @@ class Template
     /**
      * Remove block
      *
-     * @param \AppBundle\Entity\Block $block
+     * @param \AppBundle\Entity\BlockTemplate $block
      */
-    public function removeBlock(\AppBundle\Entity\Block $block)
+    public function removeBlockTemplate(\AppBundle\Entity\BlockTemplate $block)
     {
-        $this->blocks->removeElement($block);
+        $this->blockTemplates->removeElement($block);
     }
 
     /**
@@ -288,8 +288,8 @@ class Template
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getBlocks()
+    public function getBlockTemplates()
     {
-        return $this->blocks;
+        return $this->blockTemplates;
     }
 }
