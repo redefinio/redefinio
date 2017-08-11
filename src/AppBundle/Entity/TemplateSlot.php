@@ -29,7 +29,7 @@ class TemplateSlot
     private $template;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Block", mappedBy="template_slots")
+     * @ORM\ManyToMany(targetEntity="BlockTemplate", mappedBy="template_slots")
      */
     private $blocks;
 
@@ -119,11 +119,11 @@ class TemplateSlot
     /**
      * Add block
      *
-     * @param \AppBundle\Entity\Block $block
+     * @param \AppBundle\Entity\BlockTemplate $block
      *
      * @return TemplateSlot
      */
-    public function addBlock(\AppBundle\Entity\Block $block)
+    public function addBlockTemplate(\AppBundle\Entity\BlockTemplate $block)
     {
         $this->blocks[] = $block;
 
@@ -133,9 +133,9 @@ class TemplateSlot
     /**
      * Remove block
      *
-     * @param \AppBundle\Entity\Block $block
+     * @param \AppBundle\Entity\BlockTemplate $block
      */
-    public function removeBlock(\AppBundle\Entity\Block $block)
+    public function removeBlockTemplate(\AppBundle\Entity\BlockTemplate $block)
     {
         $this->blocks->removeElement($block);
     }
@@ -145,7 +145,7 @@ class TemplateSlot
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getBlocks()
+    public function getBlockTemplates()
     {
         return $this->blocks;
     }

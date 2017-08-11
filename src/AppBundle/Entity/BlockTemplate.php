@@ -8,10 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Block
  *
- * @ORM\Table(name="block")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\BlockRepository")
+ * @ORM\Table(name="block_template")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\BlockTemplateRepository")
  */
-class Block
+class BlockTemplate
 {
     const TYPE_FIXED = 0;
     const TYPE_TEXT = 1;
@@ -34,24 +34,24 @@ class Block
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Block", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="BlockTemplate", mappedBy="parent")
      */
     private $children;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Block", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="BlockTemplate", inversedBy="children")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      */
     private $parent;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Template", inversedBy="blocks")
+     * @ORM\ManyToOne(targetEntity="Template", inversedBy="blockTemplates")
      * @ORM\JoinColumn(name="template_id", referencedColumnName="id")
      */
     private $template;
 
     /**
-     * @ORM\OneToMany(targetEntity="BlockData", mappedBy="block")
+     * @ORM\OneToMany(targetEntity="BlockData", mappedBy="blockTemplate")
      */
     private $block_datas;
 
@@ -110,7 +110,7 @@ class Block
      *
      * @param string $title
      *
-     * @return Block
+     * @return BlockTemplate
      */
     public function setTitle($title)
     {
@@ -134,7 +134,7 @@ class Block
      *
      * @param integer $type
      *
-     * @return Block
+     * @return BlockTemplate
      */
     public function setType($type)
     {
@@ -158,7 +158,7 @@ class Block
      *
      * @param \AppBundle\Entity\BlockData $blockData
      *
-     * @return Block
+     * @return BlockTemplate
      */
     public function addBlockData(\AppBundle\Entity\BlockData $blockData)
     {
@@ -192,7 +192,7 @@ class Block
      *
      * @param \AppBundle\Entity\TemplateSlot $templateSlot
      *
-     * @return Block
+     * @return BlockTemplate
      */
     public function addTemplateSlot(\AppBundle\Entity\TemplateSlot $templateSlot)
     {
@@ -224,11 +224,11 @@ class Block
     /**
      * Add child
      *
-     * @param \AppBundle\Entity\Block $child
+     * @param \AppBundle\Entity\BlockTemplate $child
      *
-     * @return Block
+     * @return BlockTemplate
      */
-    public function addChild(\AppBundle\Entity\Block $child)
+    public function addChild(\AppBundle\Entity\BlockTemplate $child)
     {
         $this->children[] = $child;
 
@@ -238,9 +238,9 @@ class Block
     /**
      * Remove child
      *
-     * @param \AppBundle\Entity\Block $child
+     * @param \AppBundle\Entity\BlockTemplate $child
      */
-    public function removeChild(\AppBundle\Entity\Block $child)
+    public function removeChild(\AppBundle\Entity\BlockTemplate $child)
     {
         $this->children->removeElement($child);
     }
@@ -258,11 +258,11 @@ class Block
     /**
      * Set parent
      *
-     * @param \AppBundle\Entity\Block $parent
+     * @param \AppBundle\Entity\BlockTemplate $parent
      *
      * @return Block
      */
-    public function setParent(\AppBundle\Entity\Block $parent = null)
+    public function setParent(\AppBundle\Entity\BlockTemplate $parent = null)
     {
         $this->parent = $parent;
 

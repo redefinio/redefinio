@@ -26,10 +26,9 @@ class CVRenderService {
 		// each TemaplteSlot acts as a block in parent template
 		foreach($cv->getTemplate()->getTemplateSlots() as $slot) {
 			$templateString .= '{% block '.$slot->getWildcard().' %}';
-			$blocks = $slot->getBlocks();
 			// traverse through each slots blocks and fill it with data
 			foreach ($slot->getBlockDatas() as $data) {
-                $template = $this->twig->createTemplate($data->getBlock()->getHtmlSource());
+                $template = $this->twig->createTemplate($data->getBlockTemplate()->getHtmlSource());
                 if (count($data->getCvDatas()) > 0) {
                     $parameters = $this->decodeData($data->getCvDatas());
                 } else {
@@ -41,7 +40,7 @@ class CVRenderService {
 				if (count($data->getChildren()) > 0) {
 					$childrenString = '';
 					foreach ($data->getChildren() as $child) {
-						$childTemplate = $this->twig->createTemplate($child->getBlock()->getHtmlSource());
+						$childTemplate = $this->twig->createTemplate($child->getBlockTemplate()->getHtmlSource());
 						$childrenString .= $childTemplate->render(json_decode($child->getData(), true));
 					}
 					// if template is parent it must define 'blocks' variable where all children template will be inserted.

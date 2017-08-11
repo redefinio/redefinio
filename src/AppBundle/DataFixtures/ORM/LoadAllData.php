@@ -1,11 +1,11 @@
 <?php
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\BlockTemplate;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\Template;
 use AppBundle\Entity\TemplateSlot;
-use AppBundle\Entity\Block;
 use AppBundle\Entity\User;
 use AppBundle\Entity\CV;
 use AppBundle\Entity\BlockData;
@@ -38,12 +38,12 @@ class LoadAllData implements FixtureInterface
         $templateSlot1_3->setWildcard('main_right_info');
         $manager->persist($templateSlot1_3);
 
-        $block1_1 = new Block();
+        $block1_1 = new BlockTemplate();
         $block1_1->setTitle('Personal info headline');
-        $block1_1->setType(Block::TYPE_FIXED);
+        $block1_1->setType(BlockTemplate::TYPE_FIXED);
         $block1_1->addTemplateSlot($templateSlot1_1);
         $block1_1->setTemplate($template1);
-        $block1_1->setHtmlSource('<div class="container"><div class="row"><div class="col-xs-12" data-zone="static"><div id="top"><div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.Block::TYPE_FIXED.'" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"><div class="big-title pull-left"><h1 class="title"><span data-key="first_name" data-placeholder="John">{{ first_name }}</span> <span data-key="last_name" data-placeholder="Doe">{{ last_name }}</span></h1><h3 class="subtitle" data-key="title" data-placeholder="Your title">{{ title }}</h3></div><div class="contacts pull-right"><a href="mailto:{{ email }}" data-key="email" data-placeholder="john@example.com">{{ email }}</a> <a href="tel:{{ phone }}" data-key="phone" data-placeholder="Your phone">{{ phone }}</a></div><div class="clear"></div></div></div></div></div></div>');
+        $block1_1->setHtmlSource('<div class="container"><div class="row"><div class="col-xs-12" data-zone="static"><div id="top"><div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.BlockTemplate::TYPE_FIXED.'" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"><div class="big-title pull-left"><h1 class="title"><span data-key="first_name" data-placeholder="John">{{ first_name }}</span> <span data-key="last_name" data-placeholder="Doe">{{ last_name }}</span></h1><h3 class="subtitle" data-key="title" data-placeholder="Your title">{{ title }}</h3></div><div class="contacts pull-right"><a href="mailto:{{ email }}" data-key="email" data-placeholder="john@example.com">{{ email }}</a> <a href="tel:{{ phone }}" data-key="phone" data-placeholder="Your phone">{{ phone }}</a></div><div class="clear"></div></div></div></div></div></div>');
         $block1_1->setAvailableFields(json_encode(array(
                 'first_name',
                 'last_name',
@@ -53,12 +53,12 @@ class LoadAllData implements FixtureInterface
             )));
         $manager->persist($block1_1);
 
-        $block1_2 = new Block();
+        $block1_2 = new BlockTemplate();
         $block1_2->setTitle('Summary');
-        $block1_2->setType(Block::TYPE_TEXT);
+        $block1_2->setType(BlockTemplate::TYPE_TEXT);
         $block1_2->addTemplateSlot($templateSlot1_2);
         $block1_2->setTemplate($template1);
-        $block1_2->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.Block::TYPE_TEXT.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-user"></i><span data-key="title" data-placeholder="Title">{{ title }}</span></h2><p data-key="text" data-placeholder="Text goes here">{{ text }}</p>
+        $block1_2->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.BlockTemplate::TYPE_TEXT.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-user"></i><span data-key="title" data-placeholder="Title">{{ title }}</span></h2><p data-key="text" data-placeholder="Text goes here">{{ text }}</p>
             </div>');
         $block1_2->setAvailableFields(
             json_encode(array(
@@ -67,12 +67,12 @@ class LoadAllData implements FixtureInterface
             )));
         $manager->persist($block1_2);
 
-        $block1_3 = new Block();
+        $block1_3 = new BlockTemplate();
         $block1_3->setTitle('Experience');
-        $block1_3->setType(Block::TYPE_EXPERIENCE);
+        $block1_3->setType(BlockTemplate::TYPE_EXPERIENCE);
         $block1_3->addTemplateSlot($templateSlot1_2);
         $block1_3->setTemplate($template1);
-        $block1_3->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.Block::TYPE_EXPERIENCE.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-briefcase"></i><span data-key="title">Experience</span></h2><ul class="timeline" data-child-block-type="'.Block::TYPE_EXPERIENCE_INNER.'" data-key="blocks">{{ blocks|raw }}</ul></div>');
+        $block1_3->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.BlockTemplate::TYPE_EXPERIENCE.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-briefcase"></i><span data-key="title">Experience</span></h2><ul class="timeline" data-child-block-type="'.BlockTemplate::TYPE_EXPERIENCE_INNER.'" data-key="blocks">{{ blocks|raw }}</ul></div>');
         $block1_3->setAvailableFields(
             json_encode(array(
                 'title',
@@ -80,10 +80,10 @@ class LoadAllData implements FixtureInterface
             )));
         $manager->persist($block1_3);
 
-        $block1_3_1 = new Block();
+        $block1_3_1 = new BlockTemplate();
         $block1_3_1->setParent($block1_3);
         $block1_3_1->setTitle('Experience entry');
-        $block1_3_1->setType(Block::TYPE_EXPERIENCE_INNER);
+        $block1_3_1->setType(BlockTemplate::TYPE_EXPERIENCE_INNER);
         $block1_3_1->setTemplate($template1);
         $block1_3_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-key="date_from" data-placeholder="Date from">{{ date_from }}</span> - <span data-key="date_to" data-placeholder="Date to">{{ date_to }}</span></div><h3 class="position" data-key="position" data-placeholder="Position">{{ position }}</h3><h3 class="subtitle" data-key="company" data-placeholder="Company" data-is-child="true">{{ company }}</h3><h4 data-placeholder="Description" data-key="description">{{ description }}</h4></div></li>');
         $block1_3_1->setAvailableFields(
@@ -96,12 +96,12 @@ class LoadAllData implements FixtureInterface
             )));
         $manager->persist($block1_3_1);
 
-        $block1_4 = new Block();
+        $block1_4 = new BlockTemplate();
         $block1_4->setTitle('Education');
-        $block1_4->setType(Block::TYPE_EDUCATION);
+        $block1_4->setType(BlockTemplate::TYPE_EDUCATION);
         $block1_4->addTemplateSlot($templateSlot1_2);
         $block1_4->setTemplate($template1);
-        $block1_4->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.Block::TYPE_EDUCATION.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-education"></i><span data-key="title">Education</span></h2><ul class="timeline" data-child-block-type="'.Block::TYPE_EDUCATION_INNER.'" data-key="blocks">{{ blocks|raw }}</ul></div>');
+        $block1_4->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.BlockTemplate::TYPE_EDUCATION.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-education"></i><span data-key="title">Education</span></h2><ul class="timeline" data-child-block-type="'.BlockTemplate::TYPE_EDUCATION_INNER.'" data-key="blocks">{{ blocks|raw }}</ul></div>');
         $block1_4->setAvailableFields(
             json_encode(array(
                 'title',
@@ -109,10 +109,10 @@ class LoadAllData implements FixtureInterface
             )));
         $manager->persist($block1_4);
 
-        $block1_4_1 = new Block();
+        $block1_4_1 = new BlockTemplate();
         $block1_4_1->setParent($block1_4);
         $block1_4_1->setTitle('Education entry');
-        $block1_4_1->setType(Block::TYPE_EDUCATION_INNER);
+        $block1_4_1->setType(BlockTemplate::TYPE_EDUCATION_INNER);
         $block1_4_1->setTemplate($template1);
         $block1_4_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-key="date_from">{{ date_from }}</span> - <span data-key="date_to">{{ date_to }}</span></div><h3 class="position" data-key="position">{{ position }}</h3><h3 class="subtitle" data-key="company">{{ company }}</h3><h4 data-key="description">{{ description }}</h4></div></li>');
         $block1_4_1->setAvailableFields(
@@ -125,13 +125,13 @@ class LoadAllData implements FixtureInterface
             )));
         $manager->persist($block1_4_1);
 
-        $block1_5 = new Block();
+        $block1_5 = new BlockTemplate();
         $block1_5->setTitle('Skills');
-        $block1_5->setType(Block::TYPE_SKILLS);
+        $block1_5->setType(BlockTemplate::TYPE_SKILLS);
         $block1_5->addTemplateSlot($templateSlot1_3);
         $block1_5->setTemplate($template1);
-        $block1_5->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.Block::TYPE_SKILLS.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true">
-              <h2 class="title"><i class="glyphicon glyphicon-tasks"></i><span data-key="title">Skills</span></h2><div data-child-block-type="'.Block::TYPE_SKILLS_INNER.'" data-key="blocks">{{ blocks|raw }}</div></div>');
+        $block1_5->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.BlockTemplate::TYPE_SKILLS.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true">
+              <h2 class="title"><i class="glyphicon glyphicon-tasks"></i><span data-key="title">Skills</span></h2><div data-child-block-type="'.BlockTemplate::TYPE_SKILLS_INNER.'" data-key="blocks">{{ blocks|raw }}</div></div>');
         $block1_5->setAvailableFields(
             json_encode(array(
                 'title',
@@ -139,10 +139,10 @@ class LoadAllData implements FixtureInterface
             )));
         $manager->persist($block1_5);
 
-        $block1_5_1 = new Block();
+        $block1_5_1 = new BlockTemplate();
         $block1_5_1->setParent($block1_5);
         $block1_5_1->setTitle('Skills/languages entry');
-        $block1_5_1->setType(Block::TYPE_SKILLS_INNER);
+        $block1_5_1->setType(BlockTemplate::TYPE_SKILLS_INNER);
         $block1_5_1->setTemplate($template1);
         $block1_5_1->setHtmlSource('<div class="skills-group" data-key="skill" data-value="{{ skill }}"><label data-key="title">{{ title }}</label><ul class="skills">{% if skill > 0 %}{% for i in 1..skill %}<li class="completed"></li>{% endfor %}{% endif %}{% if skill < 10 %}{% for i in 1..(10-skill) %}<li></li>{% endfor %}{% endif %}</ul></div>');
         $block1_5_1->setAvailableFields(
@@ -226,7 +226,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_1 = new BlockData();
         $blockData1_1->setCV($cv1);
         $blockData1_1->setTemplateSlot($templateSlot1_1);
-        $blockData1_1->setBlock($block1_1);
+        $blockData1_1->setBlockTemplate($block1_1);
         $blockData1_1->setData(json_encode(array(
                 'first_name' => 'Erikas',
                 'last_name' => 'Mališauskas',
@@ -239,7 +239,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_2 = new BlockData();
         $blockData1_2->setCV($cv1);
         $blockData1_2->setTemplateSlot($templateSlot1_2);
-        $blockData1_2->setBlock($block1_2);
+        $blockData1_2->setBlockTemplate($block1_2);
         $blockData1_2->setData(json_encode(array(
                 'title' => 'Summary',
                 'text' => 'Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
@@ -249,7 +249,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_3 = new BlockData();
         $blockData1_3->setCV($cv1);
         $blockData1_3->setTemplateSlot($templateSlot1_2);
-        $blockData1_3->setBlock($block1_3);
+        $blockData1_3->setBlockTemplate($block1_3);
         $blockData1_3->setData(json_encode(array(
                 'blocks' => ''
             )));
@@ -258,7 +258,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_3_1 = new BlockData();
         $blockData1_3_1->setParent($blockData1_3);
         $blockData1_3_1->setCV($cv1);
-        $blockData1_3_1->setBlock($block1_3_1);
+        $blockData1_3_1->setBlockTemplate($block1_3_1);
         $blockData1_3_1->setData(json_encode(array(
                 'date_from' => '2014 June',
                 'date_to' => 'present',
@@ -271,7 +271,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_3_2 = new BlockData();
         $blockData1_3_2->setParent($blockData1_3);
         $blockData1_3_2->setCV($cv1);
-        $blockData1_3_2->setBlock($block1_3_1);
+        $blockData1_3_2->setBlockTemplate($block1_3_1);
         $blockData1_3_2->setData(json_encode(array(
                 'date_from' => '2014 June',
                 'date_to' => 'present',
@@ -284,7 +284,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_3_3 = new BlockData();
         $blockData1_3_3->setParent($blockData1_3);
         $blockData1_3_3->setCV($cv1);
-        $blockData1_3_3->setBlock($block1_3_1);
+        $blockData1_3_3->setBlockTemplate($block1_3_1);
         $blockData1_3_3->setData(json_encode(array(
                 'date_from' => '2014 June',
                 'date_to' => 'present',
@@ -297,7 +297,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_4 = new BlockData();
         $blockData1_4->setCV($cv1);
         $blockData1_4->setTemplateSlot($templateSlot1_2);
-        $blockData1_4->setBlock($block1_4);
+        $blockData1_4->setBlockTemplate($block1_4);
         $blockData1_4->setData(json_encode(array(
                 'blocks' => ''
             )));
@@ -306,7 +306,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_4_1 = new BlockData();
         $blockData1_4_1->setParent($blockData1_4);
         $blockData1_4_1->setCV($cv1);
-        $blockData1_4_1->setBlock($block1_4_1);
+        $blockData1_4_1->setBlockTemplate($block1_4_1);
         $blockData1_4_1->setData(json_encode(array(
                 'date_from' => '2014 June',
                 'date_to' => 'present',
@@ -319,7 +319,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_4_2 = new BlockData();
         $blockData1_4_2->setParent($blockData1_4);
         $blockData1_4_2->setCV($cv1);
-        $blockData1_4_2->setBlock($block1_4_1);
+        $blockData1_4_2->setBlockTemplate($block1_4_1);
         $blockData1_4_2->setData(json_encode(array(
                 'date_from' => '2014 June',
                 'date_to' => 'present',
@@ -332,7 +332,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_4_3 = new BlockData();
         $blockData1_4_3->setParent($blockData1_4);
         $blockData1_4_3->setCV($cv1);
-        $blockData1_4_3->setBlock($block1_4_1);
+        $blockData1_4_3->setBlockTemplate($block1_4_1);
         $blockData1_4_3->setData(json_encode(array(
                 'date_from' => '2014 June',
                 'date_to' => 'present',
@@ -345,7 +345,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_5 = new BlockData();
         $blockData1_5->setCV($cv1);
         $blockData1_5->setTemplateSlot($templateSlot1_3);
-        $blockData1_5->setBlock($block1_5);
+        $blockData1_5->setBlockTemplate($block1_5);
         $blockData1_5->setData(json_encode(array(
                 'blocks' => ''
             )));
@@ -354,7 +354,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_5_1 = new BlockData();
         $blockData1_5_1->setParent($blockData1_5);
         $blockData1_5_1->setCV($cv1);
-        $blockData1_5_1->setBlock($block1_5_1);
+        $blockData1_5_1->setBlockTemplate($block1_5_1);
         $blockData1_5_1->setData(json_encode(array(
                 'title' => 'HTML/CSS',
                 'skill' => '8'
@@ -364,7 +364,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_5_2 = new BlockData();
         $blockData1_5_2->setParent($blockData1_5);
         $blockData1_5_2->setCV($cv1);
-        $blockData1_5_2->setBlock($block1_5_1);
+        $blockData1_5_2->setBlockTemplate($block1_5_1);
         $blockData1_5_2->setData(json_encode(array(
                 'title' => 'Photoshop',
                 'skill' => '8'
@@ -374,7 +374,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_5_3 = new BlockData();
         $blockData1_5_3->setParent($blockData1_5);
         $blockData1_5_3->setCV($cv1);
-        $blockData1_5_3->setBlock($block1_5_1);
+        $blockData1_5_3->setBlockTemplate($block1_5_1);
         $blockData1_5_3->setData(json_encode(array(
                 'title' => 'Ilustrator',
                 'skill' => '4'
@@ -384,7 +384,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_5_4 = new BlockData();
         $blockData1_5_4->setParent($blockData1_5);
         $blockData1_5_4->setCV($cv1);
-        $blockData1_5_4->setBlock($block1_5_1);
+        $blockData1_5_4->setBlockTemplate($block1_5_1);
         $blockData1_5_4->setData(json_encode(array(
                 'title' => 'NodeJS',
                 'skill' => '2'
@@ -394,7 +394,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_6 = new BlockData();
         $blockData1_6->setCV($cv1);
         $blockData1_6->setTemplateSlot($templateSlot1_3);
-        $blockData1_6->setBlock($block1_5);
+        $blockData1_6->setBlockTemplate($block1_5);
         $blockData1_6->setData(json_encode(array(
                 'blocks' => ''
             )));
@@ -403,7 +403,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_6_1 = new BlockData();
         $blockData1_6_1->setParent($blockData1_6);
         $blockData1_6_1->setCV($cv1);
-        $blockData1_6_1->setBlock($block1_5_1);
+        $blockData1_6_1->setBlockTemplate($block1_5_1);
         $blockData1_6_1->setData(json_encode(array(
                 'title' => 'Lithuanian',
                 'skill' => '10'
@@ -413,7 +413,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_6_2 = new BlockData();
         $blockData1_6_2->setParent($blockData1_6);
         $blockData1_6_2->setCV($cv1);
-        $blockData1_6_2->setBlock($block1_5_1);
+        $blockData1_6_2->setBlockTemplate($block1_5_1);
         $blockData1_6_2->setData(json_encode(array(
                 'title' => 'English',
                 'skill' => '8'
@@ -423,7 +423,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_6_3 = new BlockData();
         $blockData1_6_3->setParent($blockData1_6);
         $blockData1_6_3->setCV($cv1);
-        $blockData1_6_3->setBlock($block1_5_1);
+        $blockData1_6_3->setBlockTemplate($block1_5_1);
         $blockData1_6_3->setData(json_encode(array(
                 'title' => 'Russian',
                 'skill' => '7'

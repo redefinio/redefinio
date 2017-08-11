@@ -35,10 +35,10 @@ class BlockData
     private $template_slot;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Block", inversedBy="block_datas")
-     * @ORM\JoinColumn(name="block_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="BlockTemplate", inversedBy="block_datas")
+     * @ORM\JoinColumn(name="block_template_id", referencedColumnName="id")
      */
-    private $block;
+    private $blockTemplate;
 
     /**
      * @ORM\OneToMany(targetEntity="BlockData", mappedBy="parent")
@@ -161,13 +161,14 @@ class BlockData
     /**
      * Set block
      *
-     * @param \AppBundle\Entity\Block $block
-     *
+     * @param BlockTemplate|null $blockTemplate
      * @return BlockData
+     * @internal param BlockTemplate $block
+     *
      */
-    public function setBlock(\AppBundle\Entity\Block $block = null)
+    public function setBlockTemplate(\AppBundle\Entity\BlockTemplate $blockTemplate = null)
     {
-        $this->block = $block;
+        $this->blockTemplate = $blockTemplate;
 
         return $this;
     }
@@ -175,11 +176,11 @@ class BlockData
     /**
      * Get block
      *
-     * @return \AppBundle\Entity\Block
+     * @return \AppBundle\Entity\BlockTemplate
      */
-    public function getBlock()
+    public function getBlockTemplate()
     {
-        return $this->block;
+        return $this->blockTemplate;
     }
 
     /**
