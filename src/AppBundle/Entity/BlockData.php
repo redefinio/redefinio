@@ -60,7 +60,6 @@ class BlockData
 
     /**
      * @ORM\ManyToMany(targetEntity="CvData", inversedBy="block_datas")
-     * @ORM\JoinTable(name="blockdata_cvdata")
      */
     private $cv_datas;
 
@@ -242,6 +241,33 @@ class BlockData
     }
 
     /**
+     * @param \AppBundle\Entity\CvData $cvData
+     * @return BlockData
+     */
+    public function addCvData(\AppBundle\Entity\CvData $cvData) {
+        $this->cv_datas[] = $cvData;
+
+        return $this;
+    }
+
+    /**
+     * @param \AppBundle\Entity\CvData $cvData
+     *
+     */
+    public function removeCvData(\AppBundle\Entity\CvData $cvData) {
+        $this->cv_datas->removeElement($cvData);
+    }
+
+    /**
+     * Get cv data
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCvDatas() {
+        return $this->cv_datas;
+    }
+
+    /**
      * Set parent
      *
      * @param \AppBundle\Entity\BlockData $parent
@@ -288,26 +314,4 @@ class BlockData
     {
         return $this->position;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getCvDatas()
-    {
-        return $this->cv_datas;
-    }
-
-    /**
-     * @param mixed $cv_datas
-     *
-     * @return BlockData
-     */
-    public function setCvDatas($cv_datas)
-    {
-        $this->cv_datas = $cv_datas;
-
-        return $this;
-    }
-
-
 }
