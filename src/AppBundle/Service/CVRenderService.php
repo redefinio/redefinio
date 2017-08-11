@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service;
 
+use Doctrine\ORM\PersistentCollection;
 use \Twig_Loader_Array;
 use \Twig_Loader_Chain;
 
@@ -25,10 +26,15 @@ class CVRenderService {
 		// each TemaplteSlot acts as a block in parent template
 		foreach($cv->getTemplate()->getTemplateSlots() as $slot) {
 			$templateString .= '{% block '.$slot->getWildcard().' %}';
+			$blocks = $slot->getBlocks();
 			// traverse through each slots blocks and fill it with data
 			foreach ($slot->getBlockDatas() as $data) {
-				$template = $this->twig->createTemplate($data->getBlock()->getHtmlSource());
-				$parameters = json_decode($data->getData(), true);
+                $template = $this->twig->createTemplate($data->getBlock()->getHtmlSource());
+                if (count($data->getCvDatas()) > 0) {
+                    $parameters = $this->decodeData($data->getCvDatas());
+                } else {
+                    $parameters = json_decode($data->getData(), true);
+                }
 				// pass BlockData object itself to the template in order to print out its id or other needed attributes
 				$parameters['block_data'] = $data;
 				// if data has embedded child data, generate template for each of them and include in parent template
@@ -49,4 +55,14 @@ class CVRenderService {
 		$template = $this->twig->createTemplate($templateString);
 		return $template->render(array());
 	}
+
+
+	private function decodeData(PersistentCollection $data) {
+        $parameters = [];
+        foreach($data as $parameter) {
+            $parameters = array_merge($parameters, json_decode($parameter->getData(), true));
+        }
+
+        return $parameters;
+    }
 }
