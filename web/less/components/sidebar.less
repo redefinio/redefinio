@@ -1,152 +1,133 @@
-/**
- * Sidebar component style.
- */
-
 .sidebar {
-  position: fixed;
-  top: 110px;
-  right: 0;
-  bottom: 0;
-  width: 280px;
-  background: white;
-  border-left: 1px solid #d1d6db;
+    width: 280px;
+    top: 110px;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    background: @white;
+    border-left: 1px solid #d1d6db;
+    
+    .sidebar-block {
+        height: 50%;
+        position: relative;
+        padding: 39px 0 0 0;
+        border-bottom: 1px solid #D1D6DB;
 
-  .check-icon {
-    position: absolute;
-    right: 7px;
-    bottom: 7px;
-    width: 25px;
-    height: 25px;
-    background: #1dce79;
-    display: block;
-    -webkit-border-radius: 25px;
-    -moz-border-radius: 25px;
-    border-radius: 25px;
-
-    img {
-      position: absolute;
-      top: 7px;
-      left: 0;
-      right: 0;
-      margin: 0 auto;
-      width: 16px;
-    }
-  }
-
-  .price-indicator {
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 40px 40px 0 0;
-    border-color: #1dce78 transparent transparent transparent;
-
-    .price-indicator-title {
-      display: block;
-      margin-top: -25px;
-      margin-left: 4px;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: white;
-      -webkit-transform: rotate(-45deg);
-      -moz-transform: rotate(-45deg);
-      -ms-transform: rotate(-45deg);
-      -o-transform: rotate(-45deg);
-      transform: rotate(-45deg);
-    }
-  }
-
-  .sidebar-block {
-    position: relative;
-    padding-top: 39px;
-    height: 50%;
-    border-bottom: 1px solid #D1D6DB;
-
-    .sidebar-header {
-      position: absolute;
-      top: 0;
-      margin: 0;
-      padding: 0 11px;
-      width: 100%;
-      background-color: #E7EAED;
-      border-bottom: 1px solid #D1D6DB;
-      line-height: 38px;
-      display: block;
-      color: #777777;
-      text-transform: uppercase;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .templates-list, .themes-list {
-      padding-top: 15px;
-      overflow-y: scroll;
-      max-height: 100%;
-    }
-
-    &.sidebar-templates {
-      .templates-list {
-        .templates-listitem {
-          float: left;
-          padding: 0 0 15px 15px;
-
-          .template {
-            position: relative;
-            width: 117px;
-            height: 117px;
-            display: block;
-            cursor: pointer;
-            -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
-            -moz-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
-            box-shadow: 0 0 7px rgba(0, 0, 0, .1);
-
-            &:hover {
-              -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, .2);
-              -moz-box-shadow: 0 0 7px rgba(0, 0, 0, .2);
-              box-shadow: 0 0 7px rgba(0, 0, 0, .2);
-            }
-
-            .template-image {
-              width: 100%;
-            }
-          }
+        .sidebar-header {
+            width: 100%;
+            top: 0;
+            margin: 0;
+            padding: 0 11px;
+            position: absolute;
+            line-height: 38px;
+            background-color: #E7EAED;
+            border-bottom: 1px solid #D1D6DB;
+            color: #777777;
+            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: 700;
         }
-      }
-    }
 
-    &.sidebar-themes {
-      .themes-listitem {
-        float: left;
-        padding: 0 0 15px 15px;
+        .templates-list,
+        .themes-list {
+            padding-top: 15px;
+            overflow-y: scroll;
+            max-height: 100%;
+            
+            .templates-listitem,
+            .themes-listitem {
+                float: left;
+                padding: 0 0 15px 15px;
+                cursor: pointer;
+                
+                .check-icon {
+                    width: 25px;
+                    height: 25px;
+                    right: 7px;
+                    bottom: 7px;
+                    position: absolute;            
+                    display: block;
+                    background: @green;
+                    .border-radius(25px);
 
-        .theme-container {
-          position: relative;
-          width: 73px;
-          height: 73px;
-          padding-top: 10px;
-          cursor: pointer;
-
-          .theme {
-            margin: 0 auto;
-            padding-top: 7px;
-            width: 57%;
-            height: 89%;
-            background: white;
-            -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
-            -moz-box-shadow: 0 0 7px rgba(0, 0, 0, .1);
-            box-shadow: 0 0 7px rgba(0, 0, 0, .1);
-
-            .theme-palette {
-              margin: 0 auto;
-              margin-bottom: 7px;
-              width: 80%;
-              height: 23%;
-              display: block;
+                    img {
+                        width: 16px;
+                        top: 7px;
+                        right: 0;
+                        left: 0;
+                        position: absolute;
+                        margin: 0 auto;
+                    }
+                }
             }
-          }
         }
-      }
+
+        &.sidebar-templates {
+            .templates-list {
+                .templates-listitem {
+                    .template {
+                        position: relative;
+                        width: 117px;
+                        height: 117px;
+                        .box-shadow(0 0 7px rgba(0, 0, 0, .1));
+
+                        &:hover {
+                            .box-shadow(0 0 7px rgba(0, 0, 0, .2));
+                        }
+                        
+                        .price-indicator {
+                            position: absolute;
+                            width: 0;
+                            height: 0;
+                            border-style: solid;
+                            border-width: 40px 40px 0 0;
+                            border-color: @green transparent transparent transparent;
+
+                            .price-indicator-title {
+                                display: block;
+                                margin-top: -25px;
+                                margin-left: 4px;
+                                font-size: 11px;
+                                font-weight: 700;
+                                text-transform: uppercase;
+                                color: @white;
+                                .transform(rotate(-45deg));
+                            }
+                        }
+                        
+                        .template-image {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+
+        &.sidebar-themes {
+            .themes-listitem {
+                .theme-container {
+                    width: 73px;
+                    height: 73px;
+                    position: relative;
+                    padding-top: 10px;
+
+                    .theme {
+                        width: 57%;
+                        height: 89%;
+                        margin: 0 auto;
+                        padding-top: 7px;
+                        background: @white;
+                        .box-shadow(0 0 7px rgba(0, 0, 0, .1));
+
+                        .theme-palette {
+                            width: 80%;
+                            height: 23%;
+                            margin: 0 auto 7px;
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
     }
-  }
 }
