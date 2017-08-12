@@ -1,94 +1,74 @@
 #status-bar {
-  position: fixed;
-  overflow: hidden;
-  z-index: 9998;
-  top: 71px;
-  left: 0;
-  right: 280px;
-  height: 39px;
-  line-height: 39px;
-  font-weight: 600;
-  font-size: 13px;
-  color: #fff;
-  transition: top 0.25s ease-in-out;
+    top: 71px;
+    left: 0;
+    right: 280px;
+    position: fixed;
+    z-index: 9998;
+    line-height: 39px;
+    font-weight: 600;
+    font-size: 13px;
+    color: @white;
+    .transition(top 0.25s ease-in-out);
 
-  &.is-active {
-    top: 110px;
-    .status-bar-inner-wrapper {
+    &.is-active {
+        top: 110px;
     }
-  }
 
-  &.is-error {
+    &.is-error {
+        .status-bar-inner-wrapper {
+            background: @red;
+        }
+
+        .action {
+            background: #edba1f;
+        }
+    }
+
     .status-bar-inner-wrapper {
-      background: #e45741;
+        background: @grey;
+        padding: 0 15px;
     }
 
     .action {
-      background: #edba1f;
-    }
-  }
-
-  .status-bar-inner-wrapper {
-    background: #b5bfc7;
-    padding: 0 15px;
-  }
-
-  .message {}
-
-  .action {
-    background: #98a0a6;
-    padding: 4px 8px;
-    border-radius: 3px;
-    margin-left: 8px;
-    border: 0;
-    line-height: normal;
-  }
-
-  .close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    cursor: pointer;
-    width: 39px;
-    height: 39px;
-    opacity: 1;
-
-    &::before,
-    &::after {
-      content: '';
-      position: absolute;
-      border-radius: 2px;
-      transform: rotate(45deg);
-      display: block;
-      background: #fff;
+        background: @border-focus;
+        .border-radius(3px);
+        margin-left: 8px;
+        padding: 4px 8px;
+        border: 0;
+        line-height: normal;
     }
 
-    &::before {
-      top: 18px;
-      left: 9px;
-      width: 20px;
-      height: 2px;
+    .close {
+        width: 39px;
+        height: 39px;
+        top: 0;
+        right: 0;
+        position: absolute;
+        .opacity(1);
+        cursor: pointer;
+
+        &::after,
+        &::before {
+            content: '';
+            position: absolute;
+            .border-radius(2px);
+            .transform(rotate(45deg));
+            display: block;
+            background: @white;
+        }
+
+        &::before {
+            width: 20px;
+            height: 2px;
+            top: 18px;
+            left: 9px;
+        }
+
+        &::after {
+            width: 2px;
+            height: 20px;
+            top: 9px;
+            left: 18px;
+        }
     }
-
-    &::after {
-      top: 9px;
-      left: 18px;
-      width: 2px;
-      height: 20px;
-    }
-  }
-}
-
-@keyframes toggleStatusBar {
-  0% {
-    transform: translateY(0px) !important;
-  }
-
-  50% {
-    transform: translateY(-39px) !important;
-  }
-
-  100% {
-    transform: translateY(0px) !important;
-  }
 }

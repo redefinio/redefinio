@@ -1,166 +1,76 @@
 .topbar {
-  width: 100%;
-  height: 50px;
-  background: @baseColor;
-  line-height: 50px;
-  font-size: 13px;
-  color: #ffcfcf;
-
-  a {
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-
-    &:hover {
-      color: rgba(255, 255, 255, 1);
-    }
-  }
-
-  .topbar-logo {
-    padding: 0 20px;
-    background: rgba(0, 0, 0, .05);
-    float: left;
-
-    img {
-      width: 100px;
-    }
-  }
-
-  .topbar-menu {
-    margin: 0 0 0 30px;
-    padding: 0;
-    list-style: none;
-    float: left;
+    width: 100%;
     height: 50px;
+    background: @base-color;
+    line-height: 50px;
+    font-size: 13px;
 
-    .topbar-listitem {
-      float: left;
-      margin-left: 50px;
-
-      &:first-child {
-        margin: 0;
-      }
-
-      a {
+    a {
         font-size: 14px;
-      }
+        color: rgba(255, 255, 255, 0.8);
+
+        &:hover {
+            color: rgba(255, 255, 255, 1);
+            text-decoration: none;
+        }
     }
 
-    @media (max-width: 767px) {
-      display: none;
+    .topbar-logo {
+        padding: 0 20px;
+        background: rgba(0, 0, 0, .05);
+        float: left;
+
+        img {
+            width: 100px;
+        }
     }
-  }
+
+    .topbar-menu {
+        margin: 0 0 0 30px;
+        padding: 0;
+        list-style: none;
+        float: left;
+        height: 50px;
+
+        .topbar-listitem {
+            float: left;
+            margin-left: 50px;
+
+            &:first-child {
+                margin: 0;
+            }
+        }
+        @media (max-width: 767px) {
+            display: none;
+        }
+    }
 }
 
 .topbar-right-menu {
-  margin: 0 30px 0 0;
-  padding: 0;
-  float: right;
-  list-style: none;
+    margin: 0 30px;
+    padding: 0;
+    float: right;
+    list-style: none;
 
-  li {
-    float: left;
-    margin-left: 35px;
+    li {
+        float: left;
+        margin-left: 35px;
 
-    &:first-child {
-      margin: 0;
+        &:first-child {
+            margin: 0;
+        }
+        
+        a {
+            display: block;
+            padding-left: 30px;    
+        }
+
+        &.topbar-settings {
+            background: url("@{images}/icon-settings.png") no-repeat left center / auto 20px;
+        }
+
+        &.topbar-logout {
+            background: url("@{images}/icon-logout.png") no-repeat left center / auto 20px;
+        }
     }
-
-    a {
-      font-size: 14px;
-    }
-
-    &.topbar-user {
-      img {
-        width: 35px;
-        height: 35px;
-        margin-left: 15px;
-      }
-    }
-
-    &.topbar-settings {
-      margin-top: 15px;
-      
-      a {
-        display: block;
-        line-height: 20px;
-        padding-left: 30px;
-        background: url(../img/icon-settings.png) no-repeat left center / auto 20px;
-      }
-    }
-
-    &.topbar-logout {
-      margin-top: 15px;
-      
-      a {
-        display: block;
-        line-height: 20px;
-        padding-left: 30px;
-        background: url(../img/icon-logout.png) no-repeat left center / auto 20px;
-      }
-    }
-  }
-}
-
-.navbar {
-  position: relative;
-}
-
-.edit-url-group {
-  // width: 350px;
-  position: absolute;
-  left: 50%;
-  transform: translate( -50%, -50%);
-  top: 50%;
-
-  .edit-url {
-    // width: 250px;
-    height: 36px;
-    float: left;
-    border: 2px solid #b5bfc7;
-    padding: 0 10px;
-    line-height: 32px;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-    border-right: 0;
-  }
-
-  .edit-url-btn {
-    // width: 100px;
-    float: left;
-    margin: 0 !important;
-    background-color: #b5bfc7;
-    color: #fff;
-    border-left: 0;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-
-  .text-copied {
-    margin-left: 5px;
-    position: absolute;
-    top: 30px;
-    left: 100%;
-    opacity: 0;
-
-    img {
-      width: 8px;
-      margin-left: 4px;
-    }
-    
-    &.active {
-      animation: copied 0.5s linear;
-    }
-  }
-}
-
-@keyframes copied {
-  50% {
-    top: 7px;
-    opacity: 1;
-  }
-
-  100% {
-    top: -16px;
-    opacity: 0;
-  }
 }

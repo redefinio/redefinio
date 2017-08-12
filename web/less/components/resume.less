@@ -1,8 +1,5 @@
-body {
-  padding-top: 110px !important;
-}
-
 .resume-container {
+  margin: 20px 0 0 0;
   padding: 38px;
 
   &.resume-editing {
@@ -13,8 +10,7 @@ body {
     }
 
     .container {
-      max-width: 1170px;
-      width: 100% !important;
+      width: 100%;
     }
 
     .editable-block {
@@ -24,27 +20,14 @@ body {
 
   &:not(.resume-editing) {
     .editable-block {
-      border-color: transparent !important;
+      border-color: transparent;
     }
   }
 }
 
 .resume {
-  background: white;
-  -webkit-box-shadow: 0 0 10px #e5e9eb;
-  -moz-box-shadow: 0 0 50px #e5e9eb;
-  box-shadow: 0 0 50px #e5e9eb;
+  background: @white;
+  .box-shadow(0 0 50px #e5e9eb);
   max-width: 1170px;
   margin: 0 auto;
-}
-
-.title {
-  font-size: 18px;
-  padding: 0 !important;
-  margin: 0 0 24px !important;
-}
-
-.item p {
-  padding: 0 0 0 39px;
-  margin: 20px 0 35px 0;
 }

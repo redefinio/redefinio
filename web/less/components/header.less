@@ -1,10 +1,109 @@
-/**
- * Header component style.
- */
-
 .header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 9999;
+    width: 100%;
+    top: 0;
+    position: fixed;
+    z-index: 9999;
+
+    .navbar {
+        padding: 0 30px;
+        line-height: 60px;
+        background: @white;
+        .border-radius(0);
+        border-bottom: 1px solid #d3d8dd;
+        border: 0;
+
+        .navbar-title {
+            margin: 0;
+            float: left;
+            line-height: 60px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .navbar-actions {
+            float: right;
+
+            .btn {
+                margin: 0 0 0 10px;
+
+                &:first-child {
+                    margin: 0;
+                }
+            }
+        }
+
+        .btn {
+            height: 36px;
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 22px;
+
+            &:hover {
+                .opacity(0.8);
+            }
+
+            &.navbar-save {
+                background: @green;
+                color: @white;
+            }
+
+            &.navbar-cancel {
+                background: @white;
+                border: 2px solid @grey;
+                color: @grey;
+            }
+
+            &.navbar-download {
+                background: @base-color;
+                color: @white;
+            }
+
+            &.navbar-edit {
+                background: @grey;
+                color: @white;
+            }
+        }
+        
+        .edit-url-group {
+            top: 50%;
+            left: 50%;
+            position: absolute;
+            .transform(translate(-50%, -50%));
+
+            .edit-url {
+                height: 36px;
+                float: left;
+                padding: 0 10px;
+                border: 2px solid @grey;
+                border-right: 0;
+                .border-radius(4px 0 0 4px);
+            }
+
+            .edit-url-btn {
+                float: left;
+                background-color: @grey;
+                color: @white;
+                border-left: 0;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+
+            .text-copied {
+                margin-left: 5px;
+                position: absolute;
+                top: 30px;
+                left: 100%;
+                opacity: 0;
+
+                img {
+                    width: 8px;
+                    margin-left: 4px;
+                }
+
+                &.active {
+                    animation: copied 0.5s linear;
+                }
+            }
+        }
+    }
 }
