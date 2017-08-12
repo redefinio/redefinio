@@ -1,9 +1,30 @@
-<li>
-    <div class="icon"></div>
-    <div class="content">
-        <div class="date"><span data-key="date_from" data-placeholder="Date from">{{ date_from }}</span> - <span
-                    data-key="date_to" data-placeholder="Date to">{{ date_to }}</span></div>
-        <h3 class="position" data-key="position" data-placeholder="Position">{{ position }}</h3>
-        <h3 class="subtitle" data-key="company" data-placeholder="Company" data-is-child="true">{{ company }}</h3><h4
-                data-placeholder="Description" data-key="description">{{ description }}</h4></div>
-</li>
+{% extends 'templates/default.html.twig' %}{% block top_header %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12" data-zone="static">
+                <div id="top">
+                    <div class="item" data-block-id="1" data-block-type="0" data-is-draggable="false"
+                         data-is-editable="true" data-is-deletable="false">
+                        <div class="big-title pull-left"><h1 class="title"><span data-key="first_name"
+                                                                                 data-placeholder="John">Erikas</span>
+                                <span data-key="last_name" data-placeholder="Doe">Mališauskas</span></h1>
+                            <h3 class="subtitle" data-key="title" data-placeholder="Your title">UI/UX designer</h3>
+                        </div>
+                        <div class="contacts pull-right"><a href="mailto:erikas@malisauskas.lt" data-key="email"
+                                                            data-placeholder="john@example.com">erikas@malisauskas.lt</a>
+                            <a href="tel:+370 (629) 26 815" data-key="phone" data-placeholder="Your phone">+370 (629) 26
+                                815</a></div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>{% endblock %}{% block main_left_info %}
+<div class="item" data-block-id="2" data-block-type="1" data-is-draggable="true" data-is-editable="true"
+     data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-user"></i><span data-key="title"
+                                                                                              data-placeholder="Title">Summary go on</span>
+    </h2>
+    <p data-key="text" data-placeholder="Text goes here">Wohhhoo Vivamus sagittis lacus vel augue laoreet rutrum
+        faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis
+        ornare vel eu leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+</div>

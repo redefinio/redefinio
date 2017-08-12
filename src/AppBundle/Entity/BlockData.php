@@ -51,12 +51,6 @@ class BlockData
      */
     private $parent;
 
-    /**
-     * @var data JSON array of used variable names and their values.
-     *
-     * @ORM\Column(name="data", type="text")
-     */
-    private $data;
 
     /**
      * @ORM\ManyToMany(targetEntity="CvData", inversedBy="block_datas")
@@ -192,19 +186,8 @@ class BlockData
      */
     public function setData($data)
     {
-        $this->data = $data;
 
         return $this;
-    }
-
-    /**
-     * Get data
-     *
-     * @return string
-     */
-    public function getData()
-    {
-        return $this->data;
     }
 
     /**

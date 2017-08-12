@@ -2,6 +2,8 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\BlockData;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
 use \Twig_Loader_Array;
 use \Twig_Loader_Chain;
@@ -29,11 +31,8 @@ class CVRenderService {
 			// traverse through each slots blocks and fill it with data
 			foreach ($slot->getBlockDatas() as $data) {
                 $template = $this->twig->createTemplate($data->getBlockTemplate()->getHtmlSource());
-                if (count($data->getCvDatas()) > 0) {
-                    $parameters = $this->decodeData($data->getCvDatas());
-                } else {
-                    $parameters = json_decode($data->getData(), true);
-                }
+
+                $parameters = $this->getParameters($data);
 				// pass BlockData object itself to the template in order to print out its id or other needed attributes
 				$parameters['block_data'] = $data;
 				// if data has embedded child data, generate template for each of them and include in parent template
@@ -41,7 +40,7 @@ class CVRenderService {
 					$childrenString = '';
 					foreach ($data->getChildren() as $child) {
 						$childTemplate = $this->twig->createTemplate($child->getBlockTemplate()->getHtmlSource());
-						$childrenString .= $childTemplate->render(json_decode($child->getData(), true));
+						$childrenString .= $childTemplate->render($this->getParameters($child));
 					}
 					// if template is parent it must define 'blocks' variable where all children template will be inserted.
 					$parameters['blocks'] = $childrenString;
@@ -55,13 +54,30 @@ class CVRenderService {
 		return $template->render(array());
 	}
 
+	private function getParameters(BlockData $data) {
+        return $this->decodeData($data->getCvDatas());
+    }
 
-	private function decodeData(PersistentCollection $data) {
-        $parameters = [];
-        foreach($data as $parameter) {
-            $parameters = array_merge($parameters, json_decode($parameter->getData(), true));
+    private function decodeData($data) {
+        if ($data instanceof PersistentCollection) {
+            $parameters = $this->decodeCollection($data);
+        } else {
+            $parameters = $this->decodeString($data);
         }
 
         return $parameters;
+    }
+
+    private function decodeCollection(PersistentCollection $data) {
+        $parameters = [];
+        foreach($data as $parameter) {
+            $parameters = array_merge($parameters, $this->decodeString($parameter->getData()));
+        }
+
+        return $parameters;
+    }
+
+    private function decodeString($json) {
+        return json_decode($json, true);
     }
 }
