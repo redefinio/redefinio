@@ -3,10 +3,7 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\BlockData;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\PersistentCollection;
-use \Twig_Loader_Array;
-use \Twig_Loader_Chain;
 
 /**
  * CVRenderService
@@ -55,17 +52,7 @@ class CVRenderService {
 	}
 
 	private function getParameters(BlockData $data) {
-        return $this->decodeData($data->getCvDatas());
-    }
-
-    private function decodeData($data) {
-        if ($data instanceof PersistentCollection) {
-            $parameters = $this->decodeCollection($data);
-        } else {
-            $parameters = $this->decodeString($data);
-        }
-
-        return $parameters;
+        return $this->decodeCollection($data->getCvDatas());
     }
 
     private function decodeCollection(PersistentCollection $data) {
