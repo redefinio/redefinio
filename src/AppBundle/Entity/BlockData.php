@@ -41,7 +41,7 @@ class BlockData
     private $blockTemplate;
 
     /**
-     * @ORM\OneToMany(targetEntity="BlockData", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="BlockData", mappedBy="parent", cascade={"persist"})
      */
     private $children;
 
@@ -53,7 +53,7 @@ class BlockData
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="CvData", inversedBy="block_datas", fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="CvData", inversedBy="block_datas", cascade={"persist"}, fetch="EAGER")
      */
     private $cv_datas;
 

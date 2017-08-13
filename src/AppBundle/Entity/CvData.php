@@ -24,7 +24,7 @@ class CvData {
 
     /**
      * @var string
-     * @ORM\Column(name="field", type="text")
+     * @ORM\Column(name="field", type="text", nullable=true)
      */
     private $field;
 
@@ -97,6 +97,17 @@ class CvData {
     public function setBlockDatas($block_datas)
     {
         $this->block_datas = $block_datas;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $block
+     * @return ArrayCollection
+     */
+    public function addBlock($block)
+    {
+        $this->block_datas[] = $block;
 
         return $this;
     }
