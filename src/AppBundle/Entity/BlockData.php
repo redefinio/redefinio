@@ -53,7 +53,7 @@ class BlockData
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="CvData", inversedBy="block_datas")
+     * @ORM\ManyToMany(targetEntity="CvData", inversedBy="block_datas", fetch="EAGER")
      */
     private $cv_datas;
 
