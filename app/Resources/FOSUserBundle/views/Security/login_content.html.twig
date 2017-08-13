@@ -26,9 +26,19 @@
                     {% endif %}
                 </form>
             </div>
+            <div class="inner">
+                <div class="text-center">
+                    Forgot a password? <a href="{{ path('fos_user_resetting_request') }}">Reset it!</a>
+                </div>    
+            </div>
+            
         </div>
     </div>
-    <div class="text-center">
-        Don't have an account? <a href="{{ path("fos_user_registration_register") }}">Sign up!</a>
+    <div class="block block--footer">
+        <div class="row">
+            <div class="inner text-center">
+                Don't have an account? <a href="{{ path("fos_user_registration_register") }}">Sign up!</a>    
+            </div>
+        </div>
     </div>
 </div>

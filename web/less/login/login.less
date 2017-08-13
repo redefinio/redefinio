@@ -31,8 +31,12 @@ a {
         .border-radius(5px);
         background: @white;
         padding: 0 15px;
-        margin: 100px 0 15px;
+        margin: 100px 0 15px 0;
         overflow: hidden;
+
+        &--footer {
+            margin: 20px 0 0 0;
+        }
 
         .form-header {
             background: @base-color url("@{images}/logo.png") no-repeat center;
@@ -41,15 +45,24 @@ a {
         }
 
         .inner {
-            padding: 25px;
+            padding: 15px 25px;
 
             .error {
                 background: @error;
                 border: 1px solid @error-border;
-                color: @red;
+                color: @error-border;
                 margin: 25px 0;
-                padding: 15px;
-                .border-radius(3px);
+                padding: 20px;
+                .border-radius(5px);
+            }
+            
+            .success {
+                background: @success;
+                border: 1px solid @success-border;
+                color: @success-border;
+                margin: 25px 0;
+                padding: 20px;
+                .border-radius(5px);
             }
         }
 
