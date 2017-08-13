@@ -3,29 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <link rel="stylesheet" href="assets/css/main.css">
     <link href="{{ asset('templates/standart/css/main.css') }}" rel="stylesheet">
 </head>
 
 <body>
-<div class="container">
+<div class="container" id="main-wrap">
     <div class="wrapper">
-        <div class="sidebar">
-            <div class="person">
-                <div class="photo">
-                    <img src="assets/img/photo.jpg" alt="">
-                </div>
-                <div class="name">Ignė Stalmokaitė</div>
-                <div class="statusquo">Senior PHP Developer</div>
-            </div>
-
-            <div class="group item">
-                <div class="group title">Key profile</div>
-                <div class="group content">
-                    Specialities: event management, report drafting, internship at the Permanent International Secretariat of the Council of the Baltic Sea States, experienced networker in multi-cultural environment, studying, working and volunteering activities in Lithuania, Finland, Sweden and Poland,  result-driven, Can-Do attitude, EU Port Policy analysis. Research interests: maritime affairs; marine environmental governance, sustainable development, ports and seaport innovations.
-                </div>
-            </div>
-
+        <div class="standart-sidebar"  data-zone="main_left_info">
+            {% block main_left_info %}{% endblock %}
             <div class="group item">
                 <div class="group title">Skills</div>
                 <div class="group content">
@@ -108,6 +93,7 @@
             </div>
         </div>
         <div class="content">
+            {% block main_right_info %}{% endblock %}
             <div class="group item">
                 <div class="group title">Working Experience</div>
                 <div class="group content">
