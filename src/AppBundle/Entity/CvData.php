@@ -23,6 +23,12 @@ class CvData {
     private $id;
 
     /**
+     * @var string
+     * @ORM\Column(name="field", type="text")
+     */
+    private $field;
+
+    /**
      * @ORM\ManyToOne(targetEntity="CV", inversedBy="cv_datas")
      * @ORM\JoinColumn(name="cv_id", referencedColumnName="id")
      */
@@ -114,7 +120,21 @@ class CvData {
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getField()
+    {
+        return $this->field;
+    }
 
+    /**
+     * @param mixed $field
+     */
+    public function setField($field)
+    {
+        $this->field = $field;
+    }
 
 
 }
