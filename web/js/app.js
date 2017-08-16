@@ -3,7 +3,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 document.addEventListener("DOMContentLoaded", function (e) {
-  loadTemplate();
+  loadTemplate(window.templateId);
 });
 
 $('.edit-url-btn').on('click', function () {
@@ -20,16 +20,20 @@ $('.edit-url-btn').on('click', function () {
     }, 500);
   } catch (err) {}
 });
+$('.template').on('click', function (evebt) {
+  var templateId = $(event.target).parent('.template').data('templateId');
+  loadTemplate(templateId);
+});
 
-var loadTemplate = function loadTemplate() {
-  API.getCv(function (data) {
+var loadTemplate = function loadTemplate(templateId) {
+  API.getCv(templateId, function (data) {
     var domParser = new DOMParser();
     var template = domParser.parseFromString(data, "text/html");
     var templateHtml = template.getElementById('main-wrap');
     var templateStyles = template.getElementsByTagName('link');
 
     //Add template HTML
-    $('#template').prepend(templateHtml);
+    $('#template').html(templateHtml);
 
     //Add template styles
     $('head').append(templateStyles);
@@ -471,12 +475,8 @@ var Block = function () {
         }
       }
 
-      // console.log($(this._element).find('.skills'))
-
-
-      var sliders = $(this._element).find('.skills'); //.after(slider);
+      var sliders = $(this._element).find('.skills');
       for (var _i7 = 0; _i7 < sliders.length; _i7++) {
-        // console.log($(sliders[i]).parent().find('.slider').length)
         if ($(sliders[_i7]).parent().find('.slider').length === 0) {
           var slider = document.createElement('div');
           slider.classList.add('slider');
@@ -488,12 +488,7 @@ var Block = function () {
             value: value,
             slide: function slide(event, ui) {
               var value = ui.value;
-              console.log(ui);
-              console.log("Event");
-              console.log(event);
-              $(ui).addClass("hello");
               $(this).parent(".skills-group").attr("data-value", ui.value);
-              console.log($(this).parent(".skills-group"));
             }
           });
 
@@ -522,17 +517,16 @@ var Block = function () {
           if (data['fields']['blocks'] !== undefined) {
             var keysCount = $(this._element).find('[data-key="blocks"]').find('[data-key]');
             var sameKeysCount = $(this._element).find('[data-key="blocks"]').find('[data-key="' + keysCount[0].getAttribute('data-key') + '"]');
-            // console.log(keysCount.length, sameKeysCount.length);
+
             var obj = {};
             for (var j = 0; j < keysCount.length / sameKeysCount.length; j++) {
               var dataValue = editableElements[_i8 + j].getAttribute('data-value') ? editableElements[_i8 + j].getAttribute('data-value') : editableElements[_i8 + j].innerHTML;
               var dataKey = editableElements[_i8 + j].getAttribute('data-key');
               obj[dataKey] = dataValue;
-              // console.log(i, j);
             }
 
             _i8 += keysCount.length / sameKeysCount.length - 1;
-            // console.log(obj);
+
             data['fields']['blocks'].push(obj);
           } else {
             data['fields'][editableElements[_i8].getAttribute('data-key')] = editableElements[_i8].innerHTML;
@@ -548,7 +542,6 @@ var Block = function () {
         }
       }
 
-      console.log(data);
       API.saveBlock(data, function () {});
 
       this._toggleEditing();
@@ -578,9 +571,10 @@ var Block = function () {
 ;
 
 var API = {
-  getCv: function getCv(cb) {
+
+  getCv: function getCv(templateId, cb) {
     $.ajax({
-      url: window.templateUrl,
+      url: '' + window.templateUrl + templateId + '/template',
       success: function success(data) {
         cb(data);
       },

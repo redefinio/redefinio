@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", (e) => {
-  loadTemplate();
+  loadTemplate(window.templateId);
 });
 
 $('.edit-url-btn').on('click', () => {
@@ -16,16 +16,20 @@ $('.edit-url-btn').on('click', () => {
     }, 500);
   } catch (err) {}
 });
+$('.template').on('click', (evebt) => {
+  let templateId = $(event.target).parent('.template').data('templateId');
+  loadTemplate(templateId);
+});
 
-let loadTemplate = () => {
-  API.getCv((data) => {
+let loadTemplate = (templateId) => {
+  API.getCv(templateId, (data) => {
     let domParser = new DOMParser();
     let template = domParser.parseFromString(data, "text/html");
     let templateHtml = template.getElementById('main-wrap');
     let templateStyles = template.getElementsByTagName('link');
 
     //Add template HTML
-    $('#template').prepend(templateHtml);
+    $('#template').html(templateHtml);
 
     //Add template styles
     $('head').append(templateStyles);
@@ -493,9 +497,10 @@ class Block {
 };
 
 const API = {
-  getCv: (cb) => {
+
+  getCv: (templateId, cb) => {
     $.ajax({
-      url: window.templateUrl,
+      url: `${window.templateUrl}${templateId}/template`,
       success: (data) => {
         cb(data);
       },

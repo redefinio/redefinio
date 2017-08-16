@@ -140,31 +140,6 @@ class ApiController extends Controller
                 $this->updateCollection($data, $cv, $formData);
                 break;
         }
-        
-        // validuoti gautus duomenis
-//        $formData = $request->get('fields', array());
-//        if (isset($formData['blocks']) && (
-//            $block_type == BlockTemplate::TYPE_SKILLS ||
-//            $block_type == BlockTemplate::TYPE_EXPERIENCE ||
-//            $block_type == BlockTemplate::TYPE_EDUCATION ||
-//            $block_type == BlockTemplate::TYPE_CERTIFICATES
-//        )) {
-//            $block_child = $em->getRepository('AppBundle:Block')->createQueryBuilder('b')
-//                ->where('b.parent = :parent')
-//                ->andWhere('b.template = :template')
-//                ->setParameter('parent', $block)
-//                ->setParameter('template', $cv->getTemplate())
-//                ->getQuery()->getOneOrNullResult();
-//            if (!$block_child) return new Response(json_encode(array('error' => 'Block child not found for parent - '.$block->getId())), Response::HTTP_NOT_FOUND);
-//            foreach($formData['blocks'] as $inner_data) {
-//                $data_child = new BlockData();
-//                $data_child->setCv($cv);
-//                $data_child->setParent($data);
-//                $data_child->setBlockTemplate($block_child);
-//                $data_child->setData(json_encode($inner_data));
-//                $em->persist($data_child);
-//            }
-//        }
 
         $em->persist($data);
         $em->flush();
@@ -292,6 +267,7 @@ class ApiController extends Controller
 
         return $collection;
     }
+
 
     private function initData($block, $cv) {
 
