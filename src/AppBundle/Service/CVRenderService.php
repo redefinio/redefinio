@@ -3,6 +3,7 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\BlockData;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\PersistentCollection;
 
 /**
@@ -15,15 +16,16 @@ class CVRenderService {
 	protected $twig;
 	protected $twigLocal;
 
+
     public function __construct(\Twig_Environment $twig) {
         $this->twig = $twig;
     }
 
-	public function getTemplateHtml($cv) {
+	public function getTemplateHtml($cv, $template) {
 		// all slots just replace the twig blocks in base template from Template.templatePath
-		$templateString = '{% extends \'templates/'.$cv->getTemplate()->getTemplatePath().'.html.twig\' %}';
+		$templateString = '{% extends \'templates/'.$template->getTemplatePath().'.html.twig\' %}';
 		// each TemaplteSlot acts as a block in parent template
-		foreach($cv->getTemplate()->getTemplateSlots() as $slot) {
+		foreach($template->getTemplateSlots() as $slot) {
 			$templateString .= '{% block '.$slot->getWildcard().' %}';
 			// traverse through each slots blocks and fill it with data
 			foreach ($slot->getBlockDatas() as $data) {
@@ -50,6 +52,7 @@ class CVRenderService {
 		$template = $this->twig->createTemplate($templateString);
 		return $template->render(array());
 	}
+
 
 	private function getParameters(BlockData $data) {
         return $this->decodeCollection($data->getCvDatas());

@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class CVController extends Controller
 {
+
     /**
      * Lists all CV entities.
      *
@@ -129,8 +130,9 @@ class CVController extends Controller
      * @Method("GET")
      */
     public function renderTemplateAction(Request $request, $id) {
-        $repository = $this->getDoctrine()->getRepository('AppBundle:CV');
-        $cv = $repository->findOneById($id);
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Template');
+        $template = $repository->findOneById($id);
+        $cv = $this->get(CvService::class)->getUserCv($this->getUser());
 
         if (!$cv) {
             $response = new Response();
@@ -141,7 +143,7 @@ class CVController extends Controller
 
         
         $cvRenderService = $this->get('cv_render');
-        return new Response($cvRenderService->getTemplateHtml($cv));
+        return new Response($cvRenderService->getTemplateHtml($cv, $template));
     }
 
     /**
