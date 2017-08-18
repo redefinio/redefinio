@@ -750,7 +750,7 @@ class LoadAllData implements FixtureInterface
         $block1_5_1->setTitle('Skills/languages entry');
         $block1_5_1->setType(BlockTemplate::TYPE_SKILLS_INNER);
         $block1_5_1->setTemplate($template1);
-        $block1_5_1->setHtmlSource('<div data-key="skill" data-value="{{skill}}"> <div class="title" data-key="title">{{title}}</div><div class="bar"> <div class="progress" style="width: 100%"></div></div></div>');
+        $block1_5_1->setHtmlSource('<div data-key="skill" data-value="{{skill}}"> <div class="title" data-key="title">{{title}}</div><div class="bar"> <div class="progress" style="width: {{ skill }}0%"></div></div></div>');
         $block1_5_1->setAvailableFields(
             json_encode(array(
                 'title',
