@@ -35,9 +35,27 @@ class CvData {
     private $cv;
 
     /**
-     * @ORM\ManyToMany(targetEntity="BlockData", mappedBy="cv_datas")
+     * @var int
+     *
+     * @ORM\Column(name="type", type="integer")
+     */
+    private $type;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="BlockData",  cascade={"persist"}, mappedBy="cv_datas")
      */
     private $block_datas;
+
+    /**
+     * @ORM\OneToMany(targetEntity="CvData", mappedBy="parent", cascade={"persist"})
+     */
+    private $children;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="CvData", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
+     */
+    private $parent;
 
     /**
      * @var data JSON array of used variable names and their values.
@@ -48,6 +66,7 @@ class CvData {
 
     public function __construct() {
         $this->block_datas = new ArrayCollection();
+        $this->children = new ArrayCollection();
     }
 
     /**
@@ -145,6 +164,80 @@ class CvData {
     public function setField($field)
     {
         $this->field = $field;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Add child
+     *
+     * @param \AppBundle\Entity\CvData $child
+     *
+     * @return BlockData
+     */
+    public function addChild(\AppBundle\Entity\CvData $child)
+    {
+        $this->children[] = $child;
+
+        return $this;
+    }
+
+    /**
+     * Remove child
+     *
+     * @param \AppBundle\Entity\CvData $child
+     */
+    public function removeChild(\AppBundle\Entity\CvData $child)
+    {
+        $this->children->removeElement($child);
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \AppBundle\Entity\CvData $parent
+     *
+     * @return BlockData
+     */
+    public function setParent(\AppBundle\Entity\CvData $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \AppBundle\Entity\CvData
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 
 
