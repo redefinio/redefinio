@@ -22,7 +22,7 @@
 		<script type="text/javascript">
 			var templateUrl = "{{ path('cv_index') }}";
 			var isEditing = false;
-            var templateId = 1;
+            var templateId = {{ cV.getTemplate().getId() }};
 		</script>
   <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 {% endblock %}

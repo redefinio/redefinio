@@ -26,6 +26,7 @@ $('.template').on('click', function (evebt) {
 });
 
 var loadTemplate = function loadTemplate(templateId) {
+  activateLoader();
   API.getCv(templateId, function (data) {
     var domParser = new DOMParser();
     var template = domParser.parseFromString(data, "text/html");
@@ -64,6 +65,19 @@ var prepareToEditTemplate = function prepareToEditTemplate() {
   for (var _i2 = 0; _i2 < blocks.length; _i2++) {
     new Block(blocks[_i2]);
   }
+};
+
+var activateLoader = function activateLoader() {
+  var loader = document.createElement('div');
+  var loaderIcon = document.createElement('div');
+
+  loader.setAttribute('id', 'loader');
+  loader.setAttribute('class', 'active');
+  loaderIcon.setAttribute('class', 'signal');
+
+  loader.append(loaderIcon);
+
+  $('#template').append(loader);
 };
 
 var StatusBar = function () {
