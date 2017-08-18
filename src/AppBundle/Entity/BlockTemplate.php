@@ -89,6 +89,12 @@ class BlockTemplate
      */
     private $available_fields;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="TemplateSlot", inversedBy="block_data")
+     * @ORM\JoinColumn(name="template_slot_id", referencedColumnName="id")
+     */
+    private $slot;
+
     public function __construct() {
         $this->children = new ArrayCollection();
         $this->block_datas = new ArrayCollection();
@@ -349,5 +355,21 @@ class BlockTemplate
     public function getTemplate()
     {
         return $this->template;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlot()
+    {
+        return $this->slot;
+    }
+
+    /**
+     * @param mixed $slot
+     */
+    public function setSlot($slot)
+    {
+        $this->slot = $slot;
     }
 }

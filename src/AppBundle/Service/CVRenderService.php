@@ -21,7 +21,7 @@ class CVRenderService {
         $this->twig = $twig;
     }
 
-	public function getTemplateHtml($cv, $template) {
+	public function getTemplateHtml($template) {
 		// all slots just replace the twig blocks in base template from Template.templatePath
 		$templateString = '{% extends \'templates/'.$template->getTemplatePath().'.html.twig\' %}';
 		// each TemaplteSlot acts as a block in parent template

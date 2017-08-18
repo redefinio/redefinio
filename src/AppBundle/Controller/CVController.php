@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\AppBundle;
+use AppBundle\Entity\BlockData;
+use AppBundle\Entity\BlockTemplate;
 use AppBundle\Entity\CvData;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -130,9 +132,18 @@ class CVController extends Controller
      * @Method("GET")
      */
     public function renderTemplateAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
         $repository = $this->getDoctrine()->getRepository('AppBundle:Template');
         $template = $repository->findOneById($id);
         $cv = $this->get(CvService::class)->getUserCv($this->getUser());
+
+        foreach($template->getTemplateSlots() as $slot) {
+            if (count($slot->getBlockDatas()) == 0) {
+                $this->mapDataToSlotTemplates($slot, $cv);
+                $em->refresh($template);
+            }
+        }
+
 
         if (!$cv) {
             $response = new Response();
@@ -141,9 +152,105 @@ class CVController extends Controller
             return $response;
         }
 
-        
         $cvRenderService = $this->get('cv_render');
-        return new Response($cvRenderService->getTemplateHtml($cv, $template));
+        return new Response($cvRenderService->getTemplateHtml($repository->findOneById($id)));
+    }
+
+    private function mapDataToSlotTemplates($slot, $cv) {
+        $em = $this->getDoctrine()->getManager();
+
+        $data = $this->getDoctrine()->getRepository('AppBundle:CvData')->findByCv($cv);
+        $templateRepository = $this->getDoctrine()->getRepository('AppBundle:BlockTemplate');
+
+        foreach($data as $entity) {
+            $template = $templateRepository->findOneBy(array('type' => $entity->getType(), 'template' => $slot->getTemplate()));
+            switch ($entity->getType()) {
+                case BlockTemplate::TYPE_SKILLS:
+                case BlockTemplate::TYPE_EXPERIENCE:
+                case BlockTemplate::TYPE_CERTIFICATES:
+                case BlockTemplate::TYPE_EDUCATION:
+                    $block = $this->mapBlock($template, $entity, $slot);
+                    break;
+                case BlockTemplate::TYPE_TEXT:
+                    $block = $this->mapText($template, $entity);
+                    break;
+                case BlockTemplate::TYPE_FIXED:
+                    $block = $this->mapFixedData($template, $entity);
+                    break;
+            }
+            if (!is_null($block)) {
+                $em->persist($block);
+                $em->flush();
+            }
+        }
+
+        $em->refresh($slot);
+
+
+    }
+
+    private function mapFixedData($template, $entity) {
+        $em = $this->getDoctrine()->getManager();
+
+        $fields = json_decode($template->getAvailableFields(), true);
+        if (in_array($entity->getField(), $fields)) {
+
+            $blocks = $this->getDoctrine()->getRepository('AppBundle:BlockData')->findBy(array('blockTemplate' => $template, 'cv' => $entity->getCv()));
+            $block = $this->filterTemplateBlock($blocks, $template, $entity->getCv());
+            $block->addCvData($entity);
+
+            return $block;
+        }
+
+    }
+
+    private function filterTemplateBlock($blocks, $template, $cv) {
+        foreach ($blocks as $block) {
+            if ($block->getBlockTemplate() == $template) {
+                return $block;
+            }
+        }
+
+        $block = new BlockData();
+        $block->setCv($cv);
+        $block->setBlockTemplate($template);
+        $block->setTemplateSlot($template->getSlot());
+
+        return $block;
+
+    }
+
+    private function mapText($template, $entity) {
+        $block = new BlockData();
+        $block->setCv($entity->getCv());
+        $block->setBlockTemplate($template);
+        $block->addCvData($entity);
+        $block->setTemplateSlot($template->getSlot());
+
+        return $block;
+    }
+
+    private function mapBlock($template, $entity, $slot) {
+        $parent = new BlockData();
+        $parent->setCv($entity->getCv());
+        $parent->setBlockTemplate($template);
+        $parent->addCvData($entity);
+        $parent->setTemplateSlot($template->getSlot());
+
+        $templateRepository = $this->getDoctrine()->getRepository('AppBundle:BlockTemplate');
+        $children = $entity->getChildren();
+        $childTemplate = $templateRepository->findOneBy(array('type' => $children->first()->getType(), 'template' => $template->getTemplate()));
+        foreach ($children as $child) {
+            $childBlock = new BlockData();
+            $childBlock->setParent($parent);
+            $childBlock->setCv($entity->getCv());
+            $childBlock->setBlockTemplate($childTemplate);
+            $childBlock->addCvData($child);
+
+            $parent->addChild($childBlock);
+        }
+
+        return $parent;
     }
 
     /**
