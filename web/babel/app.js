@@ -22,6 +22,7 @@ $('.template').on('click', (evebt) => {
 });
 
 let loadTemplate = (templateId) => {
+  activateLoader();
   API.getCv(templateId, (data) => {
     let domParser = new DOMParser();
     let template = domParser.parseFromString(data, "text/html");
@@ -60,6 +61,19 @@ let prepareToEditTemplate = () => {
   for (let i = 0; i < blocks.length; i++) {
     new Block(blocks[i]);
   }
+}
+
+let activateLoader = () => {
+    let loader = document.createElement('div');
+    let loaderIcon = document.createElement('div');
+
+    loader.setAttribute('id', 'loader');
+    loader.setAttribute('class', 'active');
+    loaderIcon.setAttribute('class', 'signal');
+
+    loader.append(loaderIcon);
+
+    $('#template').append(loader);
 }
 
 class StatusBar {

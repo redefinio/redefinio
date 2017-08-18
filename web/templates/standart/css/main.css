@@ -1,6 +1,5 @@
 @import 'https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,600i,700,700i';
 @import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css';
-@import url(../css/bootstrap.min.css);
 body {
   background: #f1f5f8;
   color: #000;
@@ -179,7 +178,7 @@ body {
 }
 
 @media only screen and (max-width: 768px) {
-  .sidebar {
+  .standart-sidebar {
     float: none;
     width: 100%;
     max-width: 100%;
