@@ -1,0 +1,38 @@
+.template-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: @black;
+    margin: 15px 0;
+}
+
+.container {
+    &--header {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin: 0 0 15px 0;
+        
+        &-emoji {
+            background-image: url("@{images}/emoji-smile.png");
+            width: 72px;
+            height: 72px;
+            margin: 15px;
+        }
+        
+        &-info {
+            line-height: 15px;
+            
+            h3 {
+                font-size: 22px;
+                font-weight: 700;
+                color: @black;
+                margin: 5px 0;
+            }
+            
+            p {
+                margin: 0;
+            }
+        }
+    }
+}
