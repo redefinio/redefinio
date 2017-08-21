@@ -1,7 +1,96 @@
 {% extends 'base.html.twig' %}
 
+{% block navbar %}
+    <div class="navbar">
+        <h1 class="navbar-title">My résumé</h1>
+    </div>
+{% endblock %}
+
 {% block body %}
-    <a href="{{ path('cv_new') }}" class="btn navbar-edit">
-        <button>Create CV</button>
-    </a>
+    <div class="container mt-150">
+        <div class="row">
+            <div class="container--header">
+                <div class="container--header-emoji"></div>
+                <div class="container--header-info">
+                    <h3>Hey there.</h3>
+                    <p>Chose one of our templates to start.</p>
+                    <p>You will be able to change it later</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <a href="#">
+                    <img class="img-fluid img-thumbnail"
+                    src="{{ asset('img/templates/1.jpg') }}"
+                    srcset="{{ asset('img/templates/1@2x.jpg') }} 2x"
+                    alt="Minimal" />
+                </a>
+                <h3 class="template-title text-center">Minimal</h3>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <a href="#">
+                    <img class="img-fluid img-thumbnail"
+                    src="{{ asset('img/templates/2.jpg') }}"
+                    srcset="{{ asset('img/templates/2@2x.jpg') }} 2x"
+                    alt="Minimal" />
+                </a>
+                <h3 class="template-title text-center">Standart with sidebar</h3>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <a href="#">
+                    <img class="img-fluid img-thumbnail"
+                    src="{{ asset('img/templates/3.jpg') }}"
+                    srcset="{{ asset('img/templates/3@2x.jpg') }} 2x"
+                    alt="Minimal" />
+                </a>
+                <h3 class="template-title text-center">Funky triangular</h3>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <a href="#">
+                    <img class="img-fluid img-thumbnail"
+                    src="{{ asset('img/templates/4.jpg') }}"
+                    srcset="{{ asset('img/templates/4@2x.jpg') }} 2x"
+                    alt="Minimal" />
+                </a>
+                <h3 class="template-title text-center">In love with whitespace</h3>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <a href="#">
+                    <img class="img-fluid img-thumbnail"
+                    src="{{ asset('img/templates/5.jpg') }}"
+                    srcset="{{ asset('img/templates/5@2x.jpg') }} 2x"
+                    alt="Minimal" />
+                </a>
+                <h3 class="template-title text-center">Splyshy</h3>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <a href="#">
+                    <img class="img-fluid img-thumbnail"
+                    src="{{ asset('img/templates/6.jpg') }}"
+                    srcset="{{ asset('img/templates/6@2x.jpg') }} 2x"
+                    alt="Minimal" />
+                </a>
+                <h3 class="template-title text-center">Soap bubbles</h3>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <a href="#">
+                    <img class="img-fluid img-thumbnail"
+                    src="{{ asset('img/templates/7.jpg') }}"
+                    srcset="{{ asset('img/templates/7@2x.jpg') }} 2x"
+                    alt="Minimal" />
+                </a>
+                <h3 class="template-title text-center">Hacking the matrix</h3>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <a href="#">
+                    <img class="img-fluid img-thumbnail"
+                    src="{{ asset('img/templates/8.jpg') }}"
+                    srcset="{{ asset('img/templates/8@2x.jpg') }} 2x"
+                    alt="Minimal" />
+                </a>
+                <h3 class="template-title text-center">Print ink server</h3>
+            </div>
+        </div>
+    </div>
 {% endblock %}
