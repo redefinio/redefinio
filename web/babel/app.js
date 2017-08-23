@@ -85,8 +85,7 @@ class StatusBar {
     let closeButton = this._element.querySelector('.close');
     closeButton.addEventListener('click', this._hide.bind(this), false);
     
-    let undoButton = this._element.querySelector('.action');
-    undoButton.addEventListener('click', this._undo.bind(this), false);
+    this.undoButton = this._element.querySelector('.action');
 
     this._isActive = false;
   }
@@ -103,6 +102,13 @@ class StatusBar {
         this._hide();
         resolve();
       }, 5000);
+      
+      Rx.Observable.fromEvent(this.undoButton, 'click')
+        .subscribe(() => {
+          window.clearTimeout(_timer);
+          this._hide();
+          reject();
+      });
     });
   }
 
@@ -123,12 +129,6 @@ class StatusBar {
   _hide() {
     this._element.classList.remove('is-active');
     this._isActive = false;
-  }
-  
-  _undo() {
-    window.clearTimeout(_timer);
-    this._hide();
-    
   }
 }
 
@@ -496,11 +496,13 @@ class Block {
   delete() {
     let blockId = this._element.getAttribute('data-block-id');
     var element = this._element;
-
+    element.classList.add('hidden');
     window.statusBar.showMessage('You have just deleted block').then(function () {
       API.deleteBlock(blockId, () => {
-        element.parentNode.removeChild(element);  
+        element.parentNode.removeChild(element);
       });
+    }).catch(function (reason) {
+      element.classList.remove('hidden');
     });
 
   }
