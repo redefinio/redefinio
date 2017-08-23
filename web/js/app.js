@@ -91,8 +91,7 @@ var StatusBar = function () {
     var closeButton = this._element.querySelector('.close');
     closeButton.addEventListener('click', this._hide.bind(this), false);
 
-    var undoButton = this._element.querySelector('.action');
-    undoButton.addEventListener('click', this._undo.bind(this), false);
+    this.undoButton = this._element.querySelector('.action');
 
     this._isActive = false;
   }
@@ -113,6 +112,12 @@ var StatusBar = function () {
           _this._hide();
           resolve();
         }, 5000);
+
+        Rx.Observable.fromEvent(_this.undoButton, 'click').subscribe(function () {
+          window.clearTimeout(_timer);
+          _this._hide();
+          reject();
+        });
       });
     }
   }, {
@@ -136,12 +141,6 @@ var StatusBar = function () {
     value: function _hide() {
       this._element.classList.remove('is-active');
       this._isActive = false;
-    }
-  }, {
-    key: '_undo',
-    value: function _undo() {
-      window.clearTimeout(_timer);
-      this._hide();
     }
   }]);
 
@@ -565,11 +564,13 @@ var Block = function () {
     value: function _delete() {
       var blockId = this._element.getAttribute('data-block-id');
       var element = this._element;
-
+      element.classList.add('hidden');
       window.statusBar.showMessage('You have just deleted block').then(function () {
         API.deleteBlock(blockId, function () {
           element.parentNode.removeChild(element);
         });
+      }).catch(function (reason) {
+        element.classList.remove('hidden');
       });
     }
   }, {
