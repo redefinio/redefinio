@@ -19,78 +19,17 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <a href="#">
-                    <img class="img-fluid img-thumbnail"
-                    src="{{ asset('img/templates/1.jpg') }}"
-                    srcset="{{ asset('img/templates/1@2x.jpg') }} 2x"
-                    alt="Minimal" />
-                </a>
-                <h3 class="template-title text-center">Minimal</h3>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <a href="#">
-                    <img class="img-fluid img-thumbnail"
-                    src="{{ asset('img/templates/2.jpg') }}"
-                    srcset="{{ asset('img/templates/2@2x.jpg') }} 2x"
-                    alt="Minimal" />
-                </a>
-                <h3 class="template-title text-center">Standart with sidebar</h3>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <a href="#">
-                    <img class="img-fluid img-thumbnail"
-                    src="{{ asset('img/templates/3.jpg') }}"
-                    srcset="{{ asset('img/templates/3@2x.jpg') }} 2x"
-                    alt="Minimal" />
-                </a>
-                <h3 class="template-title text-center">Funky triangular</h3>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <a href="#">
-                    <img class="img-fluid img-thumbnail"
-                    src="{{ asset('img/templates/4.jpg') }}"
-                    srcset="{{ asset('img/templates/4@2x.jpg') }} 2x"
-                    alt="Minimal" />
-                </a>
-                <h3 class="template-title text-center">In love with whitespace</h3>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <a href="#">
-                    <img class="img-fluid img-thumbnail"
-                    src="{{ asset('img/templates/5.jpg') }}"
-                    srcset="{{ asset('img/templates/5@2x.jpg') }} 2x"
-                    alt="Minimal" />
-                </a>
-                <h3 class="template-title text-center">Splyshy</h3>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <a href="#">
-                    <img class="img-fluid img-thumbnail"
-                    src="{{ asset('img/templates/6.jpg') }}"
-                    srcset="{{ asset('img/templates/6@2x.jpg') }} 2x"
-                    alt="Minimal" />
-                </a>
-                <h3 class="template-title text-center">Soap bubbles</h3>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <a href="#">
-                    <img class="img-fluid img-thumbnail"
-                    src="{{ asset('img/templates/7.jpg') }}"
-                    srcset="{{ asset('img/templates/7@2x.jpg') }} 2x"
-                    alt="Minimal" />
-                </a>
-                <h3 class="template-title text-center">Hacking the matrix</h3>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <a href="#">
-                    <img class="img-fluid img-thumbnail"
-                    src="{{ asset('img/templates/8.jpg') }}"
-                    srcset="{{ asset('img/templates/8@2x.jpg') }} 2x"
-                    alt="Minimal" />
-                </a>
-                <h3 class="template-title text-center">Print ink server</h3>
-            </div>
+            {% for template in templates %}
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <a href="{{ path('cv_new', {'templateId': template.id }) }}">
+                        <img class="img-fluid img-thumbnail"
+                             src="{{ asset('img/templates/' ~ template.templatePath ~ '.jpg') }}"
+                             srcset="{{ asset('img/templates/' ~ template.templatePath ~ '@2x.jpg') }} 2x"
+                             alt="{{ template.title }}" />
+                    </a>
+                    <h3 class="template-title text-center">{{ template.title }}</h3>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

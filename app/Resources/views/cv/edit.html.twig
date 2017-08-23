@@ -37,7 +37,7 @@
 			<h3 class="sidebar-header">Templates</h3>
 			<div class="templates-list">
         {% for template in templates %}
-        <div class="templates-listitem">
+        <div class="templates-listitem" {% if template.id == cv.getTemplate().getId() %}class="active" {% endif %}>
           <div class="template" data-template-id="{{ template.id }}">
             {# {% if template.free %} #}
             <span class="price-indicator">

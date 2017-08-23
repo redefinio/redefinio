@@ -44,10 +44,9 @@ class LoadAllData implements FixtureInterface
         $block1_1->setType(BlockTemplate::TYPE_FIXED);
         $block1_1->addTemplateSlot($templateSlot1_1);
         $block1_1->setTemplate($template1);
-        $block1_1->setHtmlSource('<div class="container"><div class="row"><div class="col-xs-12" data-zone="static"><div id="top"><div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.BlockTemplate::TYPE_FIXED.'" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"><div class="big-title pull-left"><h1 class="title"><span data-key="first_name" data-placeholder="John">{{ first_name }}</span> <span data-key="last_name" data-placeholder="Doe">{{ last_name }}</span></h1><h3 class="subtitle" data-key="title" data-placeholder="Your title">{{ title }}</h3></div><div class="contacts pull-right"><a href="mailto:{{ email }}" data-key="email" data-placeholder="john@example.com">{{ email }}</a> <a href="tel:{{ phone }}" data-key="phone" data-placeholder="Your phone">{{ phone }}</a></div><div class="clear"></div></div></div></div></div></div>');
+        $block1_1->setHtmlSource('<div class="container"><div class="row"><div class="col-xs-12" data-zone="static"><div id="top"><div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.BlockTemplate::TYPE_FIXED.'" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"><div class="big-title pull-left"><h1 class="title"><span data-key="full_name" data-placeholder="John">{{ full_name }}</span></h1><h3 class="subtitle" data-key="title" data-placeholder="Your title">{{ title }}</h3></div><div class="contacts pull-right"><a href="mailto:{{ email }}" data-key="email" data-placeholder="john@example.com">{{ email }}</a> <a href="tel:{{ phone }}" data-key="phone" data-placeholder="Your phone">{{ phone }}</a></div><div class="clear"></div></div></div></div></div></div>');
         $block1_1->setAvailableFields(json_encode(array(
-                'first_name',
-                'last_name',
+                'full_name',
                 'title',
                 'email',
                 'phone'
@@ -218,12 +217,6 @@ class LoadAllData implements FixtureInterface
         $cv1->setUrl('my_great_cv');
         $cv1->setTemplate($template1);
         $cv1->setTheme($theme1_1);
-        $cv1->setFullName('Albinas Anusauskas');
-        $cv1->setOccupation('Kokybės užtikrintojas');
-        $cv1->setLocation('Kavarskas, Lietuva');
-        $cv1->setEmail($user1->getEmail());
-        $cv1->setPhone('37 11 10');
-        $cv1->setSummary('Trumpai apie nieką.');
         $manager->persist($cv1);
 
 
@@ -271,7 +264,7 @@ class LoadAllData implements FixtureInterface
         $cvData1_6 = new CvData();
         $cvData1_6->setCv($cv1);
         $cvData1_6->setData(json_encode(array('full_name' => 'Erikas Mališauskas')));
-        $cvData1_6->setField("first_name");
+        $cvData1_6->setField("full_name");
         $cvData1_6->setType(BlockTemplate::TYPE_FIXED);
         $manager->persist($cvData1_6);
 
@@ -285,6 +278,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_1->addCvData($cvData1_3);
         $blockData1_1->addCvData($cvData1_4);
         $blockData1_1->addCvData($cvData1_5);
+        $blockData1_1->addCvData($cvData1_6);
         $blockData1_1->setData(json_encode(array(
                 'first_name' => 'Erikas',
                 'last_name' => 'Mališauskas',
@@ -653,10 +647,9 @@ class LoadAllData implements FixtureInterface
         $block1_1->setType(BlockTemplate::TYPE_FIXED);
         $block1_1->setSlot($templateSlot1_1);
         $block1_1->setTemplate($template1);
-        $block1_1->setHtmlSource('<div class="person" class="item" data-block-id="{{block_data.id}}" data-block-type="0" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"> <div class="photo"><img src="{{asset(\'templates/standart/img/photo.jpg\')}}" alt=""/></div><div class="name" data-key="full_name" data-placeholder="John">{{full_name}}</div><div class="statusquo" data-key="title" data-placeholder="UI/UX designer">{{title}}</div></div>');
+        $block1_1->setHtmlSource('<div class="person" class="item" data-block-id="{{block_data.id}}" data-block-type="0" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"> <div class="photo"><img src="{{asset(\'templates/standart/img/photo.jpg\')}}" alt=""/></div><div class="name" data-key="full_name" data-placeholder="John">{{ full_name }}</div><div class="statusquo" data-key="title" data-placeholder="UI/UX designer">{{title}}</div></div>');
         $block1_1->setAvailableFields(json_encode(array(
-            'first_name',
-            'last_name',
+            'full_name',
             'title'
         )));
         $manager->persist($block1_1);
