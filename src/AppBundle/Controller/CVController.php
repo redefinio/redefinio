@@ -2,16 +2,13 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\AppBundle;
 use AppBundle\Entity\BlockData;
 use AppBundle\Entity\BlockTemplate;
-use AppBundle\Entity\CvData;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\CV;
-use AppBundle\Form\CVType;
 use AppBundle\Service\CvService;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -34,47 +31,36 @@ class CVController extends Controller
     {
         $template = 'cv/show.html.twig';
 
-        $this->cvService = $this->get(CvService::class);
+        $userCv = $this->get(CvService::class)->getUserCv($this->getUser());
 
-        $userCv = $this->cvService->getUserCv($this->getUser());
+        $parametes = array('cV' => $userCv);
 
         if (is_null($userCv)) {
             $template = 'cv/create.html.twig';
+            $em = $this->getDoctrine()->getManager();
+            $parametes['templates'] = $em->getRepository('AppBundle:Template')->findAll();
         }
 
-        return $this->render($template, array(
-            'cV' => $userCv
-        ));
+        return $this->render($template, $parametes);
     }
 
     /**
      * Creates a new CV entity.
      *
-     * @Route("/new", name="cv_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new/{templateId}", name="cv_new")
+     * @Method({"GET",})
+     * @param Request $request
+     * @param int $templateId
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, int $templateId)
     {
-        $cv = new CV();        
-        $form = $this->createForm('AppBundle\Form\CVType', $cv);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            if (!$this->get('security.authorization_checker')->isGranted('ROLE_USER')) {
-                throw $this->createAccessDeniedException();
-            }
-            $cv->setUser($this->getUser());
-            $em->persist($cv);
-            $em->flush();
-
-            return $this->redirectToRoute('cv_show', array('id' => $cv->getId()));
+        $service = $this->get(CvService::class);
+        if (is_null($service->getUserCv($this->getUser()))) {
+            $service->initializeCv($this->getUser(), $templateId);
         }
 
-        return $this->render('cv/new.html.twig', array(
-            'cV' => $cv,
-            'form' => $form->createView(),
-        ));
+        return new Response($templateId);
     }
 
     /**
