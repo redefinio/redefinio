@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\BlockData;
 use AppBundle\Entity\BlockTemplate;
+use AppBundle\Entity\TemplatType;
+use AppBundle\Service\CVRenderService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -60,7 +62,9 @@ class CVController extends Controller
             $service->initializeCv($this->getUser(), $templateId);
         }
 
-        return new Response($templateId);
+        return $this->redirect($this->generateUrl("cv_index"));
+
+//        return new Response($templateId);
     }
 
     /**
@@ -119,7 +123,9 @@ class CVController extends Controller
      */
     public function renderTemplateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
+        $cvRenderService = $this->get(CVRenderService::class);
         $repository = $this->getDoctrine()->getRepository('AppBundle:Template');
+
         $template = $repository->findOneById($id);
         $cv = $this->get(CvService::class)->getUserCv($this->getUser());
 
@@ -138,7 +144,6 @@ class CVController extends Controller
             return $response;
         }
 
-        $cvRenderService = $this->get('cv_render');
         return new Response($cvRenderService->getTemplateHtml($repository->findOneById($id)));
     }
 
@@ -171,13 +176,9 @@ class CVController extends Controller
         }
 
         $em->refresh($slot);
-
-
     }
 
     private function mapFixedData($template, $entity) {
-        $em = $this->getDoctrine()->getManager();
-
         $fields = json_decode($template->getAvailableFields(), true);
         if (in_array($entity->getField(), $fields)) {
 

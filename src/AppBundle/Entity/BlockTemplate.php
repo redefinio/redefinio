@@ -56,12 +56,6 @@ class BlockTemplate
     private $block_datas;
 
     /**
-     * @ORM\ManyToMany(targetEntity="TemplateSlot", inversedBy="blocks")
-     * @ORM\JoinTable(name="templateslots_blocks")
-     */
-    private $template_slots;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
@@ -98,7 +92,6 @@ class BlockTemplate
     public function __construct() {
         $this->children = new ArrayCollection();
         $this->block_datas = new ArrayCollection();
-        $this->template_slots = new ArrayCollection();
     }
 
     /**
@@ -191,40 +184,6 @@ class BlockTemplate
     public function getBlockDatas()
     {
         return $this->block_datas;
-    }
-
-    /**
-     * Add templateSlot
-     *
-     * @param \AppBundle\Entity\TemplateSlot $templateSlot
-     *
-     * @return BlockTemplate
-     */
-    public function addTemplateSlot(\AppBundle\Entity\TemplateSlot $templateSlot)
-    {
-        $this->template_slots[] = $templateSlot;
-
-        return $this;
-    }
-
-    /**
-     * Remove templateSlot
-     *
-     * @param \AppBundle\Entity\TemplateSlot $templateSlot
-     */
-    public function removeTemplateSlot(\AppBundle\Entity\TemplateSlot $templateSlot)
-    {
-        $this->template_slots->removeElement($templateSlot);
-    }
-
-    /**
-     * Get templateSlots
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTemplateSlots()
-    {
-        return $this->template_slots;
     }
 
     /**

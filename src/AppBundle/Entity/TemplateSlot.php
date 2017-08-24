@@ -207,4 +207,38 @@ class TemplateSlot
     {
         return $this->wildcard;
     }
+
+    /**
+     * Add block
+     *
+     * @param \AppBundle\Entity\BlockTemplate $block
+     *
+     * @return TemplateSlot
+     */
+    public function addBlock(\AppBundle\Entity\BlockTemplate $block)
+    {
+        $this->blocks[] = $block;
+
+        return $this;
+    }
+
+    /**
+     * Remove block
+     *
+     * @param \AppBundle\Entity\BlockTemplate $block
+     */
+    public function removeBlock(\AppBundle\Entity\BlockTemplate $block)
+    {
+        $this->blocks->removeElement($block);
+    }
+
+    /**
+     * Get blocks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBlocks()
+    {
+        return $this->blocks;
+    }
 }

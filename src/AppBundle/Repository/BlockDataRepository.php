@@ -10,4 +10,13 @@ namespace AppBundle\Repository;
  */
 class BlockDataRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findByTemplates($templates) {
+        $ids = array_map(function ($template) {
+            return $template->getId();
+        }, $templates);
+        return $this->getEntityManager()
+            ->createQuery('SELECT block FROM AppBundle:BlockData as block WHERE block.block_template_id IN :ids')
+            ->setParameter('ids', $ids)
+            ->execute();
+    }
 }

@@ -136,7 +136,7 @@ class CvData {
      */
     public function getData()
     {
-        return $this->data;
+        return json_decode($this->data, true);
     }
 
     /**
@@ -145,7 +145,7 @@ class CvData {
      */
     public function setData($data)
     {
-        $this->data = $data;
+        $this->data = json_encode($data);
 
         return $this;
     }
@@ -241,4 +241,28 @@ class CvData {
     }
 
 
+
+    /**
+     * Add blockData
+     *
+     * @param \AppBundle\Entity\BlockData $blockData
+     *
+     * @return CvData
+     */
+    public function addBlockData(\AppBundle\Entity\BlockData $blockData)
+    {
+        $this->block_datas[] = $blockData;
+
+        return $this;
+    }
+
+    /**
+     * Remove blockData
+     *
+     * @param \AppBundle\Entity\BlockData $blockData
+     */
+    public function removeBlockData(\AppBundle\Entity\BlockData $blockData)
+    {
+        $this->block_datas->removeElement($blockData);
+    }
 }
