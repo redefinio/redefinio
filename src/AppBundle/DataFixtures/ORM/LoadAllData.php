@@ -229,48 +229,48 @@ class LoadAllData implements FixtureInterface
 
         $cvData_block_template = new CvData();
         $cvData_block_template->setCv($cv1);
-        $cvData_block_template->setData(json_encode(array(
+        $cvData_block_template->setData(array(
             'blocks' => ''
-        )));
+        ));
 
         $cvData1_1 = new CvData();
         $cvData1_1->setCv($cv1);
-        $cvData1_1->setData(json_encode(array('first_name' => 'Erikas')));
+        $cvData1_1->setData(array('first_name' => 'Erikas'));
         $cvData1_1->setField("first_name");
         $cvData1_1->setType(BlockTemplate::TYPE_FIXED);
         $manager->persist($cvData1_1);
 
         $cvData1_2 = new CvData();
         $cvData1_2->setCv($cv1);
-        $cvData1_2->setData(json_encode(array('last_name' => 'Mališauskas')));
+        $cvData1_2->setData(array('last_name' => 'Mališauskas'));
         $cvData1_2->setType(BlockTemplate::TYPE_FIXED);
         $cvData1_2->setField("last_name");
         $manager->persist($cvData1_2);
 
         $cvData1_3 = new CvData();
         $cvData1_3->setCv($cv1);
-        $cvData1_3->setData(json_encode(array('title' => 'UI/UX designer')));
+        $cvData1_3->setData(array('title' => 'UI/UX designer'));
         $cvData1_3->setType(BlockTemplate::TYPE_FIXED);
         $cvData1_3->setField("title");
         $manager->persist($cvData1_3);
 
         $cvData1_4 = new CvData();
         $cvData1_4->setCv($cv1);
-        $cvData1_4->setData(json_encode(array('email' => 'erikas@malisauskas.lt')));
+        $cvData1_4->setData(array('email' => 'erikas@malisauskas.lt'));
         $cvData1_4->setType(BlockTemplate::TYPE_FIXED);
         $cvData1_4->setField("email");
         $manager->persist($cvData1_4);
 
         $cvData1_5 = new CvData();
         $cvData1_5->setCv($cv1);
-        $cvData1_5->setData(json_encode(array('phone' => '+370 (629) 26 815')));
+        $cvData1_5->setData(array('phone' => '+370 (629) 26 815'));
         $cvData1_5->setType(BlockTemplate::TYPE_FIXED);
         $cvData1_5->setField("phone");
         $manager->persist($cvData1_5);
 
         $cvData1_6 = new CvData();
         $cvData1_6->setCv($cv1);
-        $cvData1_6->setData(json_encode(array('full_name' => 'Erikas Mališauskas')));
+        $cvData1_6->setData(array('full_name' => 'Erikas Mališauskas'));
         $cvData1_6->setField("full_name");
         $cvData1_6->setType(BlockTemplate::TYPE_FIXED);
         $manager->persist($cvData1_6);
@@ -286,19 +286,12 @@ class LoadAllData implements FixtureInterface
         $blockData1_1->addCvData($cvData1_4);
         $blockData1_1->addCvData($cvData1_5);
         $blockData1_1->addCvData($cvData1_6);
-        $blockData1_1->setData(json_encode(array(
-                'first_name' => 'Erikas',
-                'last_name' => 'Mališauskas',
-                'title' => 'UI/UX designer',
-                'email' => 'erikas@malisauskas.lt',
-                'phone' => '+370 (629) 26 815'
-            )));
         $manager->persist($blockData1_1);
 
 
         $cvData_summary = new CvData();
         $cvData_summary->setCv($cv1);
-        $cvData_summary->setData(json_encode(array('title' => 'Summary', 'text' => 'Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.')));
+        $cvData_summary->setData(array('title' => 'Summary', 'text' => 'Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.'));
         $cvData_summary->setType(BlockTemplate::TYPE_TEXT);
         $manager->persist($cvData_summary);
 
@@ -308,13 +301,38 @@ class LoadAllData implements FixtureInterface
         $blockData1_2->setTemplateSlot($templateSlot1_2);
         $blockData1_2->setBlockTemplate($block1_2);
         $blockData1_2->addCvData($cvData_summary);
-        $blockData1_2->setData(json_encode(array(
-                'title' => 'Summary',
-                'text' => 'Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Vestibulum id ligula porta felis euismod semper. Nullam quis risus eget urna mollis ornare vel eu leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-            )));
         $manager->persist($blockData1_2);
 
+        $education_data_template = array(
+            "title" => "Education",
+            "blocks" => array(
+                array(
+                    'date_from' => '2014 June',
+                    'date_to' => 'present',
+                    'position' => 'Senior UI/UX designer 1',
+                    'company' => 'MailerLite',
+                    'description' => 'Padsobniku dirbau'
+                ),
+                array(
+                    'date_from' => '2014 June',
+                    'date_to' => 'present',
+                    'position' => 'Senior UI/UX designer 1',
+                    'company' => 'MailerLite',
+                    'description' => 'Padsobniku dirbau'
+                ),
+                array(
+                    'date_from' => '2014 June',
+                    'date_to' => 'present',
+                    'position' => 'Senior UI/UX designer 1',
+                    'company' => 'MailerLite',
+                    'description' => 'Padsobniku dirbau'
+                )
+            )
+
+        );
+
         $cvData_block_1 = clone ($cvData_block_template);
+        $cvData_block_1->setData($education_data_template);
         $cvData_block_1->setType(BlockTemplate::TYPE_EDUCATION);
         $manager->persist($cvData_block_1);
 
@@ -323,118 +341,23 @@ class LoadAllData implements FixtureInterface
         $blockData1_3->addCvData($cvData_block_1);
         $blockData1_3->setTemplateSlot($templateSlot1_2);
         $blockData1_3->setBlockTemplate($block1_3);
-        $blockData1_3->setData(json_encode(array(
-                'blocks' => ''
-            )));
         $manager->persist($blockData1_3);
 
         $cvData_template = new CvData();
         $cvData_template->setCv($cv1);
-        $cvData_template->setData(json_encode(array(
+        $cvData_template->setData(array(
             'date_from' => '2014 June',
             'date_to' => 'present',
             'position' => 'Senior UI/UX designer 1',
             'company' => 'MailerLite',
             'description' => 'Padsobniku dirbau'
-        )));
+        ));
 
-        $cvData_expirience_1 = new CvData();
-        $cvData_expirience_1->setCv($cv1);
-        $cvData_expirience_1->setParent($cvData_block_1);
-        $cvData_expirience_1->setData(json_encode(array(
-            'date_from' => '2014 June',
-            'date_to' => 'present',
-            'position' => 'Senior UI/UX designer 1',
-            'company' => 'MailerLite',
-            'description' => 'Padsobniku dirbau'
-        )));
-        $cvData_expirience_1->setType(BlockTemplate::TYPE_EXPERIENCE_INNER);
-        $manager->persist($cvData_expirience_1);
-
-        $cvData_expirience_2 = new CvData();
-        $cvData_expirience_2->setCv($cv1);
-        $cvData_expirience_2->setParent($cvData_block_1);
-        $cvData_expirience_2->setType(BlockTemplate::TYPE_EXPERIENCE_INNER);
-        $cvData_expirience_2->setData(json_encode(array(
-            'date_from' => '2014 June',
-            'date_to' => 'present',
-            'position' => 'Senior UI/UX designer 2',
-            'company' => 'MailerLite',
-            'description' => 'Padsobniku dirbau'
-        )));
-        $manager->persist($cvData_expirience_2);
-
-        $cvData_expirience_3 = new CvData();
-        $cvData_expirience_3->setCv($cv1);
-        $cvData_expirience_3->setParent($cvData_block_1);
-        $cvData_expirience_3->setType(BlockTemplate::TYPE_EXPERIENCE_INNER);
-        $cvData_expirience_3->setData(json_encode(array(
-            'date_from' => '2014 June',
-            'date_to' => 'present',
-            'position' => 'Senior UI/UX designer 3',
-            'company' => 'MailerLite',
-            'description' => 'Padsobniku dirbau'
-        )));
-        $manager->persist($cvData_expirience_3);
-
-        $blockData1_3_1 = new BlockData();
-        $blockData1_3_1->setParent($blockData1_3);
-        $blockData1_3_1->setCV($cv1);
-        $blockData1_3_1->addCvData($cvData_expirience_1);
-        $blockData1_3_1->setBlockTemplate($block1_3_1);
-        $blockData1_3_1->setData(json_encode(array(
-                'date_from' => '2014 June',
-                'date_to' => 'present',
-                'position' => 'Senior UI/UX designer',
-                'company' => 'MailerLite',
-                'description' => 'Padsobniku dirbau'
-            )));
-        $manager->persist($blockData1_3_1);
-
-        $blockData1_3_2 = new BlockData();
-        $blockData1_3_2->setParent($blockData1_3);
-        $blockData1_3_2->setCV($cv1);
-        $blockData1_3_2->setBlockTemplate($block1_3_1);
-        $blockData1_3_2->addCvData($cvData_expirience_2);
-        $blockData1_3_2->setData(json_encode(array(
-                'date_from' => '2014 June',
-                'date_to' => 'present',
-                'position' => 'Senior UI/UX designer',
-                'company' => 'MailerLite',
-                'description' => 'Padsobniku dirbau'
-            )));
-        $manager->persist($blockData1_3_2);
-
-        $blockData1_3_3 = new BlockData();
-        $blockData1_3_3->setParent($blockData1_3);
-        $blockData1_3_3->setCV($cv1);
-        $blockData1_3_3->addCvData($cvData_expirience_3);
-        $blockData1_3_3->setBlockTemplate($block1_3_1);
-        $blockData1_3_3->setData(json_encode(array(
-                'date_from' => '2014 June',
-                'date_to' => 'present',
-                'position' => 'Senior UI/UX designer',
-                'company' => 'MailerLite',
-                'description' => 'Padsobniku dirbau'
-            )));
-        $manager->persist($blockData1_3_3);
 
         $cvData_block_2 = clone ($cvData_block_template);
         $cvData_block_2->setType(BlockTemplate::TYPE_EDUCATION);
+        $cvData_block_2->setData($education_data_template);
         $manager->persist($cvData_block_2);
-
-        $cvData_education_1 = clone($cvData_template);
-        $cvData_education_1->setType(BlockTemplate::TYPE_EXPERIENCE_INNER);
-        $cvData_education_1->setParent($cvData_block_2);
-        $cvData_education_2 = clone($cvData_template);
-        $cvData_education_2->setType(BlockTemplate::TYPE_EXPERIENCE_INNER);
-        $cvData_education_2->setParent($cvData_block_2);
-        $cvData_education_3 = clone($cvData_template);
-        $cvData_education_3->setType(BlockTemplate::TYPE_EXPERIENCE_INNER);
-        $cvData_education_3->setParent($cvData_block_2);
-        $manager->persist($cvData_education_1);
-        $manager->persist($cvData_education_2);
-        $manager->persist($cvData_education_3);
 
 
 
@@ -443,36 +366,27 @@ class LoadAllData implements FixtureInterface
         $blockData1_4->addCvData($cvData_block_2);
         $blockData1_4->setTemplateSlot($templateSlot1_2);
         $blockData1_4->setBlockTemplate($block1_4);
-        $blockData1_4->setData(json_encode(array(
-                'blocks' => ''
-            )));
         $manager->persist($blockData1_4);
-
-        $blockData1_4_1 = new BlockData();
-        $blockData1_4_1->setParent($blockData1_4);
-        $blockData1_4_1->setCV($cv1);
-        $blockData1_4_1->addCvData($cvData_education_1);
-        $blockData1_4_1->setBlockTemplate($block1_4_1);
-
-        $manager->persist($blockData1_4_1);
-
-        $blockData1_4_2 = new BlockData();
-        $blockData1_4_2->setParent($blockData1_4);
-        $blockData1_4_2->setCV($cv1);
-        $blockData1_4_2->addCvData($cvData_education_2);
-        $blockData1_4_2->setBlockTemplate($block1_4_1);
-
-        $manager->persist($blockData1_4_2);
-
-        $blockData1_4_3 = new BlockData();
-        $blockData1_4_3->setParent($blockData1_4);
-        $blockData1_4_3->setCV($cv1);
-        $blockData1_4_3->addCvData($cvData_education_3);
-        $blockData1_4_3->setBlockTemplate($block1_4_1);
-        $manager->persist($blockData1_4_3);
 
         $cvData_block_3 = clone ($cvData_block_template);
         $cvData_block_3->setType(BlockTemplate::TYPE_SKILLS);
+        $cvData_block_3->setData(array(
+            'title' => 'Skill',
+            'blocks' => array(
+                array(
+                    'title' => 'HTML/CSS',
+                    'skill' => '8'
+                ),
+                array(
+                    'title' => 'HTML/CSS',
+                    'skill' => '8'
+                ),
+                array(
+                    'title' => 'HTML/CSS',
+                    'skill' => '8'
+                )
+            )
+        ));
         $manager->persist($cvData_block_3);
 
         $blockData1_5 = new BlockData();
@@ -480,83 +394,26 @@ class LoadAllData implements FixtureInterface
         $blockData1_5->addCvData($cvData_block_3);
         $blockData1_5->setTemplateSlot($templateSlot1_3);
         $blockData1_5->setBlockTemplate($block1_5);
-        $blockData1_5->setData(json_encode(array(
-                'blocks' => ''
-            )));
         $manager->persist($blockData1_5);
 
-        $cvData_skill_template = new CvData();
-        $cvData_skill_template->setCv($cv1);
-        $cvData_skill_template->setData(json_encode(array(
-            'title' => 'HTML/CSS',
-            'skill' => '8'
-        )));
-
-        $cvData_skill_1 = clone($cvData_skill_template);
-        $cvData_skill_1->setType(BlockTemplate::TYPE_SKILLS_INNER);
-        $cvData_skill_1->setParent($cvData_block_3);
-        $cvData_skill_2 = clone($cvData_skill_template);
-        $cvData_skill_2->setType(BlockTemplate::TYPE_SKILLS_INNER);
-        $cvData_skill_2->setParent($cvData_block_3);
-        $cvData_skill_3 = clone($cvData_skill_template);
-        $cvData_skill_3->setType(BlockTemplate::TYPE_SKILLS_INNER);
-        $cvData_skill_3->setParent($cvData_block_3);
-        $cvData_skill_4 = clone($cvData_skill_template->setData(json_encode(array(
-            'title' => 'NodeJS m',
-            'skill' => '5'
-        ))));
-        $cvData_skill_4->setParent($cvData_block_3);
-        $cvData_skill_4->setType(BlockTemplate::TYPE_SKILLS_INNER);
-        $manager->persist($cvData_skill_1);
-        $manager->persist($cvData_skill_2);
-        $manager->persist($cvData_skill_3);
-        $manager->persist($cvData_skill_4);
-
-        $blockData1_5_1 = new BlockData();
-        $blockData1_5_1->setParent($blockData1_5);
-        $blockData1_5_1->setCV($cv1);
-        $blockData1_5_1->addCvData($cvData_skill_1);
-        $blockData1_5_1->setBlockTemplate($block1_5_1);
-        $blockData1_5_1->setData(json_encode(array(
-                'title' => 'HTML/CSS',
-                'skill' => '8'
-            )));
-        $manager->persist($blockData1_5_1);
-
-        $blockData1_5_2 = new BlockData();
-        $blockData1_5_2->setParent($blockData1_5);
-        $blockData1_5_2->setCV($cv1);
-        $blockData1_5_2->addCvData($cvData_skill_2);
-        $blockData1_5_2->setBlockTemplate($block1_5_1);
-        $blockData1_5_2->setData(json_encode(array(
-                'title' => 'Photoshop',
-                'skill' => '8'
-            )));
-        $manager->persist($blockData1_5_2);
-
-        $blockData1_5_3 = new BlockData();
-        $blockData1_5_3->setParent($blockData1_5);
-        $blockData1_5_3->setCV($cv1);
-        $blockData1_5_3->addCvData($cvData_skill_3);
-        $blockData1_5_3->setBlockTemplate($block1_5_1);
-        $blockData1_5_3->setData(json_encode(array(
-                'title' => 'Ilustrator',
-                'skill' => '4'
-            )));
-        $manager->persist($blockData1_5_3);
-
-        $blockData1_5_4 = new BlockData();
-        $blockData1_5_4->setParent($blockData1_5);
-        $blockData1_5_4->setCV($cv1);
-        $blockData1_5_4->addCvData($cvData_skill_4);
-        $blockData1_5_4->setBlockTemplate($block1_5_1);
-        $blockData1_5_4->setData(json_encode(array(
-                'title' => 'NodeJS',
-                'skill' => '2'
-            )));
-        $manager->persist($blockData1_5_4);
-
         $cvData_block_4 = clone ($cvData_block_template);
+        $cvData_block_4->setData(array(
+            'title' => 'Skill',
+            'blocks' => array(
+                array(
+                    'title' => 'Lithuanian',
+                    'skill' => '8'
+                ),
+                array(
+                    'title' => 'English',
+                    'skill' => '8'
+                ),
+                array(
+                    'title' => 'Russian',
+                    'skill' => '8'
+                )
+            )
+        ));
         $cvData_block_4->setType(BlockTemplate::TYPE_SKILLS);
 
         $manager->persist($cvData_block_4);
@@ -566,66 +423,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_6->addCvData($cvData_block_4);
         $blockData1_6->setTemplateSlot($templateSlot1_3);
         $blockData1_6->setBlockTemplate($block1_5);
-        $blockData1_6->setData(json_encode(array(
-                'blocks' => ''
-            )));
         $manager->persist($blockData1_6);
-
-        $cvData_language_1= clone($cvData_skill_template->setData(json_encode(array(
-            'title' => 'Lithuanian',
-            'skill' => '10'
-        ))));
-        $cvData_language_1->setParent($cvData_block_4);
-        $cvData_language_1->setType(BlockTemplate::TYPE_SKILLS_INNER);
-        $cvData_language_2= clone($cvData_skill_template->setData(json_encode(array(
-            'title' => 'English',
-            'skill' => '5'
-        ))));
-        $cvData_language_2->setParent($cvData_block_4);
-        $cvData_language_2->setType(BlockTemplate::TYPE_SKILLS_INNER);
-        $cvData_language_3= clone($cvData_skill_template->setData(json_encode(array(
-            'title' => 'Russian',
-            'skill' => '3'
-        ))));
-        $cvData_language_3->setParent($cvData_block_4);
-        $cvData_language_3->setType(BlockTemplate::TYPE_SKILLS_INNER);
-        $manager->persist($cvData_language_1);
-        $manager->persist($cvData_language_2);
-        $manager->persist($cvData_language_3);
-
-
-        $blockData1_6_1 = new BlockData();
-        $blockData1_6_1->setParent($blockData1_6);
-        $blockData1_6_1->setCV($cv1);
-        $blockData1_6_1->addCvData($cvData_language_1);
-        $blockData1_6_1->setBlockTemplate($block1_5_1);
-        $blockData1_6_1->setData(json_encode(array(
-                'title' => 'Lithuanian',
-                'skill' => '10'
-            )));
-        $manager->persist($blockData1_6_1);
-
-        $blockData1_6_2 = new BlockData();
-        $blockData1_6_2->setParent($blockData1_6);
-        $blockData1_6_2->setCV($cv1);
-        $blockData1_6_2->addCvData($cvData_language_2);
-        $blockData1_6_2->setBlockTemplate($block1_5_1);
-        $blockData1_6_2->setData(json_encode(array(
-                'title' => 'English',
-                'skill' => '8'
-            )));
-        $manager->persist($blockData1_6_2);
-
-        $blockData1_6_3 = new BlockData();
-        $blockData1_6_3->setParent($blockData1_6);
-        $blockData1_6_3->setCV($cv1);
-        $blockData1_6_3->addCvData($cvData_language_3);
-        $blockData1_6_3->setBlockTemplate($block1_5_1);
-        $blockData1_6_3->setData(json_encode(array(
-                'title' => 'Russian',
-                'skill' => '7'
-            )));
-        $manager->persist($blockData1_6_3);
 
         $manager->flush();
     }
