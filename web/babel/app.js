@@ -20,7 +20,13 @@ $('.template').on('click', (evebt) => {
   let templateId = $(event.target).parent('.template').data('templateId');
   loadTemplate(templateId);
 });
-
+$('.themes-listitem').on('click', (evebt) => {
+    let themeSource = $(evebt.target).parent('.themes-listitem').data('themeSource');
+    loadTheme(themeSource);
+});
+let loadTheme = (themeSource) => {
+    $('head').append(`<link href="/templates/default/${themeSource}" rel="stylesheet">`);
+}
 let loadTemplate = (templateId) => {
   activateLoader();
   API.getCv(templateId, (data) => {
