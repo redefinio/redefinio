@@ -27,14 +27,15 @@ class CVRenderService {
         $this->twig = $this->container->get('twig');
     }
 
-	public function getTemplateHtml($template) {
+	public function getTemplateHtml($template, $cv) {
 		// all slots just replace the twig blocks in base template from Template.templatePath
 		$templateString = '{% extends \'templates/'.$template->getTemplatePath().'.html.twig\' %}';
 		// each TemaplteSlot acts as a block in parent template
 		foreach($template->getTemplateSlots() as $slot) {
 			$templateString .= '{% block '.$slot->getWildcard().' %}';
 			// traverse through each slots blocks and fill it with data
-			foreach ($slot->getBlockDatas() as $data) {
+            $dataBlocks = $this->em->getRepository('AppBundle:BlockData')->findBy(array('template_slot' => $slot, 'cv' => $cv));
+			foreach ($dataBlocks as $data) {
                 $template = $this->twig->createTemplate($data->getBlockTemplate()->getHtmlSource());
 
                 $parameters = $this->getParameters($data);

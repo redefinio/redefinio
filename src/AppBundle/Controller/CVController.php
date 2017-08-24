@@ -63,8 +63,6 @@ class CVController extends Controller
         }
 
         return $this->redirect($this->generateUrl("cv_index"));
-
-//        return new Response($templateId);
     }
 
     /**
@@ -146,7 +144,7 @@ class CVController extends Controller
             return $response;
         }
 
-        return new Response($cvRenderService->getTemplateHtml($repository->findOneById($id)));
+        return new Response($cvRenderService->getTemplateHtml($template, $cv));
     }
 
     private function mapDataToSlotTemplates($slot, $cv) {
