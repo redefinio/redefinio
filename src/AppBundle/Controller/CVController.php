@@ -162,7 +162,7 @@ class CVController extends Controller
                 case BlockTemplate::TYPE_EXPERIENCE:
                 case BlockTemplate::TYPE_CERTIFICATES:
                 case BlockTemplate::TYPE_EDUCATION:
-                    $block = $this->mapBlock($template, $entity, $slot);
+                    $block = $this->mapText($template, $entity);
                     break;
                 case BlockTemplate::TYPE_TEXT:
                     $block = $this->mapText($template, $entity);
@@ -217,29 +217,6 @@ class CVController extends Controller
         $block->setTemplateSlot($template->getSlot());
 
         return $block;
-    }
-
-    private function mapBlock($template, $entity, $slot) {
-        $parent = new BlockData();
-        $parent->setCv($entity->getCv());
-        $parent->setBlockTemplate($template);
-        $parent->addCvData($entity);
-        $parent->setTemplateSlot($template->getSlot());
-
-        $templateRepository = $this->getDoctrine()->getRepository('AppBundle:BlockTemplate');
-        $children = $entity->getChildren();
-        $childTemplate = $templateRepository->findOneBy(array('type' => $children->first()->getType(), 'template' => $template->getTemplate()));
-        foreach ($children as $child) {
-            $childBlock = new BlockData();
-            $childBlock->setParent($parent);
-            $childBlock->setCv($entity->getCv());
-            $childBlock->setBlockTemplate($childTemplate);
-            $childBlock->addCvData($child);
-
-            $parent->addChild($childBlock);
-        }
-
-        return $parent;
     }
 
     /**
