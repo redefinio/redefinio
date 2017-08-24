@@ -2,10 +2,11 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\TemplatType;
 use AppBundle\Entity\User;
 use AppBundle\Entity\CV;
-use Doctrine\ORM\EntityManager;
-
+use AppBundle\Event\CreateDataEvent;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * CVService
@@ -14,11 +15,14 @@ use Doctrine\ORM\EntityManager;
  */
 class CvService {
 
-    protected $em;
+    private $em;
+    private $container;
+    private $eventHandler;
 
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
+    public function __construct(ContainerInterface $container) {
+        $this->container = $container;
+        $this->em = $this->container->get('doctrine')->getManager();
+        $this->eventHandler = $this->container->get(EventHandlerService::class);
     }
 
     public function getUserCv(User $user) {
@@ -37,14 +41,99 @@ class CvService {
         $cv->setTheme($theme);
         $cv->setUrl("some_url");
 
-        $this->initializeTemplate($cv, $template);
+        $this->em->persist($cv);
+        $this->em->flush();
 
-//        $this->em->persist($cv);
-//        $this->em->flush();
-
+        $this->initializeData($cv, $template);
     }
 
-    private function initializeTemplate($cv, $template) {
+    private function initializeData($cv, $template) {
+        $templates = $this->em->getRepository('AppBundle:BlockTemplate')->findByTemplate($template);
 
+        foreach($templates as $block) {
+            $event = $this->createDataEvent($cv, $block);
+
+            if (is_array($event)) {
+                $this->eventHandler->applyEvents($event);
+            } else {
+
+                $this->eventHandler->applyEvent($event);
+            }
+        }
+    }
+
+
+    private function initializeFixed($event, $template) {
+        $fields = json_decode($template->getAvailableFields());
+
+        $events = array();
+
+        foreach($fields as $field) {
+            $separateEvent = clone($event);
+            $separateEvent->setData(array($field => ''));
+            $separateEvent->setField($field);
+
+            $events[] = $separateEvent;
+        }
+
+        return $events;
+    }
+
+    private function initializeBlock($event, $block)
+    {
+        $fields = json_decode($block->getAvailableFields());
+
+        $data = array();
+        foreach($fields as $field) {
+            if ($field == 'blocks') {
+                $data['blocks'] = array();
+            } else {
+
+                $data[$field] = "";
+            }
+        }
+
+        if (count($block->getChildren()) > 0) {
+            foreach($block->getChildren() as $child) {
+                $childFields = json_decode($child->getAvailableFields());
+                $fields['blocks'][] = $childFields;
+
+                $childData = array();
+
+                foreach ($childFields as $childField) {
+                    $childData[$childField] = "";
+                }
+
+                $data['blocks'][] = $childData;
+            }
+        }
+
+        $event->setData($data);
+
+        return $event;
+    }
+
+    private function createDataEvent($cv, $template) {
+        $event = new CreateDataEvent();
+        $event->setCvId($cv);
+        $event->setType($template->getType());
+        $event->setTemplateId($template->getId());
+
+        //TODO: Refactor with immutable
+        switch ($template->getType()) {
+            case TemplatType::TYPE_SKILLS:
+            case TemplatType::TYPE_EXPERIENCE:
+            case TemplatType::TYPE_CERTIFICATES:
+            case TemplatType::TYPE_EDUCATION:
+            case TemplatType::TYPE_TEXT:
+                $event = $this->initializeBlock($event, $template);
+                break;
+            case TemplatType::TYPE_FIXED:
+                $event = $this->initializeFixed($event, $template);
+                break;
+        }
+
+
+        return $event;
     }
 }
