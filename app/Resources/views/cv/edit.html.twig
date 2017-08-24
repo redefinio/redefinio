@@ -37,7 +37,7 @@
 			<h3 class="sidebar-header">Templates</h3>
 			<div class="templates-list">
         {% for template in templates %}
-        <div class="templates-listitem" {% if template.id == cv.getTemplate().getId() %}class="active" {% endif %}>
+        <div class="templates-listitem{% if template.id == cv.getTemplate().getId() %} active{% endif %}">
           <div class="template" data-template-id="{{ template.id }}">
             {# {% if template.free %} #}
             <span class="price-indicator">
@@ -47,7 +47,7 @@
 
             <span class="check-icon">
             <img src="{{ asset('img/check.png') }}" alt="Icon"></span>
-            <img class="template-image" src="{{ asset('img/dummy_template.png') }}" alt="Template" title="{{ template.title }}">
+            <img class="template-image" src="{{ asset('img/templates/' ~ template.templatePath~ '.jpg') }}" alt="Template" title="{{ template.title }}">
           </div>
         </div>
         {% endfor %}

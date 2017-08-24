@@ -233,19 +233,12 @@ class LoadAllData implements FixtureInterface
             'blocks' => ''
         ));
 
-        $cvData1_1 = new CvData();
-        $cvData1_1->setCv($cv1);
-        $cvData1_1->setData(array('first_name' => 'Erikas'));
-        $cvData1_1->setField("first_name");
-        $cvData1_1->setType(BlockTemplate::TYPE_FIXED);
-        $manager->persist($cvData1_1);
-
-        $cvData1_2 = new CvData();
-        $cvData1_2->setCv($cv1);
-        $cvData1_2->setData(array('last_name' => 'Mališauskas'));
-        $cvData1_2->setType(BlockTemplate::TYPE_FIXED);
-        $cvData1_2->setField("last_name");
-        $manager->persist($cvData1_2);
+        $cvData1_6 = new CvData();
+        $cvData1_6->setCv($cv1);
+        $cvData1_6->setData(array('full_name' => 'Erikas Mališauskas'));
+        $cvData1_6->setField("full_name");
+        $cvData1_6->setType(BlockTemplate::TYPE_FIXED);
+        $manager->persist($cvData1_6);
 
         $cvData1_3 = new CvData();
         $cvData1_3->setCv($cv1);
@@ -268,20 +261,10 @@ class LoadAllData implements FixtureInterface
         $cvData1_5->setField("phone");
         $manager->persist($cvData1_5);
 
-        $cvData1_6 = new CvData();
-        $cvData1_6->setCv($cv1);
-        $cvData1_6->setData(array('full_name' => 'Erikas Mališauskas'));
-        $cvData1_6->setField("full_name");
-        $cvData1_6->setType(BlockTemplate::TYPE_FIXED);
-        $manager->persist($cvData1_6);
-
-
         $blockData1_1 = new BlockData();
         $blockData1_1->setCV($cv1);
         $blockData1_1->setTemplateSlot($templateSlot1_1);
         $blockData1_1->setBlockTemplate($block1_1);
-        $blockData1_1->addCvData($cvData1_1);
-        $blockData1_1->addCvData($cvData1_2);
         $blockData1_1->addCvData($cvData1_3);
         $blockData1_1->addCvData($cvData1_4);
         $blockData1_1->addCvData($cvData1_5);
