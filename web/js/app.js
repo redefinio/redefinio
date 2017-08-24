@@ -22,9 +22,28 @@ $('.edit-url-btn').on('click', function () {
 });
 $('.template').on('click', function (evebt) {
   var templateId = $(event.target).parent('.template').data('templateId');
+  var element = $(evebt.target).parent('.template').find('.check-icon')[0];
+
+  $('.templates-list .check-icon').each(function () {
+    $(this).css('display', 'none');
+  });
+  $(element).css('display', 'block');
   loadTemplate(templateId);
 });
+$('.themes-listitem').on('click', function (evebt) {
+  var themeSource = $(evebt.target).parent('.themes-listitem').data('themeSource');
+  var element = $(evebt.target).parent('.themes-listitem').find('.check-icon')[0];
 
+  $('.themes-list .check-icon').each(function () {
+    $(this).css('display', 'none');
+  });
+  $(element).css('display', 'block');
+
+  loadTheme(themeSource);
+});
+var loadTheme = function loadTheme(themeSource) {
+  $('head').append('<link href="/templates/default/' + themeSource + '" rel="stylesheet">');
+};
 var loadTemplate = function loadTemplate(templateId) {
   activateLoader();
   API.getCv(templateId, function (data) {

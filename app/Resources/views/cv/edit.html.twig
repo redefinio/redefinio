@@ -37,7 +37,7 @@
 			<h3 class="sidebar-header">Templates</h3>
 			<div class="templates-list">
         {% for template in templates %}
-        <div class="templates-listitem{% if template.id == cv.getTemplate().getId() %} active{% endif %}">
+        <div class="templates-listitem">
           <div class="template" data-template-id="{{ template.id }}">
             {# {% if template.free %} #}
             <span class="price-indicator">
@@ -45,7 +45,7 @@
             </span>
             {# {% endif %} #}
 
-            <span class="check-icon">
+            <span class="check-icon" style="{% if template.id == cv.getTemplate().getId() %} display: block; {% endif %}">
             <img src="{{ asset('img/check.png') }}" alt="Icon"></span>
             <img class="template-image" src="{{ asset('img/templates/' ~ template.templatePath~ '.jpg') }}" alt="Template" title="{{ template.title }}">
           </div>
@@ -58,12 +58,13 @@
 			<h3 class="sidebar-header">Themes</h3>
 			<div class="themes-list">
         {% for theme in cv.template.themes %}
-        <div class="themes-listitem">
+        <div class="themes-listitem" data-theme-source="{{ theme.cssSource }}">
           <div class="theme-container" style="background: #{{ theme.backgroundColor }};">
             <div class="theme">
-              <span class="check-icon">
-                <img src="{{ asset('img/check.png') }}" alt="Icon">
-              </span>
+
+                <span class="check-icon" style="{% if theme.id == cv.getTemplate().getId() %} display: block; {% endif %}">
+                  <img src="{{ asset('img/check.png') }}" alt="Icon">
+                </span>
               <span class="theme-palette" style="background:#{{ theme.titleColor }};"></span>
               <span class="theme-palette" style="background:#{{ theme.paragraphColor }};"></span>
               <span class="theme-palette" style="background:#{{ theme.primaryColor }};"></span>
