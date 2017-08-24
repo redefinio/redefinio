@@ -176,7 +176,7 @@ class LoadAllData implements FixtureInterface
         $theme1_1->setTitleColor('000000');
         $theme1_1->setParagraphColor('777777');
         $theme1_1->setPrimaryColor('288dd5');
-        $theme1_1->setCssSource('1_1.css');
+        $theme1_1->setCssSource('styles.css');
         $manager->persist($theme1_1);
 
         $theme1_2 = new Theme();
@@ -206,7 +206,7 @@ class LoadAllData implements FixtureInterface
         $theme1_4->setTitleColor('555000');
         $theme1_4->setParagraphColor('555000');
         $theme1_4->setPrimaryColor('555000');
-        $theme1_4->setCssSource('byrka.css');
+        $theme1_4->setCssSource('lopas.css');
         $manager->persist($theme1_4);
 
         $theme1_5 = new Theme();
@@ -216,7 +216,7 @@ class LoadAllData implements FixtureInterface
         $theme1_5->setTitleColor('555000');
         $theme1_5->setParagraphColor('555000');
         $theme1_5->setPrimaryColor('555000');
-        $theme1_5->setCssSource('byrka.css');
+        $theme1_5->setCssSource('qwerty.css');
         $manager->persist($theme1_5);        
 
         $cv1 = new CV();

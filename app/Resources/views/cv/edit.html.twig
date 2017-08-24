@@ -58,7 +58,7 @@
 			<h3 class="sidebar-header">Themes</h3>
 			<div class="themes-list">
         {% for theme in cv.template.themes %}
-        <div class="themes-listitem">
+        <div class="themes-listitem" data-theme-source="{{ theme.cssSource }}">
           <div class="theme-container" style="background: #{{ theme.backgroundColor }};">
             <div class="theme">
               <span class="check-icon">
