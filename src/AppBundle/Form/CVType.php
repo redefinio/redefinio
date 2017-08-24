@@ -15,15 +15,8 @@ class CVType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
             ->add('template')
             ->add('url')
-            ->add('full_name')
-            ->add('occupation')
-            ->add('location')
-            ->add('phone')
-            ->add('email')
-            ->add('summary')
         ;
     }
     

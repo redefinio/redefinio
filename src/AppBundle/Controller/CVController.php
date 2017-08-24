@@ -86,11 +86,13 @@ class CVController extends Controller
 
             return $this->redirectToRoute('cv_edit', array('id' => $cV->getId()));
         }
+
         $em = $this->getDoctrine()->getManager();
         $templates = $em->getRepository('AppBundle:Template')->findAll();
 
         return $this->render('cv/edit.html.twig', array(
             'cv' => $cV,
+            'current_template_id' => $cV->getTemplate()->getId(),
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'templates' => $templates

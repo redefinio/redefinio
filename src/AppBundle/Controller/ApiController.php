@@ -191,7 +191,7 @@ class ApiController extends Controller
             case BlockTemplate::TYPE_EXPERIENCE:
             case BlockTemplate::TYPE_CERTIFICATES:
             case BlockTemplate::TYPE_EDUCATION:
-                $this->updateCollection($data, $cv, $formData);
+                $this->updateText($data->getCvDatas(), $formData);
                 break;
         }
 
@@ -235,7 +235,7 @@ class ApiController extends Controller
 
     private function updateText($persistedData, $formData) {
         foreach($persistedData as $data) {
-            $data->setData(json_encode($formData));
+            $data->setData($formData);
         }
 
         return $persistedData;
@@ -243,8 +243,8 @@ class ApiController extends Controller
 
     private function updateMixed($persistedData, $formData) {
         foreach($persistedData as $data) {
-            $json = json_encode(array($data->getField() => $formData[$data->getField()]));
-            $data->setData($json);
+            $value = array($data->getField() => $formData[$data->getField()]);
+            $data->setData($value);
         }
 
         return $persistedData;
