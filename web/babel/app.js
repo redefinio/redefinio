@@ -18,10 +18,23 @@ $('.edit-url-btn').on('click', () => {
 });
 $('.template').on('click', (evebt) => {
   let templateId = $(event.target).parent('.template').data('templateId');
+  let element = $(evebt.target).parent('.template').find('.check-icon')[0];
+  
+  $('.templates-list .check-icon').each(function() {
+    $(this).css('display', 'none');
+  });
+  $(element).css('display', 'block');
   loadTemplate(templateId);
 });
 $('.themes-listitem').on('click', (evebt) => {
     let themeSource = $(evebt.target).parent('.themes-listitem').data('themeSource');
+    let element = $(evebt.target).parent('.themes-listitem').find('.check-icon')[0];
+    
+    $('.themes-list .check-icon').each(function() {
+      $(this).css('display', 'none');
+    });
+    $(element).css('display', 'block');
+    
     loadTheme(themeSource);
 });
 let loadTheme = (themeSource) => {
