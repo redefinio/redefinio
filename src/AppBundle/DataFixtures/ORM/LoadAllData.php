@@ -3,6 +3,7 @@ namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\BlockTemplate;
 use AppBundle\Entity\CvData;
+use AppBundle\Entity\TemplatType;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\Template;
@@ -14,6 +15,53 @@ use AppBundle\Entity\Theme;
 
 class LoadAllData implements FixtureInterface
 {
+
+    private $defaultFields = array(
+        TemplatType::TYPE_TEXT => array(
+            'title' => '',
+            'text' => ''
+        ),
+        TemplatType::TYPE_EXPERIENCE => array(
+                'title' => '',
+                'blocks' => array()
+        ),
+        TemplatType::TYPE_EDUCATION => array(
+                'title' => '',
+                'blocks' => array()
+        ),
+        TemplatType::TYPE_CERTIFICATES => array(
+                'title' => '',
+                'blocks' => array()
+        ),
+        TemplatType::TYPE_EXPERIENCE_INNER => array(
+            'date_from' => '',
+            'date_to' => '',
+            'position' => '',
+            'company' => '',
+            'description' => ''
+        ),
+        TemplatType::TYPE_EDUCATION_INNER => array(
+            'date_from' => '',
+            'date_to' => '',
+            'position' => '',
+            'company' => '',
+            'description' => ''
+        ),
+        TemplatType::TYPE_SKILLS => array(
+                'title' => '',
+                'blocks' => array()
+        ),
+        TemplatType::TYPE_SKILLS_INNER => array(
+            'title' => '',
+            'skill' => '0'
+        )
+
+    );
+
+    public function getDefaultFields(int $type) {
+        return $this->defaultFields[$type];
+    }
+
     public function load(ObjectManager $manager)
     {
         $template1 = new Template();
@@ -46,10 +94,10 @@ class LoadAllData implements FixtureInterface
         $block1_1->setTemplate($template1);
         $block1_1->setHtmlSource('<div class="container"><div class="row"><div class="col-xs-12" data-zone="static"><div id="top"><div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.BlockTemplate::TYPE_FIXED.'" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"><div class="big-title pull-left"><h1 class="title"><span data-key="full_name" data-placeholder="John">{{ full_name }}</span></h1><h3 class="subtitle" data-key="title" data-placeholder="Your title">{{ title }}</h3></div><div class="contacts pull-right"><a href="mailto:{{ email }}" data-key="email" data-placeholder="john@example.com">{{ email }}</a> <a href="tel:{{ phone }}" data-key="phone" data-placeholder="Your phone">{{ phone }}</a></div><div class="clear"></div></div></div></div></div></div>');
         $block1_1->setAvailableFields(json_encode(array(
-                'full_name',
-                'title',
-                'email',
-                'phone'
+                'full_name' => '',
+                'title' => '',
+                'email' => '',
+                'phone' => ''
             )));
         $manager->persist($block1_1);
 
@@ -62,8 +110,8 @@ class LoadAllData implements FixtureInterface
             </div>');
         $block1_2->setAvailableFields(
             json_encode(array(
-                'title',
-                'text'
+                'title' => '',
+                'text' => ''
             )));
         $manager->persist($block1_2);
 
@@ -75,8 +123,8 @@ class LoadAllData implements FixtureInterface
         $block1_3->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.BlockTemplate::TYPE_EXPERIENCE.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-briefcase"></i><span data-key="title">Experience</span></h2><ul class="timeline" data-child-block-type="'.BlockTemplate::TYPE_EXPERIENCE_INNER.'" data-key="blocks">{{ blocks|raw }}</ul></div>');
         $block1_3->setAvailableFields(
             json_encode(array(
-                'title',
-                'blocks'
+                'title' => '',
+                'blocks' => array()
             )));
         $manager->persist($block1_3);
 
@@ -87,13 +135,8 @@ class LoadAllData implements FixtureInterface
         $block1_3_1->setTemplate($template1);
         $block1_3_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-key="date_from" data-placeholder="Date from">{{ date_from }}</span> - <span data-key="date_to" data-placeholder="Date to">{{ date_to }}</span></div><h3 class="position" data-key="position" data-placeholder="Position">{{ position }}</h3><h3 class="subtitle" data-key="company" data-placeholder="Company" data-is-child="true">{{ company }}</h3><h4 data-placeholder="Description" data-key="description">{{ description }}</h4></div></li>');
         $block1_3_1->setAvailableFields(
-            json_encode(array(
-                'date_from',
-                'date_to',
-                'position',
-                'company',
-                'description'
-            )));
+            json_encode($this->getDefaultFields(TemplatType::TYPE_EXPERIENCE_INNER))
+        );
         $manager->persist($block1_3_1);
 
         $block1_4 = new BlockTemplate();
@@ -103,10 +146,8 @@ class LoadAllData implements FixtureInterface
         $block1_4->setTemplate($template1);
         $block1_4->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.BlockTemplate::TYPE_EDUCATION.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-education"></i><span data-key="title">Education</span></h2><ul class="timeline" data-child-block-type="'.BlockTemplate::TYPE_EDUCATION_INNER.'" data-key="blocks">{{ blocks|raw }}</ul></div>');
         $block1_4->setAvailableFields(
-            json_encode(array(
-                'title',
-                'blocks'
-            )));
+            json_encode($this->getDefaultFields(TemplatType::TYPE_EDUCATION)))
+        ;
         $manager->persist($block1_4);
 
         $block1_4_1 = new BlockTemplate();
@@ -116,13 +157,8 @@ class LoadAllData implements FixtureInterface
         $block1_4_1->setTemplate($template1);
         $block1_4_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-key="date_from">{{ date_from }}</span> - <span data-key="date_to">{{ date_to }}</span></div><h3 class="position" data-key="position">{{ position }}</h3><h3 class="subtitle" data-key="company">{{ company }}</h3><h4 data-key="description">{{ description }}</h4></div></li>');
         $block1_4_1->setAvailableFields(
-            json_encode(array(
-                'date_from',
-                'date_to',
-                'position',
-                'company',
-                'description'
-            )));
+            json_encode($this->getDefaultFields(TemplatType::TYPE_EDUCATION_INNER))
+        );
         $manager->persist($block1_4_1);
 
         $block1_5 = new BlockTemplate();
@@ -133,10 +169,8 @@ class LoadAllData implements FixtureInterface
         $block1_5->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.BlockTemplate::TYPE_SKILLS.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true">
               <h2 class="title"><i class="glyphicon glyphicon-tasks"></i><span data-key="title">Skills</span></h2><div data-child-block-type="'.BlockTemplate::TYPE_SKILLS_INNER.'" data-key="blocks">{{ blocks|raw }}</div></div>');
         $block1_5->setAvailableFields(
-            json_encode(array(
-                'title',
-                'blocks'
-            )));
+            json_encode($this->getDefaultFields(TemplatType::TYPE_SKILLS))
+        );
         $manager->persist($block1_5);
 
         $block1_5_1 = new BlockTemplate();
@@ -146,10 +180,8 @@ class LoadAllData implements FixtureInterface
         $block1_5_1->setTemplate($template1);
         $block1_5_1->setHtmlSource('<div class="skills-group" data-key="skill" data-value="{{ skill }}"><label data-key="title">{{ title }}</label><ul class="skills">{% if skill > 0 %}{% for i in 1..skill %}<li class="completed"></li>{% endfor %}{% endif %}{% if skill < 10 %}{% for i in 1..(10-skill) %}<li></li>{% endfor %}{% endif %}</ul></div>');
         $block1_5_1->setAvailableFields(
-            json_encode(array(
-                'title',
-                'skill'
-            )));
+            json_encode($this->getDefaultFields(TemplatType::TYPE_SKILLS_INNER))
+        );
         $manager->persist($block1_5_1);
 
         $this->addTemplates($manager);
@@ -437,8 +469,8 @@ class LoadAllData implements FixtureInterface
         $block1_1->setTemplate($template1);
         $block1_1->setHtmlSource('<div class="person" class="item" data-block-id="{{block_data.id}}" data-block-type="0" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"> <div class="photo"><img src="{{asset(\'templates/standart/img/photo.jpg\')}}" alt=""/></div><div class="name" data-key="full_name" data-placeholder="John">{{ full_name }}</div><div class="statusquo" data-key="title" data-placeholder="UI/UX designer">{{title}}</div></div>');
         $block1_1->setAvailableFields(json_encode(array(
-            'full_name',
-            'title'
+            'full_name' => '',
+            'title' => ''
         )));
         $manager->persist($block1_1);
 
@@ -449,10 +481,7 @@ class LoadAllData implements FixtureInterface
         $block1_2->setTemplate($template1);
         $block1_2->setHtmlSource('<div class="group item" data-block-id="{{ block_data.id }}" data-block-type="1" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"> <div class="group title" data-key="title" data-placeholder="Title">{{ title }}</div> <div class="group content" data-key="text" data-placeholder="Text goes here"> {{ text }} </div> </div>');
         $block1_2->setAvailableFields(
-            json_encode(array(
-                'title',
-                'text'
-            )));
+            json_encode($this->getDefaultFields(TemplatType::TYPE_TEXT)));
         $manager->persist($block1_2);
 
         $block1_3 = new BlockTemplate();
@@ -462,10 +491,7 @@ class LoadAllData implements FixtureInterface
         $block1_3->setTemplate($template1);
         $block1_3->setHtmlSource('<div class="group item" data-block-id="{{block_data.id}}" data-block-type="4" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"> <div class="group title" data-key="title">Working Experience</div><div class="group content"> <div class="blocks timeline" data-child-block-type="5" data-key="blocks">{{blocks|raw}}</div></div></div>');
         $block1_3->setAvailableFields(
-            json_encode(array(
-                'title',
-                'blocks'
-            )));
+            json_encode($this->getDefaultFields(TemplatType::TYPE_EXPERIENCE)));
         $manager->persist($block1_3);
 
         $block1_3_1 = new BlockTemplate();
@@ -475,13 +501,7 @@ class LoadAllData implements FixtureInterface
         $block1_3_1->setTemplate($template1);
         $block1_3_1->setHtmlSource('<div class="row"> <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 date"> <span data-placeholder="Date from">{{date_from}}</span> <span>-</span> <span data-key="date_to" data-placeholder="Date to">{{date_to}}</span> </div><div class="col-lg-10 col-md-9 col-sm-9 col-xs-12"> <div class="title" data-key="position" data-placeholder="Position">{{position}}</div><div class="company" data-key="company" data-placeholder="Company" data-is-child="true">{{company}}</div><div class="description" ata-placeholder="Description" data-key="description">{{description}}</div></div></div>');
         $block1_3_1->setAvailableFields(
-            json_encode(array(
-                'date_from',
-                'date_to',
-                'position',
-                'company',
-                'description'
-            )));
+            json_encode($this->getDefaultFields(TemplatType::TYPE_EXPERIENCE_INNER)));
         $manager->persist($block1_3_1);
 
         $block1_4 = new BlockTemplate();
@@ -491,10 +511,7 @@ class LoadAllData implements FixtureInterface
         $block1_4->setTemplate($template1);
         $block1_4->setHtmlSource('<div class="group item" data-block-id="{{block_data.id}}" data-block-type="4" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"> <div class="group title" data-key="title">Working Experience</div><div class="group content"> <div class="blocks timeline" data-child-block-type="5" data-key="blocks">{{blocks|raw}}</div></div></div>');
         $block1_4->setAvailableFields(
-            json_encode(array(
-                'title',
-                'blocks'
-            )));
+            json_encode($this->getDefaultFields(TemplatType::TYPE_EDUCATION)));
         $manager->persist($block1_4);
 
         $block1_4_1 = new BlockTemplate();
@@ -504,13 +521,7 @@ class LoadAllData implements FixtureInterface
         $block1_4_1->setTemplate($template1);
         $block1_4_1->setHtmlSource('<div class="row"> <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 date"> <span data-placeholder="Date from">{{date_from}}</span> <span>-</span> <span data-key="date_to" data-placeholder="Date to">{{date_to}}</span> </div><div class="col-lg-10 col-md-9 col-sm-9 col-xs-12"> <div class="title" data-key="position" data-placeholder="Position">{{position}}</div><div class="company" data-key="company" data-placeholder="Company" data-is-child="true">{{company}}</div><div class="description" ata-placeholder="Description" data-key="description">{{description}}</div></div></div>');
         $block1_4_1->setAvailableFields(
-            json_encode(array(
-                'date_from',
-                'date_to',
-                'position',
-                'company',
-                'description'
-            )));
+            json_encode($this->getDefaultFields(TemplatType::TYPE_EDUCATION_INNER)));
         $manager->persist($block1_4_1);
 
         $block1_5 = new BlockTemplate();
@@ -520,10 +531,7 @@ class LoadAllData implements FixtureInterface
         $block1_5->setTemplate($template1);
         $block1_5->setHtmlSource('<div class="group item" data-block-id="{{block_data.id}}" data-block-type="2" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"> <div class="group title" data-key="title">Languages</div><div class="group content"> <div class="blocks indicator">{{blocks|raw}}</div></div></div>');
         $block1_5->setAvailableFields(
-            json_encode(array(
-                'title',
-                'blocks'
-            )));
+            json_encode($this->getDefaultFields(TemplatType::TYPE_SKILLS)));
         $manager->persist($block1_5);
 
         $block1_5_1 = new BlockTemplate();
@@ -533,10 +541,7 @@ class LoadAllData implements FixtureInterface
         $block1_5_1->setTemplate($template1);
         $block1_5_1->setHtmlSource('<div data-key="skill" data-value="{{skill}}"> <div class="title" data-key="title">{{title}}</div><div class="bar"> <div class="progress" style="width: {{ skill }}0%"></div></div></div>');
         $block1_5_1->setAvailableFields(
-            json_encode(array(
-                'title',
-                'skill'
-            )));
+            json_encode($this->getDefaultFields(TemplatType::TYPE_EDUCATION_INNER)));
         $manager->persist($block1_5_1);
     }
 }

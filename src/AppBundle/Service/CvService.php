@@ -68,9 +68,9 @@ class CvService {
 
         $events = array();
 
-        foreach($fields as $field) {
+        foreach($fields as $key=>$field) {
             $separateEvent = clone($event);
-            $separateEvent->setData(array($field => ''));
+            $separateEvent->setData(array($key => $field));
             $separateEvent->setField($field);
 
             $events[] = $separateEvent;
@@ -84,24 +84,17 @@ class CvService {
         $fields = json_decode($block->getAvailableFields());
 
         $data = array();
-        foreach($fields as $field) {
-            if ($field == 'blocks') {
-                $data['blocks'] = array();
-            } else {
-
-                $data[$field] = "";
-            }
+        foreach($fields as $key=>$field) {
+            $data[$key] = $field;
         }
 
         if (count($block->getChildren()) > 0) {
             foreach($block->getChildren() as $child) {
                 $childFields = json_decode($child->getAvailableFields());
-                $fields['blocks'][] = $childFields;
-
                 $childData = array();
 
-                foreach ($childFields as $childField) {
-                    $childData[$childField] = "";
+                foreach ($childFields as $key=>$childField) {
+                    $childData[$key] = $childField;
                 }
 
                 $data['blocks'][] = $childData;
