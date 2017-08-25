@@ -58,11 +58,23 @@ let loadTemplate = (templateId) => {
       prepareToEditTemplate();
     }
 
+    setPlaceholders();
+
     //Add timeout to remove twitches after loading template
     setTimeout(() => {
       $('#loader').removeClass('active');
     }, 1000);
   });
+}
+
+let setPlaceholders = () => {
+    let placeholders = $('body').find("[data-placeholder]");
+
+    for(let i = 0; i < placeholders.length; i++) {
+        let element = $(placeholders[i]);
+        let value = element.data('placeholder');
+        element.html(value);
+    }
 }
 
 let prepareToEditTemplate = () => {

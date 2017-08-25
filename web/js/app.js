@@ -62,11 +62,23 @@ var loadTemplate = function loadTemplate(templateId) {
       prepareToEditTemplate();
     }
 
+    setPlaceholders();
+
     //Add timeout to remove twitches after loading template
     setTimeout(function () {
       $('#loader').removeClass('active');
     }, 1000);
   });
+};
+
+var setPlaceholders = function setPlaceholders() {
+  var placeholders = $('body').find("[data-placeholder]");
+
+  for (var _i = 0; _i < placeholders.length; _i++) {
+    var element = $(placeholders[_i]);
+    var value = element.data('placeholder');
+    element.html(value);
+  }
 };
 
 var prepareToEditTemplate = function prepareToEditTemplate() {
@@ -75,14 +87,14 @@ var prepareToEditTemplate = function prepareToEditTemplate() {
 
   //Setup zones
   var zones = $('[data-zone-block-types]');
-  for (var _i = 0; _i < zones.length; _i++) {
-    new Zone(zones[_i]);
+  for (var _i2 = 0; _i2 < zones.length; _i2++) {
+    new Zone(zones[_i2]);
   }
 
   //Setup blocks
   var blocks = $('[data-block-id]');
-  for (var _i2 = 0; _i2 < blocks.length; _i2++) {
-    new Block(blocks[_i2]);
+  for (var _i3 = 0; _i3 < blocks.length; _i3++) {
+    new Block(blocks[_i3]);
   }
 };
 
@@ -303,16 +315,16 @@ var Zone = function () {
           var type = $(ui.item).data('blockType');
           var zones = $('[data-zone]');
 
-          for (var _i3 = 0; _i3 < zones.length; _i3++) {
+          for (var _i4 = 0; _i4 < zones.length; _i4++) {
             var types = [];
-            if ($(zones[_i3]).data('zoneBlockTypes') !== undefined) {
-              types = $(zones[_i3]).data('zoneBlockTypes').map(function (obj) {
+            if ($(zones[_i4]).data('zoneBlockTypes') !== undefined) {
+              types = $(zones[_i4]).data('zoneBlockTypes').map(function (obj) {
                 return obj.type;
               });
             }
 
-            if (types.indexOf(type) === -1 && $(zones[_i3]).hasClass('ui-sortable')) {
-              $(zones[_i3]).sortable('disable');
+            if (types.indexOf(type) === -1 && $(zones[_i4]).hasClass('ui-sortable')) {
+              $(zones[_i4]).sortable('disable');
             }
           }
         },
@@ -401,8 +413,8 @@ var Block = function () {
     key: '_fixPlaceholders',
     value: function _fixPlaceholders() {
       var placeholders = $(this._element).find('[data-placeholder]');
-      for (var _i4 = 0; _i4 < placeholders.length; _i4++) {
-        var el = $(placeholders[_i4])[0];
+      for (var _i5 = 0; _i5 < placeholders.length; _i5++) {
+        var el = $(placeholders[_i5])[0];
         var placeholder = el.dataset.placeholder;
         if (el.innerHTML.indexOf('{{') > -1) {
           $(el).html(placeholder);
@@ -482,10 +494,10 @@ var Block = function () {
 
         //TODO: refactor edit function
         var editableElements = _this3._element.querySelectorAll('[data-key]');
-        for (var _i5 = 0; _i5 < editableElements.length; _i5++) {
-          var key = editableElements[_i5].getAttribute('data-key');
+        for (var _i6 = 0; _i6 < editableElements.length; _i6++) {
+          var key = editableElements[_i6].getAttribute('data-key');
           if (['skill', 'blocks'].indexOf(key) === -1) {
-            editableElements[_i5].setAttribute('contenteditable', true);
+            editableElements[_i6].setAttribute('contenteditable', true);
           }
         }
       });
@@ -500,19 +512,19 @@ var Block = function () {
     key: 'edit',
     value: function edit() {
       var editableElements = this._element.querySelectorAll('[data-key]');
-      for (var _i6 = 0; _i6 < editableElements.length; _i6++) {
-        var key = editableElements[_i6].getAttribute('data-key');
+      for (var _i7 = 0; _i7 < editableElements.length; _i7++) {
+        var key = editableElements[_i7].getAttribute('data-key');
         if (['blocks'].indexOf(key) === -1) {
-          editableElements[_i6].setAttribute('contenteditable', true);
+          editableElements[_i7].setAttribute('contenteditable', true);
         }
       }
 
       var sliders = $(this._element).find('.skills');
-      for (var _i7 = 0; _i7 < sliders.length; _i7++) {
-        if ($(sliders[_i7]).parent().find('.slider').length === 0) {
+      for (var _i8 = 0; _i8 < sliders.length; _i8++) {
+        if ($(sliders[_i8]).parent().find('.slider').length === 0) {
           var slider = document.createElement('div');
           slider.classList.add('slider');
-          var value = $(sliders[_i7]).parent('.skills-group').attr('data-value');
+          var value = $(sliders[_i8]).parent('.skills-group').attr('data-value');
           $(slider).slider({
             range: 'max',
             min: 0,
@@ -524,7 +536,7 @@ var Block = function () {
             }
           });
 
-          $(sliders[_i7]).after(slider);
+          $(sliders[_i8]).after(slider);
         }
       }
 
@@ -543,25 +555,25 @@ var Block = function () {
       data['zone'] = $(this._element).parent().data('zone');
       data['fields'] = {};
 
-      for (var _i8 = 0; _i8 < editableElements.length; _i8++) {
+      for (var _i9 = 0; _i9 < editableElements.length; _i9++) {
 
-        if (editableElements[_i8].getAttribute('data-key') !== 'blocks') {
+        if (editableElements[_i9].getAttribute('data-key') !== 'blocks') {
           if (data['fields']['blocks'] !== undefined) {
             var keysCount = $(this._element).find('[data-key="blocks"]').find('[data-key]');
             var sameKeysCount = $(this._element).find('[data-key="blocks"]').find('[data-key="' + keysCount[0].getAttribute('data-key') + '"]');
 
             var obj = {};
             for (var j = 0; j < keysCount.length / sameKeysCount.length; j++) {
-              var dataValue = editableElements[_i8 + j].getAttribute('data-value') ? editableElements[_i8 + j].getAttribute('data-value') : editableElements[_i8 + j].innerHTML;
-              var dataKey = editableElements[_i8 + j].getAttribute('data-key');
+              var dataValue = editableElements[_i9 + j].getAttribute('data-value') ? editableElements[_i9 + j].getAttribute('data-value') : editableElements[_i9 + j].innerHTML;
+              var dataKey = editableElements[_i9 + j].getAttribute('data-key');
               obj[dataKey] = dataValue;
             }
 
-            _i8 += keysCount.length / sameKeysCount.length - 1;
+            _i9 += keysCount.length / sameKeysCount.length - 1;
 
             data['fields']['blocks'].push(obj);
           } else {
-            data['fields'][editableElements[_i8].getAttribute('data-key')] = editableElements[_i8].innerHTML;
+            data['fields'][editableElements[_i9].getAttribute('data-key')] = editableElements[_i9].innerHTML;
           }
         } else {
           data['fields']['blocks'] = [];
