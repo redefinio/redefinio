@@ -209,11 +209,23 @@ class Zone {
         }
 
         this._element.appendChild(blockWrapper);
+
+        let cancelButton = document.createElement('a');
+        cancelButton.classList.add('active', 'cancel-button');
+        cancelButton.innerHTML = 'Cancel';
+        cancelButton.addEventListener('click', this._hideAddBlockList.bind(this), false);
+        blockWrapper.appendChild(cancelButton);
+
+
         this._addBlock = blockWrapper;
     }
 
     _showAddBlockList() {
         this._addBlock.classList.add('is-active');
+    }
+
+    _hideAddBlockList() {
+        this._addBlock.classList.remove('is-active');
     }
 
     _addNewBlock(zoneName, type) {
