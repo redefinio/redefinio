@@ -78,8 +78,10 @@ var setPlaceholders = function setPlaceholders() {
 
     for (var _i = 0; _i < placeholders.length; _i++) {
         var element = $(placeholders[_i]);
-        var value = element.data('placeholder');
-        element.html(value);
+        if (element.html() == "") {
+            var value = element.data('placeholder');
+            element.html(value);
+        }
     }
 };
 

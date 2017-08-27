@@ -75,8 +75,10 @@ let setPlaceholders = () => {
 
     for (let i = 0; i < placeholders.length; i++) {
         let element = $(placeholders[i]);
-        let value = element.data('placeholder');
-        element.html(value);
+        if (element.html() == "") {
+            let value = element.data('placeholder');
+            element.html(value);
+        }
     }
 };
 
