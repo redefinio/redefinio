@@ -256,12 +256,24 @@ var Zone = function () {
             }
 
             this._element.appendChild(blockWrapper);
+
+            var cancelButton = document.createElement('a');
+            cancelButton.classList.add('active', 'cancel-button');
+            cancelButton.innerHTML = 'Cancel';
+            cancelButton.addEventListener('click', this._hideAddBlockList.bind(this), false);
+            blockWrapper.appendChild(cancelButton);
+
             this._addBlock = blockWrapper;
         }
     }, {
         key: '_showAddBlockList',
         value: function _showAddBlockList() {
             this._addBlock.classList.add('is-active');
+        }
+    }, {
+        key: '_hideAddBlockList',
+        value: function _hideAddBlockList() {
+            this._addBlock.classList.remove('is-active');
         }
     }, {
         key: '_addNewBlock',

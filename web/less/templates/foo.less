@@ -279,12 +279,17 @@
   border-radius: 3px;
   text-align: center;
 
+  .cancel-button {
+    display: none;
+    margin: 0 0 20px 0;
+  }
+
   &.is-active {
     button {
       display: none;
     }
     
-    .add-block-items {
+    .add-block-items, .cancel-button {
       display: block;
     }
   }
