@@ -147,6 +147,30 @@ class CVController extends Controller
         return new Response($cvRenderService->getTemplateHtml($template, $cv));
     }
 
+    /**
+     * Generte pdf
+     *
+     * @Route("/pdf", name="cv_pdf")
+     * @param Request $request
+     * @return Response
+     */
+    public function renderPdfAction(Request $request) {
+        $cvRenderService = $this->get(CVRenderService::class);
+        $cvService = $this->get(CvService::class);
+
+        $cv = $cvService->getUserCv($this->getUser());
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($cvRenderService->getTemplateHtml($cv->getTemplate(), $cv)),
+                '200',
+                array(
+                    'Content-Type' => 'application/pdf',
+                    'Content-Disposition' => 'cv.pdf'
+                )
+        );
+    }
+
+
+
     private function mapDataToSlotTemplates($slot, $cv) {
         $em = $this->getDoctrine()->getManager();
 
@@ -180,7 +204,7 @@ class CVController extends Controller
 
     private function mapFixedData($template, $entity) {
         $fields = json_decode($template->getAvailableFields(), true);
-        if (in_array($entity->getField(), $fields)) {
+        if (array_key_exists($entity->getField(), $fields)) {
 
             $blocks = $this->getDoctrine()->getRepository('AppBundle:BlockData')->findBy(array('blockTemplate' => $template, 'cv' => $entity->getCv()));
             $block = $this->filterTemplateBlock($blocks, $template, $entity->getCv());

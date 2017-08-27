@@ -71,7 +71,7 @@ class CvService {
         foreach($fields as $key=>$field) {
             $separateEvent = clone($event);
             $separateEvent->setData(array($key => $field));
-            $separateEvent->setField($field);
+            $separateEvent->setField($key);
 
             $events[] = $separateEvent;
         }
@@ -129,4 +129,5 @@ class CvService {
 
         return $event;
     }
+
 }
