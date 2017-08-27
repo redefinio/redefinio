@@ -188,7 +188,7 @@ class Zone {
 
     let zonesList = document.createElement('ul');
     zonesList.classList.add('add-block-items', 'clearfix');
-    blockWrapper.appendChild(zonesList)
+    blockWrapper.appendChild(zonesList);
 
     for(let type of zoneTypes) {
       let listItem = document.createElement('li');
@@ -224,7 +224,11 @@ class Zone {
       $(`[data-zone="${zoneName}"]`).find('.add-block').before(newBlock);
       new Block(newBlock);
 
-      window.statusBar.showMessage(`You have just added ${type.name} block`);
+      window.statusBar.showMessage(`You have just added ${type.name} block`).then(function () {
+          // @TODO fix this when API will be done.
+      }).catch(function (reason) {
+
+      });
     });
   }
 
@@ -334,6 +338,14 @@ class Block {
       deleteButton.addEventListener('click', this.delete.bind(this), false);
       blockActionsWrapper.appendChild(deleteButton);
     }
+
+    if (JSON.parse(this._element.getAttribute('data-is-editable')) === true) {
+        let cancelButton = document.createElement('button');
+        cancelButton.classList.add('cancel');
+        cancelButton.innerHTML = 'Cancel';
+        cancelButton.addEventListener('click', this.cancel.bind(this), false);
+        blockActionsWrapper.appendChild(cancelButton);
+      }
 
     if (JSON.parse(this._element.getAttribute('data-is-editable')) === true) {
       let saveButton = document.createElement('button');
@@ -472,6 +484,18 @@ class Block {
     }
 
     this._toggleEditing();
+  }
+
+  cancel() {
+      let editableElements = this._element.querySelectorAll('[data-key]');
+
+      for (let z = 0; z < editableElements.length; z++) {
+          if (['blocks'].indexOf(editableElements[z].getAttribute('data-key')) === -1) {
+              editableElements[z].setAttribute('contenteditable', false);
+          }
+      }
+
+      this._toggleEditing();
   }
 
   save() {

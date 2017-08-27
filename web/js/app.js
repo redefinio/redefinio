@@ -274,7 +274,9 @@ var Zone = function () {
         $('[data-zone="' + zoneName + '"]').find('.add-block').before(newBlock);
         new Block(newBlock);
 
-        window.statusBar.showMessage('You have just added ' + type.name + ' block');
+        window.statusBar.showMessage('You have just added ' + type.name + ' block').then(function () {
+          // @TODO fix this when API will be done.
+        }).catch(function (reason) {});
       });
     }
   }, {
@@ -395,6 +397,14 @@ var Block = function () {
         deleteButton.innerHTML = 'Delete';
         deleteButton.addEventListener('click', this.delete.bind(this), false);
         blockActionsWrapper.appendChild(deleteButton);
+      }
+
+      if (JSON.parse(this._element.getAttribute('data-is-editable')) === true) {
+        var cancelButton = document.createElement('button');
+        cancelButton.classList.add('cancel');
+        cancelButton.innerHTML = 'Cancel';
+        cancelButton.addEventListener('click', this.cancel.bind(this), false);
+        blockActionsWrapper.appendChild(cancelButton);
       }
 
       if (JSON.parse(this._element.getAttribute('data-is-editable')) === true) {
@@ -539,6 +549,19 @@ var Block = function () {
           });
 
           $(sliders[_i8]).after(slider);
+        }
+      }
+
+      this._toggleEditing();
+    }
+  }, {
+    key: 'cancel',
+    value: function cancel() {
+      var editableElements = this._element.querySelectorAll('[data-key]');
+
+      for (var z = 0; z < editableElements.length; z++) {
+        if (['blocks'].indexOf(editableElements[z].getAttribute('data-key')) === -1) {
+          editableElements[z].setAttribute('contenteditable', false);
         }
       }
 
