@@ -17,29 +17,31 @@ $('.edit-url-btn').on('click', () => {
   } catch (err) {}
 });
 $('.template').on('click', (evebt) => {
-  let templateId = $(event.target).parent('.template').data('templateId');
-  let element = $(evebt.target).parent('.template').find('.check-icon')[0];
+  let templateId = evebt.currentTarget.attributes[1].value;
+  let checkIcon = $(evebt.target).parent().find('.check-icon');
   
   $('.templates-list .check-icon').each(function() {
     $(this).css('display', 'none');
   });
-  $(element).css('display', 'block');
+  $(checkIcon).css('display', 'block');
+
   loadTemplate(templateId);
 });
 $('.themes-listitem').on('click', (evebt) => {
-    let themeSource = $(evebt.target).parent('.themes-listitem').data('themeSource');
-    let element = $(evebt.target).parent('.themes-listitem').find('.check-icon')[0];
-    
-    $('.themes-list .check-icon').each(function() {
+    let themeSource = evebt.currentTarget.attributes[1].value;
+    let checkIcon = $(evebt.target).parent().find('.check-icon');
+
+    $('.themes-list').find('.check-icon').each(function() {
       $(this).css('display', 'none');
     });
-    $(element).css('display', 'block');
-    
+
+    $(checkIcon).css('display', 'block');
+
     loadTheme(themeSource);
 });
 let loadTheme = (themeSource) => {
     $('head').append(`<link href="/templates/default/${themeSource}" rel="stylesheet">`);
-}
+};
 let loadTemplate = (templateId) => {
   activateLoader();
   API.getCv(templateId, (data) => {
