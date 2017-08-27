@@ -278,8 +278,6 @@ var Zone = function () {
     }, {
         key: '_addNewBlock',
         value: function _addNewBlock(zoneName, type) {
-            var _this3 = this;
-
             this._addBlock.classList.remove('is-active');
 
             API.getBlock(type.type, function (block) {
@@ -290,7 +288,7 @@ var Zone = function () {
 
                 newBlock.firstChild.classList.add('is-editing');
 
-                var editableElements = _this3._element.querySelectorAll('[data-key]');
+                var editableElements = newBlock.querySelectorAll('[data-key]');
                 for (var _i4 = 0; _i4 < editableElements.length; _i4++) {
                     var key = editableElements[_i4].getAttribute('data-key');
                     if (['blocks'].indexOf(key) === -1) {
@@ -298,7 +296,7 @@ var Zone = function () {
                     }
                 }
 
-                var sliders = $(_this3._element).find('.skills');
+                var sliders = $(newBlock).find('.skills');
                 for (var _i5 = 0; _i5 < sliders.length; _i5++) {
                     if ($(sliders[_i5]).parent().find('.slider').length === 0) {
                         var slider = document.createElement('div');
@@ -542,15 +540,15 @@ var Block = function () {
     }, {
         key: '_addMicroBlock',
         value: function _addMicroBlock() {
-            var _this4 = this;
+            var _this3 = this;
 
             API.getBlock(this._childBlockType, function (block) {
-                $(_this4._element).find('[data-key="blocks"]').append(block);
-                _this4._createMicroBlockControls();
-                _this4._fixPlaceholders();
+                $(_this3._element).find('[data-key="blocks"]').append(block);
+                _this3._createMicroBlockControls();
+                _this3._fixPlaceholders();
 
                 //TODO: refactor edit function
-                var editableElements = _this4._element.querySelectorAll('[data-key]');
+                var editableElements = _this3._element.querySelectorAll('[data-key]');
                 for (var _i8 = 0; _i8 < editableElements.length; _i8++) {
                     var key = editableElements[_i8].getAttribute('data-key');
                     if (['skill', 'blocks'].indexOf(key) === -1) {

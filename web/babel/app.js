@@ -239,7 +239,7 @@ class Zone {
 
             newBlock.firstChild.classList.add('is-editing');
 
-            let editableElements = this._element.querySelectorAll('[data-key]');
+            let editableElements = newBlock.querySelectorAll('[data-key]');
             for (let i = 0; i < editableElements.length; i++) {
                 const key = editableElements[i].getAttribute('data-key');
                 if (['blocks'].indexOf(key) === -1) {
@@ -247,7 +247,7 @@ class Zone {
                 }
             }
 
-            let sliders = $(this._element).find('.skills');
+            let sliders = $(newBlock).find('.skills');
             for (let i = 0; i < sliders.length; i++) {
                 if ($(sliders[i]).parent().find('.slider').length === 0) {
                     let slider = document.createElement('div');
