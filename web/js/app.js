@@ -21,23 +21,25 @@ $('.edit-url-btn').on('click', function () {
   } catch (err) {}
 });
 $('.template').on('click', function (evebt) {
-  var templateId = $(event.target).parent('.template').data('templateId');
-  var element = $(evebt.target).parent('.template').find('.check-icon')[0];
+  var templateId = evebt.currentTarget.attributes[1].value;
+  var checkIcon = $(evebt.target).parent().find('.check-icon');
 
   $('.templates-list .check-icon').each(function () {
     $(this).css('display', 'none');
   });
-  $(element).css('display', 'block');
+  $(checkIcon).css('display', 'block');
+
   loadTemplate(templateId);
 });
 $('.themes-listitem').on('click', function (evebt) {
-  var themeSource = $(evebt.target).parent('.themes-listitem').data('themeSource');
-  var element = $(evebt.target).parent('.themes-listitem').find('.check-icon')[0];
+  var themeSource = evebt.currentTarget.attributes[1].value;
+  var checkIcon = $(evebt.target).parent().find('.check-icon');
 
-  $('.themes-list .check-icon').each(function () {
+  $('.themes-list').find('.check-icon').each(function () {
     $(this).css('display', 'none');
   });
-  $(element).css('display', 'block');
+
+  $(checkIcon).css('display', 'block');
 
   loadTheme(themeSource);
 });
