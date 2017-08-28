@@ -130,7 +130,8 @@ class CVController extends Controller
         $cv = $this->get(CvService::class)->getUserCv($this->getUser());
 
         foreach($template->getTemplateSlots() as $slot) {
-            if (count($slot->getBlockDatas()) == 0) {
+            $dataBlocks = $em->getRepository('AppBundle:BlockData')->findBy(array('template_slot' => $slot, 'cv' => $cv));
+            if (count($dataBlocks) == 0) {
                 $this->mapDataToSlotTemplates($slot, $cv);
                 $em->refresh($template);
             }
