@@ -27,6 +27,8 @@ class CreateDataEvent implements Event
 
     private $field;
 
+    private $slotWildcard;
+
     /**
      * @return data
      */
@@ -106,6 +108,23 @@ class CreateDataEvent implements Event
     {
         $this->field = $field;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSlotWildcard()
+    {
+        return $this->slotWildcard;
+    }
+
+    /**
+     * @param mixed $slotWildcard
+     */
+    public function setSlotWildcard($slotWildcard)
+    {
+        $this->slotWildcard = $slotWildcard;
+    }
+
 
 
 }

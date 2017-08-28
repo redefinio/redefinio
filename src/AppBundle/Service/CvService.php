@@ -47,11 +47,22 @@ class CvService {
         $this->initializeData($cv, $template);
     }
 
+    public function createNewBlock($cv, $wildcard, $templateId, $blockType, $formData) {
+        $template = $this->em->getRepository('AppBundle:BlockTemplate')->findOneBy(array('template' => $templateId, "type" => $blockType));
+
+        $event = $this->createDataEvent($cv, $template, $wildcard);
+        $event->setData($formData);
+
+        $this->eventHandler->applyEvent($event);
+
+    }
+
     private function initializeData($cv, $template) {
         $templates = $this->em->getRepository('AppBundle:BlockTemplate')->findByTemplate($template);
 
         foreach($templates as $block) {
-            $event = $this->createDataEvent($cv, $block);
+            $wildcard = $template->getSlot()->getWildcard();
+            $event = $this->createDataEvent($cv, $block, $wildcard);
 
             if (is_array($event)) {
                 $this->eventHandler->applyEvents($event);
@@ -106,11 +117,12 @@ class CvService {
         return $event;
     }
 
-    private function createDataEvent($cv, $template) {
+    private function createDataEvent($cv, $template, $wildcard) {
         $event = new CreateDataEvent();
         $event->setCvId($cv);
         $event->setType($template->getType());
         $event->setTemplateId($template->getId());
+        $event->setSlotWildcard($wildcard);
 
         //TODO: Refactor with immutable
         switch ($template->getType()) {

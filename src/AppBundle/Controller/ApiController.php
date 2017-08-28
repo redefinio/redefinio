@@ -2,11 +2,10 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\AppBundle;
 use AppBundle\Entity\BlockTemplate;
 use AppBundle\Entity\CvData;
+use AppBundle\Service\CvService;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\ORMException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -95,57 +94,17 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/block/{cv_id}/{template_slot_id}", name="api_block_new", requirements={"cv_id": "\d+"})
+     * @Route("/block/{wildcard}", name="api_block_new")
      * @Method({"POST"})
      */
-    public function blockNewAction($cv_id, $template_slot_id, Request $request) {
-        $em = $this->getDoctrine()->getManager();
-        $cv = $em->getRepository('AppBundle:CV')->find($cv_id); 
-        if (!$cv) return new Response(json_encode(array('error' => 'CV not found')), Response::HTTP_NOT_FOUND);
-        $slot = $em->getRepository('AppBundle:TemplateSlot')->createQueryBuilder('ts')
-            ->where('ts.wildcard = :wildcard')
-            ->andWhere('ts.template = :template')
-            ->setParameter('wildcard', $template_slot_id)
-            ->setParameter('template', $cv->getTemplate())
-            ->getQuery()->getOneOrNullResult(); 
-        if (!$slot) return new Response(json_encode(array('error' => 'TemplateSlot not found')), Response::HTTP_NOT_FOUND);
-        if ($cv->getTemplate() != $slot->getTemplate()) return new Response(json_encode(array('error' => 'CV and TemplateSlot do not match')), Response::HTTP_NOT_FOUND);
-
-        $data = new BlockData();
-        $data->setCV($cv);
-        $data->setTemplateSlot($slot);
-        // get the block from available in template by block type
-        $block_type = $request->get('blockType', null);
-        $block = $em->getRepository('AppBundle:BlockTemplate')->createQueryBuilder('b')
-            ->where('b.type = :type')
-            ->andWhere('b.template = :template')
-            ->setParameter('type', $block_type)
-            ->setParameter('template', $cv->getTemplate())
-            ->getQuery()->getOneOrNullResult();
-
-        if (!$block) return new Response(json_encode(array('error' => 'Block not found')), Response::HTTP_NOT_FOUND);
-        $data->setBlockTemplate($block);
-        $data->addCvData($this->initData($data, $cv));
-
-        // validuoti gautus duomenis
+    public function blockNewAction($wildcard, Request $request) {
+        $service = $this->get(CvService::class);
+        $cv = $service->getUserCv($this->getUser());
+        $templateId = $request->get('templateId', null);
+        $blockType = $request->get('blockType', null);
         $formData = $request->get('fields', array());
-        switch($block_type) {
-            case BlockTemplate::TYPE_FIXED:
-                $this->updateMixed($data->getCvDatas(), $formData);
-                break;
-            case BlockTemplate::TYPE_TEXT:
-                $this->updateText($data->getCvDatas(), $formData);
-                break;
-            case BlockTemplate::TYPE_SKILLS:
-            case BlockTemplate::TYPE_EXPERIENCE:
-            case BlockTemplate::TYPE_CERTIFICATES:
-            case BlockTemplate::TYPE_EDUCATION:
-                $this->updateCollection($data, $cv, $formData);
-                break;
-        }
 
-        $em->persist($data);
-        $em->flush();
+        $service->createNewBlock($cv, $wildcard, $templateId, $blockType, $formData);
 
         return new Response();
     }
