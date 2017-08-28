@@ -34,6 +34,13 @@ class EventSource
      */
     private $cv;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Template")
+     * @ORM\JoinColumn(name="template_id", referencedColumnName="id", nullable=false)
+     */
+    private $template;
+
     /**
      * @var serialized object
      *
@@ -105,5 +112,19 @@ class EventSource
         $this->object = serialize($object);
     }
 
+    /**
+     * @return mixed
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
 
+    /**
+     * @param mixed $template
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+    }
 }

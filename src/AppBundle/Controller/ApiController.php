@@ -110,10 +110,10 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/block/{template_slot_id}", name="api_block_update")
+     * @Route("/block/{wildcard}", name="api_block_update")
      * @Method({"PUT"})
      */
-    public function blockUpdateAction($template_slot_id, Request $request) {
+    public function blockUpdateAction($wildcard, Request $request) {
         $service = $this->get(CvService::class);
         $em = $this->getDoctrine()->getManager();
 
@@ -121,78 +121,11 @@ class ApiController extends Controller
         if (!$cv) return new Response(json_encode(array('error' => 'CV not found')), Response::HTTP_NOT_FOUND);
 
         $id = $request->get('blockId', null);
-        $data = $em->getRepository('AppBundle:BlockData')->find($id);
-        if (!$data) return new Response(json_encode(array('error' => 'BlockData not found')), Response::HTTP_NOT_FOUND);
-
-        $slot = $em->getRepository('AppBundle:TemplateSlot')->createQueryBuilder('ts')
-            ->where('ts.wildcard = :wildcard')
-            ->andWhere('ts.template = :template')
-            ->setParameter('wildcard', $template_slot_id)
-            ->setParameter('template', $cv->getTemplate())
-            ->getQuery()->getOneOrNullResult(); 
-        // Fixed blocks do not need template slot provided because they are always in the same position and can not be moved anywhere
-        $block_type = $data->getBlockTemplate()->getType();
-        if ($block_type != BlockTemplate::TYPE_FIXED && !$slot) return new Response(json_encode(array('error' => 'TemplateSlot not found')), Response::HTTP_NOT_FOUND);
-        if ($slot && $cv->getTemplate() != $slot->getTemplate()) return new Response(json_encode(array('error' => 'CV and TemplateSlot do not match')), Response::HTTP_NOT_FOUND);
-        if ($slot) {
-            $data->setTemplateSlot($slot);
-        }
-        $block = $data->getBlockTemplate();
-        if (!$block) return new Response(json_encode(array('error' => 'Block not found')), Response::HTTP_NOT_FOUND);
-
-        // validuoti gautus duomenis
         $formData = $request->get('fields', array());
-        switch($block_type) {
-            case BlockTemplate::TYPE_FIXED:
-                $this->updateMixed($data->getCvDatas(), $formData);
-                break;
-            case BlockTemplate::TYPE_TEXT:
-                $this->updateText($data->getCvDatas(), $formData);
-                break;
-            case BlockTemplate::TYPE_SKILLS:
-            case BlockTemplate::TYPE_EXPERIENCE:
-            case BlockTemplate::TYPE_CERTIFICATES:
-            case BlockTemplate::TYPE_EDUCATION:
-                $this->updateText($data->getCvDatas(), $formData);
-                break;
-        }
 
-        $em->persist($data);
-        $em->flush();
-
+        $service->updateBlock($id, $formData, $wildcard);
+        
         return new Response();
-    }
-
-    private function updateCollection($data, $cv, $formData) {
-        if (!isset($formData['blocks'])) {
-            return;
-        }
-        $em = $this->getDoctrine()->getManager();
-        $blockTemplate = $data->getBlockTemplate();
-        $childTemplate = $em->getRepository('AppBundle:BlockTemplate')->createQueryBuilder('b')
-            ->where('b.parent = :parent')
-            ->andWhere('b.template = :template')
-            ->setParameter('parent', $blockTemplate)
-            ->setParameter('template', $cv->getTemplate())
-            ->getQuery()->getOneOrNullResult();
-        if (!$childTemplate) return new Response(json_encode(array('error' => 'Block child not found for parent - '.$blockTemplate->getId())), Response::HTTP_NOT_FOUND);
-
-
-        if (is_null($data->getId())) {
-            foreach($this->initCollection($data, $cv, $childTemplate, $formData) as $child) {
-                $data->addChild($child);
-            }
-            $children = $data->getChildren();
-        } else {
-            $children = $em->getRepository('AppBundle:BlockData')->createQueryBuilder('b')
-                ->where('b.parent = :parent')
-                ->setParameter('parent', $data)
-                ->getQuery()->execute();
-        }
-
-        foreach($children as $key=>$child) {
-            $this->updateText($child->getCvDatas(), $formData['blocks'][$key]);
-        }
     }
 
     private function updateText($persistedData, $formData) {
@@ -210,37 +143,6 @@ class ApiController extends Controller
         }
 
         return $persistedData;
-    }
-
-    private function initCollection($data, $cv, $template, $formData) {
-        //TODO:: Refactor with immutable
-        foreach ($data->getCvDatas() as $cvData) {
-            $cvData->setData(json_encode(array("blocks" => "")));
-        }
-        $collection = new ArrayCollection();
-
-        foreach($formData['blocks'] as $inner_data) {
-            $data_child = new BlockData();
-            $data_child->setCv($cv);
-            $data_child->setParent($data);
-            $data_child->setBlockTemplate($template);
-            $data_child->addCvData($this->initData($data_child, $cv));
-            $data_child->setData(json_encode($inner_data));
-
-            $collection->add($data_child);
-        }
-
-        return $collection;
-    }
-
-
-    private function initData($block, $cv) {
-
-        $data = new CvData();
-        $data->setCv($cv);
-        $data->addBlock($block);
-
-        return $data;
     }
 
     private function isUserOwnBlock(BlockData $blockData) {
