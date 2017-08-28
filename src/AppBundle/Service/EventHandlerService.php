@@ -40,6 +40,9 @@ class EventHandlerService
             case 'AppBundle\Event\CreateDataEvent':
                 $this->applyCreateEvent($eventSource);
                 break;
+            case 'AppBundle\Event\UpdateDataEvent':
+                $this->applyUpdateEvent($eventSource);
+                break;
         }
     }
 
@@ -50,6 +53,7 @@ class EventHandlerService
 
         $eventSource->setCv($cv);
         $eventSource->setType($event->getType());
+        $eventSource->setTemplate($event->getParentTemplate());
         $eventSource->setObject($event);
 
         $this->em->persist($eventSource);
@@ -86,6 +90,21 @@ class EventHandlerService
         $data->setType($eventSource->getObject()->getType());
 
         $block->addCvData($data);
+
+        $this->em->persist($block);
+        $this->em->flush();
+    }
+
+    private function applyUpdateEvent($eventSource)
+    {
+        $event = $eventSource->getObject();
+        $block = $this->em->getRepository('AppBundle:BlockData')->findOneById($event->getBlockId());
+
+        foreach($block->getCvDatas() as $data) {
+            if ($data->getField() == $event->getField()) {
+                $data->setData($event->getData());
+            }
+        }
 
         $this->em->persist($block);
         $this->em->flush();

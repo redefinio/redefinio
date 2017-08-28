@@ -6,6 +6,7 @@ use AppBundle\Entity\TemplatType;
 use AppBundle\Entity\User;
 use AppBundle\Entity\CV;
 use AppBundle\Event\CreateDataEvent;
+use AppBundle\Event\UpdateDataEvent;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -54,32 +55,37 @@ class CvService {
         $event->setData($formData);
 
         $this->eventHandler->applyEvent($event);
+    }
 
+    public function updateBlock($blockId, $formData, $wildcard) {
+        $block = $this->em->getRepository('AppBundle:BlockData')->findOneById($blockId);
+
+        $event = $this->updateDataEvent($block, $formData, $wildcard);
+
+        $this->apply($event);
     }
 
     private function initializeData($cv, $template) {
         $templates = $this->em->getRepository('AppBundle:BlockTemplate')->findByTemplate($template);
 
         foreach($templates as $block) {
-            $wildcard = $template->getSlot()->getWildcard();
+            if (!is_null($block->getSlot())) {
+
+                $wildcard = $block->getSlot()->getWildcard();
+            } else {
+                $wildcard = null;
+            }
+
             $event = $this->createDataEvent($cv, $block, $wildcard);
 
-            if (is_array($event)) {
-                $this->eventHandler->applyEvents($event);
-            } else {
-
-                $this->eventHandler->applyEvent($event);
-            }
+            $this->apply($event);
         }
     }
 
-
-    private function initializeFixed($event, $template) {
-        $fields = json_decode($template->getAvailableFields());
-
+    private function mapFixed($event, $data) {
         $events = array();
 
-        foreach($fields as $key=>$field) {
+        foreach($data as $key=>$field) {
             $separateEvent = clone($event);
             $separateEvent->setData(array($key => $field));
             $separateEvent->setField($key);
@@ -122,6 +128,7 @@ class CvService {
         $event->setCvId($cv);
         $event->setType($template->getType());
         $event->setTemplateId($template->getId());
+        $event->setParentTemplate($template->getTemplate());
         $event->setSlotWildcard($wildcard);
 
         //TODO: Refactor with immutable
@@ -134,12 +141,51 @@ class CvService {
                 $event = $this->initializeBlock($event, $template);
                 break;
             case TemplatType::TYPE_FIXED:
-                $event = $this->initializeFixed($event, $template);
+                $event = $this->mapFixed($event, json_decode($template->getAvailableFields()));
                 break;
         }
 
 
         return $event;
+    }
+
+    private function updateDataEvent($block, $formData, $wildcard) {
+        $event = new UpdateDataEvent();
+        $event->setBlockId($block->getId());
+        $event->setCvId($block->getCv());
+        $event->setType($block->getBlockTemplate()->getType());
+        $event->setTemplateId($block->getBlockTemplate()->getId());
+        $event->setParentTemplate($block->getBlockTemplate()->getTemplate());
+        $event->setSlotWildcard($wildcard);
+        $event->setData($formData);
+
+        //TODO: Refactor with immutable
+        switch ($block->getBlockTemplate()->getType()) {
+            case TemplatType::TYPE_SKILLS:
+            case TemplatType::TYPE_EXPERIENCE:
+            case TemplatType::TYPE_CERTIFICATES:
+            case TemplatType::TYPE_EDUCATION:
+            case TemplatType::TYPE_TEXT:
+//                $event = $this->initializeBlock($event, $template);
+                break;
+            case TemplatType::TYPE_FIXED:
+                $event = $this->mapFixed($event, $formData);
+                break;
+        }
+
+        return $event;
+    }
+
+    /**
+     * @param $event
+     */
+    private function apply($event)
+    {
+        if (is_array($event)) {
+            $this->eventHandler->applyEvents($event);
+        } else {
+            $this->eventHandler->applyEvent($event);
+        }
     }
 
 }
