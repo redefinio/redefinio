@@ -43,3 +43,9 @@ monolog:
 
 #swiftmailer:
 #    delivery_address: me@example.com
+knp_snappy:
+    pdf:
+        enabled: true
+        binary: xvfb-run wkhtmltopdf
+        options:
+            lowquality: false
