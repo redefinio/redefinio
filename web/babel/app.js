@@ -44,6 +44,8 @@ let loadTheme = (themeSource) => {
     $('head').append(`<link href="/templates/default/${themeSource}" rel="stylesheet">`);
 };
 let loadTemplate = (templateId) => {
+    window.templateId = templateId;
+
     activateLoader();
     API.getCv(templateId, (data) => {
         let domParser = new DOMParser();
@@ -672,10 +674,11 @@ const API = {
 
     saveBlock: (block, cb) => {
         block.cvId = cvId;
+        block.templateId = window.templateId;
 
         if (block.blockId !== 0) {
             $.ajax({
-                url: `${apiUrl}/block/${window.cvId}/${block.zone}/${block.blockId}`,
+                url: `${apiUrl}/block/${block.zone}`,
                 method: 'PUT',
                 data: block,
                 success: (data) => {
@@ -688,7 +691,7 @@ const API = {
             });
         } else {
             $.ajax({
-                url: `${apiUrl}/block/${window.cvId}/${block.zone}`,
+                url: `${apiUrl}/block/${block.zone}`,
                 method: 'POST',
                 data: block,
                 success: (data) => {

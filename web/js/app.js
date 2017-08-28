@@ -47,6 +47,8 @@ var loadTheme = function loadTheme(themeSource) {
     $('head').append('<link href="/templates/default/' + themeSource + '" rel="stylesheet">');
 };
 var loadTemplate = function loadTemplate(templateId) {
+    window.templateId = templateId;
+
     activateLoader();
     API.getCv(templateId, function (data) {
         var domParser = new DOMParser();
@@ -713,10 +715,11 @@ var API = {
 
     saveBlock: function saveBlock(block, cb) {
         block.cvId = cvId;
+        block.templateId = window.templateId;
 
         if (block.blockId !== 0) {
             $.ajax({
-                url: apiUrl + '/block/' + window.cvId + '/' + block.zone + '/' + block.blockId,
+                url: apiUrl + '/block/' + block.zone,
                 method: 'PUT',
                 data: block,
                 success: function success(data) {
@@ -727,7 +730,7 @@ var API = {
             });
         } else {
             $.ajax({
-                url: apiUrl + '/block/' + window.cvId + '/' + block.zone,
+                url: apiUrl + '/block/' + block.zone,
                 method: 'POST',
                 data: block,
                 success: function success(data) {

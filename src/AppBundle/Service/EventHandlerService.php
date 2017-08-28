@@ -5,8 +5,8 @@ namespace AppBundle\Service;
 use AppBundle\Entity\BlockData;
 use AppBundle\Entity\CvData;
 use AppBundle\Entity\EventSource;
+use AppBundle\Entity\TemplatType;
 use AppBundle\Event\Event;
-use AppBundle\Entity\Data;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -66,10 +66,13 @@ class EventHandlerService
                 'blockTemplate' => $blockTemplate
             ));
 
-        if (is_null($block)) {
+        if (is_null($block) || $eventSource->getType() != TemplatType::TYPE_FIXED) {
             $block = new BlockData();
 
-            $block->setTemplateSlot($blockTemplate->getSlot());
+            $wildcard = ($eventSource->getObject()->getSlotWildcard()) ? $eventSource->getObject()->getSlotWildcard(): $blockTemplate->getSlot();
+            $slot = $this->em->getRepository('AppBundle:TemplateSlot')->findOneByWildcard($wildcard);
+
+            $block->setTemplateSlot($slot);
             $block->setCv($eventSource->getCv());
             $block->setBlockTemplate($blockTemplate);
         }
