@@ -84,4 +84,5 @@ knp_snappy:
     pdf:
         enabled: true
         binary: xvfb-run wkhtmltopdf
-        options: []
+        options:
+          lowquality: false
