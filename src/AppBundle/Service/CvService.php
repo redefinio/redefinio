@@ -123,6 +123,12 @@ class CvService {
         return $event;
     }
 
+    private function updateBlockData($event, $data) {
+        $event->setData($data);
+
+        return $event;
+    }
+
     private function createDataEvent($cv, $template, $wildcard) {
         $event = new CreateDataEvent();
         $event->setCvId($cv);
@@ -166,7 +172,7 @@ class CvService {
             case TemplatType::TYPE_CERTIFICATES:
             case TemplatType::TYPE_EDUCATION:
             case TemplatType::TYPE_TEXT:
-//                $event = $this->initializeBlock($event, $template);
+                $event = $this->updateBlockData($event, $formData);
                 break;
             case TemplatType::TYPE_FIXED:
                 $event = $this->mapFixed($event, $formData);
@@ -179,8 +185,7 @@ class CvService {
     /**
      * @param $event
      */
-    private function apply($event)
-    {
+    private function apply($event) {
         if (is_array($event)) {
             $this->eventHandler->applyEvents($event);
         } else {
