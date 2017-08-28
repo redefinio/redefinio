@@ -22,7 +22,6 @@ use AppBundle\Entity\BlockData;
 class ApiController extends Controller
 {
 
-
     /**
      * @Route("/block/{block_id}", name="api_block_delete")
      * @Method("DELETE")
@@ -99,6 +98,7 @@ class ApiController extends Controller
      */
     public function blockNewAction($wildcard, Request $request) {
         $service = $this->get(CvService::class);
+
         $cv = $service->getUserCv($this->getUser());
         $templateId = $request->get('templateId', null);
         $blockType = $request->get('blockType', null);
@@ -110,15 +110,18 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/block/{cv_id}/{template_slot_id}/{data_id}", name="api_block_update", requirements={"cv_id": "\d+", "data_id": "\d+"})
+     * @Route("/block/{template_slot_id}", name="api_block_update")
      * @Method({"PUT"})
      */
-    public function blockUpdateAction($cv_id, $template_slot_id, $data_id, Request $request) {
+    public function blockUpdateAction($template_slot_id, Request $request) {
+        $service = $this->get(CvService::class);
         $em = $this->getDoctrine()->getManager();
-        $cv = $em->getRepository('AppBundle:CV')->find($cv_id); 
+
+        $cv = $service->getUserCv($this->getUser());
         if (!$cv) return new Response(json_encode(array('error' => 'CV not found')), Response::HTTP_NOT_FOUND);
 
-        $data = $em->getRepository('AppBundle:BlockData')->find($data_id);
+        $id = $request->get('blockId', null);
+        $data = $em->getRepository('AppBundle:BlockData')->find($id);
         if (!$data) return new Response(json_encode(array('error' => 'BlockData not found')), Response::HTTP_NOT_FOUND);
 
         $slot = $em->getRepository('AppBundle:TemplateSlot')->createQueryBuilder('ts')
