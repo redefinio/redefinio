@@ -35,15 +35,15 @@ class CVController extends Controller
 
         $userCv = $this->get(CvService::class)->getUserCv($this->getUser());
 
-        $parametes = array('cV' => $userCv);
+        $parameters = array('cV' => $userCv);
 
         if (is_null($userCv)) {
             $template = 'cv/create.html.twig';
             $em = $this->getDoctrine()->getManager();
-            $parametes['templates'] = $em->getRepository('AppBundle:Template')->findAll();
+            $parameters['templates'] = $em->getRepository('AppBundle:Template')->findAll();
         }
 
-        return $this->render($template, $parametes);
+        return $this->render($template, $parameters);
     }
 
     /**
@@ -128,6 +128,10 @@ class CVController extends Controller
 
         $template = $repository->findOneById($id);
         $cv = $this->get(CvService::class)->getUserCv($this->getUser());
+        $cv->setTemplate($template);
+
+        $em->persist($cv);
+        $em->flush();
 
         foreach($template->getTemplateSlots() as $slot) {
             $dataBlocks = $em->getRepository('AppBundle:BlockData')->findBy(array('template_slot' => $slot, 'cv' => $cv));
@@ -161,7 +165,7 @@ class CVController extends Controller
 
         $cv = $cvService->getUserCv($this->getUser());
         return new Response(
-            $this->get('knp_snappy.pdf')->getOutputFromHtml($cvRenderService->getTemplateHtml($cv->getTemplate(), $cv)),
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($cvRenderService->getTemplateHtml($cv->getPublicTemplate(), $cv)),
                 '200',
                 array(
                     'Content-Type' => 'application/pdf',

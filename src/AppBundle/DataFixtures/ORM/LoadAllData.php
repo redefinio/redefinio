@@ -255,6 +255,7 @@ class LoadAllData implements FixtureInterface
         $cv1->setUser($user1);
         $cv1->setUrl('my_great_cv');
         $cv1->setTemplate($template1);
+        $cv1->setPublicTemplate($template1);
         $cv1->setTheme($theme1_1);
         $manager->persist($cv1);
 

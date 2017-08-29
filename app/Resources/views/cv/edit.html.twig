@@ -76,7 +76,7 @@
             var apiUrl = location.protocol + "//" + location.host + "/app_dev.php/api";
             var templateUrl = "{{ path('cv_index') }}";
             var isEditing = true;
-            var templateId = {{ cv.template.id }};
+            var templateId = {{ cv.getTemplate().getId() }};
             var cvId = {{ cv.id }};
 		</script>
   <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>

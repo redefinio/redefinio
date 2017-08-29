@@ -39,6 +39,7 @@ class CvService {
         $cv = new CV();
         $cv->setUser($user);
         $cv->setTemplate($template);
+        $cv->setPublicTemplate($template);
         $cv->setTheme($theme);
         $cv->setUrl("some_url");
 

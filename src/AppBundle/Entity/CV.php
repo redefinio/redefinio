@@ -35,6 +35,12 @@ class CV
     private $template;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Template")
+     * @ORM\JoinColumn(name="public_template_id", referencedColumnName="id", nullable=false)
+     */
+    private $publicTemplate;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Theme", inversedBy="cvs")
      * @ORM\JoinColumn(name="theme_id", referencedColumnName="id", nullable=false)
      */
@@ -127,5 +133,19 @@ class CV
         $this->url = $url;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPublicTemplate()
+    {
+        return $this->publicTemplate;
+    }
 
+    /**
+     * @param mixed $publicTemplate
+     */
+    public function setPublicTemplate($publicTemplate)
+    {
+        $this->publicTemplate = $publicTemplate;
+    }
 }
