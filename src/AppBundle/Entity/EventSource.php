@@ -24,9 +24,9 @@ class EventSource
     /**
      * @var int
      *
-     * @ORM\Column(name="type", type="integer")
+     * @ORM\Column(name="type", type="integer", nullable=true)
      */
-    private $type;
+    private $type = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="CV")

@@ -34,7 +34,7 @@ class CVRenderService {
 		foreach($template->getTemplateSlots() as $slot) {
 			$templateString .= '{% block '.$slot->getWildcard().' %}';
 			// traverse through each slots blocks and fill it with data
-            $dataBlocks = $this->em->getRepository('AppBundle:BlockData')->findBy(array('template_slot' => $slot, 'cv' => $cv));
+            $dataBlocks = $this->em->getRepository('AppBundle:BlockData')->findBy(array('template_slot' => $slot, 'cv' => $cv), array('position' => 'asc'));
 			foreach ($dataBlocks as $data) {
                 $template = $this->twig->createTemplate($data->getBlockTemplate()->getHtmlSource());
 

@@ -32,16 +32,15 @@ class EventHandlerService
     public function applyEvent(Event $event) {
         $eventSource = $this->storeEvent($event);
 
-        if (is_null($event->getData())) {
-            return;
-        }
-
         switch (get_class($event)) {
             case 'AppBundle\Event\CreateDataEvent':
                 $this->applyCreateEvent($eventSource);
                 break;
             case 'AppBundle\Event\UpdateDataEvent':
                 $this->applyUpdateEvent($eventSource);
+                break;
+            case 'AppBundle\Event\SortBlockEvent':
+                $this->applySortEvent($eventSource);
                 break;
         }
     }
@@ -52,7 +51,9 @@ class EventHandlerService
         $eventSource = new EventSource();
 
         $eventSource->setCv($cv);
-        $eventSource->setType($event->getType());
+        if (method_exists($event, 'getType')) {
+            $eventSource->setType($event->getType());
+        }
         $eventSource->setTemplate($event->getParentTemplate());
         $eventSource->setObject($event);
 
@@ -63,6 +64,10 @@ class EventHandlerService
     }
 
     private function applyCreateEvent(EventSource $eventSource) {
+        if (is_null($eventSource->getObject()->getData())) {
+            return;
+        }
+
         $blockTemplate = $this->em->getRepository("AppBundle:BlockTemplate")->findOneById($eventSource->getObject()->getTemplateId());
         $block = $this->em->getRepository("AppBundle:BlockData")->findOneBy(
             array(
@@ -108,5 +113,20 @@ class EventHandlerService
 
         $this->em->persist($block);
         $this->em->flush();
+    }
+
+    private function applySortEvent($eventSource)
+    {
+        $event = $eventSource->getObject();
+
+        $slot = $this->em->getRepository('AppBundle:TemplateSlot')->findOneByWildcard($event->getWildcard());
+        $block = $this->em->getRepository('AppBundle:BlockData')->findOneById($event->getBlockId());
+
+        $block->setTemplateSlot($slot);
+        $block->setPosition($event->getPosition());
+
+        $this->em->persist($block);
+        $this->em->flush();
+
     }
 }

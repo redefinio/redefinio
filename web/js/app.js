@@ -380,7 +380,20 @@ var Zone = function () {
                     }
                 },
                 stop: function stop(e, ui) {},
-                update: function update(e, ui) {}
+                update: function update(e, ui) {
+                    var parent = ui.item.parent('[data-zone]');
+                    var wildcard = $(parent).data('zone');
+                    var children = parent.find('[data-block-id]');
+
+                    var positions = [];
+
+                    for (var _i7 = 0; _i7 < children.length; _i7++) {
+                        var position = $(children[_i7]).data('blockId');
+                        positions.push(position);
+                    }
+
+                    API.sortBlocks(wildcard, positions, function () {});
+                }
             });
         }
     }]);
@@ -472,8 +485,8 @@ var Block = function () {
         key: '_fixPlaceholders',
         value: function _fixPlaceholders() {
             var placeholders = $(this._element).find('[data-placeholder]');
-            for (var _i7 = 0; _i7 < placeholders.length; _i7++) {
-                var el = $(placeholders[_i7])[0];
+            for (var _i8 = 0; _i8 < placeholders.length; _i8++) {
+                var el = $(placeholders[_i8])[0];
                 var placeholder = el.dataset.placeholder;
                 if (el.innerHTML.indexOf('{{') > -1) {
                     $(el).html(placeholder);
@@ -523,7 +536,9 @@ var Block = function () {
                 over: function over(e, ui) {},
                 receive: function receive(e, ui) {},
                 remove: function remove(e, ui) {},
-                sort: function sort(e, ui) {},
+                sort: function sort(e, ui) {
+                    console.log("Sort");
+                },
                 start: function start(e, ui) {},
                 stop: function stop(e, ui) {},
                 update: function update(e, ui) {}
@@ -553,10 +568,10 @@ var Block = function () {
 
                 //TODO: refactor edit function
                 var editableElements = _this3._element.querySelectorAll('[data-key]');
-                for (var _i8 = 0; _i8 < editableElements.length; _i8++) {
-                    var key = editableElements[_i8].getAttribute('data-key');
+                for (var _i9 = 0; _i9 < editableElements.length; _i9++) {
+                    var key = editableElements[_i9].getAttribute('data-key');
                     if (['skill', 'blocks'].indexOf(key) === -1) {
-                        editableElements[_i8].setAttribute('contenteditable', true);
+                        editableElements[_i9].setAttribute('contenteditable', true);
                     }
                 }
             });
@@ -571,19 +586,19 @@ var Block = function () {
         key: 'edit',
         value: function edit() {
             var editableElements = this._element.querySelectorAll('[data-key]');
-            for (var _i9 = 0; _i9 < editableElements.length; _i9++) {
-                var key = editableElements[_i9].getAttribute('data-key');
+            for (var _i10 = 0; _i10 < editableElements.length; _i10++) {
+                var key = editableElements[_i10].getAttribute('data-key');
                 if (['blocks'].indexOf(key) === -1) {
-                    editableElements[_i9].setAttribute('contenteditable', true);
+                    editableElements[_i10].setAttribute('contenteditable', true);
                 }
             }
 
             var sliders = $(this._element).find('.skills');
-            for (var _i10 = 0; _i10 < sliders.length; _i10++) {
-                if ($(sliders[_i10]).parent().find('.slider').length === 0) {
+            for (var _i11 = 0; _i11 < sliders.length; _i11++) {
+                if ($(sliders[_i11]).parent().find('.slider').length === 0) {
                     var slider = document.createElement('div');
                     slider.classList.add('slider');
-                    var value = $(sliders[_i10]).parent('.skills-group').attr('data-value');
+                    var value = $(sliders[_i11]).parent('.skills-group').attr('data-value');
                     $(slider).slider({
                         range: 'max',
                         min: 0,
@@ -595,7 +610,7 @@ var Block = function () {
                         }
                     });
 
-                    $(sliders[_i10]).after(slider);
+                    $(sliders[_i11]).after(slider);
                 }
             }
 
@@ -628,25 +643,25 @@ var Block = function () {
             data['zone'] = $(this._element).parent().data('zone');
             data['fields'] = {};
 
-            for (var _i11 = 0; _i11 < editableElements.length; _i11++) {
+            for (var _i12 = 0; _i12 < editableElements.length; _i12++) {
 
-                if (editableElements[_i11].getAttribute('data-key') !== 'blocks') {
+                if (editableElements[_i12].getAttribute('data-key') !== 'blocks') {
                     if (data['fields']['blocks'] !== undefined) {
                         var keysCount = $(this._element).find('[data-key="blocks"]').find('[data-key]');
                         var sameKeysCount = $(this._element).find('[data-key="blocks"]').find('[data-key="' + keysCount[0].getAttribute('data-key') + '"]');
 
                         var obj = {};
                         for (var j = 0; j < keysCount.length / sameKeysCount.length; j++) {
-                            var dataValue = editableElements[_i11 + j].getAttribute('data-value') ? editableElements[_i11 + j].getAttribute('data-value') : editableElements[_i11 + j].innerHTML;
-                            var dataKey = editableElements[_i11 + j].getAttribute('data-key');
+                            var dataValue = editableElements[_i12 + j].getAttribute('data-value') ? editableElements[_i12 + j].getAttribute('data-value') : editableElements[_i12 + j].innerHTML;
+                            var dataKey = editableElements[_i12 + j].getAttribute('data-key');
                             obj[dataKey] = dataValue;
                         }
 
-                        _i11 += keysCount.length / sameKeysCount.length - 1;
+                        _i12 += keysCount.length / sameKeysCount.length - 1;
 
                         data['fields']['blocks'].push(obj);
                     } else {
-                        data['fields'][editableElements[_i11].getAttribute('data-key')] = editableElements[_i11].innerHTML;
+                        data['fields'][editableElements[_i12].getAttribute('data-key')] = editableElements[_i12].innerHTML;
                     }
                 } else {
                     data['fields']['blocks'] = [];
@@ -754,6 +769,24 @@ var API = {
                 error: function error() {}
             });
         }
+    },
+    sortBlocks: function sortBlocks(wildcard, positions, cb) {
+        var payload = {};
+        payload['wildcard'] = wildcard;
+        payload['positions'] = positions;
+        payload['templateId'] = window.templateId;
+
+        $.ajax({
+            url: apiUrl + '/zone',
+            method: 'PUT',
+            data: payload,
+            success: function success(data) {
+                cb(data);
+            },
+            error: function error() {},
+            complete: function complete() {}
+
+        });
     }
 };
 //# sourceMappingURL=app.js.map
