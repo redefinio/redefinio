@@ -92,12 +92,13 @@ class LoadAllData implements FixtureInterface
         $block1_1->setType(BlockTemplate::TYPE_FIXED);
         $block1_1->setSlot($templateSlot1_1);
         $block1_1->setTemplate($template1);
-        $block1_1->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.BlockTemplate::TYPE_FIXED.'" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"><div class="big-title pull-left"><h1 class="title"><span data-key="full_name" data-placeholder="John">{{ full_name }}</span></h1><h3 class="subtitle" data-key="title" data-placeholder="Your title">{{ title }}</h3></div><div class="contacts pull-right"><a href="mailto:{{ email }}" data-key="email" data-placeholder="john@example.com">{{ email }}</a> <a href="tel:{{ phone }}" data-key="phone" data-placeholder="Your phone">{{ phone }}</a></div><div class="clear"></div></div>');
+        $block1_1->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.BlockTemplate::TYPE_FIXED.'" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"><div class="big-title pull-left"><h1 class="title"><span data-key="full_name" data-placeholder="John">{{ full_name }}</span></h1><h3 class="subtitle" data-key="title" data-placeholder="Your title">{{ title }}</h3></div><div class="contacts pull-right"><a href="mailto:{{ email }}" data-key="email" data-placeholder="john@example.com">{{ email }}</a><a href="tel:{{ phone }}" data-key="phone" data-placeholder="Your phone">{{ phone }}</a><a href="#" data-key="location" data-placeholder="Your location">{{ location }}</a></div><div class="clear"></div></div>');
         $block1_1->setAvailableFields(json_encode(array(
                 'full_name' => '',
                 'title' => '',
                 'email' => '',
-                'phone' => ''
+                'phone' => '',
+                'location' => ''
             )));
         $manager->persist($block1_1);
 
@@ -294,6 +295,13 @@ class LoadAllData implements FixtureInterface
         $cvData1_5->setField("phone");
         $manager->persist($cvData1_5);
 
+        $cvData1_7 = new CvData();
+        $cvData1_7->setCv($cv1);
+        $cvData1_7->setData(array('location' => 'Vilnius, Lithuania'));
+        $cvData1_7->setType(BlockTemplate::TYPE_FIXED);
+        $cvData1_7->setField("location");
+        $manager->persist($cvData1_7);
+
         $blockData1_1 = new BlockData();
         $blockData1_1->setCV($cv1);
         $blockData1_1->setTemplateSlot($templateSlot1_1);
@@ -302,6 +310,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_1->addCvData($cvData1_4);
         $blockData1_1->addCvData($cvData1_5);
         $blockData1_1->addCvData($cvData1_6);
+        $blockData1_1->addCvData($cvData1_7);
         $manager->persist($blockData1_1);
 
 
