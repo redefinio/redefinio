@@ -60,7 +60,8 @@ p {
     display: inline-block;
     vertical-align: top;
     line-height: .8;
-    font-weight: 400
+    font-weight: 400;
+    word-break: break-word;
 }
 
 #top .subtitle {
@@ -68,7 +69,8 @@ p {
     color: #9a9a9a;
     line-height: .8;
     margin: 20px 0;
-    font-weight: 400
+    font-weight: 400;
+    word-break: break-word;
 }
 
 .contacts {
