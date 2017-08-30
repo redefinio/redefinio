@@ -5,7 +5,7 @@
         <h1 class="navbar-title">My résumé</h1>
         
         <div class="edit-url-group">
-            <input class="edit-url" id="cv-url" value="http://redefin.io/erikas-malisauskas" readonly>
+            <input class="edit-url" id="cv-url" value="{{ absolute_url(path('default_public_link', {'identifier': cV.url})) }}" readonly>
             <button class="btn edit-url-btn">Copy</button>
             <span class="label label-success text-copied">Copied!
                 <img src="/img/check.png" alt="Icon">
