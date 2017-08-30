@@ -44,7 +44,7 @@ class CvService {
         $cv->setTemplate($template);
         $cv->setPublicTemplate($template);
         $cv->setTheme($theme);
-        $cv->setUrl("some_url");
+        $cv->setUrl($this->generateUserHash($user));
 
         $this->em->persist($cv);
         $this->em->flush();
@@ -307,6 +307,20 @@ class CvService {
         } else {
             $this->eventHandler->applyEvent($event);
         }
+    }
+
+    /**
+     * @param User $user
+     * @return bool|string
+     */
+    private function generateUserHash(User $user)
+    {
+        $seed = 'JvKnrQWPsThuJteNQAuH' . $user->getId() . $user->getUsername();
+        $hash = sha1(uniqid($seed . mt_rand(), true));
+
+        # To get a shorter version of the hash, just use substr
+        $hash = substr($hash, 0, 10);
+        return $hash;
     }
 
 }

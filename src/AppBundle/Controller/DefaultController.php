@@ -26,7 +26,7 @@ class DefaultController extends Controller
 
 
     /**
-     * @Route("/{identifier}", name="default_public_link")"
+     * @Route("/public/{identifier}", name="default_public_link")"
      */
     public function publicLink(Request $request) {
         $identifier = $request->get('identifier');
