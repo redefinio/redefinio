@@ -60,23 +60,6 @@ class CVRenderService {
 		return $template->render(array());
 	}
 
-	public function generateTemplate($data, $template) {
-        $templateString = '{% extends \'templates/'.$template->getTemplatePath().'.html.twig\' %}';
-
-        $fixed = array_filter($data, function ($item) {
-            return  $item->getType() == TemplatType::TYPE_FIXED;
-        });
-
-        $blocks = array_filter($data, function ($item) {
-            return $item->getType() != TemplatType::TYPE_FIXED;
-        });
-
-        foreach ($template->getTemplateSlots() as $slot) {
-            $templates = $this->em->getRepository("AppBundle:BlockTemplate")->findByTemplate($template);
-        }
-    }
-
-
 	private function getParameters(BlockData $data) {
 
         return $this->decodeCollection($data->getCvDatas());

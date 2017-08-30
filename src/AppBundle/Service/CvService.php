@@ -2,6 +2,8 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\BlockData;
+use AppBundle\Entity\BlockTemplate;
 use AppBundle\Entity\TemplatType;
 use AppBundle\Entity\User;
 use AppBundle\Entity\CV;
@@ -81,6 +83,33 @@ class CvService {
             $this->eventHandler->applyEvent($event);
         }
 
+    }
+
+    public function publishCv($templateId, $user) {
+        $renderService = $this->container->get(CVRenderService::class);
+
+        $template = $this->em->getRepository('AppBundle:Template')->findOneById($templateId);
+        $cv = $this->getUserCv($user);
+
+        $html = $renderService->getTemplateHtml($template, $cv);
+
+        $cv->setPublicTemplate($template);
+        $cv->setPublicHtml($html);
+
+        $this->em->persist($cv);
+        $this->em->flush();
+    }
+
+    public function getPublicLinkHtml($user, $identifier) {
+        $cv = $this->em->getRepository('AppBundle:CV')->findOneBy(array('url' => $identifier, 'user' => $user));
+
+        return $cv->getPublicHtml();
+    }
+
+    public function getPublicHtml($user) {
+       $cv = $this->getUserCv($user);
+
+       return $cv->getPublicHtml();
     }
 
     private function initializeData($cv, $template) {
@@ -198,6 +227,75 @@ class CvService {
         }
 
         return $event;
+    }
+
+    //TODO Refactor with event sourcing
+    public function mapDataToSlotTemplates($slot, $cv) {
+        $data = $this->em->getRepository('AppBundle:CvData')->findByCv($cv);
+        $templateRepository = $this->em->getRepository('AppBundle:BlockTemplate');
+
+        foreach($data as $entity) {
+            $template = $templateRepository->findOneBy(array('type' => $entity->getType(), 'template' => $slot->getTemplate()));
+            switch ($entity->getType()) {
+                case BlockTemplate::TYPE_SKILLS:
+                case BlockTemplate::TYPE_EXPERIENCE:
+                case BlockTemplate::TYPE_CERTIFICATES:
+                case BlockTemplate::TYPE_EDUCATION:
+                    $block = $this->mapText($template, $entity);
+                    break;
+                case BlockTemplate::TYPE_TEXT:
+                    $block = $this->mapText($template, $entity);
+                    break;
+                case BlockTemplate::TYPE_FIXED:
+                    $block = $this->mapFixedData($template, $entity);
+                    break;
+            }
+            if (!is_null($block)) {
+                $this->em->persist($block);
+                $this->em->flush();
+            }
+        }
+
+        $this->em->refresh($slot);
+    }
+
+    private function mapFixedData($template, $entity) {
+        $fields = json_decode($template->getAvailableFields(), true);
+        if (array_key_exists($entity->getField(), $fields)) {
+
+            $blocks = $this->em->getRepository('AppBundle:BlockData')->findBy(array('blockTemplate' => $template, 'cv' => $entity->getCv()));
+            $block = $this->filterTemplateBlock($blocks, $template, $entity->getCv());
+            $block->addCvData($entity);
+
+            return $block;
+        }
+
+    }
+
+    private function filterTemplateBlock($blocks, $template, $cv) {
+        foreach ($blocks as $block) {
+            if ($block->getBlockTemplate() == $template) {
+                return $block;
+            }
+        }
+
+        $block = new BlockData();
+        $block->setCv($cv);
+        $block->setBlockTemplate($template);
+        $block->setTemplateSlot($template->getSlot());
+
+        return $block;
+
+    }
+
+    private function mapText($template, $entity) {
+        $block = new BlockData();
+        $block->setCv($entity->getCv());
+        $block->setBlockTemplate($template);
+        $block->addCvData($entity);
+        $block->setTemplateSlot($template->getSlot());
+
+        return $block;
     }
 
     /**

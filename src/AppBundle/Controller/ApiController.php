@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Service\CvService;
+use AppBundle\Service\CVRenderService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,6 +19,53 @@ use AppBundle\Entity\BlockData;
  */
 class ApiController extends Controller
 {
+    /**
+     * @Route("/{id}/template", name="api_render_template")
+     * @Method("GET")
+     */
+    public function renderTemplateAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+        $cvRenderService = $this->get(CVRenderService::class);
+        $service = $this->get(CvService::class);
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Template');
+
+        $template = $repository->findOneById($id);
+        $cv = $this->get(CvService::class)->getUserCv($this->getUser());
+        $cv->setTemplate($template);
+
+        $em->persist($cv);
+        $em->flush();
+
+        foreach($template->getTemplateSlots() as $slot) {
+            $dataBlocks = $em->getRepository('AppBundle:BlockData')->findBy(array('template_slot' => $slot, 'cv' => $cv));
+            if (count($dataBlocks) == 0) {
+                $service->mapDataToSlotTemplates($slot, $cv);
+                $em->refresh($template);
+            }
+        }
+
+
+        if (!$cv) {
+            $response = new Response();
+            $response->setStatusCode(Response::HTTP_NOT_FOUND);
+
+            return $response;
+        }
+
+        return new Response($cvRenderService->getTemplateHtml($template, $cv));
+    }
+
+    /**
+     * @Route("/template", name="api_public_template")
+     * @Method("GET")
+     */
+    public function getPublicHtml(Request $request) {
+        $service = $this->get(CvService::class);
+
+        $cv = $service->getUserCv($this->getUser());
+
+        return new Response($cv->getPublicHtml());
+    }
 
     /**
      * @Route("/block/{block_id}", name="api_block_delete")
@@ -50,6 +98,21 @@ class ApiController extends Controller
 
         $service->distributeBlocks($wildcard, $templateId, $service->getUserCv($this->getUser()), $positions);
 
+
+        return new Response();
+    }
+
+
+    /**
+     * @Route("/publish", name="api_cv_publish")
+     * @Method("PUT")
+     */
+    public function publishCv(Request $request) {
+        $service = $this->get(CvService::class);
+
+        $templateId = $request->get('templateId');
+
+        $service->publishCv($templateId, $this->getUser());
 
         return new Response();
     }
@@ -142,22 +205,6 @@ class ApiController extends Controller
         return new Response();
     }
 
-    private function updateText($persistedData, $formData) {
-        foreach($persistedData as $data) {
-            $data->setData($formData);
-        }
-
-        return $persistedData;
-    }
-
-    private function updateMixed($persistedData, $formData) {
-        foreach($persistedData as $data) {
-            $value = array($data->getField() => $formData[$data->getField()]);
-            $data->setData($value);
-        }
-
-        return $persistedData;
-    }
 
     private function isUserOwnBlock(BlockData $blockData) {
         $cv = $this->getDoctrine()->getManager()->getRepository('AppBundle:CV')->findOneById($blockData->getCv()->getId());

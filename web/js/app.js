@@ -31,6 +31,9 @@ $('.template').on('click', function (evebt) {
 
     loadTemplate(templateId);
 });
+$('#publish-button').on('click', function (event) {
+    API.publishTemplate(function (data) {});
+});
 $('.themes-listitem').on('click', function (evebt) {
     var themeSource = evebt.currentTarget.attributes[1].value;
     var checkIcon = $(evebt.target).parent().find('.check-icon');
@@ -536,9 +539,7 @@ var Block = function () {
                 over: function over(e, ui) {},
                 receive: function receive(e, ui) {},
                 remove: function remove(e, ui) {},
-                sort: function sort(e, ui) {
-                    console.log("Sort");
-                },
+                sort: function sort(e, ui) {},
                 start: function start(e, ui) {},
                 stop: function stop(e, ui) {},
                 update: function update(e, ui) {}
@@ -705,8 +706,12 @@ var Block = function () {
 var API = {
 
     getCv: function getCv(templateId, cb) {
+        var url = apiUrl + '/' + templateId + '/template';
+        if (templateId == undefined) {
+            url = apiUrl + '/template';
+        }
         $.ajax({
-            url: '' + window.templateUrl + templateId + '/template',
+            url: url,
             success: function success(data) {
                 cb(data);
             },
@@ -786,6 +791,22 @@ var API = {
             error: function error() {},
             complete: function complete() {}
 
+        });
+    },
+    publishTemplate: function publishTemplate(cb) {
+        var payload = {
+            'templateId': window.templateId
+        };
+
+        $.ajax({
+            url: apiUrl + '/publish',
+            method: 'PUT',
+            data: payload,
+            success: function success(data) {
+                cb(data);
+            },
+            error: function error() {},
+            complete: function complete() {}
         });
     }
 };
