@@ -53,6 +53,14 @@ class CV
      */
     private $url;
 
+
+    /**
+     * @var String
+     *
+     * @ORM\Column(name="public_html", type="text", nullable=true)
+     */
+    private $publicHtml;
+
     /**
      * @return int
      */
@@ -148,4 +156,21 @@ class CV
     {
         $this->publicTemplate = $publicTemplate;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPublicHtml()
+    {
+        return $this->publicHtml;
+    }
+
+    /**
+     * @param mixed $publicHtml
+     */
+    public function setPublicHtml($publicHtml)
+    {
+        $this->publicHtml = $publicHtml;
+    }
+
 }

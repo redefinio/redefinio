@@ -2,9 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\BlockData;
-use AppBundle\Entity\BlockTemplate;
-use AppBundle\Entity\TemplatType;
+
 use AppBundle\Service\CVRenderService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -176,75 +174,6 @@ class CVController extends Controller
 
 
 
-    private function mapDataToSlotTemplates($slot, $cv) {
-        $em = $this->getDoctrine()->getManager();
-
-        $data = $this->getDoctrine()->getRepository('AppBundle:CvData')->findByCv($cv);
-        $templateRepository = $this->getDoctrine()->getRepository('AppBundle:BlockTemplate');
-
-        foreach($data as $entity) {
-            $template = $templateRepository->findOneBy(array('type' => $entity->getType(), 'template' => $slot->getTemplate()));
-            switch ($entity->getType()) {
-                case BlockTemplate::TYPE_SKILLS:
-                case BlockTemplate::TYPE_EXPERIENCE:
-                case BlockTemplate::TYPE_CERTIFICATES:
-                case BlockTemplate::TYPE_EDUCATION:
-                    $block = $this->mapText($template, $entity);
-                    break;
-                case BlockTemplate::TYPE_TEXT:
-                    $block = $this->mapText($template, $entity);
-                    break;
-                case BlockTemplate::TYPE_FIXED:
-                    $block = $this->mapFixedData($template, $entity);
-                    break;
-            }
-            if (!is_null($block)) {
-                $em->persist($block);
-                $em->flush();
-            }
-        }
-
-        $em->refresh($slot);
-    }
-
-    private function mapFixedData($template, $entity) {
-        $fields = json_decode($template->getAvailableFields(), true);
-        if (array_key_exists($entity->getField(), $fields)) {
-
-            $blocks = $this->getDoctrine()->getRepository('AppBundle:BlockData')->findBy(array('blockTemplate' => $template, 'cv' => $entity->getCv()));
-            $block = $this->filterTemplateBlock($blocks, $template, $entity->getCv());
-            $block->addCvData($entity);
-
-            return $block;
-        }
-
-    }
-
-    private function filterTemplateBlock($blocks, $template, $cv) {
-        foreach ($blocks as $block) {
-            if ($block->getBlockTemplate() == $template) {
-                return $block;
-            }
-        }
-
-        $block = new BlockData();
-        $block->setCv($cv);
-        $block->setBlockTemplate($template);
-        $block->setTemplateSlot($template->getSlot());
-
-        return $block;
-
-    }
-
-    private function mapText($template, $entity) {
-        $block = new BlockData();
-        $block->setCv($entity->getCv());
-        $block->setBlockTemplate($template);
-        $block->addCvData($entity);
-        $block->setTemplateSlot($template->getSlot());
-
-        return $block;
-    }
 
     /**
      * Creates a form to delete a CV entity.

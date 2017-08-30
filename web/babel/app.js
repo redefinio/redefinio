@@ -28,6 +28,9 @@ $('.template').on('click', (evebt) => {
 
     loadTemplate(templateId);
 });
+$('#publish-button').on('click', (event) => {
+   API.publishTemplate((data) => {});
+});
 $('.themes-listitem').on('click', (evebt) => {
     let themeSource = evebt.currentTarget.attributes[1].value;
     let checkIcon = $(evebt.target).parent().find('.check-icon');
@@ -660,8 +663,12 @@ class Block {
 const API = {
 
     getCv: (templateId, cb) => {
+        let url = `${apiUrl}/${templateId}/template`;
+        if (templateId == undefined) {
+            url = `${apiUrl}/template`;
+        }
         $.ajax({
-            url: `${window.templateUrl}${templateId}/template`,
+            url: url,
             success: (data) => {
                 cb(data);
             },
@@ -751,6 +758,22 @@ const API = {
             error: () => {},
             complete: () => {}
 
+        });
+    },
+    publishTemplate: (cb) => {
+        let payload = {
+            'templateId': window.templateId
+        };
+
+        $.ajax({
+            url: `${apiUrl}/publish`,
+            method: 'PUT',
+            data: payload,
+            success: (data) => {
+                cb(data);
+            },
+            error: () => {},
+            complete: () => {}
         });
     }
 }
