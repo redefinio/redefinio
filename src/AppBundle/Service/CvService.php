@@ -6,6 +6,7 @@ use AppBundle\Entity\TemplatType;
 use AppBundle\Entity\User;
 use AppBundle\Entity\CV;
 use AppBundle\Event\CreateDataEvent;
+use AppBundle\Event\SortBlockEvent;
 use AppBundle\Event\UpdateDataEvent;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -64,6 +65,22 @@ class CvService {
         $event = $this->updateDataEvent($block, $formData, $wildcard);
 
         $this->apply($event);
+    }
+
+    public function distributeBlocks($wildcard, $templateId, $cv, $positions) {
+        $template = $this->em->getRepository('AppBundle:Template')->findOneById($templateId);
+
+        foreach($positions as $key=>$position) {
+            $event = new SortBlockEvent();
+            $event->setWildcard($wildcard);
+            $event->setPosition($key);
+            $event->setBlockId($position);
+            $event->setCvId($cv->getId());
+            $event->setParentTemplate($template);
+
+            $this->eventHandler->applyEvent($event);
+        }
+
     }
 
     private function initializeData($cv, $template) {

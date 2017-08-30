@@ -2,10 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\BlockTemplate;
-use AppBundle\Entity\CvData;
 use AppBundle\Service\CvService;
-use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -38,6 +35,23 @@ class ApiController extends Controller
 
         return new Response();
 
+    }
+
+    /**
+     * @Route("/zone", name="api_zone_sort")
+     * @Method({"PUT"})
+     */
+    public function blockSort(Request $request) {
+        $service = $this->get(CvService::class);
+
+        $wildcard = $request->get('wildcard');
+        $positions = $request->get('positions');
+        $templateId = $request->get('templateId');
+
+        $service->distributeBlocks($wildcard, $templateId, $service->getUserCv($this->getUser()), $positions);
+
+
+        return new Response();
     }
 
     /**

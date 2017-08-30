@@ -339,6 +339,21 @@ class Zone {
             stop: (e, ui) => {
             },
             update: (e, ui) => {
+                let parent = ui.item.parent('[data-zone]');
+                let wildcard = $(parent).data('zone');
+                let children = parent.find('[data-block-id]');
+
+                let positions = [];
+
+                for (let i = 0; i < children.length; i++) {
+                    let position = $(children[i]).data('blockId');
+                    positions.push(position);
+                }
+
+                API.sortBlocks(wildcard, positions, () => {
+
+                });
+
             }
         });
     }
@@ -719,5 +734,23 @@ const API = {
                 }
             });
         }
+    },
+    sortBlocks: (wildcard, positions, cb) => {
+        let payload = {};
+        payload['wildcard'] = wildcard;
+        payload['positions'] = positions;
+        payload['templateId'] = window.templateId;
+
+        $.ajax({
+            url: `${apiUrl}/zone`,
+            method: 'PUT',
+            data: payload,
+            success: (data) => {
+                cb(data);
+            },
+            error: () => {},
+            complete: () => {}
+
+        });
     }
 }
