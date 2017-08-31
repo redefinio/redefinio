@@ -536,9 +536,7 @@ var Block = function () {
                 over: function over(e, ui) {},
                 receive: function receive(e, ui) {},
                 remove: function remove(e, ui) {},
-                sort: function sort(e, ui) {
-                    console.log("Sort");
-                },
+                sort: function sort(e, ui) {},
                 start: function start(e, ui) {},
                 stop: function stop(e, ui) {},
                 update: function update(e, ui) {}
