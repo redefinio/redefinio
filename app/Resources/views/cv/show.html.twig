@@ -29,9 +29,7 @@
 
 {% block javascripts %}
 		<script type="text/javascript">
-			var templateUrl = "{{ path('cv_index') }}";
-			var isEditing = false;
-            var templateId = {{ cV.getPublicTemplate().getId() }};
+            var apiUrl = location.protocol + "//" + location.host + "/app_dev.php/api";
 		</script>
   <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 {% endblock %}
