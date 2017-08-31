@@ -5,7 +5,7 @@ body {
   color: #000;
   font-family: "Open Sans", sans-serif;
   font-size: 13px;
-  padding: 50px 0;
+  padding: 90px 0;
 }
 
 .wrapper {
@@ -17,6 +17,10 @@ body {
   content: "";
   display: table;
   clear: both;
+}
+
+.container {
+  padding: 0;
 }
 
 .standart-sidebar {
