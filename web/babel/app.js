@@ -618,6 +618,15 @@ class Block {
                     i += keysCount.length / sameKeysCount.length - 1;
 
                     data['fields']['blocks'].push(obj);
+                }  else if (editableElements[i].getAttribute('data-key') == 'photo') {
+                    let files = editableElements[i].files;
+                    API.uploadPhoto(files, (data) => {
+                        console.log(data.photo);
+                        let element = $('.photo img');
+                       $('.photo img').attr('src', data.photo);
+
+                    });
+                    // data['fields'][editableElements[i].getAttribute('data-key')] = files[0];
                 }
                 else {
                     data['fields'][editableElements[i].getAttribute('data-key')] = editableElements[i].innerHTML;
@@ -725,6 +734,27 @@ const API = {
                 }
             });
         }
+    },
+
+    uploadPhoto: (files, cb) => {
+        var data = new FormData();
+        $.each(files, function (key, value) {
+           data.append(key, value);
+        });
+
+        $.ajax({
+            url: `${apiUrl}/photo`,
+            method: 'POST',
+            data: data,
+            cache: false,
+            dataType: 'json',
+            processData: false, // Don't process the files
+            contentType: false,
+            success: (data) => {
+                cb(data);
+            }
+
+        })
     },
 
     deleteBlock: (blockId, cb) => {
