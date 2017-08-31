@@ -7,6 +7,7 @@ use AppBundle\Service\CVRenderService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Block;
@@ -53,6 +54,19 @@ class ApiController extends Controller
         }
 
         return new Response($cvRenderService->getTemplateHtml($template, $cv));
+    }
+
+    /**
+     * @Route("/photo", name="api_upload_photo")
+     * @Method("POST")
+     */
+    public function uploadPhoto(Request $request) {
+
+        $photo = $request->files->all()[0];
+        $name = $this->getUser()->getId().".".$photo->guessExtension();
+        $target = $photo->move('upload/photos', $name)->getPathname();
+
+        return new JsonResponse(array('photo' => "/".$target));
     }
 
     /**

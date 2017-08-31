@@ -661,6 +661,12 @@ var Block = function () {
                         _i12 += keysCount.length / sameKeysCount.length - 1;
 
                         data['fields']['blocks'].push(obj);
+                    } else if (editableElements[_i12].getAttribute('data-key') == 'photo') {
+                        var files = editableElements[_i12].files;
+                        API.uploadPhoto(files, function (data) {
+                            var element = $('.photo img');
+                            $('.photo img').attr('src', data.photo);
+                        });
                     } else {
                         data['fields'][editableElements[_i12].getAttribute('data-key')] = editableElements[_i12].innerHTML;
                     }
@@ -760,6 +766,27 @@ var API = {
                 error: function error() {}
             });
         }
+    },
+
+    uploadPhoto: function uploadPhoto(files, cb) {
+        var data = new FormData();
+        $.each(files, function (key, value) {
+            data.append(key, value);
+        });
+
+        $.ajax({
+            url: apiUrl + '/photo',
+            method: 'POST',
+            data: data,
+            cache: false,
+            dataType: 'json',
+            processData: false, // Don't process the files
+            contentType: false,
+            success: function success(data) {
+                cb(data);
+            }
+
+        });
     },
 
     deleteBlock: function deleteBlock(blockId, cb) {

@@ -57,20 +57,21 @@ class CVController extends Controller
     {
         $service = $this->get(CvService::class);
         if (is_null($service->getUserCv($this->getUser()))) {
-            $service->initializeCv($this->getUser(), $templateId);
+            $cv = $service->initializeCv($this->getUser(), $templateId);
         }
 
-        return $this->redirect($this->generateUrl("cv_index"));
+        return $this->redirect($this->generateUrl("cv_edit"));
     }
 
     /**
      * Displays a form to edit an existing CV entity.
      *
-     * @Route("/{id}/edit", name="cv_edit")
+     * @Route("/edit", name="cv_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, CV $cV)
+    public function editAction(Request $request)
     {
+        $cV = $this->get(CvService::class)->getUserCv($this->getUser());
         $deleteForm = $this->createDeleteForm($cV);
         $editForm = $this->createForm('AppBundle\Form\CVType', $cV);
         $editForm->handleRequest($request);

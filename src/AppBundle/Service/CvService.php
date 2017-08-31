@@ -50,6 +50,8 @@ class CvService {
         $this->em->flush();
 
         $this->initializeData($cv, $template);
+
+        return $cv;
     }
 
     public function createNewBlock($cv, $wildcard, $templateId, $blockType, $formData) {
