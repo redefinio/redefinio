@@ -55,7 +55,7 @@ var loadTemplate = function loadTemplate(templateId) {
     activateLoader();
     API.getCv(templateId, function (data) {
         var domParser = new DOMParser();
-        var template = domParser.parseFromString(data, "text/html");
+        var template = domParser.parseFromString(data.html, "text/html");
         var templateHtml = template.getElementById('main-wrap');
         var templateStyles = template.getElementsByTagName('link');
 
@@ -662,11 +662,14 @@ var Block = function () {
 
                         data['fields']['blocks'].push(obj);
                     } else if (editableElements[_i12].getAttribute('data-key') == 'photo') {
-                        var files = editableElements[_i12].files;
-                        API.uploadPhoto(files, function (data) {
-                            var element = $('.photo img');
-                            $('.photo img').attr('src', data.photo);
-                        });
+                        (function () {
+                            var files = editableElements[_i12].files;
+                            var key = editableElements[_i12].getAttribute('data-key');
+                            API.uploadPhoto(files, function (response) {
+                                data['fields'][key] = response.photo;
+                                $('.photo img').attr('src', response.photo);
+                            });
+                        })();
                     } else {
                         data['fields'][editableElements[_i12].getAttribute('data-key')] = editableElements[_i12].innerHTML;
                     }
@@ -782,6 +785,7 @@ var API = {
             dataType: 'json',
             processData: false, // Don't process the files
             contentType: false,
+            async: false,
             success: function success(data) {
                 cb(data);
             }

@@ -98,7 +98,8 @@ class LoadAllData implements FixtureInterface
                 'title' => '',
                 'email' => '',
                 'phone' => '',
-                'location' => ''
+                'location' => '',
+                'photo' => ''
             )));
         $manager->persist($block1_1);
 
@@ -302,6 +303,13 @@ class LoadAllData implements FixtureInterface
         $cvData1_7->setField("location");
         $manager->persist($cvData1_7);
 
+        $cvData1_8 = new CvData();
+        $cvData1_8->setCv($cv1);
+        $cvData1_8->setData(array('photo' => ''));
+        $cvData1_8->setType(BlockTemplate::TYPE_FIXED);
+        $cvData1_8->setField("photo");
+        $manager->persist($cvData1_8);
+
         $blockData1_1 = new BlockData();
         $blockData1_1->setCV($cv1);
         $blockData1_1->setTemplateSlot($templateSlot1_1);
@@ -311,6 +319,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_1->addCvData($cvData1_5);
         $blockData1_1->addCvData($cvData1_6);
         $blockData1_1->addCvData($cvData1_7);
+        $blockData1_1->addCvData($cvData1_8);
         $manager->persist($blockData1_1);
 
 
@@ -477,10 +486,11 @@ class LoadAllData implements FixtureInterface
         $block1_1->setType(BlockTemplate::TYPE_FIXED);
         $block1_1->setSlot($templateSlot1_1);
         $block1_1->setTemplate($template1);
-        $block1_1->setHtmlSource('<div class="person" class="item" data-block-id="{{block_data.id}}" data-block-type="0" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"> <div class="photo"><img src="{{absolute_url(asset(\'templates/standart/img/photo.jpg\'))}}" alt=""/></div><div><input data-key="photo" type="file"> </div><div class="name" data-key="full_name" data-placeholder="John">{{ full_name }}</div><div class="statusquo" data-key="title" data-placeholder="UI/UX designer">{{title}}</div></div>');
+        $block1_1->setHtmlSource('<div class="person" class="item" data-block-id="{{block_data.id}}" data-block-type="0" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"> <div class="photo"><img src="{{absolute_url(asset(photo))}}" alt=""/></div><div><input data-key="photo" type="file"> </div><div class="name" data-key="full_name" data-placeholder="John">{{ full_name }}</div><div class="statusquo" data-key="title" data-placeholder="UI/UX designer">{{title}}</div></div>');
         $block1_1->setAvailableFields(json_encode(array(
             'full_name' => '',
-            'title' => ''
+            'title' => '',
+            'photo' => ''
         )));
         $manager->persist($block1_1);
 
@@ -551,7 +561,7 @@ class LoadAllData implements FixtureInterface
         $block1_5_1->setTemplate($template1);
         $block1_5_1->setHtmlSource('<div data-key="skill" data-value="{{skill}}"> <div class="title" data-key="title">{{title}}</div><div class="bar"> <div class="progress" style="width: {{ skill }}0%"></div></div></div>');
         $block1_5_1->setAvailableFields(
-            json_encode($this->getDefaultFields(TemplatType::TYPE_EDUCATION_INNER)));
+            json_encode($this->getDefaultFields(TemplatType::TYPE_SKILLS_INNER)));
         $manager->persist($block1_5_1);
     }
 }
