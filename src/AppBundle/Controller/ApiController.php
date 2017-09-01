@@ -88,7 +88,9 @@ class ApiController extends Controller
 
         $cv = $service->getUserCv($this->getUser());
 
-        return new Response($cv->getPublicHtml());
+        return new JsonResponse(array(
+            'html' => $cv->getPublicHtml()
+        ));
     }
 
     /**
