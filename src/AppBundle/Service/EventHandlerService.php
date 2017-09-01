@@ -105,11 +105,26 @@ class EventHandlerService
         $event = $eventSource->getObject();
         $block = $this->em->getRepository('AppBundle:BlockData')->findOneById($event->getBlockId());
 
+        $notExist = true;
+
         foreach($block->getCvDatas() as $data) {
             if ($data->getField() == $event->getField()) {
                 $data->setData($event->getData());
+                $notExist = false;
             }
         }
+
+        if ($notExist) {
+            $newData = new CvData();
+
+            $newData->setCv($block->getCv());
+            $newData->setField($event->getField());
+            $newData->setData($event->getData());
+            $newData->setType($eventSource->getType());
+
+            $block->addCvData($newData);
+        }
+
 
         $this->em->persist($block);
         $this->em->flush();

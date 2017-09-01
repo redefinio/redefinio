@@ -45,15 +45,25 @@ class ApiController extends Controller
             }
         }
 
+        $themePaths = $template->getThemes()->map(function($theme) {
+            return array(
+                'id' => $theme->getId(),
+                'path' => $theme->getCssSource()
+            );
+        });
 
         if (!$cv) {
-            $response = new Response();
+            $response = new JsonResponse();
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
 
             return $response;
         }
 
-        return new Response($cvRenderService->getTemplateHtml($template, $cv));
+
+        return new JsonResponse(array(
+            'html' => $cvRenderService->getTemplateHtml($template, $cv),
+            'themes' => $themePaths->toArray()
+        ));
     }
 
     /**

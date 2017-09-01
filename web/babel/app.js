@@ -52,7 +52,7 @@ let loadTemplate = (templateId) => {
     activateLoader();
     API.getCv(templateId, (data) => {
         let domParser = new DOMParser();
-        let template = domParser.parseFromString(data, "text/html");
+        let template = domParser.parseFromString(data.html, "text/html");
         let templateHtml = template.getElementById('main-wrap');
         let templateStyles = template.getElementsByTagName('link');
 
@@ -620,13 +620,12 @@ class Block {
                     data['fields']['blocks'].push(obj);
                 }  else if (editableElements[i].getAttribute('data-key') == 'photo') {
                     let files = editableElements[i].files;
-                    API.uploadPhoto(files, (data) => {
-                        console.log(data.photo);
-                        let element = $('.photo img');
-                       $('.photo img').attr('src', data.photo);
+                    let key = editableElements[i].getAttribute('data-key');
+                    API.uploadPhoto(files, (response) => {
+                        data['fields'][key] = response.photo;
+                        $('.photo img').attr('src', response.photo);
 
                     });
-                    // data['fields'][editableElements[i].getAttribute('data-key')] = files[0];
                 }
                 else {
                     data['fields'][editableElements[i].getAttribute('data-key')] = editableElements[i].innerHTML;
@@ -750,6 +749,7 @@ const API = {
             dataType: 'json',
             processData: false, // Don't process the files
             contentType: false,
+            async: false,
             success: (data) => {
                 cb(data);
             }
