@@ -75,6 +75,13 @@ body {
   color: #fff;
 }
 
+.editable-block [data-key^=photo] {
+  display: none;
+}
+.is-editing [data-key^=photo] {
+  display: block;
+}
+
 .standart-sidebar .statusquo {
   margin-top: 7px;
   font-size: 16px;
