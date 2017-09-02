@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block navbar %}
+    <div class="navbar">
+        <h1 class="navbar-title">My résumé</h1>
+
+        <div class="edit-url-group">
+            <input class="edit-url" id="cv-url" value="{{ absolute_url(path('default_public_link', {'identifier': cV.url})) }}" readonly>
+            <button class="btn edit-url-btn">Copy</button>
+            <span class="label label-success text-copied">Copied!
+                <img src="/img/check.png" alt="Icon">
+            </span>
+        </div>
+
+        <div class="navbar-actions">
+            <a href="{{ path('cv_edit') }}" class="btn navbar-edit">Edit</a>
+            <a href="{{ path('cv_pdf') }}" class="btn navbar-download">Download PDF</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div id="template" class="resume-container">
+        <div id="main-wrap">
+            <h1>{{ 'message_no_public_cv'|trans }}</h1>
+        </div>
+    </div>
+{% endblock %}
+
