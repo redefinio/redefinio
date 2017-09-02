@@ -79,7 +79,7 @@ body {
   color: #fff;
 }
 
-.editable-block [data-key^=photo] {
+.standart-sidebar [data-key^=photo] {
   display: none;
 }
 .is-editing [data-key^=photo] {
