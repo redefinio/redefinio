@@ -99,7 +99,8 @@ class LoadAllData implements FixtureInterface
                 'email' => '',
                 'phone' => '',
                 'location' => '',
-                'photo' => ''
+                'photo' => '',
+                'contact_title' => 'Contacts'
             )));
         $manager->persist($block1_1);
 
@@ -310,6 +311,13 @@ class LoadAllData implements FixtureInterface
         $cvData1_8->setField("photo");
         $manager->persist($cvData1_8);
 
+        $cvData1_9 = new CvData();
+        $cvData1_9->setCv($cv1);
+        $cvData1_9->setData(array('contact_title' => 'Contacts'));
+        $cvData1_9->setType(BlockTemplate::TYPE_FIXED);
+        $cvData1_9->setField("contact_title");
+        $manager->persist($cvData1_9);
+
         $blockData1_1 = new BlockData();
         $blockData1_1->setCV($cv1);
         $blockData1_1->setTemplateSlot($templateSlot1_1);
@@ -320,6 +328,7 @@ class LoadAllData implements FixtureInterface
         $blockData1_1->addCvData($cvData1_6);
         $blockData1_1->addCvData($cvData1_7);
         $blockData1_1->addCvData($cvData1_8);
+        $blockData1_1->addCvData($cvData1_9);
         $manager->persist($blockData1_1);
 
 
@@ -581,9 +590,9 @@ class LoadAllData implements FixtureInterface
         $block1_6->setType(BlockTemplate::TYPE_FIXED);
         $block1_6->setSlot($templateSlot2);
         $block1_6->setTemplate($template1);
-        $block1_6->setHtmlSource('<div class="group item" class="item" data-block-id="{{block_data.id}}" data-block-type="0" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"> <div class="group title" data-key="title">{{title}}</div><div class="group content"> <div> <i class="fa fa-map-marker" aria-hidden="true" ></i> <span data-key="location" data-placeholder="Location">{{location}}</span> </div><div> <i class="fa fa-phone" aria-hidden="true"></i> <span data-key="phone" data-placeholder="Phone number">{{phone}}</span> </div><div> <i class="fa fa-envelope" aria-hidden="true"></i> <span data-key="email" data-placeholder="Email address">{{email}}</span> </div></div></div>');
+        $block1_6->setHtmlSource('<div class="group item" class="item" data-block-id="{{block_data.id}}" data-block-type="0" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"> <div class="group title" data-key="contact_title">{{ contact_title }}</div><div class="group content"> <div> <i class="fa fa-map-marker" aria-hidden="true" ></i> <span data-key="location" data-placeholder="Location">{{location}}</span> </div><div> <i class="fa fa-phone" aria-hidden="true"></i> <span data-key="phone" data-placeholder="Phone number">{{phone}}</span> </div><div> <i class="fa fa-envelope" aria-hidden="true"></i> <span data-key="email" data-placeholder="Email address">{{email}}</span> </div></div></div>');
         $block1_6->setAvailableFields(json_encode(array(
-            'title' => '',
+            'contact_title' => 'Contacts',
             'location' => '',
             'phone' => '',
             'email' => ''
