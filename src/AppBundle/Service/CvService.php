@@ -103,15 +103,23 @@ class CvService {
     }
 
     public function getPublicLinkHtml($user, $identifier) {
-        $cv = $this->em->getRepository('AppBundle:CV')->findOneBy(array('url' => $identifier, 'user' => $user));
+        $html = $this->em->getRepository('AppBundle:CV')->findOneBy(array('url' => $identifier, 'user' => $user))->getPublicHtml();
 
-        return $cv->getPublicHtml();
+        if (is_null($html)) {
+            $html = $this->container->get('translator')->trans("message_no_public_cv");
+        }
+
+        return $html;
     }
 
     public function getPublicHtml($user) {
-       $cv = $this->getUserCv($user);
+       $html = $this->getUserCv($user)->getPublicHtml();
 
-       return $cv->getPublicHtml();
+        if (is_null($html)) {
+            $html = $this->container->get('translator')->trans("message_no_public_cv");
+        }
+
+       return $html;
     }
 
     private function initializeData($cv, $template) {

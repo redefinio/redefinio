@@ -41,6 +41,10 @@ class CVController extends Controller
             $parameters['templates'] = $em->getRepository('AppBundle:Template')->findAll();
         }
 
+        if (is_null($userCv->getPublicHtml())) {
+            $template = 'cv/empty.html.twig';
+        }
+
         return $this->render($template, $parameters);
     }
 
