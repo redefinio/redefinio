@@ -632,6 +632,7 @@ var Block = function () {
             }
 
             this._toggleEditing();
+            $('.block-actions').css('display', 'none');
             loadTemplate(window.templateId);
         }
     }, {

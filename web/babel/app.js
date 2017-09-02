@@ -589,6 +589,7 @@ class Block {
         }
 
         this._toggleEditing();
+        $('.block-actions').css('display', 'none');
         loadTemplate(window.templateId);
     }
 
