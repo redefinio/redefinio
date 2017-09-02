@@ -19,3 +19,4 @@
 /node_modules/
 /docker/mysql/data/*
 .idea/*
+package-lock.json
