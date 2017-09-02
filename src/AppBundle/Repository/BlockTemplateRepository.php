@@ -33,4 +33,13 @@ class BlockTemplateRepository extends \Doctrine\ORM\EntityRepository
 		    ->setMaxResults(1)
 		    ->getQuery()->getScalarResult();
 	}
+
+
+	public function getUsedTemplates($type) {
+	    $templates = $this->findByType($type);
+
+	    return array_filter($templates, function ($template) {
+	        return count($template->getBlockDatas()) > 0;
+        });
+    }
 }

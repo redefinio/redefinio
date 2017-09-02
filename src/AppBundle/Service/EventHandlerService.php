@@ -8,6 +8,7 @@ use AppBundle\Entity\EventSource;
 use AppBundle\Entity\TemplatType;
 use AppBundle\Event\Event;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * EventHandlerService
@@ -18,9 +19,15 @@ class EventHandlerService
 {
     protected $em;
 
-    public function __construct(EntityManager $em)
+    protected $container;
+
+    protected $user;
+
+    public function __construct(ContainerInterface $container)
     {
-        $this->em = $em;
+        $this->container = $container;
+        $this->em = $this->container->get('doctrine')->getManager();
+        $this->user = $this->container->get('security.token_storage')->getToken()->getUser();
     }
 
     public function applyEvents($events) {
@@ -42,12 +49,14 @@ class EventHandlerService
             case 'AppBundle\Event\SortBlockEvent':
                 $this->applySortEvent($eventSource);
                 break;
+            case 'AppBundle\Event\CreateBlockEvent':
+                $this->applyCreateBlockEvent($eventSource);
+                break;
         }
     }
 
     private function storeEvent(Event $event) {
-        $cv = $this->em->getRepository('AppBundle:CV')->findOneById($event->getCvId());
-
+        $cv = $this->container->get(CvService::class)->getUserCv($this->user);
         $eventSource = new EventSource();
 
         $eventSource->setCv($cv);
@@ -142,6 +151,43 @@ class EventHandlerService
 
         $this->em->persist($block);
         $this->em->flush();
+
+    }
+
+    private function applyCreateBlockEvent($eventSource) {
+        $event = $eventSource->getObject();
+
+        $data = new CvData();
+
+        $data->setCv($eventSource->getCv());
+        $data->setType($event->getBlockType());
+        $data->setData($event->getFormData());
+
+        $this->em->persist($data);
+        $this->em->flush();
+
+        $templates = $this->em->getRepository('AppBundle:BlockTemplate')->getUsedTemplates($event->getBlockType());
+
+        foreach ($templates as $template) {
+            if ($template->getTemplate()->getId() != $event->getParentTemplate()->getId()) {
+                $wildcard = $template->getSlot()->getWildcard();
+            } else {
+                $wildcard = $event->getWildcard();
+            }
+
+            $slot = $this->em->getRepository('AppBundle:TemplateSlot')->findOneByWildcard($wildcard);
+
+            $block = new BlockData();
+
+            $block->setTemplateSlot($slot);
+            $block->setCv($eventSource->getCv());
+            $block->setBlockTemplate($template);
+
+            $block->addCvData($data);
+
+            $this->em->persist($block);
+            $this->em->flush();
+        }
 
     }
 }

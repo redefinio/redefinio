@@ -7,6 +7,7 @@ use AppBundle\Entity\BlockTemplate;
 use AppBundle\Entity\TemplatType;
 use AppBundle\Entity\User;
 use AppBundle\Entity\CV;
+use AppBundle\Event\CreateBlockEvent;
 use AppBundle\Event\CreateDataEvent;
 use AppBundle\Event\SortBlockEvent;
 use AppBundle\Event\UpdateDataEvent;
@@ -55,12 +56,16 @@ class CvService {
     }
 
     public function createNewBlock($cv, $wildcard, $templateId, $blockType, $formData) {
-        $template = $this->em->getRepository('AppBundle:BlockTemplate')->findOneBy(array('template' => $templateId, "type" => $blockType));
+        $template = $this->em->getRepository('AppBundle:Template')->findOneById($templateId);
 
-        $event = $this->createDataEvent($cv, $template, $wildcard);
-        $event->setData($formData);
+        $event = new CreateBlockEvent();
 
-        $this->eventHandler->applyEvent($event);
+        $event->setWildcard($wildcard);
+        $event->setParentTemplate($template);
+        $event->setBlockType($blockType);
+        $event->setFormData($formData);
+
+        $this->apply($event);
     }
 
     public function updateBlock($blockId, $formData, $wildcard) {

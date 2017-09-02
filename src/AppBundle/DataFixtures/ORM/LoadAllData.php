@@ -570,7 +570,7 @@ class LoadAllData implements FixtureInterface
         $block1_5->setType(BlockTemplate::TYPE_SKILLS);
         $block1_5->setSlot($templateSlot3);
         $block1_5->setTemplate($template1);
-        $block1_5->setHtmlSource('<div class="group item" data-block-id="{{block_data.id}}" data-block-type="2" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"> <div class="group title" data-key="title">Languages</div><div class="group content"> <div class="blocks indicator">{{blocks|raw}}</div></div></div>');
+        $block1_5->setHtmlSource('<div class="group item" data-block-id="{{block_data.id}}" data-block-type="2" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"> <div class="group title" data-key="title">{{ title }}</div><div class="group content"> <div class="blocks indicator">{{blocks|raw}}</div></div></div>');
         $block1_5->setAvailableFields(
             json_encode($this->getDefaultFields(TemplatType::TYPE_SKILLS)));
         $manager->persist($block1_5);

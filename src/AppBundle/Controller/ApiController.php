@@ -94,15 +94,23 @@ class ApiController extends Controller
     public function deleteBlock($block_id) {
         $em = $this->getDoctrine()->getManager();
 
-        $blockData = $em->getRepository('AppBundle:BlockData')->find($block_id);
+        $blocks = $em
+            ->getRepository('AppBundle:BlockData')
+            ->find($block_id)
+            ->getCvDatas()
+            ->first()
+            ->getBlockDatas();
 
-        if ($this->isUserOwnBlock($blockData)) {
-            $em->remove($blockData);
-            $em->flush();
+
+        foreach($blocks as $block) {
+            if ($this->isUserOwnBlock($block)) {
+                $em->remove($block);
+            }
         }
+        $em->flush();
+
 
         return new Response();
-
     }
 
     /**
