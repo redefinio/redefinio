@@ -1,2 +1,5 @@
 button_publish: Publish
 button_cancel: Cancel
+
+
+message_no_public_cv: You have no public CV yet
