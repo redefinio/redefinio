@@ -34,7 +34,7 @@ $('.template').on('click', function (evebt) {
 $('#publish-button').on('click', function (event) {
     API.publishTemplate(function (data) {});
 });
-$('.themes-listitem').on('click', function (evebt) {
+$('.themes-list').on('click', '.themes-listitem', function (evebt) {
     var themeSource = evebt.currentTarget.attributes[1].value;
     var checkIcon = $(evebt.target).parent().find('.check-icon');
 
@@ -46,6 +46,7 @@ $('.themes-listitem').on('click', function (evebt) {
 
     loadTheme(themeSource);
 });
+
 var loadTheme = function loadTheme(themeSource) {
     $('head').append('<link href="/templates/default/' + themeSource + '" rel="stylesheet">');
 };
@@ -64,6 +65,8 @@ var loadTemplate = function loadTemplate(templateId) {
 
         //Add template styles
         $('head').append(templateStyles);
+
+        $('.themes-list').html(data.themes);
 
         if (window.isEditing) {
             prepareToEditTemplate();
