@@ -2,6 +2,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var _isEditing = false;
+
 document.addEventListener("DOMContentLoaded", function (e) {
     loadTemplate(window.templateId);
 });
@@ -23,14 +25,24 @@ $('.edit-url-btn').on('click', function () {
 $('.template').on('click', function (evebt) {
     var templateId = evebt.currentTarget.attributes[1].value;
     var checkIcon = $(evebt.target).parent().find('.check-icon');
-
-    $('.templates-list .check-icon').each(function () {
-        $(this).css('display', 'none');
-    });
-    $(checkIcon).css('display', 'block');
-
-    loadTemplate(templateId);
+    if (_isEditing) {
+        $('#myModal').modal('show');
+        $('#myModal').on('click', 'button', function (event) {
+            if (event.currentTarget.getAttribute('data-action') === 'cancel') {
+                $('#myModal').modal('hide');
+            } else {
+                _isEditing = false;
+                loadTemplate(templateId);
+                setCheckIcon('.templates-list .check-icon', checkIcon);
+                $('#myModal').modal('hide');
+            }
+        });
+    } else {
+        loadTemplate(templateId);
+        setCheckIcon('.templates-list .check-icon', checkIcon);
+    }
 });
+
 $('#publish-button').on('click', function (event) {
     API.publishTemplate(function (data) {});
 });
@@ -583,7 +595,7 @@ var Block = function () {
         key: '_toggleEditing',
         value: function _toggleEditing() {
             this._element.querySelector('.editable-block').classList.toggle('is-editing');
-            this._isEditing = !this._isEditing;
+            _isEditing = !_isEditing;
         }
     }, {
         key: 'edit',
@@ -726,6 +738,13 @@ var Block = function () {
 
     return Block;
 }();
+
+function setCheckIcon(className, checkIcon) {
+    $(className).each(function () {
+        $(this).css('display', 'none');
+    });
+    $(checkIcon).css('display', 'block');
+}
 
 var API = {
 
