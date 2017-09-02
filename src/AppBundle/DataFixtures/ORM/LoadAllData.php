@@ -469,22 +469,34 @@ class LoadAllData implements FixtureInterface
         $template1->setTemplatePath('standart');
         $manager->persist($template1);
 
-        $templateSlot1_1 = new TemplateSlot();
-        $templateSlot1_1->setTemplate($template1);
-        $templateSlot1_1->setTitle('Standart left slot');
-        $templateSlot1_1->setWildcard('standart_left_info');
-        $manager->persist($templateSlot1_1);
+        $templateSlot1 = new TemplateSlot();
+        $templateSlot1->setTemplate($template1);
+        $templateSlot1->setTitle('Standart personal slot');
+        $templateSlot1->setWildcard('standart_personal_info');
+        $manager->persist($templateSlot1);
 
-        $templateSlot1_2 = new TemplateSlot();
-        $templateSlot1_2->setTemplate($template1);
-        $templateSlot1_2->setTitle('Standart right slot');
-        $templateSlot1_2->setWildcard('standart_right_slot');
-        $manager->persist($templateSlot1_2);
+        $templateSlot2 = new TemplateSlot();
+        $templateSlot2->setTemplate($template1);
+        $templateSlot2->setTitle('Standart contacts slot');
+        $templateSlot2->setWildcard('standart_contacts_slot');
+        $manager->persist($templateSlot2);
+
+        $templateSlot3 = new TemplateSlot();
+        $templateSlot3->setTemplate($template1);
+        $templateSlot3->setTitle('Standart right slot');
+        $templateSlot3->setWildcard('standart_left_info');
+        $manager->persist($templateSlot3);
+
+        $templateSlot4 = new TemplateSlot();
+        $templateSlot4->setTemplate($template1);
+        $templateSlot4->setTitle('Standart right slot');
+        $templateSlot4->setWildcard('standart_right_slot');
+        $manager->persist($templateSlot4);
 
         $block1_1 = new BlockTemplate();
         $block1_1->setTitle('Personal info headline');
         $block1_1->setType(BlockTemplate::TYPE_FIXED);
-        $block1_1->setSlot($templateSlot1_1);
+        $block1_1->setSlot($templateSlot1);
         $block1_1->setTemplate($template1);
         $block1_1->setHtmlSource('<div class="person" class="item" data-block-id="{{block_data.id}}" data-block-type="0" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"> <div class="photo"><img src="{{absolute_url(asset(photo))}}" alt=""/></div><div><input data-key="photo" type="file"> </div><div class="name" data-key="full_name" data-placeholder="John">{{ full_name }}</div><div class="statusquo" data-key="title" data-placeholder="UI/UX designer">{{title}}</div></div>');
         $block1_1->setAvailableFields(json_encode(array(
@@ -497,7 +509,7 @@ class LoadAllData implements FixtureInterface
         $block1_2 = new BlockTemplate();
         $block1_2->setTitle('Summary');
         $block1_2->setType(BlockTemplate::TYPE_TEXT);
-        $block1_2->setSlot($templateSlot1_1);
+        $block1_2->setSlot($templateSlot3);
         $block1_2->setTemplate($template1);
         $block1_2->setHtmlSource('<div class="group item" data-block-id="{{ block_data.id }}" data-block-type="1" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"> <div class="group title" data-key="title" data-placeholder="Title">{{ title }}</div> <div class="group content" data-key="text" data-placeholder="Text goes here"> {{ text }} </div> </div>');
         $block1_2->setAvailableFields(
@@ -507,7 +519,7 @@ class LoadAllData implements FixtureInterface
         $block1_3 = new BlockTemplate();
         $block1_3->setTitle('Experience');
         $block1_3->setType(BlockTemplate::TYPE_EXPERIENCE);
-        $block1_3->setSlot($templateSlot1_2);
+        $block1_3->setSlot($templateSlot4);
         $block1_3->setTemplate($template1);
         $block1_3->setHtmlSource('<div class="group item" data-block-id="{{block_data.id}}" data-block-type="4" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"> <div class="group title" data-key="title">Working Experience</div><div class="group content"> <div class="blocks timeline" data-child-block-type="5" data-key="blocks">{{blocks|raw}}</div></div></div>');
         $block1_3->setAvailableFields(
@@ -527,7 +539,7 @@ class LoadAllData implements FixtureInterface
         $block1_4 = new BlockTemplate();
         $block1_4->setTitle('Education');
         $block1_4->setType(BlockTemplate::TYPE_EDUCATION);
-        $block1_4->setSlot($templateSlot1_2);
+        $block1_4->setSlot($templateSlot4);
         $block1_4->setTemplate($template1);
         $block1_4->setHtmlSource('<div class="group item" data-block-id="{{block_data.id}}" data-block-type="4" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"> <div class="group title" data-key="title">Working Experience</div><div class="group content"> <div class="blocks timeline" data-child-block-type="5" data-key="blocks">{{blocks|raw}}</div></div></div>');
         $block1_4->setAvailableFields(
@@ -547,7 +559,7 @@ class LoadAllData implements FixtureInterface
         $block1_5 = new BlockTemplate();
         $block1_5->setTitle('Skills');
         $block1_5->setType(BlockTemplate::TYPE_SKILLS);
-        $block1_5->setSlot($templateSlot1_1);
+        $block1_5->setSlot($templateSlot3);
         $block1_5->setTemplate($template1);
         $block1_5->setHtmlSource('<div class="group item" data-block-id="{{block_data.id}}" data-block-type="2" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"> <div class="group title" data-key="title">Languages</div><div class="group content"> <div class="blocks indicator">{{blocks|raw}}</div></div></div>');
         $block1_5->setAvailableFields(
@@ -563,5 +575,20 @@ class LoadAllData implements FixtureInterface
         $block1_5_1->setAvailableFields(
             json_encode($this->getDefaultFields(TemplatType::TYPE_SKILLS_INNER)));
         $manager->persist($block1_5_1);
+
+        $block1_6 = new BlockTemplate();
+        $block1_6->setTitle('Contacts');
+        $block1_6->setType(BlockTemplate::TYPE_FIXED);
+        $block1_6->setSlot($templateSlot2);
+        $block1_6->setTemplate($template1);
+        $block1_6->setHtmlSource('<div class="group item" class="item" data-block-id="{{block_data.id}}" data-block-type="0" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"> <div class="group title" data-key="title">{{title}}</div><div class="group content"> <div> <i class="fa fa-map-marker" aria-hidden="true" ></i> <span data-key="location" data-placeholder="Location">{{location}}</span> </div><div> <i class="fa fa-phone" aria-hidden="true"></i> <span data-key="phone" data-placeholder="Phone number">{{phone}}</span> </div><div> <i class="fa fa-envelope" aria-hidden="true"></i> <span data-key="email" data-placeholder="Email address">{{email}}</span> </div></div></div>');
+        $block1_6->setAvailableFields(json_encode(array(
+            'title' => '',
+            'location' => '',
+            'phone' => '',
+            'email' => ''
+        )));
+        $manager->persist($block1_6);
+
     }
 }

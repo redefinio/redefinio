@@ -233,27 +233,32 @@ class CvService {
 
     //TODO Refactor with event sourcing
     public function mapDataToSlotTemplates($slot, $cv) {
-        $data = $this->em->getRepository('AppBundle:CvData')->findByCv($cv);
-        $templateRepository = $this->em->getRepository('AppBundle:BlockTemplate');
+        $blockTemplates = $this->em->getRepository('AppBundle:BlockTemplate')->findBy(array('slot' => $slot));
 
-        foreach($data as $entity) {
-            $template = $templateRepository->findOneBy(array('type' => $entity->getType(), 'template' => $slot->getTemplate()));
-            switch ($entity->getType()) {
+        foreach($blockTemplates as $template) {
+            switch ($template->getType()) {
                 case BlockTemplate::TYPE_SKILLS:
                 case BlockTemplate::TYPE_EXPERIENCE:
                 case BlockTemplate::TYPE_CERTIFICATES:
                 case BlockTemplate::TYPE_EDUCATION:
-                    $block = $this->mapText($template, $entity);
+                    $block = $this->mapText($template, $cv);
                     break;
                 case BlockTemplate::TYPE_TEXT:
-                    $block = $this->mapText($template, $entity);
+                    $block = $this->mapText($template, $cv);
                     break;
                 case BlockTemplate::TYPE_FIXED:
-                    $block = $this->mapFixedData($template, $entity);
+                    $block = $this->mapFixedData($template, $cv);
                     break;
             }
             if (!is_null($block)) {
-                $this->em->persist($block);
+                if (is_array($block)) {
+                    foreach ($block as $item) {
+                        $this->em->persist($item);
+                    }
+                } else {
+                    $this->em->persist($block);
+                }
+
                 $this->em->flush();
             }
         }
@@ -261,43 +266,46 @@ class CvService {
         $this->em->refresh($slot);
     }
 
-    private function mapFixedData($template, $entity) {
+    private function mapFixedData($template, $cv) {
         $fields = json_decode($template->getAvailableFields(), true);
-        if (array_key_exists($entity->getField(), $fields)) {
+        $fieldKeys = [];
 
-            $blocks = $this->em->getRepository('AppBundle:BlockData')->findBy(array('blockTemplate' => $template, 'cv' => $entity->getCv()));
-            $block = $this->filterTemplateBlock($blocks, $template, $entity->getCv());
-            $block->addCvData($entity);
-
-            return $block;
+        foreach ($fields as $key=>$field) {
+            $fieldKeys[] = $key;
         }
 
-    }
-
-    private function filterTemplateBlock($blocks, $template, $cv) {
-        foreach ($blocks as $block) {
-            if ($block->getBlockTemplate() == $template) {
-                return $block;
-            }
-        }
-
+        $data = $this->em->getRepository('AppBundle:CvData')->findBy(array('field' => $fieldKeys, 'cv' => $cv));
         $block = new BlockData();
+
         $block->setCv($cv);
         $block->setBlockTemplate($template);
         $block->setTemplateSlot($template->getSlot());
 
-        return $block;
+        foreach($data as $item) {
+            $block->addCvData($item);
+        }
 
+        return $block;
     }
 
-    private function mapText($template, $entity) {
-        $block = new BlockData();
-        $block->setCv($entity->getCv());
-        $block->setBlockTemplate($template);
-        $block->addCvData($entity);
-        $block->setTemplateSlot($template->getSlot());
 
-        return $block;
+    private function mapText($template, $cv) {
+        $data = $this->em->getRepository('AppBundle:CvData')->findBy(array('type' => $template->getType(), 'cv' => $cv));
+
+        $blocks = array();
+
+        foreach ($data as $item) {
+            $block = new BlockData();
+            $block->setCv($cv);
+            $block->setBlockTemplate($template);
+            $block->addCvData($item);
+            $block->setTemplateSlot($template->getSlot());
+
+            $blocks[] = $block;
+
+        }
+
+        return $blocks;
     }
 
     /**

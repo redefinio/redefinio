@@ -10,8 +10,16 @@
 <body>
 <div class="container" id="main-wrap">
     <div class="wrapper">
-        <div class="standart-sidebar" data-zone="standart_left_info" data-zone-block-types='[{"name": "Employment History", "type": 4}, {"name": "Education", "type": 6}, {"name": "Certificates", "type": 8}, {"name": "Text Block", "type": 1}]'>
-            {% block standart_left_info %}{% endblock %}
+        <div class="standart-sidebar">
+            <div data-zone="standart_personal_info">
+                {% block standart_personal_info %}{% endblock %}
+            </div>
+            <div data-zone="standart_left_info" data-zone-block-types='[{"name": "Employment History", "type": 4}, {"name": "Education", "type": 6}, {"name": "Certificates", "type": 8}, {"name": "Text Block", "type": 1}]'>
+                {% block standart_left_info %}{% endblock %}
+            </div>
+            <div data-zone="standart_contacts_slot">
+                {% block standart_contacts_slot %}{% endblock %}
+            </div>
         </div>
         <div class="content" data-zone="standart_right_slot" data-zone-block-types='[{"name": "Skills", "type": 2}, {"name": "Text Block", "type": 1}]'>
             {% block standart_right_slot %}{% endblock %}
