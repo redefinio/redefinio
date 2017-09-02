@@ -553,6 +553,10 @@ class Block {
             if (['blocks'].indexOf(key) === -1) {
                 editableElements[i].setAttribute('contenteditable', true);
             }
+
+            if (editableElements[i].innerHTML == "" && editableElements[i].classList.contains('hidden')) {
+                editableElements[i].classList.remove('hidden');
+            }
         }
 
         let sliders = $(this._element).find('.skills');
@@ -643,6 +647,14 @@ class Block {
         for (let z = 0; z < editableElements.length; z++) {
             if (['blocks'].indexOf(editableElements[z].getAttribute('data-key')) === -1) {
                 editableElements[z].setAttribute('contenteditable', false);
+
+                if (editableElements[z].innerHTML == "") {
+                    if (editableElements[z].getAttribute('data-required')) {
+                        editableElements[z].innerHTML = editableElements[z].getAttribute('data-placeholder');
+                    } else {
+                        editableElements[z].classList.add('hidden');
+                    }
+                }
             }
         }
 
