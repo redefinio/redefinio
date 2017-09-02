@@ -1,3 +1,5 @@
+let _isEditing = false;
+
 document.addEventListener("DOMContentLoaded", (e) => {
     loadTemplate(window.templateId);
 });
@@ -20,14 +22,25 @@ $('.edit-url-btn').on('click', () => {
 $('.template').on('click', (evebt) => {
     let templateId = evebt.currentTarget.attributes[1].value;
     let checkIcon = $(evebt.target).parent().find('.check-icon');
-
-    $('.templates-list .check-icon').each(function () {
-        $(this).css('display', 'none');
-    });
-    $(checkIcon).css('display', 'block');
-
-    loadTemplate(templateId);
+    
+    if (_isEditing) {
+        $('#confirmModal').modal({show: true})
+        $('#confirmModal').on('click', 'button', (event) => {
+            if (event.currentTarget.getAttribute('data-action') === 'cancel') {
+                $('#confirmModal').modal('hide');
+            } else {
+                _isEditing = false;
+                loadTemplate(templateId);
+                setCheckIcon('.templates-list .check-icon', checkIcon);
+                $('#confirmModal').modal('hide');
+            }
+        });
+    } else {
+        loadTemplate(templateId);
+        setCheckIcon('.templates-list .check-icon', checkIcon);
+    }
 });
+
 $('#publish-button').on('click', (event) => {
    API.publishTemplate((data) => {});
 });
@@ -542,7 +555,7 @@ class Block {
 
     _toggleEditing() {
         this._element.querySelector('.editable-block').classList.toggle('is-editing');
-        this._isEditing = !this._isEditing;
+        _isEditing = !_isEditing;
     }
 
     edit() {
@@ -681,6 +694,13 @@ class Block {
     deleteMicroBlock(e) {
         $(e.target).parent().parent().detach();
     }
+}
+
+function setCheckIcon(className, checkIcon) {
+    $(className).each(function () {
+        $(this).css('display', 'none');
+    });
+    $(checkIcon).css('display', 'block');
 }
 
 const API = {
