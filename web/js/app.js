@@ -595,6 +595,10 @@ var Block = function () {
                 if (['blocks'].indexOf(key) === -1) {
                     editableElements[_i10].setAttribute('contenteditable', true);
                 }
+
+                if (editableElements[_i10].innerHTML == "" && editableElements[_i10].classList.contains('hidden')) {
+                    editableElements[_i10].classList.remove('hidden');
+                }
             }
 
             var sliders = $(this._element).find('.skills');
@@ -685,6 +689,14 @@ var Block = function () {
             for (var z = 0; z < editableElements.length; z++) {
                 if (['blocks'].indexOf(editableElements[z].getAttribute('data-key')) === -1) {
                     editableElements[z].setAttribute('contenteditable', false);
+
+                    if (editableElements[z].innerHTML == "") {
+                        if (editableElements[z].getAttribute('data-required')) {
+                            editableElements[z].innerHTML = editableElements[z].getAttribute('data-placeholder');
+                        } else {
+                            editableElements[z].classList.add('hidden');
+                        }
+                    }
                 }
             }
 
