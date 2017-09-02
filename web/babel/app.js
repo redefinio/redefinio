@@ -31,7 +31,7 @@ $('.template').on('click', (evebt) => {
 $('#publish-button').on('click', (event) => {
    API.publishTemplate((data) => {});
 });
-$('.themes-listitem').on('click', (evebt) => {
+$('.themes-list').on('click', '.themes-listitem', (evebt) => {
     let themeSource = evebt.currentTarget.attributes[1].value;
     let checkIcon = $(evebt.target).parent().find('.check-icon');
 
@@ -43,6 +43,7 @@ $('.themes-listitem').on('click', (evebt) => {
 
     loadTheme(themeSource);
 });
+
 let loadTheme = (themeSource) => {
     $('head').append(`<link href="/templates/default/${themeSource}" rel="stylesheet">`);
 };
@@ -62,6 +63,8 @@ let loadTemplate = (templateId) => {
         //Add template styles
         $('head').append(templateStyles);
 
+        $('.themes-list').html(data.themes);
+
         if (window.isEditing) {
             prepareToEditTemplate();
         }
@@ -73,7 +76,7 @@ let loadTemplate = (templateId) => {
             $('#loader').removeClass('active');
         }, 1000);
     });
-}
+};
 
 let setPlaceholders = () => {
     let placeholders = $('body').find("[data-placeholder]");

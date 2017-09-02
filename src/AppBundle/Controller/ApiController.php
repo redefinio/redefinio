@@ -45,13 +45,6 @@ class ApiController extends Controller
             }
         }
 
-        $themePaths = $template->getThemes()->map(function($theme) {
-            return array(
-                'id' => $theme->getId(),
-                'path' => $theme->getCssSource()
-            );
-        });
-
         if (!$cv) {
             $response = new JsonResponse();
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
@@ -59,10 +52,11 @@ class ApiController extends Controller
             return $response;
         }
 
-
         return new JsonResponse(array(
             'html' => $cvRenderService->getTemplateHtml($template, $cv),
-            'themes' => $themePaths->toArray()
+            'themes' => $this->renderView('cv/themes.html.twig', array(
+                'cv' => $cv
+            ))
         ));
     }
 

@@ -1,0 +1,15 @@
+{% for theme in cv.template.themes %}
+    <div class="themes-listitem" data-theme-source="{{ theme.cssSource }}">
+        <div class="theme-container" style="background: #{{ theme.backgroundColor }};">
+            <div class="theme">
+                    <span class="check-icon"
+                          style="{% if theme.id == cv.getTemplate().getId() %} display: block; {% endif %}">
+                      <img src="{{ asset('img/check.png') }}" alt="Icon">
+                    </span>
+                <span class="theme-palette" style="background:#{{ theme.titleColor }};"></span>
+                <span class="theme-palette" style="background:#{{ theme.paragraphColor }};"></span>
+                <span class="theme-palette" style="background:#{{ theme.primaryColor }};"></span>
+            </div>
+        </div>
+    </div>
+{% endfor %}
