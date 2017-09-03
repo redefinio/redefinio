@@ -58,7 +58,6 @@ var loadTemplate = function loadTemplate(templateId) {
         var template = domParser.parseFromString(data.html, "text/html");
         var templateHtml = template.getElementById('main-wrap');
         var templateStyles = template.getElementsByTagName('link');
-        console.log(templateStyles);
 
         //Add template HTML
         $('#template').html(templateHtml);
