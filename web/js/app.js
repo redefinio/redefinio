@@ -43,12 +43,11 @@ $('.themes-list').on('click', '.themes-listitem', function (evebt) {
     });
 
     $(checkIcon).css('display', 'block');
-
     loadTheme(themeSource);
 });
 
 var loadTheme = function loadTheme(themeSource) {
-    $('head').append('<link href="/templates/default/' + themeSource + '" rel="stylesheet">');
+    $('head').append('<link href="/templates/' + themeSource + '" rel="stylesheet">');
 };
 var loadTemplate = function loadTemplate(templateId) {
     window.templateId = templateId;
@@ -59,6 +58,7 @@ var loadTemplate = function loadTemplate(templateId) {
         var template = domParser.parseFromString(data.html, "text/html");
         var templateHtml = template.getElementById('main-wrap');
         var templateStyles = template.getElementsByTagName('link');
+        console.log(templateStyles);
 
         //Add template HTML
         $('#template').html(templateHtml);
