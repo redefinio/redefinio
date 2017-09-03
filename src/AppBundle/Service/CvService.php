@@ -98,7 +98,7 @@ class CvService {
         $template = $this->em->getRepository('AppBundle:Template')->findOneById($templateId);
         $cv = $this->getUserCv($user);
 
-        $html = $renderService->getTemplateHtml($template, $cv);
+        $html = $renderService->getTemplateHtml($template, $cv, true);
 
         $cv->setPublicTemplate($template);
         $cv->setPublicHtml($html);

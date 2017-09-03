@@ -27,9 +27,10 @@ class CVRenderService {
         $this->twig = $this->container->get('twig');
     }
 
-	public function getTemplateHtml($template, $cv) {
+	public function getTemplateHtml($template, $cv, $public = false) {
+		$templatePath = $public ? $template->getTemplatePath() . '_public' : $template->getTemplatePath();
 		// all slots just replace the twig blocks in base template from Template.templatePath
-		$templateString = '{% extends \'templates/'.$template->getTemplatePath().'.html.twig\' %}';
+		$templateString = '{% extends \'templates/'.$templatePath.'.html.twig\' %}';
 		// each TemaplteSlot acts as a block in parent template
 		foreach($template->getTemplateSlots() as $slot) {
 			$templateString .= '{% block '.$slot->getWildcard().' %}';
