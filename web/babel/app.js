@@ -398,6 +398,10 @@ class Block {
     _createControls() {
         let blockWrapper = document.createElement('div');
         blockWrapper.classList.add('editable-block');
+        
+        let leftblockActionsWrapper = document.createElement('div');
+        leftblockActionsWrapper.classList.add('block-actions--left-side');
+        blockWrapper.appendChild(leftblockActionsWrapper);
 
         let blockActionsWrapper = document.createElement('div');
         blockActionsWrapper.classList.add('block-actions');
@@ -435,7 +439,7 @@ class Block {
             cancelButton.classList.add('cancel');
             cancelButton.innerHTML = 'Cancel';
             cancelButton.addEventListener('click', this.cancel.bind(this), false);
-            blockActionsWrapper.appendChild(cancelButton);
+            leftblockActionsWrapper.appendChild(cancelButton);
         }
 
         if (JSON.parse(this._element.getAttribute('data-is-editable')) === true) {

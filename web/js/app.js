@@ -445,6 +445,10 @@ var Block = function () {
             var blockWrapper = document.createElement('div');
             blockWrapper.classList.add('editable-block');
 
+            var leftblockActionsWrapper = document.createElement('div');
+            leftblockActionsWrapper.classList.add('block-actions--left-side');
+            blockWrapper.appendChild(leftblockActionsWrapper);
+
             var blockActionsWrapper = document.createElement('div');
             blockActionsWrapper.classList.add('block-actions');
             blockWrapper.appendChild(blockActionsWrapper);
@@ -481,7 +485,7 @@ var Block = function () {
                 cancelButton.classList.add('cancel');
                 cancelButton.innerHTML = 'Cancel';
                 cancelButton.addEventListener('click', this.cancel.bind(this), false);
-                blockActionsWrapper.appendChild(cancelButton);
+                leftblockActionsWrapper.appendChild(cancelButton);
             }
 
             if (JSON.parse(this._element.getAttribute('data-is-editable')) === true) {
