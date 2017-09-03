@@ -3,5 +3,22 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-    <p>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
-{% endblock fos_user_content %}
+    <div id="login" class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+        <div class="block">
+            <div class="row">
+                <div class="form-header"></div>
+            </div>
+            <div class="row">
+                <div class="inner">
+                    <div class="success">
+                        {{ 'registration.check_email'|trans({'%email%': user.email}) }}
+                    </div>
+                    <a href="{{ path('fos_user_security_login') }}">
+                        <button type="submit" id="_submit" name="_submit">{{ 'security.login.submit'|trans }}</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
