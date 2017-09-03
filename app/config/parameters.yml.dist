@@ -13,7 +13,7 @@ parameters:
     mailer_transport:  gmail
     mailer_host:      smtp.gmail.com
     mailer_user:      svidleo@gmail.com
-    mailer_password:  '%env(GMAIL_PASSWORD)%'
+    mailer_password:  kriptografija
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt

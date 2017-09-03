@@ -1,0 +1,100 @@
+{% extends 'email/html/base.html.twig' %}
+
+{% block content %}
+    <table align="center" border="0" bgcolor="#FFFFFF" class="mlContentTable" cellspacing="0" cellpadding="0"
+           style="background: #FFFFFF; min-width: 640px; width: 640px;" width="640" id="ml-block-61825301">
+        <tr>
+            <td>
+                <table width="640" class="mlContentTable" bgcolor="#FFFFFF" cellspacing="0" cellpadding="0" border="0"
+                       align="center" style="background: #FFFFFF; width: 640px;">
+
+                    <tr>
+
+                        <td align="left" class="mlContentContainer" style="padding: 5px 50px 5px 50px;">
+
+                            <h1 style="margin: 0px; font-family: Arial; font-weight: bold; font-size: 25px; text-decoration: none; line-height: 44px; color: #000000;">
+
+
+                                Thank you for signing up!
+
+
+                            </h1>
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </td>
+        </tr>
+    </table>
+    <table align="center" border="0" bgcolor="#FFFFFF" class="mlContentTable" cellspacing="0" cellpadding="0"
+           style="background: #FFFFFF; min-width: 640px; width: 640px;" width="640" id="ml-block-61825497">
+        <tr>
+            <td>
+                <table width="640" class="mlContentTable" bgcolor="#FFFFFF" cellspacing="0" cellpadding="0" border="0"
+                       align="center" style="background: #FFFFFF; width: 640px;">
+                    <tr>
+                        <td align="left" class="mlContentContainer"
+                            style="padding: 15px 50px 5px 50px; font-family: Arial; font-size: 13px; color: #666666; line-height: 22px;">
+                            <p style="margin: 0px 0px 10px 0px;        line-height: 22px;">Before you start building your
+                                resume, we need to activate your account. To do that, click on the button below.</p></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table align="center" border="0" bgcolor="#FFFFFF" class="mlContentTable" cellspacing="0" cellpadding="0"
+           style="background: #FFFFFF; min-width: 640px; width: 640px;" width="640" id="ml-block-61825335">
+        <tr>
+            <td>
+                <table width="640" class="mlContentTable" bgcolor="#FFFFFF" cellspacing="0" cellpadding="0" border="0"
+                       align="center" style="background: #FFFFFF; width: 640px;">
+                    <tr>
+                        <td width="540" class="mlContentContainer" cellspacing="0" cellpadding="0" border="0"
+                            style="padding: 0px 0px 0px 50px;">
+                            <table width="540" class="mlContentBlock" cellspacing="0" cellpadding="0" border="0"
+                                   align="left">
+                                <tr>
+                                    <td class="mlContentButton" style="padding: 15px 0px 15px 0px;">
+                                        <!--[if mso]>
+                                        <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
+                                                     xmlns:w="urn:schemas-microsoft-com:office:word"
+                                                     href="http://www.redefin.io"
+                                                     style="height:41px;v-text-anchor:middle;width:540px;" arcsize="13%"
+                                                     stroke="f" fillcolor="#00B2EA">
+                                            <w:anchorlock/>
+                                            <center>     <![endif]-->            <a href="{{ confirmationUrl }}"
+                                                                                    class="button-1"
+                                                                                    style="background-color: #00B2EA;        color: #FFFFFF;        font-family: Arial;        font-size: 15px;        line-height: 21px;        display: inline-block;        border-radius: 6px;        text-align: center;        text-decoration: none;        font-weight: bold;        display: block;        margin: 0px 0px;        padding: 10px 0px;width: 540px;">
+                                            Activate my account </a>        <!--[if mso]>     </center>     </v:roundrect>
+                                        <![endif]-->                           </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table align="center" border="0" bgcolor="#FFFFFF" class="mlContentTable" cellspacing="0" cellpadding="0"
+           style="background: #FFFFFF; min-width: 640px; width: 640px;" width="640" id="ml-block-61825509">
+        <tr>
+            <td>
+                <table width="640" class="mlContentTable" bgcolor="#FFFFFF" cellspacing="0" cellpadding="0" border="0"
+                       align="center" style="background: #FFFFFF; width: 640px;">
+                    <tr>
+                        <td align="left" class="mlContentContainer"
+                            style="padding: 15px 50px 5px 50px; font-family: Arial; font-size: 13px; color: #666666; line-height: 22px;">
+                            <p style="margin: 0px 0px 10px 0px;        line-height: 22px;">If you can't click on the button,
+                                please use this URL:</p>
+                            <p style="margin: 0px 0px 10px 0px;        line-height: 22px;"><a href="http://www.redefin.io"
+                                                                                              style="color: #00B2EA;        text-decoration: underline;">{{ confirmationUrl }}</a>
+                            </p></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

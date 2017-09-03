@@ -74,9 +74,16 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: AppBundle\Entity\User
+    service:
+        mailer: fos_user.mailer.twig_swift
     resetting:
-              retry_ttl: 0
+        retry_ttl: 0
+        email:
+          template: email/resetting/resetting.email.twig
     registration:
+        confirmation:
+          template: email/registration/confirmation.email.twig
+          enabled: true
         form:
           type: AppBundle\Form\RegistrationFormType
     from_email:
