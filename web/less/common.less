@@ -102,3 +102,43 @@ button {
 .modal-dialog {
     margin-top: 200px;
 }
+
+.container--footer {
+    margin-top: 40px;
+    font-size: 14px;
+    background: none;
+    
+    .muted {
+        color: @grey;
+    }
+    .text-center {
+        text-align: center;
+    }
+    
+    img {
+        width: 15%;
+        margin: 0 10px;
+        vertical-align: middle;
+    }
+    
+    button {
+        line-height: 40px;
+        color: @white;
+        background: @blue;
+        .border-radius(3px);
+        border: 0;
+        font-size: 14px;
+        font-weight: 800;
+        text-transform: uppercase;
+        padding: 5px 20px;
+        margin: 15px 0 5px 0;
+
+        &:hover {
+            background: @blue-hover;
+        }
+
+        &:active {
+            background: @blue-active;
+        }
+    }
+}
