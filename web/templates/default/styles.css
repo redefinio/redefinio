@@ -161,7 +161,6 @@ p {
 }
 
 .timeline>li .content .subtitle {
-    font-weight: 400;
     margin: 0;
     margin-bottom: 8px
 }
@@ -233,6 +232,10 @@ ul.skills li.completed {
     #top .big-title a, #top .contacts a {
         margin-bottom: 20px
     }
+}
+
+[data-key="company"] {
+    font-weight: 700;
 }
 
 @media only screen and (max-width: 767px) {
