@@ -12,7 +12,8 @@
     .box-shadow(rgba(0,0,0,0.1) 0px 1px 5px);
 }
 
-.container {
+.container,
+.container-message {
     &--header {
         display: flex;
         flex-direction: row;
@@ -20,10 +21,17 @@
         align-items: center;
         margin: 0 0 15px 0;
         
-        &-emoji {
+        &-emoji-smile {
             background-image: url("@{images}/emoji-smile.png");
             width: 72px;
             height: 72px;
+            margin: 15px;
+        }
+        &-emoji-cool {
+            background-image: url("@{images}/emoji-cool.png");
+            background-size: 66px 66px;
+            width: 66px;
+            height: 66px;
             margin: 15px;
         }
         
@@ -42,4 +50,9 @@
             }
         }
     }
+}
+
+.container-message {
+    margin: 30px 0 -40px 0;
+    display: none;
 }

@@ -2,6 +2,10 @@ let _isEditing = false;
 
 document.addEventListener("DOMContentLoaded", (e) => {
     loadTemplate(window.templateId);
+    
+    if (window.location.hash === "#published" && document.referrer === editUrl) {
+        $('.container-message').css('display', 'block');
+    }
 });
 
 $('.edit-url-btn').on('click', () => {
@@ -42,6 +46,9 @@ $('.template').on('click', (evebt) => {
 
 $('#publish-button').on('click', (event) => {
    API.publishTemplate((data) => {});
+   _isPublished = true;
+   window.location.replace(templateUrl);
+   $(location).attr('href', templateUrl + '#published');
 });
 $('.themes-list').on('click', '.themes-listitem', (evebt) => {
     let themeSource = evebt.currentTarget.attributes[1].value;

@@ -20,6 +20,17 @@
 {% endblock %}
 
 {% block body %}
+    <div class="container-message">
+        <div class="row">
+            <div class="container--header">
+                <div class="container--header-emoji-cool"></div>
+                <div class="container--header-info">
+                    <h3>Your template is published!</h3>
+                    <p>See the URL above or Download PDF.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 	<div id="template" class="resume-container">
 		<div id="loader" class="active">
 			<div class="signal"></div>
@@ -30,6 +41,7 @@
 {% block javascripts %}
 		<script type="text/javascript">
             var apiUrl = location.protocol + "//" + location.host + "/app_dev.php/api";
+            var editUrl = location.protocol + "//" + location.host + "/cv/edit";
 		</script>
   <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 {% endblock %}
