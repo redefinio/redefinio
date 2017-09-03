@@ -40,12 +40,11 @@ $('.themes-list').on('click', '.themes-listitem', (evebt) => {
     });
 
     $(checkIcon).css('display', 'block');
-
     loadTheme(themeSource);
 });
 
 let loadTheme = (themeSource) => {
-    $('head').append(`<link href="/templates/default/${themeSource}" rel="stylesheet">`);
+    $('head').append(`<link href="/templates/${themeSource}" rel="stylesheet">`);
 };
 let loadTemplate = (templateId) => {
     window.templateId = templateId;
