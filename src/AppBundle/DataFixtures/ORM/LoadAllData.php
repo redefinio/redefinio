@@ -585,6 +585,27 @@ class LoadAllData implements FixtureInterface
             json_encode($this->getDefaultFields(TemplatType::TYPE_SKILLS_INNER)));
         $manager->persist($block1_5_1);
 
+
+        $theme2_1 = new Theme();
+        $theme2_1->setTemplate($template1);
+        $theme2_1->setBackgroundColor('333111');
+        $theme2_1->setPageColor('555000');
+        $theme2_1->setTitleColor('555000');
+        $theme2_1->setParagraphColor('555000');
+        $theme2_1->setPrimaryColor('555000');
+        $theme2_1->setCssSource('custom-1.css');
+        $manager->persist($theme2_1);
+
+        $theme2_2 = new Theme();
+        $theme2_2->setTemplate($template1);
+        $theme2_2->setBackgroundColor('333111');
+        $theme2_2->setPageColor('555000');
+        $theme2_2->setTitleColor('555000');
+        $theme2_2->setParagraphColor('555000');
+        $theme2_2->setPrimaryColor('555000');
+        $theme2_2->setCssSource('custom-2.css');
+        $manager->persist($theme2_2);
+
         $block1_6 = new BlockTemplate();
         $block1_6->setTitle('Contacts');
         $block1_6->setType(BlockTemplate::TYPE_FIXED);
