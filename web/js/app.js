@@ -6,6 +6,10 @@ var _isEditing = false;
 
 document.addEventListener("DOMContentLoaded", function (e) {
     loadTemplate(window.templateId);
+
+    if (window.location.hash === "#published" && document.referrer === editUrl) {
+        $('.container-message').css('display', 'block');
+    }
 });
 
 $('.edit-url-btn').on('click', function () {
@@ -45,6 +49,9 @@ $('.template').on('click', function (evebt) {
 
 $('#publish-button').on('click', function (event) {
     API.publishTemplate(function (data) {});
+    _isPublished = true;
+    window.location.replace(templateUrl);
+    $(location).attr('href', templateUrl + '#published');
 });
 $('.themes-list').on('click', '.themes-listitem', function (evebt) {
     var themeSource = evebt.currentTarget.attributes[1].value;
@@ -59,7 +66,7 @@ $('.themes-list').on('click', '.themes-listitem', function (evebt) {
 });
 
 var loadTheme = function loadTheme(themeSource) {
-    $('head').append('<link href="/templates/' + themeSource + '" rel="stylesheet">');
+    $('head').append("<link href=\"/templates/" + themeSource + "\" rel=\"stylesheet\">");
 };
 var loadTemplate = function loadTemplate(templateId) {
     window.templateId = templateId;
@@ -151,7 +158,7 @@ var StatusBar = function () {
     }
 
     _createClass(StatusBar, [{
-        key: 'showMessage',
+        key: "showMessage",
         value: function showMessage(message) {
             var _this = this;
 
@@ -175,7 +182,7 @@ var StatusBar = function () {
             });
         }
     }, {
-        key: 'showError',
+        key: "showError",
         value: function showError(error) {
             this._element.classList.add('is-error');
 
@@ -185,13 +192,13 @@ var StatusBar = function () {
             this._show();
         }
     }, {
-        key: '_show',
+        key: "_show",
         value: function _show() {
             this._element.classList.add('is-active');
             this._isActive = true;
         }
     }, {
-        key: '_hide',
+        key: "_hide",
         value: function _hide() {
             this._element.classList.remove('is-active');
             this._isActive = false;
@@ -213,7 +220,7 @@ var Zone = function () {
     }
 
     _createClass(Zone, [{
-        key: '_createAddBlock',
+        key: "_createAddBlock",
         value: function _createAddBlock() {
             var _this2 = this;
 
@@ -247,7 +254,7 @@ var Zone = function () {
 
                     var listImg = document.createElement('img');
                     listImg.classList.add('icon');
-                    listImg.setAttribute('src', window.location.origin + '/img/add-block-' + type.type + '.png');
+                    listImg.setAttribute('src', window.location.origin + "/img/add-block-" + type.type + ".png");
                     listItem.appendChild(listImg);
 
                     var listName = document.createElement('span');
@@ -287,24 +294,24 @@ var Zone = function () {
             this._addBlock = blockWrapper;
         }
     }, {
-        key: '_showAddBlockList',
+        key: "_showAddBlockList",
         value: function _showAddBlockList() {
             this._addBlock.classList.add('is-active');
         }
     }, {
-        key: '_hideAddBlockList',
+        key: "_hideAddBlockList",
         value: function _hideAddBlockList() {
             this._addBlock.classList.remove('is-active');
         }
     }, {
-        key: '_addNewBlock',
+        key: "_addNewBlock",
         value: function _addNewBlock(zoneName, type) {
             this._addBlock.classList.remove('is-active');
 
             API.getBlock(type.type, function (block) {
                 var newBlock = $(block)[0];
 
-                $('[data-zone="' + zoneName + '"]').find('.add-block').before(newBlock);
+                $("[data-zone=\"" + zoneName + "\"]").find('.add-block').before(newBlock);
                 new Block(newBlock);
 
                 newBlock.firstChild.classList.add('is-editing');
@@ -338,13 +345,13 @@ var Zone = function () {
                     }
                 }
 
-                window.statusBar.showMessage('You have just added ' + type.name + ' block').then(function () {
+                window.statusBar.showMessage("You have just added " + type.name + " block").then(function () {
                     // @TODO fix this when API will be done.
                 }).catch(function (reason) {});
             });
         }
     }, {
-        key: '_enableDragNDrop',
+        key: "_enableDragNDrop",
         value: function _enableDragNDrop() {
             $(this._element).sortable({
                 connectWith: '[data-zone]',
@@ -440,7 +447,7 @@ var Block = function () {
     }
 
     _createClass(Block, [{
-        key: '_createControls',
+        key: "_createControls",
         value: function _createControls() {
             var blockWrapper = document.createElement('div');
             blockWrapper.classList.add('editable-block');
@@ -503,7 +510,7 @@ var Block = function () {
             this._element.appendChild(blockWrapper);
         }
     }, {
-        key: '_fixPlaceholders',
+        key: "_fixPlaceholders",
         value: function _fixPlaceholders() {
             var placeholders = $(this._element).find('[data-placeholder]');
             for (var _i8 = 0; _i8 < placeholders.length; _i8++) {
@@ -515,7 +522,7 @@ var Block = function () {
             }
         }
     }, {
-        key: '_createMicroBlockControls',
+        key: "_createMicroBlockControls",
         value: function _createMicroBlockControls() {
             $('[data-key="blocks"] > div, [data-key="blocks"] > li').addClass('editable-micro-block');
 
@@ -536,7 +543,7 @@ var Block = function () {
             $('[data-key="blocks"] > div, [data-key="blocks"] > li').append(blockActionsWrapper);
         }
     }, {
-        key: '_enableMicroBlockDragNDrop',
+        key: "_enableMicroBlockDragNDrop",
         value: function _enableMicroBlockDragNDrop() {
             $('[data-key="blocks"]').sortable({
                 // connectWith: '',
@@ -564,7 +571,7 @@ var Block = function () {
             });
         }
     }, {
-        key: '_createAddBlock',
+        key: "_createAddBlock",
         value: function _createAddBlock() {
             var blockWrapper = document.createElement('div');
             blockWrapper.classList.add('add-micro-block');
@@ -576,7 +583,7 @@ var Block = function () {
             $(this._element).find('.editable-block').append(blockWrapper);
         }
     }, {
-        key: '_addMicroBlock',
+        key: "_addMicroBlock",
         value: function _addMicroBlock() {
             var _this3 = this;
 
@@ -596,13 +603,13 @@ var Block = function () {
             });
         }
     }, {
-        key: '_toggleEditing',
+        key: "_toggleEditing",
         value: function _toggleEditing() {
             this._element.querySelector('.editable-block').classList.toggle('is-editing');
             _isEditing = !_isEditing;
         }
     }, {
-        key: 'edit',
+        key: "edit",
         value: function edit() {
             var editableElements = this._element.querySelectorAll('[data-key]');
             for (var _i10 = 0; _i10 < editableElements.length; _i10++) {
@@ -640,7 +647,7 @@ var Block = function () {
             this._toggleEditing();
         }
     }, {
-        key: 'cancel',
+        key: "cancel",
         value: function cancel() {
             var editableElements = this._element.querySelectorAll('[data-key]');
 
@@ -655,7 +662,7 @@ var Block = function () {
             loadTemplate(window.templateId);
         }
     }, {
-        key: 'save',
+        key: "save",
         value: function save() {
             var editableElements = this._element.querySelectorAll('[data-key]');
 
@@ -720,7 +727,7 @@ var Block = function () {
             this._toggleEditing();
         }
     }, {
-        key: 'delete',
+        key: "delete",
         value: function _delete() {
             var blockId = this._element.getAttribute('data-block-id');
             var element = this._element;
@@ -734,7 +741,7 @@ var Block = function () {
             });
         }
     }, {
-        key: 'deleteMicroBlock',
+        key: "deleteMicroBlock",
         value: function deleteMicroBlock(e) {
             $(e.target).parent().parent().detach();
         }
@@ -753,9 +760,9 @@ function setCheckIcon(className, checkIcon) {
 var API = {
 
     getCv: function getCv(templateId, cb) {
-        var url = apiUrl + '/' + templateId + '/template';
+        var url = apiUrl + "/" + templateId + "/template";
         if (templateId == undefined) {
-            url = apiUrl + '/template';
+            url = apiUrl + "/template";
         }
         $.ajax({
             url: url,
@@ -769,7 +776,7 @@ var API = {
 
     getBlock: function getBlock(type, cb) {
         $.ajax({
-            url: apiUrl + '/block/' + window.templateId + '/' + type,
+            url: apiUrl + "/block/" + window.templateId + "/" + type,
             success: function success(data) {
                 var block = decodeURIComponent(JSON.parse(data).data).replace(/\+/g, ' ');
 
@@ -786,7 +793,7 @@ var API = {
 
         if (block.blockId !== 0) {
             $.ajax({
-                url: apiUrl + '/block/' + block.zone,
+                url: apiUrl + "/block/" + block.zone,
                 method: 'PUT',
                 data: block,
                 success: function success(data) {
@@ -797,7 +804,7 @@ var API = {
             });
         } else {
             $.ajax({
-                url: apiUrl + '/block/' + block.zone,
+                url: apiUrl + "/block/" + block.zone,
                 method: 'POST',
                 data: block,
                 success: function success(data) {
@@ -816,7 +823,7 @@ var API = {
         });
 
         $.ajax({
-            url: apiUrl + '/photo',
+            url: apiUrl + "/photo",
             method: 'POST',
             data: data,
             cache: false,
@@ -834,7 +841,7 @@ var API = {
     deleteBlock: function deleteBlock(blockId, cb) {
         if (blockId !== undefined) {
             $.ajax({
-                url: apiUrl + '/block/' + blockId,
+                url: apiUrl + "/block/" + blockId,
                 method: 'DELETE',
                 success: function success(data) {
                     cb(true);
@@ -851,7 +858,7 @@ var API = {
         payload['templateId'] = window.templateId;
 
         $.ajax({
-            url: apiUrl + '/zone',
+            url: apiUrl + "/zone",
             method: 'PUT',
             data: payload,
             success: function success(data) {
@@ -868,7 +875,7 @@ var API = {
         };
 
         $.ajax({
-            url: apiUrl + '/publish',
+            url: apiUrl + "/publish",
             method: 'PUT',
             data: payload,
             success: function success(data) {
