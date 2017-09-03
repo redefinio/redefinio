@@ -11,7 +11,7 @@ parameters:
     # database_path: "%kernel.root_dir%/data.db3"
 
     mailer_transport:  gmail
-    mailer_host:      stmp.gmail.com
+    mailer_host:      smtp.gmail.com
     mailer_user:      svidleo@gmail.com
     mailer_password:  '%env(GMAIL_PASSWORD)%'
 
