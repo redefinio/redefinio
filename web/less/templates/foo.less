@@ -360,7 +360,7 @@
   &:hover {
     border-color: #b5bfc7;
 
-    > .block-actions {
+    > .block-actions, .block-actions--left-side {
       display: block;
       z-index: 1000;
     }
@@ -374,9 +374,11 @@
   }
 
   &.is-editing {
+    padding-top: 40px;
     border-color: #1dce79;
 
-    .block-actions {
+    .block-actions,
+    .block-actions--left-side {
       display: block;
       z-index: 1000;
       
@@ -444,7 +446,8 @@
     }
   }
 
-  .block-actions {
+  .block-actions,
+  .block-actions--left-side {
     display: none;
     position: absolute;
     top: 0;
@@ -489,8 +492,8 @@
     }
 
     .cancel {
-      display: none;
-      background: #1dce79;
+        display: none;
+        background: #1dce79;
     }
 
     .save {
@@ -499,6 +502,13 @@
       background: #1dce79 url('../img/icon-action-save.png') no-repeat 4px center / 14px 11px;
     }
   }
+}
+
+.block-actions--left-side {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 5px;
 }
 
 .block {
