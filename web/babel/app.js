@@ -81,16 +81,15 @@ let loadTemplate = (templateId) => {
 
         $('.themes-list').html(data.themes);
 
-        if (window.isEditing) {
-            prepareToEditTemplate();
-        }
-
-        setPlaceholders();
-
         //Add timeout to remove twitches after loading template
         setTimeout(() => {
             $('#loader').removeClass('active');
             $('#template').html(templateHtml);
+
+            if (window.isEditing) {
+                prepareToEditTemplate();
+            }
+            setPlaceholders();
         }, 1000);
     });
 };
