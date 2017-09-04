@@ -84,16 +84,15 @@ var loadTemplate = function loadTemplate(templateId) {
 
         $('.themes-list').html(data.themes);
 
-        if (window.isEditing) {
-            prepareToEditTemplate();
-        }
-
-        setPlaceholders();
-
         //Add timeout to remove twitches after loading template
         setTimeout(function () {
             $('#loader').removeClass('active');
             $('#template').html(templateHtml);
+
+            if (window.isEditing) {
+                prepareToEditTemplate();
+            }
+            setPlaceholders();
         }, 1000);
     });
 };
