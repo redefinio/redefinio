@@ -79,7 +79,7 @@ var loadTemplate = function loadTemplate(templateId) {
         var templateStyles = template.getElementsByTagName('link');
 
         //Add template styles
-        $('head').find('link').slice(1).remove();
+        $('head').find('link').slice(2).remove();
         $('head').append(templateStyles);
 
         $('.themes-list').html(data.themes);
