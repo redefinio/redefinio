@@ -23,7 +23,10 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
-        "knplabs/knp-snappy-bundle": "^1.4"
+        "knplabs/knp-snappy-bundle": "^1.4",
+        "cspoo/swiftmailer-mailgun-bundle": "^0.4.0",
+        "guzzlehttp/psr7": "^1.4",
+        "psr/http-message": "^1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
