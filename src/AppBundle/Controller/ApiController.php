@@ -78,12 +78,10 @@ class ApiController extends Controller
      * @Method("GET")
      */
     public function getPublicHtml(Request $request) {
-        $service = $this->get(CvService::class);
-
-        $html = $service->getPublicHtml($this->getUser());
+        $cv = $this->get(CvService::class)->getUserCv($this->getUser());
 
         return new JsonResponse(array(
-            'html' => $html
+            'html' => $this->get(CVRenderService::class)->getTemplateHtml($cv->getTemplate(), $cv)
         ));
     }
 
