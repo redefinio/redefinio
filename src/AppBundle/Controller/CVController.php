@@ -57,7 +57,7 @@ class CVController extends Controller
     {
         $service = $this->get(CvService::class);
         if (is_null($service->getUserCv($this->getUser()))) {
-            $cv = $service->initializeCv($this->getUser(), $templateId);
+             $service->initializeCv($this->getUser(), $templateId);
         }
 
         return $this->redirect($this->generateUrl("cv_edit"));

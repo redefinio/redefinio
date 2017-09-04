@@ -29,8 +29,17 @@ class DefaultController extends Controller
      * @Route("/public/{identifier}", name="default_public_link")"
      */
     public function publicLink(Request $request) {
+        $response = new Response();
         $identifier = $request->get('identifier');
 
-        return new Response($this->get(CvService::class)->getPublicHtml($this->getUser(), $identifier));
+        $html = $this->get(CvService::class)->getPublicLinkHtml($identifier);
+
+        if (is_null($html)) {
+            $response = $this->render('exception/error404.html.twig');
+        } else {
+            $response->setContent($html);
+        }
+
+        return $response;
     }
 }

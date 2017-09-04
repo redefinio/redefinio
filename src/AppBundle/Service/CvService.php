@@ -107,14 +107,14 @@ class CvService {
         $this->em->flush();
     }
 
-    public function getPublicLinkHtml($user, $identifier) {
-        $html = $this->em->getRepository('AppBundle:CV')->findOneBy(array('url' => $identifier, 'user' => $user))->getPublicHtml();
+    public function getPublicLinkHtml($identifier) {
+        $cv = $this->em->getRepository('AppBundle:CV')->findOneBy(array('url' => $identifier));
 
-        if (is_null($html)) {
-            $html = $this->container->get('translator')->trans("message_no_public_cv");
+        if (is_null($cv)) {
+            return null;
         }
 
-        return $html;
+        return $cv->getPublicHtml();
     }
 
     public function getPublicHtml($user) {
