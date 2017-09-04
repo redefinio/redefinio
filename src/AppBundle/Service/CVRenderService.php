@@ -37,22 +37,8 @@ class CVRenderService {
 			// traverse through each slots blocks and fill it with data
             $dataBlocks = $this->em->getRepository('AppBundle:BlockData')->findBy(array('template_slot' => $slot, 'cv' => $cv), array('position' => 'asc'));
 			foreach ($dataBlocks as $data) {
-                $template = $this->twig->createTemplate($data->getBlockTemplate()->getHtmlSource());
 
-                $parameters = $this->getParameters($data);
-				// pass BlockData object itself to the template in order to print out its id or other needed attributes
-				$parameters['block_data'] = $data;
-				// if data has embedded child data, generate template for each of them and include in parent template
-				if (count($data->getBlockTemplate()->getChildren()) > 0) {
-					$childrenString = '';
-					foreach ($parameters['blocks'] as $child) {
-						$childTemplate = $this->twig->createTemplate($data->getBlockTemplate()->getChildren()->first()->getHtmlSource());
-						$childrenString .= $childTemplate->render($child);
-					}
-					// if template is parent it must define 'blocks' variable where all children template will be inserted.
-					$parameters['blocks'] = $childrenString;
-				}
-				$templateString .= ($template->render($parameters));
+				$templateString .= $this->renderBlock($data);
 			}
 			$templateString .= '{% endblock %}';
 		}
@@ -60,6 +46,27 @@ class CVRenderService {
 		$template = $this->twig->createTemplate($templateString);
 		return $template->render(array());
 	}
+
+
+	public function renderBlock($block) {
+        $template = $this->twig->createTemplate($block->getBlockTemplate()->getHtmlSource());
+
+        $parameters = $this->getParameters($block);
+        // pass BlockData object itself to the template in order to print out its id or other needed attributes
+        $parameters['block_data'] = $block;
+        // if data has embedded child data, generate template for each of them and include in parent template
+        if (count($block->getBlockTemplate()->getChildren()) > 0) {
+            $childrenString = '';
+            foreach ($parameters['blocks'] as $child) {
+                $childTemplate = $this->twig->createTemplate($block->getBlockTemplate()->getChildren()->first()->getHtmlSource());
+                $childrenString .= $childTemplate->render($child);
+            }
+            // if template is parent it must define 'blocks' variable where all children template will be inserted.
+            $parameters['blocks'] = $childrenString;
+        }
+
+        return $template->render($parameters);
+    }
 
 	private function getParameters(BlockData $data) {
 

@@ -20,6 +20,28 @@ use AppBundle\Entity\BlockData;
  */
 class ApiController extends Controller
 {
+
+
+    /**
+     * Render block
+     * @Route("/block/{id}", name="api_render_block")
+     * @Method("GET")
+     */
+    public function renderBlock(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+        $response = new JsonResponse();
+
+        $block = $em->getRepository('AppBundle:BlockData')->findOneById($id);
+        if (is_null($block)) {
+            $response->setStatusCode(JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        $response->setData(array(
+            'html' => $this->get(CVRenderService::class)->renderBlock($block)
+        ));
+
+        return $response;
+    }
     /**
      * @Route("/{id}/template", name="api_render_template")
      * @Method("GET")
