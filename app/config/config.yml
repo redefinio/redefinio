@@ -61,12 +61,13 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
 
+cspoo_swiftmailer_mailgun:
+    key: "key-317bcb132baed9fa762fd8b6c30ad66b"
+    domain: "grozioplanas.lt"
+
 # Swiftmailer Configuration
 swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
+    transport: "mailgun"
     spool:     { type: memory }
 
 
