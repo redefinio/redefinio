@@ -75,10 +75,8 @@ let loadTemplate = (templateId) => {
         let templateHtml = template.getElementById('main-wrap');
         let templateStyles = template.getElementsByTagName('link');
 
-        //Add template HTML
-        $('#template').html(templateHtml);
-
         //Add template styles
+        $('head').find('link').slice(1).remove();
         $('head').append(templateStyles);
 
         $('.themes-list').html(data.themes);
@@ -92,6 +90,7 @@ let loadTemplate = (templateId) => {
         //Add timeout to remove twitches after loading template
         setTimeout(() => {
             $('#loader').removeClass('active');
+            $('#template').html(templateHtml);
         }, 1000);
     });
 };

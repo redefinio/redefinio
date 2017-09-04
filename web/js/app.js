@@ -78,10 +78,8 @@ var loadTemplate = function loadTemplate(templateId) {
         var templateHtml = template.getElementById('main-wrap');
         var templateStyles = template.getElementsByTagName('link');
 
-        //Add template HTML
-        $('#template').html(templateHtml);
-
         //Add template styles
+        $('head').find('link').slice(1).remove();
         $('head').append(templateStyles);
 
         $('.themes-list').html(data.themes);
@@ -95,6 +93,7 @@ var loadTemplate = function loadTemplate(templateId) {
         //Add timeout to remove twitches after loading template
         setTimeout(function () {
             $('#loader').removeClass('active');
+            $('#template').html(templateHtml);
         }, 1000);
     });
 };
