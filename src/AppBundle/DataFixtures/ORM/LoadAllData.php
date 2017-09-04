@@ -306,7 +306,7 @@ class LoadAllData implements FixtureInterface
 
         $cvData1_8 = new CvData();
         $cvData1_8->setCv($cv1);
-        $cvData1_8->setData(array('photo' => ''));
+        $cvData1_8->setData(array('photo' => 'img/photo-placeholder.png'));
         $cvData1_8->setType(BlockTemplate::TYPE_FIXED);
         $cvData1_8->setField("photo");
         $manager->persist($cvData1_8);
