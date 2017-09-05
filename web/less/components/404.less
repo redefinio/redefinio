@@ -1,0 +1,78 @@
+@import "../mixins";
+@import "../colors";
+@import "../config";
+
+html, body {
+	height: 100%;
+}
+
+body {
+    background: #f0f5f8 url('../@{images}/404.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 100%;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin: 15px 0;
+    
+    img {
+        width: 80%;
+    }
+    
+    &.info-center {
+        justify-content: center;
+        height: 100%;
+        
+        h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #2b2724;
+            margin: 5px 0;
+        }
+        
+        p {
+            color: #646465;
+        }
+    }
+    
+    .emoji-interesting {
+        background-image: url("../@{images}/emoji-interesting.png");
+        background-size: 66px 71px;
+        width: 66px;
+        height: 71px;
+        margin: 15px;
+    }
+}
+
+.btn {
+    color: @white;
+    background: @blue;
+    .border-radius(3px);
+    border: 0;
+    font-size: 14px;
+    font-weight: 800;
+    padding: 15px 40px;
+
+    &:hover {
+        background: @blue-hover;
+    }
+
+    &:active {
+        background: @blue-active;
+    }
+}
