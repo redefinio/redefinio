@@ -1,0 +1,53 @@
+@import "../mixins";
+@import "../colors";
+@import "../config";
+
+body {
+	background: @background;
+}
+
+h3 {
+	font-size: 23px;
+    font-weight: 800;
+    color: #2b2724;
+}
+
+form {
+	width: 20%;
+	
+	label {
+		color: @typography;
+		font-weight: 500;
+		margin-bottom: 0;
+	}
+	
+	input {
+		width: 100%;
+		display: block;
+		.border-radius(2px);
+		border: 1px solid @border;
+		line-height: 25px;
+		margin-bottom: 10px;
+	}
+}
+
+
+
+.btn-submit {
+    color: @white;
+    background: @blue;
+    .border-radius(3px);
+    border: 0;
+    font-size: 14px;
+    font-weight: 800;
+    padding: 10px 20px;
+	margin: 10px 0;
+
+    &:hover {
+        background: @blue-hover;
+    }
+
+    &:active {
+        background: @blue-active;
+    }
+}

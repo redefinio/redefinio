@@ -1,5 +1,71 @@
-{% extends "@FOSUser/layout.html.twig" %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}redefin.io{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet/less" type="text/css" href="{{ asset('less/app.less') }}">
+        <link rel="stylesheet/less" type="text/css" href="{{ asset('less/components/edit-profile.less') }}">
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <script src="{{ asset('js/less.min.js') }}"></script>
+    </head>
 
-{% block fos_user_content %}
-{% include "@FOSUser/Profile/edit_content.html.twig" %}
-{% endblock fos_user_content %}
+    <body>
+        <header class="header">
+            <div class="topbar">
+                <a class="topbar-logo" href="{{ path('cv_index') }}"><img alt="Logo" src="{{ asset('img/logo.png') }}"></a>
+                <ul class="topbar-menu">
+                    <li class="topbar-listitem">
+                        <a href="{{ path('cv_index') }}">My résumé</a>
+                    </li>
+                </ul>
+
+                <ul class="topbar-right-menu">
+                    <li class="topbar-settings">
+                        <a href="{{ path('fos_user_profile_edit') }}">Settings</a>
+                    </li>
+                    <li class="topbar-logout">
+                        <a href="{{ path('fos_user_security_logout') }}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="navbar">
+                <h1 class="navbar-title">Settings</h1>
+               
+                <div class="navbar-actions">
+                    <a href="{{ path('cv_edit') }}" class="btn navbar-edit">Edit</a>
+                    <a href="{{ path('cv_pdf') }}" class="btn navbar-download">Download PDF</a>
+                </div>
+            </div>
+        </header>
+
+        <div class="container--content">
+            {% block fos_user_content %}
+            {% include "@FOSUser/Profile/edit_content.html.twig" %}
+            {% endblock fos_user_content %}     
+        </div>
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script src="https://unpkg.com/rxjs@5.4.3/bundles/Rx.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script>
+            (function(i, s, o, g, r, a, m) {
+              i['GoogleAnalyticsObject'] = r;
+              i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+              }, i[r].l = 1 * new Date();
+              a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+              a.async = 1;
+              a.src = g;
+              m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-42085739-7', 'auto');
+          </script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
