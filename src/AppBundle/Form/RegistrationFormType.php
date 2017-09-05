@@ -2,7 +2,6 @@
 
 namespace AppBundle\Form;
 
-use FOS\UserBundle\Form\Type\RegistrationFormType as BaseFormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
