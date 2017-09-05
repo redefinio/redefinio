@@ -240,17 +240,25 @@ class ApiController extends Controller
      */
     public function blockUpdateAction($wildcard, Request $request) {
         $service = $this->get(CvService::class);
-        $em = $this->getDoctrine()->getManager();
-
+        $response = new JsonResponse();
         $cv = $service->getUserCv($this->getUser());
-        if (!$cv) return new Response(json_encode(array('error' => 'CV not found')), Response::HTTP_NOT_FOUND);
+        if (!$cv) {
+            $response->setStatusCode(JsonResponse::HTTP_NOT_FOUND);
+            $response->setData(array('error' => 'CV not found'));
+
+            return $response;
+        }
 
         $id = $request->get('blockId', null);
         $formData = $request->get('fields', array());
 
-        $service->updateBlock($id, $formData, $wildcard);
+        $block = $service->updateBlock($id, $formData, $wildcard);
+
+        $response->setData(array(
+            'html' => $this->get(CVRenderService::class)->renderBlock($block)
+        ));
         
-        return new Response();
+        return $response;
     }
 
 
