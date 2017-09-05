@@ -74,6 +74,8 @@ class CvService {
         $event = $this->updateDataEvent($block, $formData, $wildcard);
 
         $this->apply($event);
+
+        return $block;
     }
 
     public function distributeBlocks($wildcard, $templateId, $cv, $positions) {

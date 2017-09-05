@@ -123,6 +123,10 @@ let prepareToEditTemplate = () => {
     }
 };
 
+let preapareBlockToEdit = (block) => {
+    new Block(block);
+}
+
 let activateLoader = () => {
     let loader = document.createElement('div');
     let loaderIcon = document.createElement('div');
@@ -605,6 +609,8 @@ class Block {
 
     cancel() {
         let editableElements = this._element.querySelectorAll('[data-key]');
+        let blockId = this._element.getAttribute('data-block-id');
+
 
         for (let z = 0; z < editableElements.length; z++) {
             if (['blocks'].indexOf(editableElements[z].getAttribute('data-key')) === -1) {
@@ -612,9 +618,10 @@ class Block {
             }
         }
 
-        this._toggleEditing();
-        $('.block-actions').css('display', 'none');
-        loadTemplate(window.templateId);
+        API.renderBlock(blockId, (response) => {
+           this._toggleEditing();
+           this._updateHtml(this._element, response.html);
+        });
     }
 
     save() {
@@ -678,11 +685,11 @@ class Block {
             }
         }
 
-        API.saveBlock(data, () => {
-
+        API.saveBlock(data, (response) => {
+            this._toggleEditing();
+            this._updateHtml(this._element, response.html);
         });
 
-        this._toggleEditing();
     }
 
     delete() {
@@ -702,6 +709,11 @@ class Block {
     deleteMicroBlock(e) {
         $(e.target).parent().parent().detach();
     }
+
+    _updateHtml(element, html) {
+        $(element).html(html)
+        preapareBlockToEdit(element);
+    }
 }
 
 function setCheckIcon(className, checkIcon) {
@@ -720,6 +732,19 @@ const API = {
         }
         $.ajax({
             url: url,
+            success: (data) => {
+                cb(data);
+            },
+            complete: () => {
+            },
+            error: () => {
+            }
+        });
+    },
+
+    renderBlock: (blockId, cb) => {
+        $.ajax({
+            url: `${apiUrl}/block/${blockId}`,
             success: (data) => {
                 cb(data);
             },
@@ -755,7 +780,7 @@ const API = {
                 method: 'PUT',
                 data: block,
                 success: (data) => {
-                    cb(true);
+                    cb(data);
                 },
                 complete: () => {
                 },

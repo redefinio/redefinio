@@ -126,6 +126,10 @@ var prepareToEditTemplate = function prepareToEditTemplate() {
     }
 };
 
+var preapareBlockToEdit = function preapareBlockToEdit(block) {
+    new Block(block);
+};
+
 var activateLoader = function activateLoader() {
     var loader = document.createElement('div');
     var loaderIcon = document.createElement('div');
@@ -647,7 +651,10 @@ var Block = function () {
     }, {
         key: "cancel",
         value: function cancel() {
+            var _this4 = this;
+
             var editableElements = this._element.querySelectorAll('[data-key]');
+            var blockId = this._element.getAttribute('data-block-id');
 
             for (var z = 0; z < editableElements.length; z++) {
                 if (['blocks'].indexOf(editableElements[z].getAttribute('data-key')) === -1) {
@@ -655,13 +662,16 @@ var Block = function () {
                 }
             }
 
-            this._toggleEditing();
-            $('.block-actions').css('display', 'none');
-            loadTemplate(window.templateId);
+            API.renderBlock(blockId, function (response) {
+                _this4._toggleEditing();
+                _this4._updateHtml(_this4._element, response.html);
+            });
         }
     }, {
         key: "save",
         value: function save() {
+            var _this5 = this;
+
             var editableElements = this._element.querySelectorAll('[data-key]');
 
             //Data saving
@@ -720,9 +730,10 @@ var Block = function () {
                 }
             }
 
-            API.saveBlock(data, function () {});
-
-            this._toggleEditing();
+            API.saveBlock(data, function (response) {
+                _this5._toggleEditing();
+                _this5._updateHtml(_this5._element, response.html);
+            });
         }
     }, {
         key: "delete",
@@ -742,6 +753,12 @@ var Block = function () {
         key: "deleteMicroBlock",
         value: function deleteMicroBlock(e) {
             $(e.target).parent().parent().detach();
+        }
+    }, {
+        key: "_updateHtml",
+        value: function _updateHtml(element, html) {
+            $(element).html(html);
+            preapareBlockToEdit(element);
         }
     }]);
 
@@ -764,6 +781,17 @@ var API = {
         }
         $.ajax({
             url: url,
+            success: function success(data) {
+                cb(data);
+            },
+            complete: function complete() {},
+            error: function error() {}
+        });
+    },
+
+    renderBlock: function renderBlock(blockId, cb) {
+        $.ajax({
+            url: apiUrl + "/block/" + blockId,
             success: function success(data) {
                 cb(data);
             },
@@ -795,7 +823,7 @@ var API = {
                 method: 'PUT',
                 data: block,
                 success: function success(data) {
-                    cb(true);
+                    cb(data);
                 },
                 complete: function complete() {},
                 error: function error() {}
