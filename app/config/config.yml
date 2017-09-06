@@ -99,4 +99,3 @@ knp_snappy:
         binary: xvfb-run wkhtmltopdf
         options:
           lowquality: false
-          disable-smart-shrinking: true
