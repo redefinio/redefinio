@@ -7,12 +7,7 @@
     <title>Title</title>
     <link href="{{ absolute_url(asset('templates/default/css/bootstrap.min.css')) }}" rel="stylesheet">
     <link href="{{ absolute_url(asset('templates/default/styles.css')) }}" rel="stylesheet">
-    <link href="{{ absolute_url(asset('less/app.less')) }}" rel="stylesheet/less">
-    <script src="{{ absolute_url(asset('js/less.min.js')) }}"></script>
     <link href="{{ absolute_url(asset('templates/css/pdf.css')) }}" rel="stylesheet">
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
 </head>
 <body>
 <div id="main-wrap">
@@ -44,16 +39,11 @@
         <div class="row text-center">
             <p>Created with
                 <a class="topbar-logo" href="http://www.redefin.io">
-                    <img alt="Redefin.io" src="/img/logo-blue.png" srcset="/img/logo-blue@2x.png">
+                    <img alt="Redefin.io" src="{{ absolute_url(asset('/img/logo-blue.png')) }}" srcset="{{ absolute_url(asset('/img/logo-blue@2x.png')) }}">
                 </a>
             </p>
-            <a href="{{ path("fos_user_registration_register") }}">
-                <button type="button" name="button">sign up free</button>
-            </a>
-            <p class="muted">No credit card required</p>
         </div>
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </body>
 </html>

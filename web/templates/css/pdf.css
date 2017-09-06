@@ -2,3 +2,21 @@ body {
     padding: 0px;
     background: none;
 }
+
+.container--footer {
+    margin-top: 40px;
+    font-size: 14px;
+    background: none;
+}
+.muted {
+    color: #8b8b8b;
+}
+.text-center {
+    text-align: center;
+}
+
+img {
+    width: 15%;
+    margin: 0 10px;
+    vertical-align: middle;
+}

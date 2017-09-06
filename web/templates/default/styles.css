@@ -232,6 +232,10 @@ ul.skills li.completed {
     #top .big-title a, #top .contacts a {
         margin-bottom: 20px
     }
+
+    .container {
+        padding: 0 15px
+    }
 }
 
 [data-key="company"] {

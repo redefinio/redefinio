@@ -32,7 +32,7 @@
     <div class="row text-center">
         <p>Created with
             <a class="topbar-logo" href="http://www.redefin.io">
-                <img alt="Redefin.io" src="/img/logo-blue.png" srcset="/img/logo-blue@2x.png">
+                <img alt="Redefin.io" src="{{ absolute_url(asset('/img/logo-blue.png')) }}" srcset="{{ absolute_url(asset('/img/logo-blue@2x.png')) }}">
             </a>
         </p>
         <a href="{{ path("fos_user_registration_register") }}">
