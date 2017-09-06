@@ -14,10 +14,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class CVRenderService {
 
+    const RENDER_TYPE_PUBLIC = 0;
+    const RENDER_TYPE_EDIT = 1;
+    const RENDER_TYPE_PDF = 2;
+
 	protected $twig;
 	protected $twigLocal;
-
-
     private $em;
     private $container;
 
@@ -27,8 +29,8 @@ class CVRenderService {
         $this->twig = $this->container->get('twig');
     }
 
-	public function getTemplateHtml($template, $cv, $public = false) {
-		$templatePath = $public ? $template->getTemplatePath() . '_public' : $template->getTemplatePath();
+	public function getTemplateHtml($template, $cv, $type = CVRenderService::RENDER_TYPE_EDIT) {
+		$templatePath = $this->getTemplatePath($template, $type);
 		// all slots just replace the twig blocks in base template from Template.templatePath
 		$templateString = '{% extends \'templates/'.$templatePath.'.html.twig\' %}';
 		// each TemaplteSlot acts as a block in parent template
@@ -66,6 +68,20 @@ class CVRenderService {
         }
 
         return $template->render($parameters);
+    }
+
+    private function getTemplatePath($template, $type) {
+        $templatePath = $template->getTemplatePath();
+        switch ($type) {
+            case CVRenderService::RENDER_TYPE_PUBLIC:
+                $templatePath .= "_public";
+                break;
+            case CVRenderService::RENDER_TYPE_PDF:
+                $templatePath .= "_pdf";
+                break;
+        }
+
+        return $templatePath;
     }
 
 	private function getParameters(BlockData $data) {

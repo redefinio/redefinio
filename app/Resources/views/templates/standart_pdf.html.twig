@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link href="{{ absolute_url(asset('templates/standart/css/bootstrap.min.css')) }}" rel="stylesheet">
+    <link href="{{ absolute_url(asset('templates/standart/css/main.css')) }}" rel="stylesheet">
+    <link href="{{ absolute_url(asset('templates/css/pdf.css')) }}" rel="stylesheet">
+    <link href="{{ absolute_url(asset('less/app.less')) }}" rel="stylesheet/less">
+    <script src="{{ absolute_url(asset('js/less.min.js')) }}"></script>
+</head>
+
+<body>
+<div class="container" id="main-wrap">
+    <div class="wrapper">
+        <div class="standart-sidebar">
+            <div data-zone="standart_personal_info">
+                {% block standart_personal_info %}{% endblock %}
+            </div>
+            <div data-zone="standart_left_info" data-zone-block-types='[{"name": "Employment History", "type": 4}, {"name": "Education", "type": 6}, {"name": "Certificates", "type": 8}, {"name": "Text Block", "type": 1}]'>
+                {% block standart_left_info %}{% endblock %}
+            </div>
+            <div data-zone="standart_contacts_slot">
+                {% block standart_contacts_slot %}{% endblock %}
+            </div>
+        </div>
+        <div class="content" data-zone="standart_right_slot" data-zone-block-types='[{"name": "Skills", "type": 2}, {"name": "Text Block", "type": 1}]'>
+            {% block standart_right_slot %}{% endblock %}
+        </div>
+    </div>
+</div>
+<div class="container container--footer">
+    <div class="row text-center">
+        <p>Created with
+            <a class="topbar-logo" href="http://www.redefin.io">
+                <img alt="Redefin.io" src="/img/logo-blue.png" srcset="/img/logo-blue@2x.png">
+            </a>
+        </p>
+        <a href="{{ path("fos_user_registration_register") }}">
+            <button type="button" name="button">sign up free</button>
+        </a>
+        <p class="muted">No credit card required</p>
+    </div>
+</div>
+</body>
+</html>

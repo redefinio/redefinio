@@ -238,7 +238,7 @@ ul.skills li.completed {
     font-weight: 700;
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 768px) {
     body {
         padding: 0;
         margin: 0

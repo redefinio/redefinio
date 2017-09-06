@@ -61,6 +61,14 @@ class CV
      */
     private $publicHtml;
 
+
+    /**
+     * @var String
+     *
+     * @ORM\Column(name="pdf_html", type="text", nullable=true)
+     */
+    private $pdfHtml;
+
     /**
      * @return int
      */
@@ -172,5 +180,23 @@ class CV
     {
         $this->publicHtml = $publicHtml;
     }
+
+    /**
+     * @return String
+     */
+    public function getPdfHtml()
+    {
+        return $this->pdfHtml;
+    }
+
+    /**
+     * @param String $pdfHtml
+     */
+    public function setPdfHtml($pdfHtml)
+    {
+        $this->pdfHtml = $pdfHtml;
+    }
+
+
 
 }

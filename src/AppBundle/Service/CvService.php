@@ -100,10 +100,12 @@ class CvService {
         $template = $this->em->getRepository('AppBundle:Template')->findOneById($templateId);
         $cv = $this->getUserCv($user);
 
-        $html = $renderService->getTemplateHtml($template, $cv, true);
+        $html = $renderService->getTemplateHtml($template, $cv, CVRenderService::RENDER_TYPE_PUBLIC);
+        $pdfHtml = $renderService->getTemplateHtml($template, $cv, CVRenderService::RENDER_TYPE_PDF);
 
         $cv->setPublicTemplate($template);
         $cv->setPublicHtml($html);
+        $cv->setPdfHtml($pdfHtml);
 
         $this->em->persist($cv);
         $this->em->flush();
