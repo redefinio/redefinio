@@ -1,6 +1,11 @@
 button_publish: Publish
 button_cancel: Cancel
 
+header_404_public: Something is missing here.
+
+text_404_public: This URL doesn't exist.
+
+link_go_home: Go to Homepage
 
 message_no_public_cv: You have no public CV yet
 
