@@ -46,6 +46,6 @@ monolog:
 knp_snappy:
     pdf:
         enabled: true
-        binary: xvfb-run wkhtmltopdf
+        binary: wkhtmltopdf
         options:
             lowquality: false

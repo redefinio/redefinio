@@ -18,13 +18,13 @@
                 <a href="www.redefin.io">
                     <img alt="Redefin.io" src="{{ asset('img/logo-blue.png') }}">
                 </a>
-                <a href="www.redefin.io" type="button" name="button" class="btn">Go to Homepage</a>
+                <a href="{{ path('cv_index') }}" type="button" name="button" class="btn">{{ 'link_go_home'|trans }}</a>
             </div>
             <div class="flex info-center">
                 <div class="emoji-interesting"></div>
                 <div>
-                    <h3>Something is missing here.</h3>
-                    <p>This URL doesn't exist.</p>
+                    <h3>{{ 'header_404_public'|trans }}</h3>
+                    <p>{{ 'text_404_public'|trans }}</p>
                 </div>
             </div>
         </div>

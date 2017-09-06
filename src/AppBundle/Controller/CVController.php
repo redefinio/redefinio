@@ -162,9 +162,11 @@ class CVController extends Controller
         $cvRenderService = $this->get(CVRenderService::class);
         $cvService = $this->get(CvService::class);
 
+        $pdf = $this->get('knp_snappy.pdf');
+
         $cv = $cvService->getUserCv($this->getUser());
         return new Response(
-            $this->get('knp_snappy.pdf')->getOutputFromHtml($cvRenderService->getTemplateHtml($cv->getPublicTemplate(), $cv)),
+            $pdf->getOutputFromHtml($cvRenderService->getTemplateHtml($cv->getPublicTemplate(), $cv)),
                 '200',
                 array(
                     'Content-Type' => 'application/pdf',
