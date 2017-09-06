@@ -8,6 +8,7 @@
     <link href="{{ absolute_url(asset('templates/default/css/bootstrap.min.css')) }}" rel="stylesheet">
     <link href="{{ absolute_url(asset('templates/default/styles.css')) }}" rel="stylesheet">
     <link href="{{ absolute_url(asset('templates/css/pdf.css')) }}" rel="stylesheet">
+
 </head>
 <body>
 <div id="main-wrap">
@@ -24,11 +25,11 @@
     </div>
     <div id="content" class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8" data-zone="main_left_info"
+            <div data-zone="main_left_info"
                  data-zone-block-types='[{"name": "Employment History", "type": 4}, {"name": "Education", "type": 6}, {"name": "Certificates", "type": 8}, {"name": "Text Block", "type": 1}]'>
                 {% block main_left_info %}{% endblock %}
             </div>
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" data-zone="main_right_info"
+            <div data-zone="main_right_info"
                  data-zone-block-types='[{"name": "Skills", "type": 2}, {"name": "Text Block", "type": 1}]'>
                 {% block main_right_info %}{% endblock %}
             </div>

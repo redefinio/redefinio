@@ -15,7 +15,7 @@ body {
     text-align: center;
 }
 
-img {
+.container--footer img {
     width: 15%;
     margin: 0 10px;
     vertical-align: middle;
