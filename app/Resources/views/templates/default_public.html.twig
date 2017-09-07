@@ -20,7 +20,13 @@
             <div class="row">
                 <div class="col-xs-12" data-zone="static">
                     <div id="top" data-zone="top_header">
-                        {% block top_header %}{% endblock %}
+                        <div class="big-title pull-left col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                            {% block top_header %}{% endblock %}
+                        </div>
+                        <div class="contacts pull-right col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                            {% block top_contacts %}{% endblock %}
+                        </div>
+                        <div class="clear"></div>
                     </div>
                 </div>
             </div>

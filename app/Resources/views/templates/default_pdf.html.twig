@@ -17,7 +17,13 @@
             <div class="row">
                 <div class="col-xs-12" data-zone="static">
                     <div id="top" data-zone="top_header">
-                        {% block top_header %}{% endblock %}
+                        <div class="big-title pull-left col-xs-8">
+                            {% block top_header %}{% endblock %}
+                        </div>
+                        <div class="contacts pull-right col-xs-4">
+                            {% block top_contacts %}{% endblock %}
+                        </div>
+                        <div class="clear"></div>
                     </div>
                 </div>
             </div>
@@ -25,11 +31,11 @@
     </div>
     <div id="content" class="container">
         <div class="row">
-            <div class="main-left" data-zone="main_left_info"
+            <div class="col-xs-8"  data-zone="main_left_info"
                  data-zone-block-types='[{"name": "Employment History", "type": 4}, {"name": "Education", "type": 6}, {"name": "Certificates", "type": 8}, {"name": "Text Block", "type": 1}]'>
                 {% block main_left_info %}{% endblock %}
             </div>
-            <div class="main-right" data-zone="main_right_info"
+            <div  class="col-xs-4" data-zone="main_right_info"
                  data-zone-block-types='[{"name": "Skills", "type": 2}, {"name": "Text Block", "type": 1}]'>
                 {% block main_right_info %}{% endblock %}
             </div>

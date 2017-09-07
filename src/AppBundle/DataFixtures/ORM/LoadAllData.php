@@ -75,6 +75,12 @@ class LoadAllData implements FixtureInterface
         $templateSlot1_1->setWildcard('top_header');
         $manager->persist($templateSlot1_1);
 
+        $templateSlot1_4 = new TemplateSlot();
+        $templateSlot1_4->setTemplate($template1);
+        $templateSlot1_4->setTitle('Top contacts');
+        $templateSlot1_4->setWildcard('top_contacts');
+        $manager->persist($templateSlot1_4);
+
         $templateSlot1_2 = new TemplateSlot();
         $templateSlot1_2->setTemplate($template1);
         $templateSlot1_2->setTitle('Main left slot');
@@ -92,17 +98,27 @@ class LoadAllData implements FixtureInterface
         $block1_1->setType(BlockTemplate::TYPE_FIXED);
         $block1_1->setSlot($templateSlot1_1);
         $block1_1->setTemplate($template1);
-        $block1_1->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.BlockTemplate::TYPE_FIXED.'" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"><div class="big-title pull-left col-xs-12 col-sm-8 col-md-8 col-lg-8"><h1 class="title"><span data-key="full_name" data-placeholder="John" data-required="true">{{ full_name }}</span></h1><h3 class="subtitle" data-key="title" data-placeholder="Your title" data-required="true">{{ title }}</h3></div><div class="contacts pull-right col-xs-12 col-sm-4 col-md-4 col-lg-4"><a href="mailto:{{ email }}" data-key="email" data-placeholder="john@example.com">{{ email }}</a><a href="tel:{{ phone }}" data-key="phone" data-placeholder="Your phone">{{ phone }}</a><a href="#" data-key="location" data-placeholder="Your location">{{ location }}</a></div><div class="clear"></div></div>');
+        $block1_1->setHtmlSource('<div class="item" data-block-id="{{block_data.id}}" data-block-type="'.BlockTemplate::TYPE_FIXED.'" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"> <h1 class="title"><span data-key="full_name" data-placeholder="John" data-required="true">{{full_name}}</span> </h1> <h3 class="subtitle" data-key="title" data-placeholder="Your title" data-required="true">{{title}}</h3></div>');
         $block1_1->setAvailableFields(json_encode(array(
                 'full_name' => '',
-                'title' => '',
-                'email' => '',
-                'phone' => '',
-                'location' => '',
-                'photo' => '',
-                'contact_title' => 'Contacts'
+                'title' => ''
             )));
         $manager->persist($block1_1);
+
+        $block_contact = new BlockTemplate();
+        $block_contact->setTitle('Personal constacts headline');
+        $block_contact->setType(BlockTemplate::TYPE_FIXED);
+        $block_contact->setSlot($templateSlot1_4);
+        $block_contact ->setTemplate($template1);
+        $block_contact->setHtmlSource('<div class="item" data-block-id="{{block_data.id}}" data-block-type="'.BlockTemplate::TYPE_FIXED.'" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"> <a href="mailto:{{email}}" data-key="email" data-placeholder="john@example.com">{{email}}</a><a href="tel:{{phone}}" data-key="phone" data-placeholder="Your phone">{{phone}}</a><a href="#" data-key="location" data-placeholder="Your location">{{location}}</a></div>');
+        $block_contact->setAvailableFields(json_encode(array(
+            'email' => '',
+            'phone' => '',
+            'location' => '',
+            'photo' => '',
+            'contact_title' => 'Contacts'
+        )));
+        $manager->persist($block_contact);
 
         $block1_2 = new BlockTemplate();
         $block1_2->setTitle('Summary');
@@ -331,6 +347,16 @@ class LoadAllData implements FixtureInterface
         $blockData1_1->addCvData($cvData1_9);
         $manager->persist($blockData1_1);
 
+        $blockData_contacts = new BlockData();
+        $blockData_contacts->setCv($cv1);
+        $blockData_contacts->setTemplateSlot($templateSlot1_4);
+        $blockData_contacts->setBlockTemplate($block_contact);
+        $blockData_contacts->addCvData($cvData1_4);
+        $blockData_contacts->addCvData($cvData1_5);
+        $blockData_contacts->addCvData($cvData1_7);
+        $blockData_contacts->addCvData($cvData1_8);
+        $blockData_contacts->addCvData($cvData1_9);
+        $manager->persist($blockData_contacts);
 
         $cvData_summary = new CvData();
         $cvData_summary->setCv($cv1);
