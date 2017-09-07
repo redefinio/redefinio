@@ -1,0 +1,17 @@
+.standart-sidebar {
+    background-color: #14194d;
+}
+
+.editable-block.is-editing {
+    border-color: #14194d;
+}
+
+.editable-block .block-actions .save {
+    background-color: #14194d;
+}
+
+.standart-sidebar .group.content,
+.standart-sidebar .statusquo,
+.blocks.indicator .title {
+    color: rgba(255, 255, 255, 0.75)
+}
