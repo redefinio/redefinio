@@ -223,6 +223,13 @@ ul.skills li.completed {
     background: #38d07c
 }
 
+.editable-block.is-editing {
+    border-color: #38d07c;
+}
+.editable-block .block-actions .save {
+    background-color: #38d07c;
+}
+
 @media only screen and (max-width: 992px) {
     #top .big-title, #top .contacts {
         float: none !important;
