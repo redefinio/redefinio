@@ -42,7 +42,7 @@ body {
 
 .standart-sidebar .group.content {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .standart-sidebar .group.content > div i {
@@ -98,7 +98,7 @@ body {
   margin-top: 7px;
   font-size: 16px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .content {
@@ -145,7 +145,7 @@ body {
 
 .blocks.indicator .title {
   color: #ffcdc5;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255,255,255,0.75);
   margin-bottom: 5px;
   font-weight: 600;
 }
