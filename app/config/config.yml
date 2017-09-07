@@ -96,6 +96,6 @@ fos_user:
 knp_snappy:
     pdf:
         enabled: true
-        binary: xvfb-run wkhtmltopdf
+        binary:  /home/app.redefin.io/wkhtmltopdf
         options:
           lowquality: false
