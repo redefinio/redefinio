@@ -649,7 +649,7 @@ class LoadAllData implements FixtureInterface
         $theme2_1->setTitleColor('555000');
         $theme2_1->setParagraphColor('555000');
         $theme2_1->setPrimaryColor('555000');
-        $theme2_1->setCssSource('custom-1.css');
+        $theme2_1->setCssSource('2_2.css');
         $manager->persist($theme2_1);
 
         $theme2_2 = new Theme();
@@ -659,9 +659,139 @@ class LoadAllData implements FixtureInterface
         $theme2_2->setTitleColor('555000');
         $theme2_2->setParagraphColor('555000');
         $theme2_2->setPrimaryColor('555000');
-        $theme2_2->setCssSource('custom-2.css');
+        $theme2_2->setCssSource('2_3.css');
         $manager->persist($theme2_2);
+        
+        $theme2_3 = new Theme();
+        $theme2_3->setTemplate($template1);
+        $theme2_3->setBackgroundColor('333111');
+        $theme2_3->setPageColor('555000');
+        $theme2_3->setTitleColor('555000');
+        $theme2_3->setParagraphColor('555000');
+        $theme2_3->setPrimaryColor('555000');
+        $theme2_3->setCssSource('2_4.css');
+        $manager->persist($theme2_3);
+        
+        $theme2_4 = new Theme();
+        $theme2_4->setTemplate($template1);
+        $theme2_4->setBackgroundColor('333111');
+        $theme2_4->setPageColor('555000');
+        $theme2_4->setTitleColor('555000');
+        $theme2_4->setParagraphColor('555000');
+        $theme2_4->setPrimaryColor('555000');
+        $theme2_4->setCssSource('2_5.css');
+        $manager->persist($theme2_4);
+        
+        $theme2_5 = new Theme();
+        $theme2_5->setTemplate($template1);
+        $theme2_5->setBackgroundColor('333111');
+        $theme2_5->setPageColor('555000');
+        $theme2_5->setTitleColor('555000');
+        $theme2_5->setParagraphColor('555000');
+        $theme2_5->setPrimaryColor('555000');
+        $theme2_5->setCssSource('2_6.css');
+        $manager->persist($theme2_5);
+        
+        $theme2_6 = new Theme();
+        $theme2_6->setTemplate($template1);
+        $theme2_6->setBackgroundColor('333111');
+        $theme2_6->setPageColor('555000');
+        $theme2_6->setTitleColor('555000');
+        $theme2_6->setParagraphColor('555000');
+        $theme2_6->setPrimaryColor('555000');
+        $theme2_6->setCssSource('2_7.css');
+        $manager->persist($theme2_6);
+        
+        $theme2_7 = new Theme();
+        $theme2_7->setTemplate($template1);
+        $theme2_7->setBackgroundColor('333111');
+        $theme2_7->setPageColor('555000');
+        $theme2_7->setTitleColor('555000');
+        $theme2_7->setParagraphColor('555000');
+        $theme2_7->setPrimaryColor('555000');
+        $theme2_7->setCssSource('2_8.css');
+        $manager->persist($theme2_7);
+        
+        $theme2_8 = new Theme();
+        $theme2_8->setTemplate($template1);
+        $theme2_8->setBackgroundColor('333111');
+        $theme2_8->setPageColor('555000');
+        $theme2_8->setTitleColor('555000');
+        $theme2_8->setParagraphColor('555000');
+        $theme2_8->setPrimaryColor('555000');
+        $theme2_8->setCssSource('2_9.css');
+        $manager->persist($theme2_8);
+        
+        $theme2_9 = new Theme();
+        $theme2_9->setTemplate($template1);
+        $theme2_9->setBackgroundColor('333111');
+        $theme2_9->setPageColor('555000');
+        $theme2_9->setTitleColor('555000');
+        $theme2_9->setParagraphColor('555000');
+        $theme2_9->setPrimaryColor('555000');
+        $theme2_9->setCssSource('2_10.css');
+        $manager->persist($theme2_9);
 
+        $theme2_10 = new Theme();
+        $theme2_10->setTemplate($template1);
+        $theme2_10->setBackgroundColor('333111');
+        $theme2_10->setPageColor('555000');
+        $theme2_10->setTitleColor('555000');
+        $theme2_10->setParagraphColor('555000');
+        $theme2_10->setPrimaryColor('555000');
+        $theme2_10->setCssSource('2_11.css');
+        $manager->persist($theme2_10);
+        
+        $theme2_11 = new Theme();
+        $theme2_11->setTemplate($template1);
+        $theme2_11->setBackgroundColor('333111');
+        $theme2_11->setPageColor('555000');
+        $theme2_11->setTitleColor('555000');
+        $theme2_11->setParagraphColor('555000');
+        $theme2_11->setPrimaryColor('555000');
+        $theme2_11->setCssSource('2_12.css');
+        $manager->persist($theme2_11);
+        
+        $theme2_12 = new Theme();
+        $theme2_12->setTemplate($template1);
+        $theme2_12->setBackgroundColor('333111');
+        $theme2_12->setPageColor('555000');
+        $theme2_12->setTitleColor('555000');
+        $theme2_12->setParagraphColor('555000');
+        $theme2_12->setPrimaryColor('555000');
+        $theme2_12->setCssSource('2_13.css');
+        $manager->persist($theme2_12);
+        
+        $theme2_13 = new Theme();
+        $theme2_13->setTemplate($template1);
+        $theme2_13->setBackgroundColor('333111');
+        $theme2_13->setPageColor('555000');
+        $theme2_13->setTitleColor('555000');
+        $theme2_13->setParagraphColor('555000');
+        $theme2_13->setPrimaryColor('555000');
+        $theme2_13->setCssSource('2_14.css');
+        $manager->persist($theme2_13);
+        
+        $theme2_14 = new Theme();
+        $theme2_14->setTemplate($template1);
+        $theme2_14->setBackgroundColor('333111');
+        $theme2_14->setPageColor('555000');
+        $theme2_14->setTitleColor('555000');
+        $theme2_14->setParagraphColor('555000');
+        $theme2_14->setPrimaryColor('555000');
+        $theme2_14->setCssSource('2_15.css');
+        $manager->persist($theme2_14);
+        
+        $theme2_15 = new Theme();
+        $theme2_15->setTemplate($template1);
+        $theme2_15->setBackgroundColor('333111');
+        $theme2_15->setPageColor('555000');
+        $theme2_15->setTitleColor('555000');
+        $theme2_15->setParagraphColor('555000');
+        $theme2_15->setPrimaryColor('555000');
+        $theme2_15->setCssSource('2_16.css');
+        $manager->persist($theme2_15);
+        
         $block1_6 = new BlockTemplate();
         $block1_6->setTitle('Contacts');
         $block1_6->setType(BlockTemplate::TYPE_FIXED);
