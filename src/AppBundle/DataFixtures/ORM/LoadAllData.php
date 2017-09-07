@@ -247,7 +247,7 @@ class LoadAllData implements FixtureInterface
         $theme1_3->setTitleColor('555000');
         $theme1_3->setParagraphColor('555000');
         $theme1_3->setPrimaryColor('555000');
-        $theme1_3->setCssSource('byrka.css');
+        $theme1_3->setCssSource('1_7.css');
         $manager->persist($theme1_3);
 
         $theme1_4 = new Theme();
@@ -257,7 +257,7 @@ class LoadAllData implements FixtureInterface
         $theme1_4->setTitleColor('555000');
         $theme1_4->setParagraphColor('555000');
         $theme1_4->setPrimaryColor('555000');
-        $theme1_4->setCssSource('lopas.css');
+        $theme1_4->setCssSource('1_8.css');
         $manager->persist($theme1_4);
 
         $theme1_5 = new Theme();
@@ -267,8 +267,38 @@ class LoadAllData implements FixtureInterface
         $theme1_5->setTitleColor('555000');
         $theme1_5->setParagraphColor('555000');
         $theme1_5->setPrimaryColor('555000');
-        $theme1_5->setCssSource('qwerty.css');
-        $manager->persist($theme1_5);        
+        $theme1_5->setCssSource('1_9.css');
+        $manager->persist($theme1_5);
+
+        $theme1_6 = new Theme();
+        $theme1_6->setTemplate($template1);
+        $theme1_6->setBackgroundColor('333111');
+        $theme1_6->setPageColor('555000');
+        $theme1_6->setTitleColor('555000');
+        $theme1_6->setParagraphColor('555000');
+        $theme1_6->setPrimaryColor('555000');
+        $theme1_6->setCssSource('1_3.css');
+        $manager->persist($theme1_6);
+
+        $theme1_7 = new Theme();
+        $theme1_7->setTemplate($template1);
+        $theme1_7->setBackgroundColor('333111');
+        $theme1_7->setPageColor('555000');
+        $theme1_7->setTitleColor('555000');
+        $theme1_7->setParagraphColor('555000');
+        $theme1_7->setPrimaryColor('555000');
+        $theme1_7->setCssSource('1_4.css');
+        $manager->persist($theme1_7);
+
+        $theme1_8 = new Theme();
+        $theme1_8->setTemplate($template1);
+        $theme1_8->setBackgroundColor('333111');
+        $theme1_8->setPageColor('555000');
+        $theme1_8->setTitleColor('555000');
+        $theme1_8->setParagraphColor('555000');
+        $theme1_8->setPrimaryColor('555000');
+        $theme1_8->setCssSource('1_6.css');
+        $manager->persist($theme1_8);
 
         $cv1 = new CV();
         $cv1->setUser($user1);

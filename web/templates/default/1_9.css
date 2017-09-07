@@ -1,21 +1,21 @@
 .title {
-    color: #3db0e5;
+    color: #00c897;
 }
 .contacts a {
-    color: #3db0e5;
+    color: #00c897;
 }
 
 .timeline>li .icon {
-    background: #3db0e5;
+    background: #00c897;
 }
 
 ul.skills li.completed {
-    background: #3db0e5;
+    background: #00c897;
 }
 
 .editable-block.is-editing {
-    border-color: #3db0e5;
+    border-color: #00c897;
 }
 .editable-block .block-actions .save {
-    background-color: #3db0e5;
+    background-color: #00c897;
 }
