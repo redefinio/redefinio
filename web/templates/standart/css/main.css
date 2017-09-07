@@ -45,6 +45,9 @@ body {
   color: rgba(255, 255, 255, 0.75);
 }
 
+.standart-sidebar .group.content.contacts > div {
+  margin: 6px 0;
+}
 .standart-sidebar .group.content > div i {
   font-size: 18px;
   color: #ffcdc5;
