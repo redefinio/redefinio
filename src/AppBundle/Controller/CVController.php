@@ -167,7 +167,7 @@ class CVController extends Controller
 
             $filePath = "upload/pdf/".$cv->getUrl().".pdf";
 
-            $pdf->generateFromHtml($cv->getPublicHtml(), $filePath, array(), true);
+            $pdf->generateFromHtml($cv->getPdfHtml(), $filePath, array(), true);
 
             $cv->setPdfPath($filePath);
 
