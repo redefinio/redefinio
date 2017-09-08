@@ -96,6 +96,6 @@ fos_user:
 knp_snappy:
     pdf:
         enabled: true
-        binary:  /home/app.redefin.io/wkhtmltopdf
+        binary:  wkhtmltopdf --enable-smart-shrinking --no-outline
         options:
           lowquality: false
