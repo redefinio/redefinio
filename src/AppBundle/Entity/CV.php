@@ -64,6 +64,13 @@ class CV
     private $pdfHtml;
 
     /**
+     * @var String
+     *
+     * @ORM\Column(name="pdf_path", type="text", nullable=true)
+     */
+    private $pdfPath;
+
+    /**
      * @return int
      */
     public function getId()
@@ -175,6 +182,20 @@ class CV
         $this->pdfHtml = $pdfHtml;
     }
 
+    /**
+     * @return String
+     */
+    public function getPdfPath()
+    {
+        return $this->pdfPath;
+    }
 
+    /**
+     * @param String $pdfPath
+     */
+    public function setPdfPath($pdfPath)
+    {
+        $this->pdfPath = $pdfPath;
+    }
 
 }

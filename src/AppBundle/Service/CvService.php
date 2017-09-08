@@ -114,6 +114,7 @@ class CvService {
         $cv->setPublicTemplate($relations->getTemplate());
         $cv->setPublicHtml($html);
         $cv->setPdfHtml($pdfHtml);
+        $cv->setPdfPath(null);
 
         $this->em->persist($cv);
         $this->em->flush();
@@ -386,13 +387,13 @@ class CvService {
      * @param User $user
      * @return bool|string
      */
-    private function generateUserHash(User $user)
+    public function generateUserHash(User $user, $length = 10)
     {
         $seed = 'JvKnrQWPsThuJteNQAuH' . $user->getId() . $user->getUsername();
         $hash = sha1(uniqid($seed . mt_rand(), true));
 
         # To get a shorter version of the hash, just use substr
-        $hash = substr($hash, 0, 10);
+        $hash = substr($hash, 0, $length);
         return $hash;
     }
 

@@ -159,17 +159,26 @@ class CVController extends Controller
      * @return Response
      */
     public function renderPdfAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
         $cv = $this->get(CvService::class)->getUserCv($this->getUser());
 
-        $pdf = $this->get('knp_snappy.pdf');
+        if (is_null($cv->getPdfPath())) {
+            $pdf = $this->get('knp_snappy.pdf');
 
-        $fileName = $this->getUser()->getId. ".pdf";
-        $filePath = "upload/pdf/".$fileName;
+            $filePath = "upload/pdf/".$this->getUser()->getUrl().".pdf";
 
-        $pdf->generateFromHtml($cv->getPublicHtml(), $filePath, array(), true);
+            $pdf->generateFromHtml($cv->getPublicHtml(), $filePath, array(), true);
+
+            $cv->setPdfPath($filePath);
+
+            $em->persist($cv);
+            $em->flush();
+        } else {
+            $filePath = $cv->getPdfPath();
+        }
 
         return new Response(
-            $filePath,
+            file_get_contents($filePath),
                 '200',
                 array(
                     'Content-Type' => 'application/pdf',
