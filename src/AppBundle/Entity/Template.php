@@ -50,11 +50,18 @@ class Template
     private $title;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Theme")
+     * @ORM\JoinColumn(name="theme_id", referencedColumnName="id")
+     */
+    private $theme;
+
+    /**
      * @var template_path Path to base template in public_html/templates directory.
      *
      * @ORM\Column(name="template_path", type="string", length=255)
      */
     private $templatePath;
+
 
     /**
      * @var \DateTime
@@ -291,5 +298,21 @@ class Template
     public function getBlockTemplates()
     {
         return $this->blockTemplates;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTheme()
+    {
+        return $this->theme;
+    }
+
+    /**
+     * @param mixed $theme
+     */
+    public function setTheme($theme)
+    {
+        $this->theme = $theme;
     }
 }

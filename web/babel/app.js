@@ -51,11 +51,16 @@ $('#publish-button').on('click', (event) => {
    $(location).attr('href', templateUrl + '#published');
 });
 $('.themes-list').on('click', '.themes-listitem', (evebt) => {
-    let themeSource = evebt.currentTarget.attributes[1].value;
+    let themeSource = $(evebt.currentTarget).data("themeSource");
     let checkIcon = $(evebt.target).parent().find('.check-icon');
+    let themeId = $(evebt.currentTarget).data("themeId");
 
     $('.themes-list').find('.check-icon').each(function () {
         $(this).css('display', 'none');
+    });
+
+    API.updateTheme(themeId, (data) => {
+
     });
 
     $(checkIcon).css('display', 'block');
@@ -745,6 +750,25 @@ const API = {
     renderBlock: (blockId, cb) => {
         $.ajax({
             url: `${apiUrl}/block/${blockId}`,
+            success: (data) => {
+                cb(data);
+            },
+            complete: () => {
+            },
+            error: () => {
+            }
+        });
+    },
+
+    updateTheme: (themeId, cb) => {
+        let data = {
+            "themeId": themeId,
+            "templateId": window.templateId
+        }
+        $.ajax({
+            url: `${apiUrl}/theme`,
+            method: "PUT",
+            data: data,
             success: (data) => {
                 cb(data);
             },

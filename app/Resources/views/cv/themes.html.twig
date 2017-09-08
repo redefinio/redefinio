@@ -1,5 +1,5 @@
 {% for theme in cv.template.themes %}
-    <div class="themes-listitem" data-theme-source="{{ cv.getTemplate().getTemplatePath() }}/{{ theme.cssSource }}">
+    <div data-theme-id="{{ theme.getId() }}" class="themes-listitem" data-theme-source="{{ cv.getTemplate().getTemplatePath() }}/{{ theme.cssSource }}">
         <div class="theme-container" style="background: #{{ theme.backgroundColor }};">
             <div class="theme">
                     <span class="check-icon"

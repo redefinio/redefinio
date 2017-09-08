@@ -41,12 +41,6 @@ class CV
     private $publicTemplate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Theme", inversedBy="cvs")
-     * @ORM\JoinColumn(name="theme_id", referencedColumnName="id", nullable=false)
-     */
-    private $theme;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=255, unique=true)
@@ -115,22 +109,6 @@ class CV
     public function setTemplate($template)
     {
         $this->template = $template;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTheme()
-    {
-        return $this->theme;
-    }
-
-    /**
-     * @param mixed $theme
-     */
-    public function setTheme($theme)
-    {
-        $this->theme = $theme;
     }
 
     /**
