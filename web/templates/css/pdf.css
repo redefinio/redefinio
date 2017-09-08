@@ -1,6 +1,7 @@
 body {
     padding: 0px;
     background: none;
+    box-sizing: content-box;
 }
 
 .container--footer {
