@@ -96,6 +96,6 @@ fos_user:
 knp_snappy:
     pdf:
         enabled: true
-        binary:  wkhtmltopdf --enable-smart-shrinking --no-outline
+        binary:  xvfb-run wkhtmltopdf --enable-smart-shrinking --no-outline
         options:
           lowquality: false
