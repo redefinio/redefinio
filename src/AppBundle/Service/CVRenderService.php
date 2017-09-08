@@ -29,7 +29,11 @@ class CVRenderService {
         $this->twig = $this->container->get('twig');
     }
 
-	public function getTemplateHtml($template, $cv, $type = CVRenderService::RENDER_TYPE_EDIT) {
+	public function getTemplateHtml($relations, $type = CVRenderService::RENDER_TYPE_EDIT) {
+        $template = $relations->getTemplate();
+        $theme = $relations->getTheme();
+        $cv = $relations->getCv();
+
 		$templatePath = $this->getTemplatePath($template, $type);
 		// all slots just replace the twig blocks in base template from Template.templatePath
 		$templateString = '{% extends \'templates/'.$templatePath.'.html.twig\' %}';
@@ -45,8 +49,9 @@ class CVRenderService {
 			$templateString .= '{% endblock %}';
 		}
 
+
 		$template = $this->twig->createTemplate($templateString);
-		return $template->render(array());
+		return $template->render(array('theme' => $theme));
 	}
 
 

@@ -5,6 +5,7 @@
     <title>{% block title %}redefin.io{% endblock %}</title>
     <link href="{{ absolute_url(asset('templates/standart/css/bootstrap.min.css')) }}" rel="stylesheet">
     <link href="{{ absolute_url(asset('templates/standart/css/main.css')) }}" rel="stylesheet">
+    <link href="{{ absolute_url(asset('templates/standart/' ~ theme.getCssSource())) }}" rel="stylesheet">
 </head>
 
 <body>

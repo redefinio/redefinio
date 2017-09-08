@@ -7,6 +7,7 @@ use AppBundle\Entity\BlockTemplate;
 use AppBundle\Entity\TemplatType;
 use AppBundle\Entity\User;
 use AppBundle\Entity\CV;
+use AppBundle\Entity\UserThemes;
 use AppBundle\Event\CreateBlockEvent;
 use AppBundle\Event\CreateDataEvent;
 use AppBundle\Event\SortBlockEvent;
@@ -38,16 +39,22 @@ class CvService {
 
     public function initializeCv(User $user, int $templateId) {
         $template = $this->em->getRepository('AppBundle:Template')->findOneById($templateId);
-        $theme = $this->em->getRepository('AppBundle:Theme')->findOneById(1);
 
         $cv = new CV();
         $cv->setUser($user);
         $cv->setTemplate($template);
         $cv->setPublicTemplate($template);
-        $cv->setTheme($theme);
         $cv->setUrl($this->generateUserHash($user));
 
+        $userThemes = new UserThemes();
+
+        $userThemes->setCv($cv);
+        $userThemes->setTemplate($template);
+        $userThemes->setTheme($template->getTheme());
+
+        $this->em->persist($userThemes);
         $this->em->persist($cv);
+
         $this->em->flush();
 
         $this->initializeData($cv, $template);
@@ -97,13 +104,14 @@ class CvService {
     public function publishCv($templateId, $user) {
         $renderService = $this->container->get(CVRenderService::class);
 
-        $template = $this->em->getRepository('AppBundle:Template')->findOneById($templateId);
         $cv = $this->getUserCv($user);
+        $relations = $this->em->getRepository('AppBundle:UserThemes')->findOneBy(array('template' => $templateId, 'cv' => $cv));
 
-        $html = $renderService->getTemplateHtml($template, $cv, CVRenderService::RENDER_TYPE_PUBLIC);
-        $pdfHtml = $renderService->getTemplateHtml($template, $cv, CVRenderService::RENDER_TYPE_PDF);
 
-        $cv->setPublicTemplate($template);
+        $html = $renderService->getTemplateHtml($relations, CVRenderService::RENDER_TYPE_PUBLIC);
+        $pdfHtml = $renderService->getTemplateHtml($relations, CVRenderService::RENDER_TYPE_PDF);
+
+        $cv->setPublicTemplate($relations->getTemplate());
         $cv->setPublicHtml($html);
         $cv->setPdfHtml($pdfHtml);
 
@@ -281,6 +289,44 @@ class CvService {
         }
 
         $this->em->refresh($slot);
+    }
+
+    public function updateRelations($templateId, $cv, $themeId = null) {
+        $userThemeRepository = $this->em->getRepository('AppBundle:UserThemes');
+
+        $relations = $userThemeRepository->findOneBy(array('template' => $templateId, 'cv' => $cv));
+
+        if (is_null($relations)) {
+            $template = $this->em->getRepository('AppBundle:Template')->findOneById($templateId);
+
+            $relations = new UserThemes();
+
+            $relations->setCv($cv);
+            $relations->setTemplate($template);
+            $relations->setTheme($template->getTheme());
+        }
+
+        if (!is_null($themeId)) {
+            $theme = $this->em->getRepository('AppBundle:Theme')->findOneById($themeId);
+            $relations->setTheme($theme);
+        }
+
+        $cv->setTemplate($relations->getTemplate());
+
+        $this->em->persist($cv);
+        $this->em->persist($relations);
+
+        $this->em->flush();
+
+        return $relations;
+    }
+
+    public function getRelations($user) {
+        $cv = $this->getUserCv($user);
+
+        $relations = $this->em->getRepository('AppBundle:UserThemes')->findOneBy(array('template' => $cv->getTemplate(), 'cv' => $cv));
+
+        return $relations;
     }
 
     private function mapFixedData($template, $cv) {

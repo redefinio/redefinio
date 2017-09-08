@@ -50,14 +50,12 @@ class ApiController extends Controller
         $em = $this->getDoctrine()->getManager();
         $cvRenderService = $this->get(CVRenderService::class);
         $service = $this->get(CvService::class);
-        $repository = $this->getDoctrine()->getRepository('AppBundle:Template');
 
-        $template = $repository->findOneById($id);
         $cv = $this->get(CvService::class)->getUserCv($this->getUser());
-        $cv->setTemplate($template);
 
-        $em->persist($cv);
-        $em->flush();
+        $relations = $this->get(CvService::class)->updateRelations($id, $cv);
+
+        $template = $relations->getTemplate();
 
         foreach($template->getTemplateSlots() as $slot) {
             $dataBlocks = $em->getRepository('AppBundle:BlockData')->findBy(array('template_slot' => $slot, 'cv' => $cv));
@@ -75,7 +73,7 @@ class ApiController extends Controller
         }
 
         return new JsonResponse(array(
-            'html' => $cvRenderService->getTemplateHtml($template, $cv),
+            'html' => $cvRenderService->getTemplateHtml($relations),
             'themes' => $this->renderView('cv/themes.html.twig', array(
                 'cv' => $cv
             ))
@@ -100,10 +98,11 @@ class ApiController extends Controller
      * @Method("GET")
      */
     public function getPublicHtml(Request $request) {
-        $cv = $this->get(CvService::class)->getUserCv($this->getUser());
 
+
+        $relations = $this->get(CvService::class)->getRelations($this->getUser());
         return new JsonResponse(array(
-            'html' => $this->get(CVRenderService::class)->getTemplateHtml($cv->getTemplate(), $cv)
+            'html' => $this->get(CVRenderService::class)->getTemplateHtml($relations)
         ));
     }
 
@@ -163,6 +162,22 @@ class ApiController extends Controller
         $service->publishCv($templateId, $this->getUser());
 
         return new Response();
+    }
+
+    /**
+     * @Route("/theme", name="api_set_theme")
+     * @Method("PUT")
+     */
+    public function setTheme(Request $request) {
+        $service = $this->get(CvService::class);
+
+        $temapleId = $request->get("templateId");
+        $themeId = $request->get("themeId");
+        $cv = $service->getUserCv($this->getUser());
+
+        $this->get(CvService::class)->updateRelations($temapleId, $cv, $themeId);
+
+        return new JsonResponse();
     }
 
     /**

@@ -4,6 +4,7 @@ namespace AppBundle\DataFixtures\ORM;
 use AppBundle\Entity\BlockTemplate;
 use AppBundle\Entity\CvData;
 use AppBundle\Entity\TemplatType;
+use AppBundle\Entity\UserThemes;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\Template;
@@ -300,13 +301,22 @@ class LoadAllData implements FixtureInterface
         $theme1_8->setCssSource('1_6.css');
         $manager->persist($theme1_8);
 
+        $template1->setTheme($theme1_1);
+
         $cv1 = new CV();
         $cv1->setUser($user1);
         $cv1->setUrl('my_great_cv');
         $cv1->setTemplate($template1);
         $cv1->setPublicTemplate($template1);
-        $cv1->setTheme($theme1_1);
         $manager->persist($cv1);
+
+
+        $user_themes = new UserThemes();
+
+        $user_themes->setCv($cv1);
+        $user_themes->setTheme($theme1_1);
+        $user_themes->setTemplate($template1);
+        $manager->persist($user_themes);
 
 
         $cvData_block_template = new CvData();
@@ -791,6 +801,9 @@ class LoadAllData implements FixtureInterface
         $theme2_15->setPrimaryColor('555000');
         $theme2_15->setCssSource('2_16.css');
         $manager->persist($theme2_15);
+
+
+        $template1->setTheme($theme2_1);
         
         $block1_6 = new BlockTemplate();
         $block1_6->setTitle('Contacts');
