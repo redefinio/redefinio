@@ -165,7 +165,7 @@ class CVController extends Controller
         if (is_null($cv->getPdfPath())) {
             $pdf = $this->get('knp_snappy.pdf');
 
-            $filePath = "upload/pdf/".$this->getUser()->getUrl().".pdf";
+            $filePath = "upload/pdf/".$cv->getUrl().".pdf";
 
             $pdf->generateFromHtml($cv->getPublicHtml(), $filePath, array(), true);
 
