@@ -29,7 +29,7 @@ class TemplateSlot
     private $template;
 
     /**
-     * @ORM\ManyToMany(targetEntity="BlockTemplate", mappedBy="template_slots")
+     * @ORM\ManyToMany(targetEntity="BlockTemplate")
      */
     private $blocks;
 

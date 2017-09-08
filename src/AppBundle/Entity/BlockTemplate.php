@@ -84,7 +84,7 @@ class BlockTemplate
     private $available_fields;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TemplateSlot", inversedBy="block_data")
+     * @ORM\ManyToOne(targetEntity="TemplateSlot")
      * @ORM\JoinColumn(name="template_slot_id", referencedColumnName="id")
      */
     private $slot;
