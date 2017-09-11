@@ -70,7 +70,7 @@
 
 {% block javascripts %}
 		<script type="text/javascript">
-            var apiUrl = location.protocol + "//" + location.host + "/app_dev.php/api";
+            var apiUrl = location.protocol + "//" + location.host + "/api";
             var templateUrl = "{{ path('cv_index') }}";
             var isEditing = true;
             var templateId = {{ cv.getTemplate().getId() }};
