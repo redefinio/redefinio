@@ -389,7 +389,7 @@ class CvService {
      */
     public function generateUserHash(User $user, $length = 10)
     {
-        $seed = 'JvKnrQWPsThuJteNQAuH' . $user->getId() . $user->getUsername();
+        $seed = 'JvKnrQWPsThuJteNQAuH' . $user->getId() . $user->getUsername().date('H:i:s \O\n d/m/Y');;
         $hash = sha1(uniqid($seed . mt_rand(), true));
 
         # To get a shorter version of the hash, just use substr

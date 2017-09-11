@@ -86,8 +86,9 @@ class ApiController extends Controller
      */
     public function uploadPhoto(Request $request) {
 
+        $test = "ddd";
         $photo = $request->files->all()[0];
-        $name = $this->getUser()->getId().".".$photo->guessExtension();
+        $name = $this->get(CvService::class)->generateUserHash($this->getUser()).".".$photo->guessExtension();
         $target = $photo->move('upload/photos', $name)->getPathname();
 
         return new JsonResponse(array('photo' => "/".$target));
