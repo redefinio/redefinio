@@ -626,7 +626,7 @@ class LoadAllData implements FixtureInterface
         $block1_4_1->setTitle('Education entry');
         $block1_4_1->setType(BlockTemplate::TYPE_EDUCATION_INNER);
         $block1_4_1->setTemplate($template1);
-        $block1_4_1->setHtmlSource('<div class="row"> <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 date"> <span data-placeholder="Date from">{{date_from}}</span> <span>-</span> <span data-key="date_to" data-placeholder="Date to">{{date_to}}</span> </div><div class="col-lg-10 col-md-9 col-sm-9 col-xs-12"> <div class="title" data-key="position" data-placeholder="Position">{{position}}</div><div class="company" data-key="company" data-placeholder="Company" data-is-child="true">{{company}}</div><div class="description" ata-placeholder="Description" data-key="description">{{description}}</div></div></div>');
+        $block1_4_1->setHtmlSource('<div class="row"> <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12 date"> <span data-key="date_from" data-placeholder="Date from">{{date_from}}</span> <span>-</span> <span data-key="date_to" data-placeholder="Date to">{{date_to}}</span> </div><div class="col-lg-10 col-md-9 col-sm-9 col-xs-12"> <div class="title" data-key="position" data-placeholder="Position">{{position}}</div><div class="company" data-key="company" data-placeholder="Company" data-is-child="true">{{company}}</div><div class="description" ata-placeholder="Description" data-key="description">{{description}}</div></div></div>');
         $block1_4_1->setAvailableFields(
             json_encode($this->getDefaultFields(TemplatType::TYPE_EDUCATION_INNER)));
         $manager->persist($block1_4_1);
