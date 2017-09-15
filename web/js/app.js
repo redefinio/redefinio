@@ -667,7 +667,7 @@ var Block = function () {
 
             API.renderBlock(blockId, function (response) {
                 _this4._toggleEditing();
-                _this4._updateHtml(_this4._element, response.html);
+                _this4._updateHtml(_this4._element, response.html, true);
             });
         }
     }, {
@@ -760,8 +760,12 @@ var Block = function () {
     }, {
         key: "_updateHtml",
         value: function _updateHtml(element, html) {
+            var editable = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
             $(element).html(html);
-            preapareBlockToEdit(element);
+            if (editable) {
+                preapareBlockToEdit(element);
+            }
         }
     }]);
 
