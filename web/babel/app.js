@@ -625,7 +625,7 @@ class Block {
 
         API.renderBlock(blockId, (response) => {
            this._toggleEditing();
-           this._updateHtml(this._element, response.html);
+           this._updateHtml(this._element, response.html, true);
         });
     }
 
@@ -715,9 +715,11 @@ class Block {
         $(e.target).parent().parent().detach();
     }
 
-    _updateHtml(element, html) {
+    _updateHtml(element, html, editable=false) {
         $(element).html(html)
-        preapareBlockToEdit(element);
+        if (editable) {
+            preapareBlockToEdit(element);
+        }
     }
 }
 

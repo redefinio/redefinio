@@ -25,6 +25,17 @@ class CvService {
     private $container;
     private $eventHandler;
 
+    private $blocksCount = array(
+        TemplatType::TYPE_EDUCATION => 1,
+        TemplatType::TYPE_TEXT => 1,
+        TemplatType::TYPE_EXPERIENCE => 1,
+        TemplatType::TYPE_SKILLS => 1,
+        TemplatType::TYPE_FIXED => 1,
+        TemplatType::TYPE_SKILLS_INNER => 4,
+        TemplatType::TYPE_EXPERIENCE_INNER => 3,
+        TemplatType::TYPE_EDUCATION_INNER => 3
+    );
+
     public function __construct(ContainerInterface $container) {
         $this->container = $container;
         $this->em = $this->container->get('doctrine')->getManager();
@@ -189,7 +200,9 @@ class CvService {
                     $childData[$key] = $childField;
                 }
 
-                $data['blocks'][] = $childData;
+                for ($i=0; $i < $this->blocksCount[$child->getType()]; $i++) {
+                    $data['blocks'][] = $childData;
+                }
             }
         }
 
