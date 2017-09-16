@@ -38,21 +38,24 @@ class EventHandlerService
 
     public function applyEvent(Event $event) {
         $eventSource = $this->storeEvent($event);
+        $block = null;
 
         switch (get_class($event)) {
             case 'AppBundle\Event\CreateDataEvent':
-                $this->applyCreateEvent($eventSource);
+                $block = $this->applyCreateEvent($eventSource);
                 break;
             case 'AppBundle\Event\UpdateDataEvent':
-                $this->applyUpdateEvent($eventSource);
+                $block = $this->applyUpdateEvent($eventSource);
                 break;
             case 'AppBundle\Event\SortBlockEvent':
-                $this->applySortEvent($eventSource);
+                $block = $this->applySortEvent($eventSource);
                 break;
             case 'AppBundle\Event\CreateBlockEvent':
-                $this->applyCreateBlockEvent($eventSource);
+                $block = $this->applyCreateBlockEvent($eventSource);
                 break;
         }
+
+        return $block;
     }
 
     private function storeEvent(Event $event) {
@@ -188,6 +191,9 @@ class EventHandlerService
             $this->em->persist($block);
             $this->em->flush();
         }
+
+
+        return $block;
 
     }
 }

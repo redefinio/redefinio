@@ -668,7 +668,7 @@ class Block {
                     });
                 }
                 else {
-                    data['fields'][editableElements[i].getAttribute('data-key')] = editableElements[i].innerHTML;
+                    data['fields'][editableElements[i].getAttribute('data-key')] = this.stripTags(editableElements[i].innerHTML);
                 }
             }
             else {
@@ -692,9 +692,15 @@ class Block {
 
         API.saveBlock(data, (response) => {
             this._toggleEditing();
-            this._updateHtml(this._element, response.html);
+            let element = this._element;
+            this._updateHtml(this._element, response.html, true);
         });
 
+    }
+
+    stripTags(html) {
+        var regex = /(<([^>]+)>)/ig
+        return html.replace(regex, "");
     }
 
     delete() {
@@ -819,7 +825,7 @@ const API = {
                 method: 'POST',
                 data: block,
                 success: (data) => {
-                    cb(true);
+                    cb(data);
                 },
                 complete: () => {
                 },

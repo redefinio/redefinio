@@ -239,15 +239,20 @@ class ApiController extends Controller
      */
     public function blockNewAction($wildcard, Request $request) {
         $service = $this->get(CvService::class);
+        $response = new JsonResponse();
 
         $cv = $service->getUserCv($this->getUser());
         $templateId = $request->get('templateId', null);
         $blockType = $request->get('blockType', null);
         $formData = $request->get('fields', array());
 
-        $service->createNewBlock($cv, $wildcard, $templateId, $blockType, $formData);
+        $block = $service->createNewBlock($cv, $wildcard, $templateId, $blockType, $formData);
 
-        return new Response();
+        $response->setData(array(
+            'html' => $this->get(CVRenderService::class)->renderBlock($block)
+        ));
+
+        return $response;
     }
 
     /**

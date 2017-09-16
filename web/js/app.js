@@ -712,7 +712,7 @@ var Block = function () {
                             });
                         })();
                     } else {
-                        data['fields'][editableElements[_i12].getAttribute('data-key')] = editableElements[_i12].innerHTML;
+                        data['fields'][editableElements[_i12].getAttribute('data-key')] = this.stripTags(editableElements[_i12].innerHTML);
                     }
                 } else {
                     data['fields']['blocks'] = [];
@@ -735,8 +735,15 @@ var Block = function () {
 
             API.saveBlock(data, function (response) {
                 _this5._toggleEditing();
-                _this5._updateHtml(_this5._element, response.html);
+                var element = _this5._element;
+                _this5._updateHtml(_this5._element, response.html, true);
             });
+        }
+    }, {
+        key: "stripTags",
+        value: function stripTags(html) {
+            var regex = /(<([^>]+)>)/ig;
+            return html.replace(regex, "");
         }
     }, {
         key: "delete",
@@ -858,7 +865,7 @@ var API = {
                 method: 'POST',
                 data: block,
                 success: function success(data) {
-                    cb(true);
+                    cb(data);
                 },
                 complete: function complete() {},
                 error: function error() {}

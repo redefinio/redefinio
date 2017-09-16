@@ -126,8 +126,7 @@ class LoadAllData implements FixtureInterface
         $block1_2->setType(BlockTemplate::TYPE_TEXT);
         $block1_2->setSlot($templateSlot1_2);
         $block1_2->setTemplate($template1);
-        $block1_2->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.BlockTemplate::TYPE_TEXT.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-user"></i><span data-key="title" data-placeholder="Summary">{{ title }}</span></h2><p data-key="text" data-placeholder="Text goes here">{{ text }}</p>
-            </div>');
+        $block1_2->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.BlockTemplate::TYPE_TEXT.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-user"></i><span data-key="title" data-placeholder="Summary">{{ title }}</span></h2><p data-key="text" data-placeholder="Text goes here">{{ text|raw }}</p></div>');
         $block1_2->setAvailableFields(
             json_encode(array(
                 'title' => '',
@@ -223,11 +222,11 @@ class LoadAllData implements FixtureInterface
 
         $theme1_1 = new Theme();
         $theme1_1->setTemplate($template1);
-        $theme1_1->setBackgroundColor('455969');
+        $theme1_1->setBackgroundColor('f1f5f8');
         $theme1_1->setPageColor('ffffff');
-        $theme1_1->setTitleColor('000000');
-        $theme1_1->setParagraphColor('777777');
-        $theme1_1->setPrimaryColor('288dd5');
+        $theme1_1->setTitleColor('1dce79');
+        $theme1_1->setParagraphColor('2b2724');
+        $theme1_1->setPrimaryColor('8b8b8b');
         $theme1_1->setCssSource('styles.css');
         $manager->persist($theme1_1);
 
@@ -235,69 +234,69 @@ class LoadAllData implements FixtureInterface
         $theme1_2->setTemplate($template1);
         $theme1_2->setBackgroundColor('f1f5f8');
         $theme1_2->setPageColor('ffffff');
-        $theme1_2->setTitleColor('000000');
-        $theme1_2->setParagraphColor('777777');
-        $theme1_2->setPrimaryColor('288dd5');
+        $theme1_2->setTitleColor('3db0e5');
+        $theme1_2->setParagraphColor('2A2720');
+        $theme1_2->setPrimaryColor('8b8b8b');
         $theme1_2->setCssSource('1_2.css');
         $manager->persist($theme1_2);
 
         $theme1_3 = new Theme();
         $theme1_3->setTemplate($template1);
-        $theme1_3->setBackgroundColor('333111');
+        $theme1_3->setBackgroundColor('f1f5f8');
         $theme1_3->setPageColor('555000');
-        $theme1_3->setTitleColor('555000');
-        $theme1_3->setParagraphColor('555000');
-        $theme1_3->setPrimaryColor('555000');
+        $theme1_3->setTitleColor('065ecd');
+        $theme1_3->setParagraphColor('2b2724');
+        $theme1_3->setPrimaryColor('8b8b8b');
         $theme1_3->setCssSource('1_7.css');
         $manager->persist($theme1_3);
 
         $theme1_4 = new Theme();
         $theme1_4->setTemplate($template1);
-        $theme1_4->setBackgroundColor('333111');
+        $theme1_4->setBackgroundColor('f1f5f8');
         $theme1_4->setPageColor('555000');
-        $theme1_4->setTitleColor('555000');
-        $theme1_4->setParagraphColor('555000');
-        $theme1_4->setPrimaryColor('555000');
+        $theme1_4->setTitleColor('000');
+        $theme1_4->setParagraphColor('2b2724');
+        $theme1_4->setPrimaryColor('8b8b8b');
         $theme1_4->setCssSource('1_8.css');
         $manager->persist($theme1_4);
 
         $theme1_5 = new Theme();
         $theme1_5->setTemplate($template1);
-        $theme1_5->setBackgroundColor('333111');
+        $theme1_5->setBackgroundColor('f1f5f8');
         $theme1_5->setPageColor('555000');
-        $theme1_5->setTitleColor('555000');
-        $theme1_5->setParagraphColor('555000');
-        $theme1_5->setPrimaryColor('555000');
+        $theme1_5->setTitleColor('00c897');
+        $theme1_5->setParagraphColor('2b2724');
+        $theme1_5->setPrimaryColor('8b8b8b');
         $theme1_5->setCssSource('1_9.css');
         $manager->persist($theme1_5);
 
         $theme1_6 = new Theme();
         $theme1_6->setTemplate($template1);
-        $theme1_6->setBackgroundColor('333111');
+        $theme1_6->setBackgroundColor('f1f5f8');
         $theme1_6->setPageColor('555000');
-        $theme1_6->setTitleColor('555000');
-        $theme1_6->setParagraphColor('555000');
-        $theme1_6->setPrimaryColor('555000');
+        $theme1_6->setTitleColor('ff9600');
+        $theme1_6->setParagraphColor('2b2724');
+        $theme1_6->setPrimaryColor('8b8b8b');
         $theme1_6->setCssSource('1_3.css');
         $manager->persist($theme1_6);
 
         $theme1_7 = new Theme();
         $theme1_7->setTemplate($template1);
-        $theme1_7->setBackgroundColor('333111');
+        $theme1_7->setBackgroundColor('f1f5f8');
         $theme1_7->setPageColor('555000');
-        $theme1_7->setTitleColor('555000');
-        $theme1_7->setParagraphColor('555000');
-        $theme1_7->setPrimaryColor('555000');
+        $theme1_7->setTitleColor('a976de');
+        $theme1_7->setParagraphColor('2b2724');
+        $theme1_7->setPrimaryColor('8b8b8b');
         $theme1_7->setCssSource('1_4.css');
         $manager->persist($theme1_7);
 
         $theme1_8 = new Theme();
         $theme1_8->setTemplate($template1);
-        $theme1_8->setBackgroundColor('333111');
+        $theme1_8->setBackgroundColor('f1f5f8');
         $theme1_8->setPageColor('555000');
-        $theme1_8->setTitleColor('555000');
-        $theme1_8->setParagraphColor('555000');
-        $theme1_8->setPrimaryColor('555000');
+        $theme1_8->setTitleColor('ff4242');
+        $theme1_8->setParagraphColor('2b2724');
+        $theme1_8->setPrimaryColor('8b8b8b');
         $theme1_8->setCssSource('1_6.css');
         $manager->persist($theme1_8);
 
@@ -654,151 +653,151 @@ class LoadAllData implements FixtureInterface
 
         $theme2_1 = new Theme();
         $theme2_1->setTemplate($template1);
-        $theme2_1->setBackgroundColor('333111');
+        $theme2_1->setBackgroundColor('ff4242');
         $theme2_1->setPageColor('555000');
-        $theme2_1->setTitleColor('555000');
-        $theme2_1->setParagraphColor('555000');
-        $theme2_1->setPrimaryColor('555000');
+        $theme2_1->setTitleColor('000');
+        $theme2_1->setParagraphColor('666');
+        $theme2_1->setPrimaryColor('666');
         $theme2_1->setCssSource('2_2.css');
         $manager->persist($theme2_1);
 
         $theme2_2 = new Theme();
         $theme2_2->setTemplate($template1);
-        $theme2_2->setBackgroundColor('333111');
+        $theme2_2->setBackgroundColor('065ecd');
         $theme2_2->setPageColor('555000');
-        $theme2_2->setTitleColor('555000');
-        $theme2_2->setParagraphColor('555000');
-        $theme2_2->setPrimaryColor('555000');
+        $theme2_2->setTitleColor('000');
+        $theme2_2->setParagraphColor('666');
+        $theme2_2->setPrimaryColor('666');
         $theme2_2->setCssSource('2_3.css');
         $manager->persist($theme2_2);
         
         $theme2_3 = new Theme();
         $theme2_3->setTemplate($template1);
-        $theme2_3->setBackgroundColor('333111');
+        $theme2_3->setBackgroundColor('000');
         $theme2_3->setPageColor('555000');
-        $theme2_3->setTitleColor('555000');
-        $theme2_3->setParagraphColor('555000');
-        $theme2_3->setPrimaryColor('555000');
+        $theme2_3->setTitleColor('000');
+        $theme2_3->setParagraphColor('666');
+        $theme2_3->setPrimaryColor('666');
         $theme2_3->setCssSource('2_4.css');
         $manager->persist($theme2_3);
         
         $theme2_4 = new Theme();
         $theme2_4->setTemplate($template1);
-        $theme2_4->setBackgroundColor('333111');
+        $theme2_4->setBackgroundColor('14194d');
         $theme2_4->setPageColor('555000');
-        $theme2_4->setTitleColor('555000');
-        $theme2_4->setParagraphColor('555000');
-        $theme2_4->setPrimaryColor('555000');
+        $theme2_4->setTitleColor('000');
+        $theme2_4->setParagraphColor('666');
+        $theme2_4->setPrimaryColor('666');
         $theme2_4->setCssSource('2_5.css');
         $manager->persist($theme2_4);
         
         $theme2_5 = new Theme();
         $theme2_5->setTemplate($template1);
-        $theme2_5->setBackgroundColor('333111');
+        $theme2_5->setBackgroundColor('00c897');
         $theme2_5->setPageColor('555000');
-        $theme2_5->setTitleColor('555000');
-        $theme2_5->setParagraphColor('555000');
-        $theme2_5->setPrimaryColor('555000');
+        $theme2_5->setTitleColor('000');
+        $theme2_5->setParagraphColor('666');
+        $theme2_5->setPrimaryColor('666');
         $theme2_5->setCssSource('2_6.css');
         $manager->persist($theme2_5);
         
         $theme2_6 = new Theme();
         $theme2_6->setTemplate($template1);
-        $theme2_6->setBackgroundColor('333111');
+        $theme2_6->setBackgroundColor('ff9600');
         $theme2_6->setPageColor('555000');
-        $theme2_6->setTitleColor('555000');
-        $theme2_6->setParagraphColor('555000');
-        $theme2_6->setPrimaryColor('555000');
+        $theme2_6->setTitleColor('000');
+        $theme2_6->setParagraphColor('666');
+        $theme2_6->setPrimaryColor('666');
         $theme2_6->setCssSource('2_7.css');
         $manager->persist($theme2_6);
         
         $theme2_7 = new Theme();
         $theme2_7->setTemplate($template1);
-        $theme2_7->setBackgroundColor('333111');
+        $theme2_7->setBackgroundColor('a976de');
         $theme2_7->setPageColor('555000');
-        $theme2_7->setTitleColor('555000');
-        $theme2_7->setParagraphColor('555000');
-        $theme2_7->setPrimaryColor('555000');
+        $theme2_7->setTitleColor('000');
+        $theme2_7->setParagraphColor('666');
+        $theme2_7->setPrimaryColor('666');
         $theme2_7->setCssSource('2_8.css');
         $manager->persist($theme2_7);
         
         $theme2_8 = new Theme();
         $theme2_8->setTemplate($template1);
-        $theme2_8->setBackgroundColor('333111');
+        $theme2_8->setBackgroundColor('e7cfff');
         $theme2_8->setPageColor('555000');
-        $theme2_8->setTitleColor('555000');
-        $theme2_8->setParagraphColor('555000');
-        $theme2_8->setPrimaryColor('555000');
+        $theme2_8->setTitleColor('000');
+        $theme2_8->setParagraphColor('666');
+        $theme2_8->setPrimaryColor('666');
         $theme2_8->setCssSource('2_9.css');
         $manager->persist($theme2_8);
         
         $theme2_9 = new Theme();
         $theme2_9->setTemplate($template1);
-        $theme2_9->setBackgroundColor('333111');
+        $theme2_9->setBackgroundColor('eee');
         $theme2_9->setPageColor('555000');
-        $theme2_9->setTitleColor('555000');
-        $theme2_9->setParagraphColor('555000');
-        $theme2_9->setPrimaryColor('555000');
+        $theme2_9->setTitleColor('000');
+        $theme2_9->setParagraphColor('666');
+        $theme2_9->setPrimaryColor('666');
         $theme2_9->setCssSource('2_10.css');
         $manager->persist($theme2_9);
 
         $theme2_10 = new Theme();
         $theme2_10->setTemplate($template1);
-        $theme2_10->setBackgroundColor('333111');
+        $theme2_10->setBackgroundColor('ffcfcf');
         $theme2_10->setPageColor('555000');
-        $theme2_10->setTitleColor('555000');
-        $theme2_10->setParagraphColor('555000');
-        $theme2_10->setPrimaryColor('555000');
+        $theme2_10->setTitleColor('000');
+        $theme2_10->setParagraphColor('666');
+        $theme2_10->setPrimaryColor('666');
         $theme2_10->setCssSource('2_11.css');
         $manager->persist($theme2_10);
         
         $theme2_11 = new Theme();
         $theme2_11->setTemplate($template1);
-        $theme2_11->setBackgroundColor('333111');
+        $theme2_11->setBackgroundColor('cfeeff');
         $theme2_11->setPageColor('555000');
-        $theme2_11->setTitleColor('555000');
-        $theme2_11->setParagraphColor('555000');
-        $theme2_11->setPrimaryColor('555000');
+        $theme2_11->setTitleColor('000');
+        $theme2_11->setParagraphColor('666');
+        $theme2_11->setPrimaryColor('666');
         $theme2_11->setCssSource('2_12.css');
         $manager->persist($theme2_11);
         
         $theme2_12 = new Theme();
         $theme2_12->setTemplate($template1);
-        $theme2_12->setBackgroundColor('333111');
+        $theme2_12->setBackgroundColor('dad2cd');
         $theme2_12->setPageColor('555000');
-        $theme2_12->setTitleColor('555000');
-        $theme2_12->setParagraphColor('555000');
-        $theme2_12->setPrimaryColor('555000');
+        $theme2_12->setTitleColor('000');
+        $theme2_12->setParagraphColor('666');
+        $theme2_12->setPrimaryColor('666');
         $theme2_12->setCssSource('2_13.css');
         $manager->persist($theme2_12);
         
         $theme2_13 = new Theme();
         $theme2_13->setTemplate($template1);
-        $theme2_13->setBackgroundColor('333111');
+        $theme2_13->setBackgroundColor('00ffd5');
         $theme2_13->setPageColor('555000');
-        $theme2_13->setTitleColor('555000');
-        $theme2_13->setParagraphColor('555000');
-        $theme2_13->setPrimaryColor('555000');
+        $theme2_13->setTitleColor('000');
+        $theme2_13->setParagraphColor('666');
+        $theme2_13->setPrimaryColor('666');
         $theme2_13->setCssSource('2_14.css');
         $manager->persist($theme2_13);
         
         $theme2_14 = new Theme();
         $theme2_14->setTemplate($template1);
-        $theme2_14->setBackgroundColor('333111');
+        $theme2_14->setBackgroundColor('ffe500');
         $theme2_14->setPageColor('555000');
-        $theme2_14->setTitleColor('555000');
-        $theme2_14->setParagraphColor('555000');
-        $theme2_14->setPrimaryColor('555000');
+        $theme2_14->setTitleColor('000');
+        $theme2_14->setParagraphColor('666');
+        $theme2_14->setPrimaryColor('666');
         $theme2_14->setCssSource('2_15.css');
         $manager->persist($theme2_14);
         
         $theme2_15 = new Theme();
         $theme2_15->setTemplate($template1);
-        $theme2_15->setBackgroundColor('333111');
+        $theme2_15->setBackgroundColor('00eeff');
         $theme2_15->setPageColor('555000');
-        $theme2_15->setTitleColor('555000');
-        $theme2_15->setParagraphColor('555000');
-        $theme2_15->setPrimaryColor('555000');
+        $theme2_15->setTitleColor('000');
+        $theme2_15->setParagraphColor('666');
+        $theme2_15->setPrimaryColor('666');
         $theme2_15->setCssSource('2_16.css');
         $manager->persist($theme2_15);
 

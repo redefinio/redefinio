@@ -83,7 +83,7 @@ class CvService {
         $event->setBlockType($blockType);
         $event->setFormData($formData);
 
-        $this->apply($event);
+        return $this->apply($event);
     }
 
     public function updateBlock($blockId, $formData, $wildcard) {
@@ -390,9 +390,9 @@ class CvService {
      */
     private function apply($event) {
         if (is_array($event)) {
-            $this->eventHandler->applyEvents($event);
+            return $this->eventHandler->applyEvents($event);
         } else {
-            $this->eventHandler->applyEvent($event);
+            return $this->eventHandler->applyEvent($event);
         }
     }
 
