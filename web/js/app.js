@@ -103,8 +103,8 @@ var loadTemplate = function loadTemplate(templateId) {
 var setPlaceholders = function setPlaceholders() {
     var placeholders = $('body').find("[data-placeholder]");
 
-    for (var _i = 0; _i < placeholders.length; _i++) {
-        var element = $(placeholders[_i]);
+    for (var i = 0; i < placeholders.length; i++) {
+        var element = $(placeholders[i]);
         if (element.html() == "") {
             var value = element.data('placeholder');
             element.html(value);
@@ -118,14 +118,14 @@ var prepareToEditTemplate = function prepareToEditTemplate() {
 
     //Setup zones
     var zones = $('[data-zone-block-types]');
-    for (var _i2 = 0; _i2 < zones.length; _i2++) {
-        new Zone(zones[_i2]);
+    for (var i = 0; i < zones.length; i++) {
+        new Zone(zones[i]);
     }
 
     //Setup blocks
     var blocks = $('[data-block-id]');
-    for (var _i3 = 0; _i3 < blocks.length; _i3++) {
-        new Block(blocks[_i3]);
+    for (var _i = 0; _i < blocks.length; _i++) {
+        new Block(blocks[_i]);
     }
 };
 
@@ -322,19 +322,19 @@ var Zone = function () {
                 newBlock.firstChild.classList.add('is-editing');
 
                 var editableElements = newBlock.querySelectorAll('[data-key]');
-                for (var _i4 = 0; _i4 < editableElements.length; _i4++) {
-                    var key = editableElements[_i4].getAttribute('data-key');
+                for (var i = 0; i < editableElements.length; i++) {
+                    var key = editableElements[i].getAttribute('data-key');
                     if (['blocks'].indexOf(key) === -1) {
-                        editableElements[_i4].setAttribute('contenteditable', true);
+                        editableElements[i].setAttribute('contenteditable', true);
                     }
                 }
 
                 var sliders = $(newBlock).find('.skills');
-                for (var _i5 = 0; _i5 < sliders.length; _i5++) {
-                    if ($(sliders[_i5]).parent().find('.slider').length === 0) {
+                for (var _i2 = 0; _i2 < sliders.length; _i2++) {
+                    if ($(sliders[_i2]).parent().find('.slider').length === 0) {
                         var slider = document.createElement('div');
                         slider.classList.add('slider');
-                        var value = $(sliders[_i5]).parent('.skills-group').attr('data-value');
+                        var value = $(sliders[_i2]).parent('.skills-group').attr('data-value');
                         $(slider).slider({
                             range: 'max',
                             min: 0,
@@ -346,7 +346,7 @@ var Zone = function () {
                             }
                         });
 
-                        $(sliders[_i5]).after(slider);
+                        $(sliders[_i2]).after(slider);
                     }
                 }
 
@@ -384,10 +384,6 @@ var Zone = function () {
                     if (types.indexOf(type) === -1) {
                         $(ui.sender).sortable('cancel');
                     }
-
-                    if ($(zones[i]).hasClass('ui-sortable')) {
-                        $('[data-zone]').sortable('enable');
-                    }
                 },
                 remove: function remove(e, ui) {},
                 sort: function sort(e, ui) {},
@@ -395,20 +391,29 @@ var Zone = function () {
                     var type = $(ui.item).data('blockType');
                     var zones = $('[data-zone]');
 
-                    for (var _i6 = 0; _i6 < zones.length; _i6++) {
+                    for (var i = 0; i < zones.length; i++) {
                         var types = [];
-                        if ($(zones[_i6]).data('zoneBlockTypes') !== undefined) {
-                            types = $(zones[_i6]).data('zoneBlockTypes').map(function (obj) {
+                        var zone = $(zones[i]);
+                        if ($(zones[i]).data('zoneBlockTypes') !== undefined) {
+                            types = $(zones[i]).data('zoneBlockTypes').map(function (obj) {
                                 return obj.type;
                             });
                         }
 
-                        if (types.indexOf(type) === -1 && $(zones[_i6]).hasClass('ui-sortable')) {
-                            $(zones[_i6]).sortable('disable');
+                        if (types.indexOf(type) === -1 && $(zones[i]).hasClass('ui-sortable')) {
+                            $(zones[i]).sortable('disable');
                         }
                     }
                 },
-                stop: function stop(e, ui) {},
+                stop: function stop(e, ui) {
+                    var zones = $('[data-zone]');
+
+                    for (var i = 0; i < zones.length; i++) {
+                        if ($(zones[i]).hasClass('ui-sortable')) {
+                            $(zones[i]).sortable('enable');
+                        }
+                    }
+                },
                 update: function update(e, ui) {
                     var parent = ui.item.parent('[data-zone]');
                     var wildcard = $(parent).data('zone');
@@ -416,8 +421,8 @@ var Zone = function () {
 
                     var positions = [];
 
-                    for (var _i7 = 0; _i7 < children.length; _i7++) {
-                        var position = $(children[_i7]).data('blockId');
+                    for (var i = 0; i < children.length; i++) {
+                        var position = $(children[i]).data('blockId');
                         positions.push(position);
                     }
 
@@ -518,8 +523,8 @@ var Block = function () {
         key: "_fixPlaceholders",
         value: function _fixPlaceholders() {
             var placeholders = $(this._element).find('[data-placeholder]');
-            for (var _i8 = 0; _i8 < placeholders.length; _i8++) {
-                var el = $(placeholders[_i8])[0];
+            for (var i = 0; i < placeholders.length; i++) {
+                var el = $(placeholders[i])[0];
                 var placeholder = el.dataset.placeholder;
                 if (el.innerHTML.indexOf('{{') > -1) {
                     $(el).html(placeholder);
@@ -599,10 +604,10 @@ var Block = function () {
 
                 //TODO: refactor edit function
                 var editableElements = _this3._element.querySelectorAll('[data-key]');
-                for (var _i9 = 0; _i9 < editableElements.length; _i9++) {
-                    var key = editableElements[_i9].getAttribute('data-key');
+                for (var i = 0; i < editableElements.length; i++) {
+                    var key = editableElements[i].getAttribute('data-key');
                     if (['skill', 'blocks'].indexOf(key) === -1) {
-                        editableElements[_i9].setAttribute('contenteditable', true);
+                        editableElements[i].setAttribute('contenteditable', true);
                     }
                 }
             });
@@ -617,23 +622,23 @@ var Block = function () {
         key: "edit",
         value: function edit() {
             var editableElements = this._element.querySelectorAll('[data-key]');
-            for (var _i10 = 0; _i10 < editableElements.length; _i10++) {
-                var key = editableElements[_i10].getAttribute('data-key');
+            for (var i = 0; i < editableElements.length; i++) {
+                var key = editableElements[i].getAttribute('data-key');
                 if (['blocks'].indexOf(key) === -1) {
-                    editableElements[_i10].setAttribute('contenteditable', true);
+                    editableElements[i].setAttribute('contenteditable', true);
                 }
 
-                if (editableElements[_i10].innerHTML == "" && editableElements[_i10].classList.contains('hidden')) {
-                    editableElements[_i10].classList.remove('hidden');
+                if (editableElements[i].innerHTML == "" && editableElements[i].classList.contains('hidden')) {
+                    editableElements[i].classList.remove('hidden');
                 }
             }
 
             var sliders = $(this._element).find('.skills');
-            for (var _i11 = 0; _i11 < sliders.length; _i11++) {
-                if ($(sliders[_i11]).parent().find('.slider').length === 0) {
+            for (var _i3 = 0; _i3 < sliders.length; _i3++) {
+                if ($(sliders[_i3]).parent().find('.slider').length === 0) {
                     var slider = document.createElement('div');
                     slider.classList.add('slider');
-                    var value = $(sliders[_i11]).parent('.skills-group').attr('data-value');
+                    var value = $(sliders[_i3]).parent('.skills-group').attr('data-value');
                     $(slider).slider({
                         range: 'max',
                         min: 0,
@@ -645,7 +650,7 @@ var Block = function () {
                         }
                     });
 
-                    $(sliders[_i11]).after(slider);
+                    $(sliders[_i3]).after(slider);
                 }
             }
 
@@ -685,34 +690,34 @@ var Block = function () {
             data['zone'] = $(this._element).parent().data('zone');
             data['fields'] = {};
 
-            for (var _i12 = 0; _i12 < editableElements.length; _i12++) {
+            for (var i = 0; i < editableElements.length; i++) {
 
-                if (editableElements[_i12].getAttribute('data-key') !== 'blocks') {
+                if (editableElements[i].getAttribute('data-key') !== 'blocks') {
                     if (data['fields']['blocks'] !== undefined) {
                         var keysCount = $(this._element).find('[data-key="blocks"]').find('[data-key]');
                         var sameKeysCount = $(this._element).find('[data-key="blocks"]').find('[data-key="' + keysCount[0].getAttribute('data-key') + '"]');
 
                         var obj = {};
                         for (var j = 0; j < keysCount.length / sameKeysCount.length; j++) {
-                            var dataValue = editableElements[_i12 + j].getAttribute('data-value') ? editableElements[_i12 + j].getAttribute('data-value') : editableElements[_i12 + j].innerHTML;
-                            var dataKey = editableElements[_i12 + j].getAttribute('data-key');
+                            var dataValue = editableElements[i + j].getAttribute('data-value') ? editableElements[i + j].getAttribute('data-value') : editableElements[i + j].innerHTML;
+                            var dataKey = editableElements[i + j].getAttribute('data-key');
                             obj[dataKey] = dataValue;
                         }
 
-                        _i12 += keysCount.length / sameKeysCount.length - 1;
+                        i += keysCount.length / sameKeysCount.length - 1;
 
                         data['fields']['blocks'].push(obj);
-                    } else if (editableElements[_i12].getAttribute('data-key') == 'photo') {
+                    } else if (editableElements[i].getAttribute('data-key') == 'photo') {
                         (function () {
-                            var files = editableElements[_i12].files;
-                            var key = editableElements[_i12].getAttribute('data-key');
+                            var files = editableElements[i].files;
+                            var key = editableElements[i].getAttribute('data-key');
                             API.uploadPhoto(files, function (response) {
                                 data['fields'][key] = response.photo;
                                 $('.photo img').attr('src', response.photo);
                             });
                         })();
                     } else {
-                        data['fields'][editableElements[_i12].getAttribute('data-key')] = this.stripTags(editableElements[_i12].innerHTML);
+                        data['fields'][editableElements[i].getAttribute('data-key')] = this.stripTags(editableElements[i].innerHTML);
                     }
                 } else {
                     data['fields']['blocks'] = [];

@@ -343,10 +343,6 @@ class Zone {
                 if (types.indexOf(type) === -1) {
                     $(ui.sender).sortable('cancel');
                 }
-
-                if ($(zones[i]).hasClass('ui-sortable')) {
-                    $('[data-zone]').sortable('enable');
-                }
             },
             remove: (e, ui) => {
             },
@@ -358,6 +354,7 @@ class Zone {
 
                 for (let i = 0; i < zones.length; i++) {
                     let types = [];
+                    let zone = $(zones[i]);
                     if ($(zones[i]).data('zoneBlockTypes') !== undefined) {
                         types = $(zones[i]).data('zoneBlockTypes').map((obj) => obj.type);
                     }
@@ -368,6 +365,13 @@ class Zone {
                 }
             },
             stop: (e, ui) => {
+                let zones = $('[data-zone]');
+
+                for (let i = 0; i < zones.length; i++) {
+                    if ($(zones[i]).hasClass('ui-sortable')) {
+                        $(zones[i]).sortable('enable');
+                    }
+                }
             },
             update: (e, ui) => {
                 let parent = ui.item.parent('[data-zone]');
