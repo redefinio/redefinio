@@ -75,6 +75,7 @@ class ApiController extends Controller
         return new JsonResponse(array(
             'html' => $cvRenderService->getTemplateHtml($relations),
             'themes' => $this->renderView('cv/themes.html.twig', array(
+                'currentTheme' => $relations->getTheme(),
                 'cv' => $cv
             ))
         ));

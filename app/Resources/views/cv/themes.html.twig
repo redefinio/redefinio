@@ -3,7 +3,7 @@
         <div class="theme-container" style="background: #{{ theme.backgroundColor }};">
             <div class="theme">
                     <span class="check-icon"
-                          style="{% if theme.id == cv.getTemplate().getId() %} display: block; {% endif %}">
+                          style="{% if theme.id == currentTheme.getId() %} display: block; {% endif %}">
                       <img src="{{ asset('img/check.png') }}" alt="Icon">
                     </span>
                 <span class="theme-palette" style="background:#{{ theme.titleColor }};"></span>
