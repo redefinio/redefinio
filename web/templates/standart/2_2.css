@@ -19,3 +19,7 @@
 .blocks.indicator .title {
     color: rgba(255, 255, 255, 0.75)
 }
+
+.standart-sidebar .group.title {
+   color: rgba(255, 255, 255, 0.75)
+}
