@@ -735,7 +735,6 @@ var Block = function () {
 
             API.saveBlock(data, function (response) {
                 _this5._toggleEditing();
-                var element = _this5._element;
                 _this5._updateHtml(_this5._element, response.html, true);
             });
         }
@@ -770,6 +769,7 @@ var Block = function () {
             var editable = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
             $(element).html(html);
+            setPlaceholders();
             if (editable) {
                 preapareBlockToEdit(element);
             }

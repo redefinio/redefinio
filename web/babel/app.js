@@ -692,7 +692,6 @@ class Block {
 
         API.saveBlock(data, (response) => {
             this._toggleEditing();
-            let element = this._element;
             this._updateHtml(this._element, response.html, true);
         });
 
@@ -723,6 +722,7 @@ class Block {
 
     _updateHtml(element, html, editable=false) {
         $(element).html(html)
+        setPlaceholders();
         if (editable) {
             preapareBlockToEdit(element);
         }
