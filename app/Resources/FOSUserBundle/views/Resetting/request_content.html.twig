@@ -10,7 +10,7 @@
                 <h1>Reset your password</h1>
                 <form action="{{ path('fos_user_resetting_send_email') }}" method="POST">
                     <label for="username">Email</label>
-                    <input id="username" name="username" required="required" class="correct" />
+                    <input id="username" name="username" required="required" />
 
                     <button type="submit" id="_submit" name="_submit">{{ 'resetting.request.submit'|trans }}</button>
                 </form>
