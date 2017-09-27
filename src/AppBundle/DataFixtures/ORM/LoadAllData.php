@@ -152,7 +152,7 @@ class LoadAllData implements FixtureInterface
         $block1_3_1->setTitle('Experience entry');
         $block1_3_1->setType(BlockTemplate::TYPE_EXPERIENCE_INNER);
         $block1_3_1->setTemplate($template1);
-        $block1_3_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-key="date_from" data-placeholder="Date from">{{ date_from }}</span> - <span data-key="date_to" data-placeholder="Date to">{{ date_to }}</span></div><h3 class="position" data-key="position" data-placeholder="Position">{{ position }}</h3><h3 class="subtitle" data-key="company" data-placeholder="Company" data-is-child="true">{{ company }}</h3><h4 data-placeholder="Description - use this area to describe your daily tasks, responsibilities, etc." data-key="description">{{ description }}</h4></div></li>');
+        $block1_3_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><div data-key="date_from" data-placeholder="Date from">{{ date_from }}</div> - <div data-key="date_to" data-placeholder="Date to">{{ date_to }}</div></div><h3 class="position" data-key="position" data-placeholder="Position">{{ position }}</h3><h3 class="subtitle" data-key="company" data-placeholder="Company" data-is-child="true">{{ company }}</h3><h4 data-placeholder="Description - use this area to describe your daily tasks, responsibilities, etc." data-key="description">{{ description }}</h4></div></li>');
         $block1_3_1->setAvailableFields(
             json_encode($this->getDefaultFields(TemplatType::TYPE_EXPERIENCE_INNER))
         );
@@ -625,7 +625,7 @@ class LoadAllData implements FixtureInterface
         $block1_4_1->setTitle('Education entry');
         $block1_4_1->setType(BlockTemplate::TYPE_EDUCATION_INNER);
         $block1_4_1->setTemplate($template1);
-        $block1_4_1->setHtmlSource('<div class="row"> <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 date"> <span data-key="date_from" data-placeholder="Date from">{{date_from}}</span> <span>-</span> <span data-key="date_to" data-placeholder="Date to">{{date_to}}</span> </div><div class="col-lg-9 col-md-9 col-sm-9 col-xs-12"> <div class="title" data-key="position" data-placeholder="Course name">{{position}}</div><div class="company" data-key="company" data-placeholder="University/College name" data-is-child="true">{{company}}</div><div class="description" data-placeholder="Description" data-key="description">{{description}}</div></div></div>');
+        $block1_4_1->setHtmlSource('<div class="row"> <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 date"> <div data-key="date_from" data-placeholder="Date from">{{date_from}}</div> <span>-</span> <div data-key="date_to" data-placeholder="Date to">{{date_to}}</div> </div><div class="col-lg-9 col-md-9 col-sm-9 col-xs-12"> <div class="title" data-key="position" data-placeholder="Course name">{{position}}</div><div class="company" data-key="company" data-placeholder="University/College name" data-is-child="true">{{company}}</div><div class="description" data-placeholder="Description" data-key="description">{{description}}</div></div></div>');
         $block1_4_1->setAvailableFields(
             json_encode($this->getDefaultFields(TemplatType::TYPE_EDUCATION_INNER)));
         $manager->persist($block1_4_1);
