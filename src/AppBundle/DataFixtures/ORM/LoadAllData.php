@@ -572,7 +572,7 @@ class LoadAllData implements FixtureInterface
         $block1_1->setType(BlockTemplate::TYPE_FIXED);
         $block1_1->setSlot($templateSlot1);
         $block1_1->setTemplate($template1);
-        $block1_1->setHtmlSource('<div class="person" class="item" data-block-id="{{block_data.id}}" data-block-type="0" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"> <div class="photo"><img src="{{absolute_url(asset(photo))}}" alt=""/></div><div><input data-key="photo" type="file"> </div><div class="name" data-key="full_name" data-placeholder="John">{{ full_name }}</div><div class="statusquo" data-key="title" data-placeholder="UI/UX designer">{{title}}</div></div>');
+        $block1_1->setHtmlSource('<div class="person" class="item" data-block-id="{{block_data.id}}" data-block-type="0" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"> <div class="photo"><img src="{{absolute_url(asset(photo))}}" alt=""/></div><div><span class="btn btn-default btn-file"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload photo<input data-key="photo" type="file"></span></div><div class="name" data-key="full_name" data-placeholder="John">{{ full_name }}</div><div class="statusquo" data-key="title" data-placeholder="UI/UX designer">{{title}}</div></div>');
         $block1_1->setAvailableFields(json_encode(array(
             'full_name' => '',
             'title' => '',
