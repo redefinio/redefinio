@@ -350,6 +350,8 @@ var Zone = function () {
                     }
                 }
 
+                setPlaceholders();
+
                 window.statusBar.showMessage("You have just added " + type.name + " block").then(function () {
                     // @TODO fix this when API will be done.
                 }).catch(function (reason) {});
