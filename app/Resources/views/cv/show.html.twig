@@ -3,7 +3,8 @@
 {% block navbar %}
     <div class="navbar">
         <h1 class="navbar-title">My résumé</h1>
-        
+
+        {% if cV.publicHtml is not null %}
         <div class="edit-url-group">
             <input class="edit-url" id="cv-url" value="{{ absolute_url(path('default_public_link', {'identifier': cV.url})) }}" readonly>
             <button class="btn edit-url-btn">Copy</button>
@@ -11,10 +12,13 @@
                 <img src="/img/check.png" alt="Icon">
             </span>
         </div>
+        {% endif %}
        
         <div class="navbar-actions">
             <a href="{{ path('cv_edit') }}" class="btn navbar-edit">Edit</a>
+            {% if cV.publicHtml is not null %}
             <a href="{{ path('cv_pdf') }}" class="btn navbar-download">Download PDF</a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
