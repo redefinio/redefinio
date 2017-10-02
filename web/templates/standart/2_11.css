@@ -2,6 +2,10 @@
     background-color: #ffcfcf;
 }
 
+.btn-file{
+    color: #ffcfcf;
+}
+
 .editable-block.is-editing {
     border-color: #ffcfcf;
 }
