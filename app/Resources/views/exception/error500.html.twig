@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>{% block title %}Redefinio{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+        <link rel="stylesheet/less" type="text/css" href="{{ asset('less/components/500.less') }}">
+        <script src="{{ asset('js/less.min.js') }}"></script>
+
+    </head>
+    <body>
+        <div class="flex-container">
+            <div class="flex">
+                <a href="{{ path('cv_index') }}">
+                    <img alt="Redefin.io" src="{{ asset('img/logo-blue.png') }}">
+                </a>
+                <a href="{{ path('cv_index') }}" type="button" name="button" class="btn">{{ 'link_go_home'|trans }}</a>
+            </div>
+            <div class="flex info-center">
+                <div class="emoji-interesting"></div>
+                <div>
+                    <h3>{{ 'header_404_public'|trans }}</h3>
+                    <p>{{ 'text_404_public'|trans }}</p>
+                </div>
+            </div>
+        </div>
+        <script>
+            (function(i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function() {
+                    (i[r].q = i[r].q || []).push(arguments)
+                },
+                i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-42085739-7', 'auto');
+        </script>
+    </body>
+</html>
