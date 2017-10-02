@@ -9,10 +9,12 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Service\CvService;
+use Http\Discovery\Exception\NotFoundException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DefaultController extends Controller
 {
@@ -35,7 +37,7 @@ class DefaultController extends Controller
         $html = $this->get(CvService::class)->getPublicLinkHtml($identifier);
 
         if (is_null($html)) {
-            $response = $this->render('exception/error404.html.twig');
+            throw new NotFoundHttpException();
         } else {
             $response->setContent($html);
         }

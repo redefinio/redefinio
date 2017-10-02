@@ -62,8 +62,8 @@ doctrine:
         auto_mapping: true
 
 cspoo_swiftmailer_mailgun:
-    key: "key-317bcb132baed9fa762fd8b6c30ad66b"
-    domain: "grozioplanas.lt"
+    key: "key-5494f37b2d382151ac27469dd14592ea"
+    domain: "app.redefin.io"
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -96,7 +96,7 @@ fos_user:
 knp_snappy:
     pdf:
         enabled: true
-        binary:  wkhtmltopdf --margin-top 2 --margin-bottom 0 --margin-left 0 --margin-right 0 --page-size A4 --viewport-size 1280x1024 --no-outline
+        binary:  xvfb-run wkhtmltopdf --margin-top 2 --margin-bottom 0 --margin-left 0 --margin-right 0 --page-size A4 --viewport-size 1280x1024 --no-outline --footer-html https://app.redefin.io
         options:
           lowquality: false
 
