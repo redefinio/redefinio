@@ -62,8 +62,8 @@ doctrine:
         auto_mapping: true
 
 cspoo_swiftmailer_mailgun:
-    key: "key-5494f37b2d382151ac27469dd14592ea"
-    domain: "app.redefin.io"
+     key: "key-317bcb132baed9fa762fd8b6c30ad66b"
+     domain: "grozioplanas.lt"
 
 # Swiftmailer Configuration
 swiftmailer:
