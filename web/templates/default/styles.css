@@ -10,6 +10,9 @@ body {
     padding: 0 70px
 }
 
+.container--footer {
+    background: none;
+}
 .container:last-child {
     padding-bottom: 0;
 }
