@@ -45,10 +45,10 @@ $('.template').on('click', (evebt) => {
 });
 
 $('#publish-button').on('click', (event) => {
-   API.publishTemplate((data) => {});
-   _isPublished = true;
-   window.location.replace(templateUrl);
-   $(location).attr('href', templateUrl + '#published');
+   API.publishTemplate((data) => {
+       _isPublished = true;
+       window.location.href = templateUrl + "#published";
+   });
 });
 $('.themes-list').on('click', '.themes-listitem', (evebt) => {
     let themeSource = $(evebt.currentTarget).data("themeSource");

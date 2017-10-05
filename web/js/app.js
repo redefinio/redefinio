@@ -48,10 +48,10 @@ $('.template').on('click', function (evebt) {
 });
 
 $('#publish-button').on('click', function (event) {
-    API.publishTemplate(function (data) {});
-    _isPublished = true;
-    window.location.replace(templateUrl);
-    $(location).attr('href', templateUrl + '#published');
+    API.publishTemplate(function (data) {
+        _isPublished = true;
+        window.location.href = templateUrl + "#published";
+    });
 });
 $('.themes-list').on('click', '.themes-listitem', function (evebt) {
     var themeSource = $(evebt.currentTarget).data("themeSource");
