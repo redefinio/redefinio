@@ -161,6 +161,7 @@ class CVController extends Controller
     public function renderPdfAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $cv = $this->get(CvService::class)->getUserCv($this->getUser());
+        $service = $this->get(CvService::class);
 
         if (is_null($cv->getPdfPath())) {
             $pdf = $this->get('knp_snappy.pdf');
@@ -182,7 +183,7 @@ class CVController extends Controller
                 '200',
                 array(
                     'Content-Type' => 'application/pdf',
-                    'Content-Disposition' => 'attachment; filename="cv.pdf"'
+                    'Content-Disposition' => 'attachment; filename="'. $service->getPdfName($this->getUser()    ) .'"'
                 )
         );
     }

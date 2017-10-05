@@ -410,4 +410,17 @@ class CvService {
         return $hash;
     }
 
+    public function getPdfName($user) {
+        $cv = $this->getUserCv($user);
+        $fullName = $this->em->getRepository('AppBundle:CvData')->findOneBy(array('field' => 'full_name', 'cv' => $cv));
+
+        if ($fullName->getData()['full_name'] != "") {
+            $name = str_replace(" ", "_", $fullName->getData()['full_name']);
+        } else {
+            $name = explode("@", $user->getEmail())[0];
+        }
+
+        return strtolower($name).".pdf";
+    }
+
 }
