@@ -182,7 +182,7 @@ class CVController extends Controller
                 '200',
                 array(
                     'Content-Type' => 'application/pdf',
-                    'Content-Disposition' => 'cv.pdf'
+                    'Content-Disposition' => 'attachment; filename="cv.pdf"'
                 )
         );
     }
