@@ -145,6 +145,30 @@ let activateLoader = () => {
     $('#template').append(loader);
 };
 
+
+let applySliders = (element) => {
+    let sliders = $(element).find('.skills');
+    for (let i = 0; i < sliders.length; i++) {
+        if ($(sliders[i]).parent().find('.slider').length === 0) {
+            let slider = document.createElement('div');
+            slider.classList.add('slider');
+            let value = $(sliders[i]).parent('.skills-group').attr('data-value');
+            $(slider).slider({
+                range: 'max',
+                min: 0,
+                max: 10,
+                value: value,
+                slide: function (event, ui) {
+                    var value = ui.value;
+                    $(this).parent(".skills-group").attr("data-value", ui.value);
+                }
+            });
+
+            $(sliders[i]).after(slider);
+        }
+    }
+};
+
 class StatusBar {
     constructor(element) {
         this._element = element[0];
@@ -282,26 +306,7 @@ class Zone {
                 }
             }
 
-            let sliders = $(newBlock).find('.skills');
-            for (let i = 0; i < sliders.length; i++) {
-                if ($(sliders[i]).parent().find('.slider').length === 0) {
-                    let slider = document.createElement('div');
-                    slider.classList.add('slider');
-                    let value = $(sliders[i]).parent('.skills-group').attr('data-value');
-                    $(slider).slider({
-                        range: 'max',
-                        min: 0,
-                        max: 10,
-                        value: value,
-                        slide: function (event, ui) {
-                            var value = ui.value;
-                            $(this).parent(".skills-group").attr("data-value", ui.value);
-                        }
-                    });
-
-                    $(sliders[i]).after(slider);
-                }
-            }
+            applySliders(newBlock);
 
             setPlaceholders();
 
@@ -565,6 +570,9 @@ class Block {
             this._createMicroBlockControls();
             this._fixPlaceholders();
 
+            applySliders(this._element);
+            setPlaceholders();
+
             //TODO: refactor edit function
             let editableElements = this._element.querySelectorAll('[data-key]');
             for (let i = 0; i < editableElements.length; i++) {
@@ -594,26 +602,7 @@ class Block {
             }
         }
 
-        let sliders = $(this._element).find('.skills');
-        for (let i = 0; i < sliders.length; i++) {
-            if ($(sliders[i]).parent().find('.slider').length === 0) {
-                let slider = document.createElement('div');
-                slider.classList.add('slider');
-                let value = $(sliders[i]).parent('.skills-group').attr('data-value');
-                $(slider).slider({
-                    range: 'max',
-                    min: 0,
-                    max: 10,
-                    value: value,
-                    slide: function (event, ui) {
-                        var value = ui.value;
-                        $(this).parent(".skills-group").attr("data-value", ui.value);
-                    }
-                });
-
-                $(sliders[i]).after(slider);
-            }
-        }
+        applySliders(this._element);
 
         this._toggleEditing();
     }

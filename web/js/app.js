@@ -146,6 +146,29 @@ var activateLoader = function activateLoader() {
     $('#template').append(loader);
 };
 
+var applySliders = function applySliders(element) {
+    var sliders = $(element).find('.skills');
+    for (var i = 0; i < sliders.length; i++) {
+        if ($(sliders[i]).parent().find('.slider').length === 0) {
+            var slider = document.createElement('div');
+            slider.classList.add('slider');
+            var value = $(sliders[i]).parent('.skills-group').attr('data-value');
+            $(slider).slider({
+                range: 'max',
+                min: 0,
+                max: 10,
+                value: value,
+                slide: function slide(event, ui) {
+                    var value = ui.value;
+                    $(this).parent(".skills-group").attr("data-value", ui.value);
+                }
+            });
+
+            $(sliders[i]).after(slider);
+        }
+    }
+};
+
 var StatusBar = function () {
     function StatusBar(element) {
         _classCallCheck(this, StatusBar);
@@ -329,26 +352,7 @@ var Zone = function () {
                     }
                 }
 
-                var sliders = $(newBlock).find('.skills');
-                for (var _i2 = 0; _i2 < sliders.length; _i2++) {
-                    if ($(sliders[_i2]).parent().find('.slider').length === 0) {
-                        var slider = document.createElement('div');
-                        slider.classList.add('slider');
-                        var value = $(sliders[_i2]).parent('.skills-group').attr('data-value');
-                        $(slider).slider({
-                            range: 'max',
-                            min: 0,
-                            max: 10,
-                            value: value,
-                            slide: function slide(event, ui) {
-                                var value = ui.value;
-                                $(this).parent(".skills-group").attr("data-value", ui.value);
-                            }
-                        });
-
-                        $(sliders[_i2]).after(slider);
-                    }
-                }
+                applySliders(newBlock);
 
                 setPlaceholders();
 
@@ -604,6 +608,9 @@ var Block = function () {
                 _this3._createMicroBlockControls();
                 _this3._fixPlaceholders();
 
+                applySliders(_this3._element);
+                setPlaceholders();
+
                 //TODO: refactor edit function
                 var editableElements = _this3._element.querySelectorAll('[data-key]');
                 for (var i = 0; i < editableElements.length; i++) {
@@ -635,26 +642,7 @@ var Block = function () {
                 }
             }
 
-            var sliders = $(this._element).find('.skills');
-            for (var _i3 = 0; _i3 < sliders.length; _i3++) {
-                if ($(sliders[_i3]).parent().find('.slider').length === 0) {
-                    var slider = document.createElement('div');
-                    slider.classList.add('slider');
-                    var value = $(sliders[_i3]).parent('.skills-group').attr('data-value');
-                    $(slider).slider({
-                        range: 'max',
-                        min: 0,
-                        max: 10,
-                        value: value,
-                        slide: function slide(event, ui) {
-                            var value = ui.value;
-                            $(this).parent(".skills-group").attr("data-value", ui.value);
-                        }
-                    });
-
-                    $(sliders[_i3]).after(slider);
-                }
-            }
+            applySliders(this._element);
 
             this._toggleEditing();
         }
