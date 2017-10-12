@@ -150,6 +150,9 @@ p {
     font-size: 14px;
     margin-bottom: 12px
 }
+.timeline>li .content .date > * {
+    display: inline-block;
+}
 
 .timeline>li .content .position, .timeline>li .content .subtitle {
     font-size: 15px;
