@@ -215,12 +215,12 @@ class StatusBar {
     }
 
     _show() {
-        this._element.classList.add('is-active');
+        $(this._element).show('slow');
         this._isActive = true;
     }
 
     _hide() {
-        this._element.classList.remove('is-active');
+        $(this._element).hide('slow');
         this._isActive = false;
     }
 }
