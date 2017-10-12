@@ -187,10 +187,12 @@ var StatusBar = function () {
 
     _createClass(StatusBar, [{
         key: "showMessage",
-        value: function showMessage(message) {
+        value: function showMessage(message, hideUndo) {
             var _this = this;
 
             this._element.classList.remove('is-error');
+
+            hideUndo ? this.undoButton.classList.add('hidden') : this.undoButton.classList.remove('hidden');
 
             var messageEl = this._element.querySelector('.message');
             messageEl.innerHTML = message;
@@ -200,7 +202,7 @@ var StatusBar = function () {
                 _timer = setTimeout(function () {
                     _this._hide();
                     resolve();
-                }, 5000);
+                }, 1500);
 
                 Rx.Observable.fromEvent(_this.undoButton, 'click').subscribe(function () {
                     window.clearTimeout(_timer);
@@ -356,9 +358,7 @@ var Zone = function () {
 
                 setPlaceholders();
 
-                window.statusBar.showMessage("You have just added " + type.name + " block").then(function () {
-                    // @TODO fix this when API will be done.
-                }).catch(function (reason) {});
+                window.statusBar.showMessage("You have just added " + type.name + " block", true).then(function () {});
             });
         }
     }, {
@@ -731,6 +731,7 @@ var Block = function () {
             API.saveBlock(data, function (response) {
                 _this5._toggleEditing();
                 _this5._updateHtml(_this5._element, response.html, true);
+                window.statusBar.showMessage('Block successfully saved.', true).then(function () {});
             });
         }
     }, {
@@ -745,7 +746,7 @@ var Block = function () {
             var blockId = this._element.getAttribute('data-block-id');
             var element = this._element;
             element.classList.add('hidden');
-            window.statusBar.showMessage('You have just deleted block').then(function () {
+            window.statusBar.showMessage('You have just deleted block', false).then(function () {
                 API.deleteBlock(blockId, function () {
                     element.parentNode.removeChild(element);
                 });
