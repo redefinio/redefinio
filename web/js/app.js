@@ -222,13 +222,13 @@ var StatusBar = function () {
     }, {
         key: "_show",
         value: function _show() {
-            this._element.classList.add('is-active');
+            $(this._element).show('slow');
             this._isActive = true;
         }
     }, {
         key: "_hide",
         value: function _hide() {
-            this._element.classList.remove('is-active');
+            $(this._element).hide('slow');
             this._isActive = false;
         }
     }]);

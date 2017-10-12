@@ -1,5 +1,5 @@
 #status-bar {
-    top: 71px;
+    top: 110px;
     left: 0;
     right: 280px;
     position: fixed;
@@ -8,11 +8,8 @@
     font-weight: 600;
     font-size: 13px;
     color: @white;
+    display: none;
     .transition(top 0.25s ease-in-out);
-
-    &.is-active {
-        top: 110px;
-    }
 
     &.is-error {
         .status-bar-inner-wrapper {
