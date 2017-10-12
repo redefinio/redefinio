@@ -183,8 +183,10 @@ class StatusBar {
         this._isActive = false;
     }
 
-    showMessage(message) {
+    showMessage(message, hideUndo) {
         this._element.classList.remove('is-error');
+
+        hideUndo ? this.undoButton.classList.add('hidden') : this.undoButton.classList.remove('hidden');
 
         let messageEl = this._element.querySelector('.message');
         messageEl.innerHTML = message;
@@ -194,7 +196,7 @@ class StatusBar {
             _timer = setTimeout(() => {
                 this._hide();
                 resolve();
-            }, 5000);
+            }, 1500);
 
             Rx.Observable.fromEvent(this.undoButton, 'click')
                 .subscribe(() => {
@@ -310,11 +312,7 @@ class Zone {
 
             setPlaceholders();
 
-            window.statusBar.showMessage(`You have just added ${type.name} block`).then(function () {
-                // @TODO fix this when API will be done.
-            }).catch(function (reason) {
-
-            });
+            window.statusBar.showMessage(`You have just added ${type.name} block`, true).then(() => {});
         });
     }
 
@@ -688,6 +686,7 @@ class Block {
         API.saveBlock(data, (response) => {
             this._toggleEditing();
             this._updateHtml(this._element, response.html, true);
+            window.statusBar.showMessage('Block successfully saved.', true).then(() => {});
         });
 
     }
@@ -701,14 +700,13 @@ class Block {
         let blockId = this._element.getAttribute('data-block-id');
         var element = this._element;
         element.classList.add('hidden');
-        window.statusBar.showMessage('You have just deleted block').then(function () {
+        window.statusBar.showMessage('You have just deleted block', false).then(function () {
             API.deleteBlock(blockId, () => {
                 element.parentNode.removeChild(element);
             });
         }).catch(function (reason) {
             element.classList.remove('hidden');
         });
-
     }
 
     deleteMicroBlock(e) {
