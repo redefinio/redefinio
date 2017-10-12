@@ -2,7 +2,7 @@ registration:
     check_email: |
         An email has been sent to %email%. It contains an activation link you must click to activate your account.
     confirmed: 'Congrats %username%, your account is now activated.'
-    back: 'Back to the originating page'
+    back: 'Create your resume'
     submit: 'Sign up'
     flash:
         user_created: 'The user has been created successfully.'
