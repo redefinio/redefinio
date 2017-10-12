@@ -39,8 +39,8 @@
                     {# {% endif %} #}
 
                     <span class="check-icon" style="{% if template.id == cv.getTemplate().getId() %} display: block; {% endif %}">
-                    <img src="{{ asset('img/check.png') }}" alt="Icon"></span>
-                    <img class="template-image" src="{{ asset('img/templates/' ~ template.templatePath~ '.jpg') }}" alt="Template" title="{{ template.title }}">
+                    <img src="{{ asset('img/check.png') }}"></span>
+                    <img height="117" class="template-image" src="{{ asset('img/templates/' ~ template.templatePath~ '.jpg') }}" alt="CV Template" title="{{ template.title }}">
                   </div>
                 </div>
                 {% endfor %}
