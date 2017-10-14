@@ -539,7 +539,7 @@ class LoadAllData implements FixtureInterface
 
     private function addTemplates(ObjectManager $manager) {
         $template1 = new Template();
-        $template1->setTitle('Standart');
+        $template1->setTitle('Standard');
         $template1->setTemplatePath('standart');
         $manager->persist($template1);
 

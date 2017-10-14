@@ -24,7 +24,7 @@
 			<div class="templates-list">
                 {% for template in templates %}
                 <div class="templates-listitem">
-                  <div class="template" data-template-id="{{ template.id }}">
+                  <div class="template" data-template-id="{{ template.id }}" data-template-name="{{ template.title }}">
                     {# {% if template.free %} #}
                     <span class="price-indicator">
                       <span class="price-indicator-title">Free</span>
