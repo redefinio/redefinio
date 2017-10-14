@@ -27,6 +27,8 @@ $('.edit-url-btn').on('click', function () {
     } catch (err) {}
 });
 $('.template').on('click', function (evebt) {
+    trackEvent('CV', "Template changed: " + evebt.currentTarget.attributes[2].value);
+
     var templateId = evebt.currentTarget.attributes[1].value;
     var checkIcon = $(evebt.target).parent().find('.check-icon');
     if (_isEditing) {
@@ -54,6 +56,8 @@ $('#publish-button').on('click', function (event) {
     });
 });
 $('.themes-list').on('click', '.themes-listitem', function (evebt) {
+    trackEvent('CV', 'Theme changed');
+
     var themeSource = $(evebt.currentTarget).data("themeSource");
     var checkIcon = $(evebt.target).parent().find('.check-icon');
     var themeId = $(evebt.currentTarget).data("themeId");
@@ -336,6 +340,8 @@ var Zone = function () {
     }, {
         key: "_addNewBlock",
         value: function _addNewBlock(zoneName, type) {
+            trackEvent('CV', "Add block: " + type.name);
+
             this._addBlock.classList.remove('is-active');
 
             API.getBlock(type.type, function (block) {
@@ -603,6 +609,8 @@ var Block = function () {
         value: function _addMicroBlock() {
             var _this3 = this;
 
+            trackEvent('CV', 'Add micro block');
+
             API.getBlock(this._childBlockType, function (block) {
                 $(_this3._element).find('[data-key="blocks"]').append(block);
                 _this3._createMicroBlockControls();
@@ -743,6 +751,8 @@ var Block = function () {
     }, {
         key: "delete",
         value: function _delete() {
+            trackEvent('CV', 'Remove block');
+
             var blockId = this._element.getAttribute('data-block-id');
             var element = this._element;
             element.classList.add('hidden');
@@ -774,6 +784,10 @@ var Block = function () {
 
     return Block;
 }();
+
+function trackEvent(category, event) {
+    ga('send', 'event', category, event);
+}
 
 function setCheckIcon(className, checkIcon) {
     $(className).each(function () {

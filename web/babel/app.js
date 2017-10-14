@@ -24,6 +24,8 @@ $('.edit-url-btn').on('click', () => {
     }
 });
 $('.template').on('click', (evebt) => {
+    trackEvent('CV', `Template changed: ${evebt.currentTarget.attributes[2].value}`);
+
     let templateId = evebt.currentTarget.attributes[1].value;
     let checkIcon = $(evebt.target).parent().find('.check-icon');
     if (_isEditing) {
@@ -51,6 +53,8 @@ $('#publish-button').on('click', (event) => {
    });
 });
 $('.themes-list').on('click', '.themes-listitem', (evebt) => {
+    trackEvent('CV', 'Theme changed');
+
     let themeSource = $(evebt.currentTarget).data("themeSource");
     let checkIcon = $(evebt.target).parent().find('.check-icon');
     let themeId = $(evebt.currentTarget).data("themeId");
@@ -290,6 +294,8 @@ class Zone {
     }
 
     _addNewBlock(zoneName, type) {
+        trackEvent('CV', `Add block: ${type.name}`)
+
         this._addBlock.classList.remove('is-active');
 
         API.getBlock(type.type, (block) => {
@@ -563,6 +569,8 @@ class Block {
     }
 
     _addMicroBlock() {
+        trackEvent('CV', 'Add micro block');
+        
         API.getBlock(this._childBlockType, (block) => {
             $(this._element).find('[data-key="blocks"]').append(block);
             this._createMicroBlockControls();
@@ -697,6 +705,8 @@ class Block {
     }
 
     delete() {
+        trackEvent('CV', 'Remove block');
+
         let blockId = this._element.getAttribute('data-block-id');
         var element = this._element;
         element.classList.add('hidden');
@@ -720,6 +730,10 @@ class Block {
             preapareBlockToEdit(element);
         }
     }
+}
+
+function trackEvent(category, event) {
+    ga('send', 'event', category, event);
 }
 
 function setCheckIcon(className, checkIcon) {
