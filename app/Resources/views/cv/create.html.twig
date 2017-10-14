@@ -26,8 +26,9 @@
                              src="{{ asset('img/templates/' ~ template.templatePath ~ '.jpg') }}"
                              srcset="{{ asset('img/templates/' ~ template.templatePath ~ '@2x.jpg') }} 2x"
                              alt="{{ template.title }}" />
+
+                        <button class="btn btn--choose-cv">{{ 'button_choose'|trans }}</button>
                     </a>
-                    <h3 class="template-title text-center">{{ template.title }}</h3>
                 </div>
             {% endfor %}
         </div>
