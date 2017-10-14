@@ -1,15 +1,26 @@
-.template-title {
-    font-size: 16px;
-    font-weight: 700;
-    color: @black;
-    margin: 15px 0;
-}
-
 .img-thumbnail {
+    width: 100%;
     border: none;
     padding: 0;
     .border-radius(0);
     .box-shadow(rgba(0,0,0,0.1) 0px 1px 5px);
+}
+
+.btn--choose-cv {
+    width: 100%;
+    background: @green;
+    color: @white;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 15px 0;
+
+    &:hover {
+        background: @green-hover;
+        color: @white;
+    }
+    &:active {
+        background: @green-active;
+    }
 }
 
 .container,
