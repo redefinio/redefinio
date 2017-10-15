@@ -98,10 +98,26 @@ let loadTemplate = (templateId) => {
             if (window.isEditing) {
                 prepareToEditTemplate();
             }
+            toggleDateElements();
             setPlaceholders();
         }, 1000);
     });
 };
+
+let toggleDateElements = () => {
+    let elements = $('body').find("[data-placeholder]");
+
+    for (let i = 0; i < elements.length; i++) {
+        let element = $(elements[i]);
+
+        if (element[0].getAttribute('data-placeholder') == 'Date from' && element.html() == 'Date from') {
+            element[0].classList.add('hidden');
+        } else if (element[0].getAttribute('data-placeholder') == 'Date to' && element.html() == 'Date to') {
+            element[0].parentElement.children[1].classList.add('hidden');
+            element[0].classList.add('hidden');
+        }
+    }
+}
 
 let setPlaceholders = () => {
     let placeholders = $('body').find("[data-placeholder]");
@@ -603,7 +619,7 @@ class Block {
                 editableElements[i].setAttribute('contenteditable', true);
             }
 
-            if (editableElements[i].innerHTML == "" && editableElements[i].classList.contains('hidden')) {
+            if (editableElements[i].classList.contains('hidden')) {
                 editableElements[i].classList.remove('hidden');
             }
         }
@@ -726,6 +742,7 @@ class Block {
     _updateHtml(element, html, editable=false) {
         $(element).html(html)
         setPlaceholders();
+        toggleDateElements();
         if (editable) {
             preapareBlockToEdit(element);
         }
