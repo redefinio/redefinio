@@ -99,9 +99,25 @@ var loadTemplate = function loadTemplate(templateId) {
             if (window.isEditing) {
                 prepareToEditTemplate();
             }
+            toggleDateElements();
             setPlaceholders();
         }, 1000);
     });
+};
+
+var toggleDateElements = function toggleDateElements() {
+    var elements = $('body').find("[data-placeholder]");
+
+    for (var i = 0; i < elements.length; i++) {
+        var element = $(elements[i]);
+
+        if (element[0].getAttribute('data-placeholder') == 'Date from' && element.html() == 'Date from') {
+            element[0].classList.add('hidden');
+        } else if (element[0].getAttribute('data-placeholder') == 'Date to' && element.html() == 'Date to') {
+            element[0].parentElement.children[1].classList.add('hidden');
+            element[0].classList.add('hidden');
+        }
+    }
 };
 
 var setPlaceholders = function setPlaceholders() {
@@ -645,7 +661,7 @@ var Block = function () {
                     editableElements[i].setAttribute('contenteditable', true);
                 }
 
-                if (editableElements[i].innerHTML == "" && editableElements[i].classList.contains('hidden')) {
+                if (editableElements[i].classList.contains('hidden')) {
                     editableElements[i].classList.remove('hidden');
                 }
             }
@@ -776,6 +792,7 @@ var Block = function () {
 
             $(element).html(html);
             setPlaceholders();
+            toggleDateElements();
             if (editable) {
                 preapareBlockToEdit(element);
             }
