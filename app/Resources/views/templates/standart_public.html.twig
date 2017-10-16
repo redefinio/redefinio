@@ -5,7 +5,7 @@
     <title>{% block title %}Redefinio{% endblock %}</title>
     <link href="{{ absolute_url(asset('templates/standart/css/bootstrap.min.css')) }}" rel="stylesheet">
     <link href="{{ absolute_url(asset('templates/standart/css/main.css')) }}" rel="stylesheet">
-    <link href="{{ absolute_url(asset('less/app.less')) }}" rel="stylesheet/less">
+    <link href="{{ absolute_url(asset('less/app.less')) }}?v=3" rel="stylesheet/less">
     <script src="{{ absolute_url(asset('js/less.min.js')) }}"></script>
     <link href="{{ absolute_url(asset('templates/standart/' ~ theme.getCssSource())) }}" rel="stylesheet">
 </head>

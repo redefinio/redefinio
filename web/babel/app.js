@@ -615,7 +615,7 @@ class Block {
         let editableElements = this._element.querySelectorAll('[data-key]');
         for (let i = 0; i < editableElements.length; i++) {
             const key = editableElements[i].getAttribute('data-key');
-            if (['blocks'].indexOf(key) === -1) {
+            if (['blocks'].indexOf(key) === -1 && key != "skill") {
                 editableElements[i].setAttribute('contenteditable', true);
             }
 
