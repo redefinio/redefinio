@@ -56,6 +56,9 @@ $('.template').on('click', (evebt) => {
                 $('#myModal').modal('hide');
             } else {
                 _isChanged = false;
+                loadTemplate(templateId);
+                setCheckIcon('.templates-list .check-icon', checkIcon);
+                $('#myModal').modal('hide');
             }
         });
     }
