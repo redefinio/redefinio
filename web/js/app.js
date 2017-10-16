@@ -3,12 +3,19 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var _isEditing = false;
+var _isChanged = false;
 
 document.addEventListener("DOMContentLoaded", function (e) {
     loadTemplate(window.templateId);
 
     if (window.location.hash === "#published" && document.referrer === editUrl) {
         $('.container-message').css('display', 'block');
+    }
+});
+
+$(window).bind('beforeunload', function () {
+    if (_isChanged) {
+        return 'Are you sure you want to leave? There are some unpublished changes.';
     }
 });
 
@@ -32,6 +39,7 @@ $('.template').on('click', function (evebt) {
     var templateId = evebt.currentTarget.attributes[1].value;
     var checkIcon = $(evebt.target).parent().find('.check-icon');
     if (_isEditing) {
+        $('.modal-body').text('Your changes will not be saved if you swich template.');
         $('#myModal').modal('show');
         $('#myModal').on('click', 'button', function (event) {
             if (event.currentTarget.getAttribute('data-action') === 'cancel') {
@@ -43,6 +51,16 @@ $('.template').on('click', function (evebt) {
                 $('#myModal').modal('hide');
             }
         });
+    } else if (_isChanged) {
+        $('.modal-body').text('Are you sure you want to leave? There are some unpublished changes.');
+        $('#myModal').modal('show');
+        $('#myModal').on('click', 'button', function (event) {
+            if (event.currentTarget.getAttribute('data-action') === 'cancel') {
+                $('#myModal').modal('hide');
+            } else {
+                _isChanged = false;
+            }
+        });
     } else {
         loadTemplate(templateId);
         setCheckIcon('.templates-list .check-icon', checkIcon);
@@ -51,7 +69,6 @@ $('.template').on('click', function (evebt) {
 
 $('#publish-button').on('click', function (event) {
     API.publishTemplate(function (data) {
-        _isPublished = true;
         window.location.href = templateUrl + "#published";
     });
 });
@@ -842,6 +859,7 @@ var API = {
     },
 
     updateTheme: function updateTheme(themeId, cb) {
+        _isChanged = true;
         var data = {
             "themeId": themeId,
             "templateId": window.templateId
@@ -859,6 +877,7 @@ var API = {
     },
 
     getBlock: function getBlock(type, cb) {
+        _isChanged = true;
         $.ajax({
             url: apiUrl + "/block/" + window.templateId + "/" + type,
             success: function success(data) {
@@ -872,6 +891,7 @@ var API = {
     },
 
     saveBlock: function saveBlock(block, cb) {
+        _isChanged = true;
         block.cvId = cvId;
         block.templateId = window.templateId;
 
@@ -901,6 +921,7 @@ var API = {
     },
 
     uploadPhoto: function uploadPhoto(files, cb) {
+        _isChanged = true;
         var data = new FormData();
         $.each(files, function (key, value) {
             data.append(key, value);
@@ -923,6 +944,7 @@ var API = {
     },
 
     deleteBlock: function deleteBlock(blockId, cb) {
+        _isChanged = true;
         if (blockId !== undefined) {
             $.ajax({
                 url: apiUrl + "/block/" + blockId,
@@ -936,6 +958,7 @@ var API = {
         }
     },
     sortBlocks: function sortBlocks(wildcard, positions, cb) {
+        _isChanged = true;
         var payload = {};
         payload['wildcard'] = wildcard;
         payload['positions'] = positions;
@@ -954,6 +977,7 @@ var API = {
         });
     },
     publishTemplate: function publishTemplate(cb) {
+        _isChanged = false;
         var payload = {
             'templateId': window.templateId
         };

@@ -1,10 +1,17 @@
 let _isEditing = false;
+let _isChanged = false;
 
 document.addEventListener("DOMContentLoaded", (e) => {
     loadTemplate(window.templateId);
     
     if (window.location.hash === "#published" && document.referrer === editUrl) {
         $('.container-message').css('display', 'block');
+    }
+});
+
+$(window).bind('beforeunload', function(){
+    if (_isChanged) {
+        return 'Are you sure you want to leave? There are some unpublished changes.';
     }
 });
 
@@ -29,6 +36,7 @@ $('.template').on('click', (evebt) => {
     let templateId = evebt.currentTarget.attributes[1].value;
     let checkIcon = $(evebt.target).parent().find('.check-icon');
     if (_isEditing) {
+        $('.modal-body').text('Your changes will not be saved if you swich template.');
         $('#myModal').modal('show')
         $('#myModal').on('click', 'button', (event) => {
             if (event.currentTarget.getAttribute('data-action') === 'cancel') {
@@ -40,7 +48,18 @@ $('.template').on('click', (evebt) => {
                 $('#myModal').modal('hide');
             }
         });
-    } else {
+    } else if (_isChanged) {
+        $('.modal-body').text('Are you sure you want to leave? There are some unpublished changes.');
+        $('#myModal').modal('show')
+        $('#myModal').on('click', 'button', (event) => {
+            if (event.currentTarget.getAttribute('data-action') === 'cancel') {
+                $('#myModal').modal('hide');
+            } else {
+                _isChanged = false;
+            }
+        });
+    }
+    else {
         loadTemplate(templateId);
         setCheckIcon('.templates-list .check-icon', checkIcon);
     }
@@ -48,7 +67,6 @@ $('.template').on('click', (evebt) => {
 
 $('#publish-button').on('click', (event) => {
    API.publishTemplate((data) => {
-       _isPublished = true;
        window.location.href = templateUrl + "#published";
    });
 });
@@ -761,7 +779,7 @@ function setCheckIcon(className, checkIcon) {
 }
 
 const API = {
-
+    
     getCv: (templateId, cb) => {
         let url = `${apiUrl}/${templateId}/template`;
         if (templateId == undefined) {
@@ -793,6 +811,7 @@ const API = {
     },
 
     updateTheme: (themeId, cb) => {
+        _isChanged = true;
         let data = {
             "themeId": themeId,
             "templateId": window.templateId
@@ -812,6 +831,7 @@ const API = {
     },
 
     getBlock: (type, cb) => {
+        _isChanged = true;
         $.ajax({
             url: `${apiUrl}/block/${window.templateId}/${type}`,
             success: (data) => {
@@ -827,6 +847,7 @@ const API = {
     },
 
     saveBlock: (block, cb) => {
+        _isChanged = true;
         block.cvId = cvId;
         block.templateId = window.templateId;
 
@@ -860,6 +881,7 @@ const API = {
     },
 
     uploadPhoto: (files, cb) => {
+        _isChanged = true;
         var data = new FormData();
         $.each(files, function (key, value) {
            data.append(key, value);
@@ -882,6 +904,7 @@ const API = {
     },
 
     deleteBlock: (blockId, cb) => {
+        _isChanged = true;
         if (blockId !== undefined) {
             $.ajax({
                 url: `${apiUrl}/block/${blockId}`,
@@ -897,6 +920,7 @@ const API = {
         }
     },
     sortBlocks: (wildcard, positions, cb) => {
+        _isChanged = true;
         let payload = {};
         payload['wildcard'] = wildcard;
         payload['positions'] = positions;
@@ -915,6 +939,7 @@ const API = {
         });
     },
     publishTemplate: (cb) => {
+        _isChanged = false;
         let payload = {
             'templateId': window.templateId
         };
