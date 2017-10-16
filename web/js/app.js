@@ -371,7 +371,7 @@ var Zone = function () {
                 var editableElements = newBlock.querySelectorAll('[data-key]');
                 for (var i = 0; i < editableElements.length; i++) {
                     var key = editableElements[i].getAttribute('data-key');
-                    if (['blocks'].indexOf(key) === -1) {
+                    if (['blocks'].indexOf(key) === -1 && key != "skill") {
                         editableElements[i].setAttribute('contenteditable', true);
                     }
                 }
@@ -639,7 +639,7 @@ var Block = function () {
                 var editableElements = _this3._element.querySelectorAll('[data-key]');
                 for (var i = 0; i < editableElements.length; i++) {
                     var key = editableElements[i].getAttribute('data-key');
-                    if (['skill', 'blocks'].indexOf(key) === -1) {
+                    if (['skill', 'blocks'].indexOf(key) === -1 && key != "skill") {
                         editableElements[i].setAttribute('contenteditable', true);
                     }
                 }
@@ -715,7 +715,7 @@ var Block = function () {
                         for (var j = 0; j < keysCount.length / sameKeysCount.length; j++) {
                             var dataValue = editableElements[i + j].getAttribute('data-value') ? editableElements[i + j].getAttribute('data-value') : editableElements[i + j].innerHTML;
                             var dataKey = editableElements[i + j].getAttribute('data-key');
-                            obj[dataKey] = dataValue;
+                            obj[dataKey] = this.stripTags(dataValue);
                         }
 
                         i += keysCount.length / sameKeysCount.length - 1;
@@ -762,7 +762,11 @@ var Block = function () {
         key: "stripTags",
         value: function stripTags(html) {
             var regex = /(<([^>]+)>)/ig;
-            return html.replace(regex, "");
+            html = html.replace(regex, "");
+            regex = /&(.*?);/ig;
+            html = html.replace(regex, "");
+
+            return html;
         }
     }, {
         key: "delete",

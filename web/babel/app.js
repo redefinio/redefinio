@@ -325,7 +325,7 @@ class Zone {
             let editableElements = newBlock.querySelectorAll('[data-key]');
             for (let i = 0; i < editableElements.length; i++) {
                 const key = editableElements[i].getAttribute('data-key');
-                if (['blocks'].indexOf(key) === -1) {
+                if (['blocks'].indexOf(key) === -1 && key != "skill") {
                     editableElements[i].setAttribute('contenteditable', true);
                 }
             }
@@ -599,7 +599,7 @@ class Block {
             let editableElements = this._element.querySelectorAll('[data-key]');
             for (let i = 0; i < editableElements.length; i++) {
                 const key = editableElements[i].getAttribute('data-key');
-                if (['skill', 'blocks'].indexOf(key) === -1) {
+                if (['skill', 'blocks'].indexOf(key) === -1 && key != "skill") {
                     editableElements[i].setAttribute('contenteditable', true);
                 }
             }
@@ -669,7 +669,7 @@ class Block {
                     for (let j = 0; j < (keysCount.length / sameKeysCount.length); j++) {
                         let dataValue = (editableElements[i + j].getAttribute('data-value')) ? editableElements[i + j].getAttribute('data-value') : editableElements[i + j].innerHTML;
                         let dataKey = editableElements[i + j].getAttribute('data-key');
-                        obj[dataKey] = dataValue;
+                        obj[dataKey] = this.stripTags(dataValue);
                     }
 
                     i += keysCount.length / sameKeysCount.length - 1;
@@ -717,7 +717,11 @@ class Block {
 
     stripTags(html) {
         var regex = /(<([^>]+)>)/ig
-        return html.replace(regex, "");
+        html = html.replace(regex, "");
+        regex = /&(.*?);/ig;
+        html = html.replace(regex, "");
+
+        return html;
     }
 
     delete() {

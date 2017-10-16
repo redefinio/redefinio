@@ -190,10 +190,14 @@ class EventHandlerService
 
             $this->em->persist($block);
             $this->em->flush();
+
+            if ($template->getTemplate()->getId() == $event->getParentTemplate()->getId()) {
+                $response = $block;
+            }
         }
 
 
-        return $block;
+        return $response;
 
     }
 }
