@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Block;
 use AppBundle\Entity\BlockData;
+use Symfony\Bundle\MonologBundle\SwiftMailer;
 
 /**
  * API controller.
@@ -281,6 +282,28 @@ class ApiController extends Controller
         ));
         
         return $response;
+    }
+
+    /**
+     * @Route("/report", name="api_bug_report")
+     * @Method({"POST"})
+     */
+    public function reportBug(Request $request) {
+        $message = $request->get("message", null);
+
+        $message = (new \Swift_Message('Bug report'))
+            ->setFrom('info@redefinio.io')
+            ->setTo(['erikas@redefin.io', 'oleg@dmarksai.com'])
+            ->setBody(
+                $message,
+                'text'
+            )
+        ;
+
+        $this->get('mailer')->send($message);
+
+        return new JsonResponse();
+
     }
 
 
