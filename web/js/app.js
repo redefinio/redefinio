@@ -6,6 +6,8 @@ var _isEditing = false;
 var _isChanged = false;
 
 document.addEventListener("DOMContentLoaded", function (e) {
+    var statusBarDom = $('#status-bar');
+    window.statusBar = new StatusBar(statusBarDom);
     loadTemplate(window.templateId);
 
     if (window.location.hash === "#published" && document.referrer === editUrl) {
@@ -39,7 +41,7 @@ $('.template').on('click', function (evebt) {
     var templateId = evebt.currentTarget.attributes[1].value;
     var checkIcon = $(evebt.target).parent().find('.check-icon');
     if (_isEditing) {
-        $('.modal-body').text('Your changes will not be saved if you swich template.');
+        $('#myModal .modal-descriptipn').text('Your changes will not be saved if you swich template.');
         $('#myModal').modal('show');
         $('#myModal').on('click', 'button', function (event) {
             if (event.currentTarget.getAttribute('data-action') === 'cancel') {
@@ -52,13 +54,16 @@ $('.template').on('click', function (evebt) {
             }
         });
     } else if (_isChanged) {
-        $('.modal-body').text('Are you sure you want to leave? There are some unpublished changes.');
+        $('#myModal .modal-descriptipn').text('Are you sure you want to leave? There are some unpublished changes.');
         $('#myModal').modal('show');
         $('#myModal').on('click', 'button', function (event) {
             if (event.currentTarget.getAttribute('data-action') === 'cancel') {
                 $('#myModal').modal('hide');
             } else {
                 _isChanged = false;
+                loadTemplate(templateId);
+                setCheckIcon('.templates-list .check-icon', checkIcon);
+                $('#myModal').modal('hide');
             }
         });
     } else {
@@ -87,6 +92,23 @@ $('.themes-list').on('click', '.themes-listitem', function (evebt) {
 
     $(checkIcon).css('display', 'block');
     loadTheme(themeSource);
+});
+
+$('.topbar-feedback').on('click', function (event) {
+    $('#feedbackModal').modal('show');
+});
+
+$('#feedback-form').submit(function (event) {
+    var text = $("#feedback-text").val();
+    if ($.trim(text)) {
+        API.sendFeedback(text, function (response) {
+            $("#feedback-text").val('');
+            $('#feedbackModal').modal('hide');
+            window.statusBar.showMessage('Your feedback was sent successfully. Thank you for your time!', true).then(function () {});
+        });
+    }
+
+    event.preventDefault();
 });
 
 var loadTheme = function loadTheme(themeSource) {
@@ -150,9 +172,6 @@ var setPlaceholders = function setPlaceholders() {
 };
 
 var prepareToEditTemplate = function prepareToEditTemplate() {
-    var statusBarDom = $('#status-bar');
-    window.statusBar = new StatusBar(statusBarDom);
-
     //Setup zones
     var zones = $('[data-zone-block-types]');
     for (var i = 0; i < zones.length; i++) {
@@ -251,12 +270,21 @@ var StatusBar = function () {
     }, {
         key: "showError",
         value: function showError(error) {
+            var _this2 = this;
+
             this._element.classList.add('is-error');
 
             var messageEl = this._element.querySelector('.message');
             messageEl.innerHTML = error;
 
             this._show();
+
+            return new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    _this2._hide();
+                    resolve();
+                }, 1500);
+            });
         }
     }, {
         key: "_show",
@@ -289,7 +317,7 @@ var Zone = function () {
     _createClass(Zone, [{
         key: "_createAddBlock",
         value: function _createAddBlock() {
-            var _this2 = this;
+            var _this3 = this;
 
             var zoneName = this._element.getAttribute('data-zone');
             var zoneTypes = JSON.parse(this._element.getAttribute('data-zone-block-types'));
@@ -316,7 +344,7 @@ var Zone = function () {
 
                     var listItem = document.createElement('li');
                     listItem.addEventListener('click', function () {
-                        return _this2._addNewBlock(zoneName, type);
+                        return _this3._addNewBlock(zoneName, type);
                     }, false);
 
                     var listImg = document.createElement('img');
@@ -640,20 +668,20 @@ var Block = function () {
     }, {
         key: "_addMicroBlock",
         value: function _addMicroBlock() {
-            var _this3 = this;
+            var _this4 = this;
 
             trackEvent('CV', 'Add micro block');
 
             API.getBlock(this._childBlockType, function (block) {
-                $(_this3._element).find('[data-key="blocks"]').append(block);
-                _this3._createMicroBlockControls();
-                _this3._fixPlaceholders();
+                $(_this4._element).find('[data-key="blocks"]').append(block);
+                _this4._createMicroBlockControls();
+                _this4._fixPlaceholders();
 
-                applySliders(_this3._element);
+                applySliders(_this4._element);
                 setPlaceholders();
 
                 //TODO: refactor edit function
-                var editableElements = _this3._element.querySelectorAll('[data-key]');
+                var editableElements = _this4._element.querySelectorAll('[data-key]');
                 for (var i = 0; i < editableElements.length; i++) {
                     var key = editableElements[i].getAttribute('data-key');
                     if (['skill', 'blocks'].indexOf(key) === -1 && key != "skill") {
@@ -690,7 +718,7 @@ var Block = function () {
     }, {
         key: "cancel",
         value: function cancel() {
-            var _this4 = this;
+            var _this5 = this;
 
             var editableElements = this._element.querySelectorAll('[data-key]');
             var blockId = this._element.getAttribute('data-block-id');
@@ -702,14 +730,14 @@ var Block = function () {
             }
 
             API.renderBlock(blockId, function (response) {
-                _this4._toggleEditing();
-                _this4._updateHtml(_this4._element, response.html, true);
+                _this5._toggleEditing();
+                _this5._updateHtml(_this5._element, response.html, true);
             });
         }
     }, {
         key: "save",
         value: function save() {
-            var _this5 = this;
+            var _this6 = this;
 
             var editableElements = this._element.querySelectorAll('[data-key]');
 
@@ -770,8 +798,8 @@ var Block = function () {
             }
 
             API.saveBlock(data, function (response) {
-                _this5._toggleEditing();
-                _this5._updateHtml(_this5._element, response.html, true);
+                _this6._toggleEditing();
+                _this6._updateHtml(_this6._element, response.html, true);
                 window.statusBar.showMessage('Block successfully saved.', true).then(function () {});
             });
         }
@@ -891,6 +919,25 @@ var API = {
             },
             complete: function complete() {},
             error: function error() {}
+        });
+    },
+
+    sendFeedback: function sendFeedback(text, cb) {
+        var data = {
+            "message": text
+        };
+        $.ajax({
+            url: apiUrl + "/report",
+            method: 'POST',
+            data: data,
+            success: function success(data) {
+                cb(data);
+            },
+            complete: function complete() {},
+            error: function error() {
+                $('#feedbackModal').modal('hide');
+                window.statusBar.showMessage('Your feedback was sent successfully. Thank you for your time!', true).then(function () {});
+            }
         });
     },
 

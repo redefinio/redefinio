@@ -24,6 +24,15 @@
                 </ul>
 
                 <ul class="topbar-right-menu">
+                    <li class="topbar-feedback">
+                        <a href="#">
+                        <img class="icon--bug"
+                            src="{{ asset('img/bug-icon.png') }}"
+                            srcset="{{ asset('img/bug-icon@2x.png') }} 2x"
+                            alt="Bug icon" />
+                            Found a bug? Report it!
+                        </a>
+                    </li>
                     <li class="topbar-settings">
                         <a href="{{ path('fos_user_profile_edit') }}">Settings</a>
                     </li>
@@ -31,6 +40,14 @@
                         <a href="{{ path('fos_user_security_logout') }}">Logout</a>
                     </li>
                 </ul>
+            </div>
+
+            <div id="status-bar">
+                <div class="status-bar-inner-wrapper">
+                    <span class="message">Block has been added</span>
+                    <button class="action">Undo</button>
+                    <button class="close"></button>
+                </div>
             </div>
             
             <div class="navbar">
@@ -44,6 +61,34 @@
             {% endblock fos_user_content %}     
         </div>
         
+
+        <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="feedbackModalLabel">Report a bug</h4>
+                        <p class="modal-descriptipn">
+                            We would be happy to fix any issues you're having.<br />
+                            Please explain what is the bug and how did you get it so we could solve it as soon as possible.
+                        </p>
+                    </div>
+                    <form id="feedback-form">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <textarea class="form-control" id="feedback-text" rows="7" placeholder="Message..." required></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" id="feedback-submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <script src="https://unpkg.com/rxjs@5.4.3/bundles/Rx.min.js"></script>
@@ -61,6 +106,10 @@
             })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
             ga('create', 'UA-42085739-7', 'auto');
           </script>
+          <script type="text/javascript">
+            var apiUrl = location.protocol + "//" + location.host + "/api";
+		</script>
+        <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
