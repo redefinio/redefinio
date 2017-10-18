@@ -61,8 +61,21 @@
         }
         
         a {
-            display: block;
-            padding-left: 30px;    
+            margin-left: 30px;    
+        }
+
+        &.topbar-feedback {
+            a {
+                background-color: @white;
+                color: @blue;
+                padding: 7px;
+                font-weight: 700;
+                .border-radius(4px);
+
+                &:hover {
+                    .opacity(0.9);
+                }
+            }
         }
 
         &.topbar-settings {
@@ -71,6 +84,13 @@
 
         &.topbar-logout {
             background: url("@{images}/icon-logout.png") no-repeat left center / auto 20px;
+        }
+    }
+
+    .icon {
+        &--bug {
+            padding-right: 5px;
+            vertical-align: middle;
         }
     }
 }

@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-        <link rel="stylesheet/less" type="text/css" href="{{ asset('less/app.less') }}?v=3">
+        <link rel="stylesheet/less" type="text/css" href="{{ asset('less/app.less') }}?v=3.1">
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <script src="{{ asset('js/less.min.js') }}"></script>
@@ -24,10 +24,15 @@
                 </ul>
 
                 <ul class="topbar-right-menu">
-                    {# <li class="topbar-user"> #}
-                        {# <span>{{ app.user }}</span> #}
-                        {# <img alt="Nopic" src="{{ asset('img/user.png') }}"> #}
-                    {# </li> #}
+                    <li class="topbar-feedback">
+                        <a href="#">
+                        <img class="icon--bug"
+                            src="{{ asset('img/bug-icon.png') }}"
+                            srcset="{{ asset('img/bug-icon@2x.png') }} 2x"
+                            alt="Bug icon" />
+                            Found a bug? Report it!
+                        </a>
+                    </li>
                     <li class="topbar-settings">
                         <a href="{{ path('fos_user_profile_edit') }}">Settings</a>
                     </li>
@@ -49,6 +54,33 @@
         </header>
 
         {% block body %}{% endblock %}
+
+        <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="feedbackModalLabel">Report a bug</h4>
+                        <p class="modal-descriptipn">
+                            We would be happy to fix any issues you're having.<br />
+                            Please explain what is the bug and how did you get it so we could solve it as soon as possible.
+                        </p>
+                    </div>
+                    <form id="feedback-form">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <textarea class="form-control" id="feedback-text" rows="7" placeholder="Message..." required></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" id="feedback-submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <script src="https://unpkg.com/rxjs@5.4.3/bundles/Rx.min.js"></script>

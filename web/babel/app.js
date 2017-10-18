@@ -2,6 +2,8 @@ let _isEditing = false;
 let _isChanged = false;
 
 document.addEventListener("DOMContentLoaded", (e) => {
+    let statusBarDom = $('#status-bar');
+    window.statusBar = new StatusBar(statusBarDom);
     loadTemplate(window.templateId);
     
     if (window.location.hash === "#published" && document.referrer === editUrl) {
@@ -36,7 +38,7 @@ $('.template').on('click', (evebt) => {
     let templateId = evebt.currentTarget.attributes[1].value;
     let checkIcon = $(evebt.target).parent().find('.check-icon');
     if (_isEditing) {
-        $('.modal-body').text('Your changes will not be saved if you swich template.');
+        $('#myModal .modal-descriptipn').text('Your changes will not be saved if you swich template.');
         $('#myModal').modal('show')
         $('#myModal').on('click', 'button', (event) => {
             if (event.currentTarget.getAttribute('data-action') === 'cancel') {
@@ -49,7 +51,7 @@ $('.template').on('click', (evebt) => {
             }
         });
     } else if (_isChanged) {
-        $('.modal-body').text('Are you sure you want to leave? There are some unpublished changes.');
+        $('#myModal .modal-descriptipn').text('Are you sure you want to leave? There are some unpublished changes.');
         $('#myModal').modal('show')
         $('#myModal').on('click', 'button', (event) => {
             if (event.currentTarget.getAttribute('data-action') === 'cancel') {
@@ -90,6 +92,23 @@ $('.themes-list').on('click', '.themes-listitem', (evebt) => {
 
     $(checkIcon).css('display', 'block');
     loadTheme(themeSource);
+});
+
+$('.topbar-feedback').on('click', (event) => {
+    $('#feedbackModal').modal('show');
+});
+
+$('#feedback-form').submit((event) => {
+    let text = $("#feedback-text").val();
+    if ($.trim(text)) {
+        API.sendFeedback(text, (response) => {
+            $("#feedback-text").val('');
+            $('#feedbackModal').modal('hide');
+            window.statusBar.showMessage('Your feedback was sent successfully. Thank you for your time!', true).then(() => {});
+        });
+    }
+
+    event.preventDefault();
 });
 
 let loadTheme = (themeSource) => {
@@ -153,9 +172,6 @@ let setPlaceholders = () => {
 };
 
 let prepareToEditTemplate = () => {
-    let statusBarDom = $('#status-bar');
-    window.statusBar = new StatusBar(statusBarDom);
-
     //Setup zones
     let zones = $('[data-zone-block-types]');
     for (let i = 0; i < zones.length; i++) {
@@ -255,6 +271,13 @@ class StatusBar {
         messageEl.innerHTML = error;
 
         this._show();
+
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                this._hide();
+                resolve();
+            }, 1500);
+        });
     }
 
     _show() {
@@ -849,6 +872,25 @@ const API = {
             complete: () => {
             },
             error: () => {
+            }
+        });
+    },
+
+    sendFeedback: (text, cb) => {
+        let data = {
+            "message": text
+        }
+        $.ajax({
+            url: `${apiUrl}/report`,
+            method: 'POST',
+            data: data,
+            success: (data) => {
+                cb(data);
+            },
+            complete: () => {},
+            error: () => {
+                $('#feedbackModal').modal('hide');
+                window.statusBar.showMessage('Your feedback was sent successfully. Thank you for your time!', true).then(() => {});
             }
         });
     },

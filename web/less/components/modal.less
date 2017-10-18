@@ -1,0 +1,50 @@
+.modal {
+
+    .modal-title {
+        font-size: 22px;
+        font-weight: 800;
+    }
+
+    .modal-descriptipn {
+        margin-top: 10px;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.5;
+    }
+
+    .modal-body {
+        padding: 0 15px;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+        text-transform: uppercase;
+        line-height: 35px;
+        font-weight: 700;
+        border: 0;
+        .border-radius(3px);
+        color: @white;
+
+        &:hover {
+            .opacity(0.8);
+        }
+
+        &-primary {
+            background: @blue;
+        }
+        &-default {
+            background: @red;
+        }
+    }
+
+    .modal-footer {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .modal-header,
+    .modal-footer {
+        border: none;
+    }
+}
