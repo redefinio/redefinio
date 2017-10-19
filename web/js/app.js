@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
 });
 
 $(window).bind('beforeunload', function () {
-    if (_isChanged) {
+    if (_isEditing) {
         return 'Are you sure you want to leave? There are some unpublished changes.';
     }
 });
@@ -420,6 +420,8 @@ var Zone = function () {
                         editableElements[i].setAttribute('contenteditable', true);
                     }
                 }
+
+                _isEditing = true;
 
                 applySliders(newBlock);
 
