@@ -186,7 +186,7 @@ class LoadAllData implements FixtureInterface
         $block1_5->setSlot($templateSlot1_3);
         $block1_5->setTemplate($template1);
         $block1_5->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.BlockTemplate::TYPE_SKILLS.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true">
-              <h2 class="title"><i class="glyphicon glyphicon-tasks"></i><span data-key="title">Skills</span></h2><div data-child-block-type="'.BlockTemplate::TYPE_SKILLS_INNER.'" data-key="blocks">{{ blocks|raw }}</div></div>');
+              <h2 class="title"><i class="glyphicon glyphicon-tasks"></i><span data-placeholder="skills" data-key="title">{{ title }}</span></h2><div data-child-block-type="'.BlockTemplate::TYPE_SKILLS_INNER.'" data-key="blocks">{{ blocks|raw }}</div></div>');
         $block1_5->setAvailableFields(
             json_encode($this->getDefaultFields(TemplatType::TYPE_SKILLS))
         );
