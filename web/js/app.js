@@ -725,16 +725,21 @@ var Block = function () {
             var editableElements = this._element.querySelectorAll('[data-key]');
             var blockId = this._element.getAttribute('data-block-id');
 
-            for (var z = 0; z < editableElements.length; z++) {
-                if (['blocks'].indexOf(editableElements[z].getAttribute('data-key')) === -1) {
-                    editableElements[z].setAttribute('contenteditable', false);
-                }
-            }
+            if (blockId == "") {
+                $(this._element).remove();
+            } else {
 
-            API.renderBlock(blockId, function (response) {
-                _this5._toggleEditing();
-                _this5._updateHtml(_this5._element, response.html, true);
-            });
+                for (var z = 0; z < editableElements.length; z++) {
+                    if (['blocks'].indexOf(editableElements[z].getAttribute('data-key')) === -1) {
+                        editableElements[z].setAttribute('contenteditable', false);
+                    }
+                }
+
+                API.renderBlock(blockId, function (response) {
+                    _this5._toggleEditing();
+                    _this5._updateHtml(_this5._element, response.html, true);
+                });
+            }
         }
     }, {
         key: "save",

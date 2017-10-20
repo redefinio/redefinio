@@ -679,17 +679,23 @@ class Block {
         let editableElements = this._element.querySelectorAll('[data-key]');
         let blockId = this._element.getAttribute('data-block-id');
 
+        if (blockId == "") {
+            $(this._element).remove();
+        } else {
 
-        for (let z = 0; z < editableElements.length; z++) {
-            if (['blocks'].indexOf(editableElements[z].getAttribute('data-key')) === -1) {
-                editableElements[z].setAttribute('contenteditable', false);
+            for (let z = 0; z < editableElements.length; z++) {
+                if (['blocks'].indexOf(editableElements[z].getAttribute('data-key')) === -1) {
+                    editableElements[z].setAttribute('contenteditable', false);
+                }
             }
+
+            API.renderBlock(blockId, (response) => {
+                this._toggleEditing();
+                this._updateHtml(this._element, response.html, true);
+            });
         }
 
-        API.renderBlock(blockId, (response) => {
-           this._toggleEditing();
-           this._updateHtml(this._element, response.html, true);
-        });
+
     }
 
     save() {
