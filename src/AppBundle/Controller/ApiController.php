@@ -77,7 +77,7 @@ class ApiController extends Controller
 
         $cv->setTemplates($templates);
 
-//        $em->flush();
+        $em->flush();
 
         return new JsonResponse(array(
             'html' => $cvRenderService->getTemplateHtml($relations),
