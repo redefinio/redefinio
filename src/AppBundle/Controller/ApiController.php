@@ -191,7 +191,7 @@ class ApiController extends Controller
      * @return Response
      */
     public function blockHtmlAction($template_id, $block_type) {
-            $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         $block = $em->getRepository('AppBundle:BlockTemplate')->createQueryBuilder('b')
             ->where('b.template = :template')

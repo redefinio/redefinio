@@ -34,6 +34,12 @@ class LoadAllData implements FixtureInterface
                 'title' => '',
                 'blocks' => array()
         ),
+        TemplatType::TYPE_CERTIFICATES_INNER => array(
+            'date_from' => '',
+            'date_to' => '',
+            'position' => '',
+            'company' => ''
+        ),
         TemplatType::TYPE_EXPERIENCE_INNER => array(
             'date_from' => '',
             'date_to' => '',
@@ -202,6 +208,28 @@ class LoadAllData implements FixtureInterface
             json_encode($this->getDefaultFields(TemplatType::TYPE_SKILLS_INNER))
         );
         $manager->persist($block1_5_1);
+
+        $block1_6 = new BlockTemplate();
+        $block1_6->setTitle('Certificates');
+        $block1_6->setType(BlockTemplate::TYPE_CERTIFICATES);
+        $block1_6->setSlot($templateSlot1_2);
+        $block1_6->setTemplate($template1);
+        $block1_6->setHtmlSource('<div class="item" data-block-id="{{ block_data.id }}" data-block-type="'.BlockTemplate::TYPE_CERTIFICATES.'" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"><h2 class="title"><i class="glyphicon glyphicon-education"></i><span data-placeholder="Certificates" data-key="title">{{title}}</span></h2><ul class="timeline" data-child-block-type="'.BlockTemplate::TYPE_EDUCATION_INNER.'" data-key="blocks">{{ blocks|raw }}</ul></div>');
+        $block1_6->setAvailableFields(
+            json_encode($this->getDefaultFields(TemplatType::TYPE_CERTIFICATES)))
+        ;
+        $manager->persist($block1_6);
+
+        $block1_6_1 = new BlockTemplate();
+        $block1_6_1->setParent($block1_6);
+        $block1_6_1->setTitle('Certificates entry');
+        $block1_6_1->setType(BlockTemplate::TYPE_CERTIFICATES_INNER);
+        $block1_6_1->setTemplate($template1);
+        $block1_6_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-placeholder="Date from" data-key="date_from">{{ date_from }}</span> <span class="date-divider">-</span> <span data-placeholder="Date to" data-key="date_to">{{ date_to }}</span></div><h3 class="position" data-placeholder="Course name" data-key="position">{{ position }}</h3><h3 class="subtitle" data-placeholder="Course description" data-key="company">{{ company }}</h3></div></li>');
+        $block1_6_1->setAvailableFields(
+            json_encode($this->getDefaultFields(TemplatType::TYPE_CERTIFICATES_INNER))
+        );
+        $manager->persist($block1_6_1);
 
         $this->addTemplates($manager);
 
@@ -649,6 +677,26 @@ class LoadAllData implements FixtureInterface
         $block1_5_1->setAvailableFields(
             json_encode($this->getDefaultFields(TemplatType::TYPE_SKILLS_INNER)));
         $manager->persist($block1_5_1);
+
+        $block1_6 = new BlockTemplate();
+        $block1_6->setTitle('Certificates');
+        $block1_6->setType(BlockTemplate::TYPE_CERTIFICATES);
+        $block1_6->setSlot($templateSlot4);
+        $block1_6->setTemplate($template1);
+        $block1_6->setHtmlSource('<div class="group item" data-block-id="{{block_data.id}}" data-block-type="4" data-is-draggable="true" data-is-editable="true" data-is-deletable="true"> <div class="group title" data-placeholder="Certificates" data-key="title">{{title}}</div><div class="group content"> <div class="blocks timeline" data-child-block-type="5" data-key="blocks">{{blocks|raw}}</div></div></div>');
+        $block1_6->setAvailableFields(
+            json_encode($this->getDefaultFields(TemplatType::TYPE_CERTIFICATES)));
+        $manager->persist($block1_6);
+
+        $block1_6_1 = new BlockTemplate();
+        $block1_6_1->setParent($block1_6);
+        $block1_6_1->setTitle('Certificates entry');
+        $block1_6_1->setType(BlockTemplate::TYPE_CERTIFICATES_INNER);
+        $block1_6_1->setTemplate($template1);
+        $block1_6_1->setHtmlSource('<div class="row"> <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 date"> <div data-key="date_from" data-placeholder="Date from">{{date_from}}</div> <span class="date-divider">-</span> <div data-key="date_to" data-placeholder="Date to">{{date_to}}</div> </div><div class="col-lg-9 col-md-9 col-sm-9 col-xs-12"> <div class="title" data-key="position" data-placeholder="Course name">{{position}}</div><div class="company" data-key="company" data-placeholder="Cource description" data-is-child="true">{{company}}</div></div></div>');
+        $block1_6_1->setAvailableFields(
+            json_encode($this->getDefaultFields(TemplatType::TYPE_CERTIFICATES_INNER)));
+        $manager->persist($block1_6_1);
 
 
         $theme2_1 = new Theme();

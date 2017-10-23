@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>{% block title %}Redefinio{% endblock %}</title>
-    <link href="{{ absolute_url(asset('templates/default/css/bootstrap.min.css')) }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link href="{{ absolute_url(asset('templates/default/styles.css')) }}" rel="stylesheet">
-    <link href="{{ absolute_url(asset('less/app.less')) }}?v=3.1 rel="stylesheet/less">
+    <link href="{{ absolute_url(asset('less/app.less')) }}?v=3.1" rel="stylesheet/less">
     <script src="{{ absolute_url(asset('js/less.min.js')) }}"></script>
     <link href="{{ absolute_url(asset('templates/default/' ~ theme.getCssSource())) }}" rel="stylesheet">
     <!--[if lt IE 9]>

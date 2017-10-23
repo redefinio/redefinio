@@ -78,7 +78,7 @@ fos_user:
     service:
         mailer: fos_user.mailer.twig_swift
     resetting:
-        retry_ttl: 0
+        retry_ttl: 1
         email:
           template: email/resetting/resetting.email.twig
     profile:
