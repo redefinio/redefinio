@@ -54,24 +54,30 @@ class ApiController extends Controller
 
         $cv = $this->get(CvService::class)->getUserCv($this->getUser());
 
-        $relations = $this->get(CvService::class)->updateRelations($id, $cv);
-
-        $template = $relations->getTemplate();
-
-        foreach($template->getTemplateSlots() as $slot) {
-            $dataBlocks = $em->getRepository('AppBundle:BlockData')->findBy(array('template_slot' => $slot, 'cv' => $cv));
-            if (count($dataBlocks) == 0) {
-                $service->mapDataToSlotTemplates($slot, $cv);
-                $em->refresh($template);
-            }
-        }
-
         if (!$cv) {
             $response = new JsonResponse();
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
 
             return $response;
         }
+
+        $templates = $cv->getTemplates();
+
+        $relations = $this->get(CvService::class)->updateRelations($id, $cv);
+
+        $template = $relations->getTemplate();
+
+        if (!in_array($relations->getTemplate()->getId(), $templates)) {
+            array_push($templates, $relations->getTemplate()->getId());
+            foreach ($template->getTemplateSlots() as $slot) {
+                $service->mapDataToSlotTemplates($slot, $cv);
+                $em->refresh($template);
+            }
+        }
+
+        $cv->setTemplates($templates);
+
+//        $em->flush();
 
         return new JsonResponse(array(
             'html' => $cvRenderService->getTemplateHtml($relations),

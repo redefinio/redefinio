@@ -33,7 +33,8 @@ class CvService {
         TemplatType::TYPE_FIXED => 1,
         TemplatType::TYPE_SKILLS_INNER => 4,
         TemplatType::TYPE_EXPERIENCE_INNER => 3,
-        TemplatType::TYPE_EDUCATION_INNER => 3
+        TemplatType::TYPE_EDUCATION_INNER => 3,
+        TemplatType::TYPE_CERTIFICATES_INNER => 3
     );
 
     public function __construct(ContainerInterface $container) {
@@ -56,6 +57,7 @@ class CvService {
         $cv->setTemplate($template);
         $cv->setPublicTemplate($template);
         $cv->setUrl($this->generateUserHash($user));
+        $cv->setTemplates(array($template->getId()));
 
         $userThemes = new UserThemes();
 

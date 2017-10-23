@@ -172,6 +172,11 @@ class EventHandlerService
         $templates = $this->em->getRepository('AppBundle:BlockTemplate')->getUsedTemplates($event->getBlockType());
 
         foreach ($templates as $template) {
+
+            if (!in_array($template->getTemplate()->getId(), $eventSource->getCv()->getTemplates())) {
+                continue;
+            }
+
             if ($template->getTemplate()->getId() != $event->getParentTemplate()->getId()) {
                 $wildcard = $template->getSlot()->getWildcard();
             } else {

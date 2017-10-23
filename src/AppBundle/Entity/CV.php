@@ -71,6 +71,22 @@ class CV
     private $pdfPath;
 
     /**
+     * @var serialized JSON object
+     *
+     * @ORM\Column(name="templates", type="text")
+     */
+    private $templates;
+
+    /**
+     * CV constructor.
+     */
+    public function __construct()
+    {
+        $this->setTemplates(array());
+    }
+
+
+    /**
      * @return int
      */
     public function getId()
@@ -197,5 +213,23 @@ class CV
     {
         $this->pdfPath = $pdfPath;
     }
+
+    /**
+     * @return serialized
+     */
+    public function getTemplates()
+    {
+        return json_decode($this->templates, true);
+    }
+
+    /**
+     * @param serialized $templates
+     */
+    public function setTemplates($templates)
+    {
+        $this->templates = json_encode($templates);
+    }
+
+
 
 }
