@@ -14,6 +14,7 @@ parameters:
     mailer_host:      smtp.sparkpostmail.com
     mailer_user:      SMTP_Injection
     mailer_password:  70ef6b98e7951287a05b9af9f1280890bfb8e767
+    mailer_sender: info@redefin.io
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
