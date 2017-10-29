@@ -105,6 +105,10 @@ $('#feedback-form').submit((event) => {
             $("#feedback-text").val('');
             $('#feedbackModal').modal('hide');
             window.statusBar.showMessage('Your feedback was sent successfully. Thank you for your time!', true).then(() => {});
+        }, (response) => {
+            $("#feedback-text").val('');
+            $('#feedbackModal').modal('hide');
+            window.statusBar.showError('Your feedback was unsuccessfully sent. Please try later!', true).then(() => {});
         });
     }
 
@@ -884,7 +888,7 @@ const API = {
         });
     },
 
-    sendFeedback: (text, cb) => {
+    sendFeedback: (text, cb, error) => {
         let data = {
             "message": text
         }
@@ -896,9 +900,8 @@ const API = {
                 cb(data);
             },
             complete: () => {},
-            error: () => {
-                $('#feedbackModal').modal('hide');
-                window.statusBar.showMessage('Your feedback was sent successfully. Thank you for your time!', true).then(() => {});
+            error: (data) => {
+                error(data);
             }
         });
     },

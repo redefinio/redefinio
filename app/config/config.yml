@@ -67,8 +67,11 @@ cspoo_swiftmailer_mailgun:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: "mailgun"
-    spool:     { type: memory }
+    transport: '%mailer_transport%'
+    host:      '%mailer_host%'
+    username:  '%mailer_user%'
+    password:  '%mailer_password%'
+    port: 587
 
 
 fos_user:
@@ -91,7 +94,7 @@ fos_user:
         form:
           type: AppBundle\Form\RegistrationFormType
     from_email:
-        address: info@redefinio.io
+        address: '%mailer_sender%'
         sender_name: Redefinio team
 knp_snappy:
     pdf:

@@ -298,13 +298,12 @@ class ApiController extends Controller
         $message = $request->get("message", null);
 
         $message = (new \Swift_Message('Bug report'))
-            ->setFrom('info@redefinio.io')
+            ->setFrom($this->container->getParameter('mailer_sender'))
             ->setTo(['erikas@redefin.io', 'oleg@dmarksai.com'])
             ->setBody(
                 $message,
                 'text'
-            )
-        ;
+            );
 
         $this->get('mailer')->send($message);
 

@@ -105,6 +105,10 @@ $('#feedback-form').submit(function (event) {
             $("#feedback-text").val('');
             $('#feedbackModal').modal('hide');
             window.statusBar.showMessage('Your feedback was sent successfully. Thank you for your time!', true).then(function () {});
+        }, function (response) {
+            $("#feedback-text").val('');
+            $('#feedbackModal').modal('hide');
+            window.statusBar.showError('Your feedback was unsuccessfully sent. Please try later!', true).then(function () {});
         });
     }
 
@@ -929,7 +933,7 @@ var API = {
         });
     },
 
-    sendFeedback: function sendFeedback(text, cb) {
+    sendFeedback: function sendFeedback(text, cb, _error) {
         var data = {
             "message": text
         };
@@ -941,9 +945,8 @@ var API = {
                 cb(data);
             },
             complete: function complete() {},
-            error: function error() {
-                $('#feedbackModal').modal('hide');
-                window.statusBar.showMessage('Your feedback was sent successfully. Thank you for your time!', true).then(function () {});
+            error: function error(data) {
+                _error(data);
             }
         });
     },
