@@ -225,7 +225,7 @@ class LoadAllData implements FixtureInterface
         $block1_6_1->setTitle('Certificates entry');
         $block1_6_1->setType(BlockTemplate::TYPE_CERTIFICATES_INNER);
         $block1_6_1->setTemplate($template1);
-        $block1_6_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-placeholder="Date from" data-key="date_from">{{ date_from }}</span> <span class="date-divider">-</span> <span data-placeholder="Date to" data-key="date_to">{{ date_to }}</span></div><h3 class="position" data-placeholder="Certificate name" data-key="position">{{ position }}</h3><h3 class="subtitle" data-placeholder="Certificate description" data-key="company">{{ company }}</h3></div></li>');
+        $block1_6_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-placeholder="Date from" data-key="date_from">{{ date_from }}</span> <span class="date-divider">-</span> <span data-placeholder="Date to" data-key="date_to">{{ date_to }}</span></div><h3 class="position" data-placeholder="Certificate name" data-key="company">{{ company }}</h3><h4 class="subtitle" data-placeholder="Certificate description" data-key="description">{{ description }}</h4></div></li>');
         $block1_6_1->setAvailableFields(
             json_encode($this->getDefaultFields(TemplatType::TYPE_CERTIFICATES_INNER))
         );
@@ -694,7 +694,7 @@ class LoadAllData implements FixtureInterface
         $block1_6_1->setTitle('Certificates entry');
         $block1_6_1->setType(BlockTemplate::TYPE_CERTIFICATES_INNER);
         $block1_6_1->setTemplate($template1);
-        $block1_6_1->setHtmlSource('<div class="row"> <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 date"> <div data-key="date_from" data-placeholder="Date from">{{date_from}}</div> <span class="date-divider">-</span> <div data-key="date_to" data-placeholder="Date to">{{date_to}}</div> </div><div class="col-lg-9 col-md-9 col-sm-9 col-xs-12"> <div class="title" data-key="position" data-placeholder="Certificate name">{{position}}</div><div class="company" data-key="company" data-placeholder="Certificate description" data-is-child="true">{{company}}</div></div></div>');
+        $block1_6_1->setHtmlSource('<div class="row"> <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 date"> <div data-key="date_from" data-placeholder="Date from">{{date_from}}</div> <span class="date-divider">-</span> <div data-key="date_to" data-placeholder="Date to">{{date_to}}</div> </div><div class="col-lg-9 col-md-9 col-sm-9 col-xs-12"> <div class="title" data-key="company" data-placeholder="Certificate name">{{company}}</div><div class="company" data-key="description" data-placeholder="Certificate description" data-is-child="true">{{description}}</div></div></div>');
         $block1_6_1->setAvailableFields(
             json_encode($this->getDefaultFields(TemplatType::TYPE_CERTIFICATES_INNER)));
         $manager->persist($block1_6_1);
