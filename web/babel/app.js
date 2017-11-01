@@ -165,7 +165,8 @@ let pasteListeners = () => {
 
             let element = event.currentTarget;
             let text = event.clipboardData.getData("text/plain");
-            element.innerHTML = text;
+
+            document.execCommand('insertHTML', false, text);
         }, false);
     }
 }

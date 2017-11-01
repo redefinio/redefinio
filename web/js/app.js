@@ -164,7 +164,8 @@ var pasteListeners = function pasteListeners() {
 
             var element = event.currentTarget;
             var text = event.clipboardData.getData("text/plain");
-            element.innerHTML = text;
+
+            document.execCommand('insertHTML', false, text);
         }, false);
     }
 };

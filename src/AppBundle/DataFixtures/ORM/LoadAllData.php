@@ -158,7 +158,7 @@ class LoadAllData implements FixtureInterface
         $block1_3_1->setTitle('Experience entry');
         $block1_3_1->setType(BlockTemplate::TYPE_EXPERIENCE_INNER);
         $block1_3_1->setTemplate($template1);
-        $block1_3_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><div data-key="date_from" data-placeholder="Date from">{{ date_from }}</div> <span class="date-divider">-</span> <div data-key="date_to" data-placeholder="Date to">{{ date_to }}</div></div><h3 class="position" data-key="position" data-placeholder="Position">{{ position }}</h3><h3 class="subtitle" data-key="company" data-placeholder="Company" data-is-child="true">{{ company }}</h3><h4 data-placeholder="Description - use this area to describe your daily tasks, responsibilities, etc." data-key="description">{{ description }}</h4></div></li>');
+        $block1_3_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><div data-key="date_from" data-placeholder="Date from">{{ date_from }}</div> <span class="date-divider">-</span> <div data-key="date_to" data-placeholder="Date to">{{ date_to }}</div></div><h3 class="subtitle" data-key="company" data-placeholder="Company" data-is-child="true">{{ company }}</h3><h3 class="position" data-key="position" data-placeholder="Position">{{ position }}</h3><h4 data-placeholder="Description - use this area to describe your daily tasks, responsibilities, etc." data-key="description">{{ description }}</h4></div></li>');
         $block1_3_1->setAvailableFields(
             json_encode($this->getDefaultFields(TemplatType::TYPE_EXPERIENCE_INNER))
         );
@@ -180,7 +180,7 @@ class LoadAllData implements FixtureInterface
         $block1_4_1->setTitle('Education entry');
         $block1_4_1->setType(BlockTemplate::TYPE_EDUCATION_INNER);
         $block1_4_1->setTemplate($template1);
-        $block1_4_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-placeholder="Date from" data-key="date_from">{{ date_from }}</span> <span class="date-divider">-</span> <span data-placeholder="Date to" data-key="date_to">{{ date_to }}</span></div><h3 class="position" data-placeholder="Course name" data-key="position">{{ position }}</h3><h3 class="subtitle" data-placeholder="University/College name" data-key="company">{{ company }}</h3><h4 data-placeholder="Description" data-key="description">{{ description }}</h4></div></li>');
+        $block1_4_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-placeholder="Date from" data-key="date_from">{{ date_from }}</span> <span class="date-divider">-</span> <span data-placeholder="Date to" data-key="date_to">{{ date_to }}</span></div><h3 class="subtitle" data-placeholder="University/College name" data-key="company">{{ company }}</h3><h3 class="position" data-placeholder="Course name" data-key="position">{{ position }}</h3><h4 data-placeholder="Description" data-key="description">{{ description }}</h4></div></li>');
         $block1_4_1->setAvailableFields(
             json_encode($this->getDefaultFields(TemplatType::TYPE_EDUCATION_INNER))
         );
