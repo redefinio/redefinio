@@ -13,6 +13,20 @@ module.exports = function(grunt) {
             }
         }
     },
+    uglify: {
+        build: {
+            options: {
+              sourceMap: true,
+            },
+            files: [{
+                expand: true,
+                cwd:  'web/js',
+                src: ["app.js"],
+                dest: 'web/js',
+                ext: ".min.js"
+            }]
+        }
+    },
 
     watch: {
       babel: {
@@ -20,7 +34,7 @@ module.exports = function(grunt) {
         tasks: 'babel'
       }
     },
-    
+
     browserSync: {
       dev: {
         bsFiles: {
@@ -38,6 +52,9 @@ module.exports = function(grunt) {
       }
     }
   });
+
+    grunt.loadNpmTasks('grunt-babel');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
 
   grunt.registerTask('default', ['browserSync', 'watch']);
   grunt.registerTask('build', ['babel']);

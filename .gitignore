@@ -15,6 +15,7 @@
 /vendor/
 /web/bundles/
 /web/upload/*
+/web/js/*.map
 
 /node_modules/
 /docker/mysql/data/*
