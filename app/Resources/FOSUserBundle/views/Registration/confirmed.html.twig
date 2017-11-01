@@ -13,6 +13,9 @@
                     <div class="success">
                         {{ 'registration.confirmed'|trans({'%username%': user.username}) }}
                     </div>
+                    <a href="{{ path('fos_user_security_login') }}">
+                        <button type="submit" id="_submit" name="_submit">{{ 'security.login.submit'|trans }}</button>
+                    </a>
                 </div>
             </div>
         </div>
