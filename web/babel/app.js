@@ -132,6 +132,7 @@ let loadTemplate = (templateId) => {
         $('head').find('link').slice(2).remove();
         $('head').append(templateStyles);
 
+
         $('.themes-list').html(data.themes);
 
         //Add timeout to remove twitches after loading template
@@ -144,9 +145,30 @@ let loadTemplate = (templateId) => {
             }
             toggleDateElements();
             setPlaceholders();
+            pasteListeners();
         }, 1000);
     });
 };
+
+let pasteListeners = () => {
+    let textBlocks = $('body').find('[data-key]');
+
+    for(let i = 0; i < textBlocks.length; i++) {
+        let attribute = textBlocks[i].getAttribute('data-key');
+
+        if (attribute === "blocks" || attribute === "skill") {
+            continue;
+        }
+
+        textBlocks[i].addEventListener('paste', (event) => {
+            event.preventDefault();
+
+            let element = event.currentTarget;
+            let text = event.clipboardData.getData("text/plain");
+            element.innerHTML = text;
+        }, false);
+    }
+}
 
 let toggleDateElements = () => {
     let elements = $('body').find("[data-placeholder]");
@@ -175,6 +197,14 @@ let setPlaceholders = () => {
     }
 };
 
+let  stripTags = (html) => {
+    var regex = /(<([^>]+)>)/ig
+    html = html.replace(regex, "");
+    regex = /&(.*?);/ig;
+    html = html.replace(regex, "");
+
+    return html;
+};
 let prepareToEditTemplate = () => {
     //Setup zones
     let zones = $('[data-zone-block-types]');

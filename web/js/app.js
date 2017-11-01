@@ -144,8 +144,29 @@ var loadTemplate = function loadTemplate(templateId) {
             }
             toggleDateElements();
             setPlaceholders();
+            pasteListeners();
         }, 1000);
     });
+};
+
+var pasteListeners = function pasteListeners() {
+    var textBlocks = $('body').find('[data-key]');
+
+    for (var i = 0; i < textBlocks.length; i++) {
+        var attribute = textBlocks[i].getAttribute('data-key');
+
+        if (attribute === "blocks" || attribute === "skill") {
+            continue;
+        }
+
+        textBlocks[i].addEventListener('paste', function (event) {
+            event.preventDefault();
+
+            var element = event.currentTarget;
+            var text = event.clipboardData.getData("text/plain");
+            element.innerHTML = text;
+        }, false);
+    }
 };
 
 var toggleDateElements = function toggleDateElements() {
@@ -175,6 +196,14 @@ var setPlaceholders = function setPlaceholders() {
     }
 };
 
+var stripTags = function stripTags(html) {
+    var regex = /(<([^>]+)>)/ig;
+    html = html.replace(regex, "");
+    regex = /&(.*?);/ig;
+    html = html.replace(regex, "");
+
+    return html;
+};
 var prepareToEditTemplate = function prepareToEditTemplate() {
     //Setup zones
     var zones = $('[data-zone-block-types]');

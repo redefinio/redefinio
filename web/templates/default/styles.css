@@ -163,7 +163,7 @@ p {
 .timeline>li .content .position {
     text-transform: none;
     margin: 0;
-    margin-bottom: 9px
+    margin-bottom: 9px;
 }
 
 .timeline>li .content .subtitle {
@@ -251,7 +251,7 @@ ul.skills li.completed {
     }
 }
 
-[data-key="company"] {
+[data-key="position"] {
     font-weight: 700;
 }
 
