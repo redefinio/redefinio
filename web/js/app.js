@@ -144,7 +144,7 @@ var loadTemplate = function loadTemplate(templateId) {
             }
             toggleDateElements();
             setPlaceholders();
-            pasteListeners();
+            // pasteListeners();
         }, 1000);
     });
 };
@@ -159,14 +159,13 @@ var pasteListeners = function pasteListeners() {
             continue;
         }
 
-        textBlocks[i].addEventListener('paste', function (event) {
+        $(textBlocks[i]).bind('paste', function (event) {
             event.preventDefault();
 
-            var element = event.currentTarget;
             var text = event.clipboardData.getData("text/plain");
 
             document.execCommand('insertHTML', false, text);
-        }, false);
+        });
     }
 };
 
@@ -555,6 +554,7 @@ var Block = function () {
 
         this._createControls();
         this._fixPlaceholders();
+        this._pasteListeners();
 
         if ($(block).find('[data-key="blocks"]').length != 0) {
             this._childBlockType = $(block).find('[data-key="blocks"]')[0].dataset.childBlockType;
@@ -627,6 +627,27 @@ var Block = function () {
             }
 
             this._element.appendChild(blockWrapper);
+        }
+    }, {
+        key: "_pasteListeners",
+        value: function _pasteListeners() {
+            var textBlocks = $(this._element).find('[data-key]');
+
+            for (var i = 0; i < textBlocks.length; i++) {
+                var attribute = textBlocks[i].getAttribute('data-key');
+
+                if (attribute === "blocks" || attribute === "skill") {
+                    continue;
+                }
+
+                textBlocks[i].addEventListener('paste', function (event) {
+                    event.preventDefault();
+
+                    var text = event.clipboardData.getData("text/plain");
+
+                    document.execCommand('insertHTML', false, text);
+                }, false);
+            }
         }
     }, {
         key: "_fixPlaceholders",
@@ -880,7 +901,7 @@ var Block = function () {
         value: function _updateHtml(element, html) {
             var editable = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
-            $(element).html(html);
+            element.innerHTML = html;
             setPlaceholders();
             toggleDateElements();
             if (editable) {

@@ -145,7 +145,7 @@ let loadTemplate = (templateId) => {
             }
             toggleDateElements();
             setPlaceholders();
-            pasteListeners();
+            // pasteListeners();
         }, 1000);
     });
 };
@@ -160,14 +160,14 @@ let pasteListeners = () => {
             continue;
         }
 
-        textBlocks[i].addEventListener('paste', (event) => {
+
+        $(textBlocks[i]).bind('paste', (event) => {
             event.preventDefault();
 
-            let element = event.currentTarget;
             let text = event.clipboardData.getData("text/plain");
 
             document.execCommand('insertHTML', false, text);
-        }, false);
+        });
     }
 }
 
@@ -511,6 +511,7 @@ class Block {
 
         this._createControls();
         this._fixPlaceholders();
+        this._pasteListeners();
 
         if ($(block).find('[data-key="blocks"]').length != 0) {
             this._childBlockType = $(block).find('[data-key="blocks"]')[0].dataset.childBlockType;
@@ -581,6 +582,27 @@ class Block {
         }
 
         this._element.appendChild(blockWrapper);
+    }
+
+    _pasteListeners() {
+        let textBlocks = $(this._element).find('[data-key]');
+
+        for(let i = 0; i < textBlocks.length; i++) {
+            let attribute = textBlocks[i].getAttribute('data-key');
+
+            if (attribute === "blocks" || attribute === "skill") {
+                continue;
+            }
+
+
+            textBlocks[i].addEventListener('paste', (event) => {
+                event.preventDefault();
+
+                let text = event.clipboardData.getData("text/plain");
+
+                document.execCommand('insertHTML', false, text);
+            }, false);
+        }
     }
 
     _fixPlaceholders() {
@@ -831,7 +853,7 @@ class Block {
     }
 
     _updateHtml(element, html, editable=false) {
-        $(element).html(html)
+        element.innerHTML = html;
         setPlaceholders();
         toggleDateElements();
         if (editable) {
