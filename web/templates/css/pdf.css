@@ -1,7 +1,16 @@
 body {
     background: none !important;
     padding: 0px !important;
+    margin: 0px !important;
     box-sizing: content-box;
+}
+
+#main-wrap {
+    min-height: 842px;
+}
+
+.container {
+    page-break-inside: avoid !important;
 }
 
 .container--footer {
@@ -20,4 +29,12 @@ body {
     width: 15%;
     margin: 0 10px;
     vertical-align: middle;
+}
+
+.position {
+    font-weight: 500;
+}
+
+[data-key="description"] {
+    font-weight: 500;
 }
