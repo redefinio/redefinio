@@ -105,7 +105,7 @@ class LoadAllData implements FixtureInterface
         $block1_1->setType(BlockTemplate::TYPE_FIXED);
         $block1_1->setSlot($templateSlot1_1);
         $block1_1->setTemplate($template1);
-        $block1_1->setHtmlSource('<div class="item" data-block-id="{{block_data.id}}" data-block-type="'.BlockTemplate::TYPE_FIXED.'" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"> <h1 class="title"><span data-key="full_name" data-placeholder="John" data-required="true">{{full_name}}</span> </h1> <h3 class="subtitle" data-key="title" data-placeholder="Your title" data-required="true">{{title}}</h3></div>');
+        $block1_1->setHtmlSource('<div class="item" data-block-id="{{block_data.id}}" data-block-type="'.BlockTemplate::TYPE_FIXED.'" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"> <h1 class="title"><span data-key="full_name" data-placeholder="John" data-required="true">{{full_name}}</span> </h1> <h3 class="subtitle" data-html="no" data-key="title" data-placeholder="Your title" data-required="true">{{title}}</h3></div>');
         $block1_1->setAvailableFields(json_encode(array(
                 'full_name' => '',
                 'title' => ''
@@ -601,7 +601,7 @@ class LoadAllData implements FixtureInterface
         $block1_1->setType(BlockTemplate::TYPE_FIXED);
         $block1_1->setSlot($templateSlot1);
         $block1_1->setTemplate($template1);
-        $block1_1->setHtmlSource('<div class="person" class="item" data-block-id="{{block_data.id}}" data-block-type="0" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"> <div class="photo">{% if photo is not empty %}<img src="{{absolute_url(asset(photo))}}" alt=""/>{% else %}<img src="{{absolute_url(asset(\'img/photo-placeholder.png\'))}}" alt=""/>{% endif %}</div><div><span class="btn btn-default btn-file"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload photo<input data-key="photo" type="file"></span></div><div class="name" data-key="full_name" data-placeholder="John">{{full_name}}</div><div class="statusquo" data-key="title" data-placeholder="UI/UX designer">{{title}}</div></div>');
+        $block1_1->setHtmlSource('<div class="person" class="item" data-block-id="{{block_data.id}}" data-block-type="0" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"> <div class="photo">{% if photo is not empty %}<img src="{{absolute_url(asset(photo))}}" alt=""/>{% else %}<img src="{{absolute_url(asset(\'img/photo-placeholder.png\'))}}" alt=""/>{% endif %}</div><div><span class="btn btn-default btn-file"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload photo<input data-key="photo" type="file"></span></div><div class="name" data-key="full_name" data-placeholder="John">{{full_name}}</div><div class="statusquo" data-html="no" data-key="title" data-placeholder="UI/UX designer">{{title}}</div></div>');
         $block1_1->setAvailableFields(json_encode(array(
             'full_name' => '',
             'title' => '',
