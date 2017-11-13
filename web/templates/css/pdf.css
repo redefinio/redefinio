@@ -11,6 +11,7 @@ body {
 
 .container {
     page-break-inside: avoid !important;
+    margin: 0px !important;
 }
 
 .container--footer {
@@ -37,4 +38,8 @@ body {
 
 [data-key="description"] {
     font-weight: 500;
+}
+
+.standart-sidebar {
+    height: 100%;
 }
