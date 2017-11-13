@@ -778,7 +778,7 @@ class Block {
                     for (let j = 0; j < (keysCount.length / sameKeysCount.length); j++) {
                         let dataValue = (editableElements[i + j].getAttribute('data-value')) ? editableElements[i + j].getAttribute('data-value') : editableElements[i + j].innerHTML;
                         let dataKey = editableElements[i + j].getAttribute('data-key');
-                        obj[dataKey] = this.stripTags(dataValue);
+                        obj[dataKey] = this.stripTags(dataValue, false);
                     }
 
                     i += keysCount.length / sameKeysCount.length - 1;
@@ -794,7 +794,12 @@ class Block {
                     });
                 }
                 else {
-                    data['fields'][editableElements[i].getAttribute('data-key')] = this.stripTags(editableElements[i].innerHTML);
+                    if (data['fields'][editableElements[i].getAttribute('data-html')] === "no") {
+                        data['fields'][editableElements[i].getAttribute('data-key')] = this.stripTags(editableElements[i].innerHTML, false);
+                    } else {
+                        data['fields'][editableElements[i].getAttribute('data-key')] = this.stripTags(editableElements[i].innerHTML, true);
+                    }
+                    
                 }
             }
             else {
@@ -824,8 +829,12 @@ class Block {
 
     }
 
-    stripTags(html) {
-        var regex = /(<([^>]+)>)/ig
+    stripTags(html, breakLine) {
+        if (breakLine) {
+            var regex = /<(?!\s*br\s*\/?)[^>]+>/gi;
+        } else {
+            var regex = /(<([^>]+)>)/ig;
+        }
         html = html.replace(regex, "");
         regex = /&(.*?);/ig;
         html = html.replace(regex, "");

@@ -105,7 +105,7 @@ class LoadAllData implements FixtureInterface
         $block1_1->setType(BlockTemplate::TYPE_FIXED);
         $block1_1->setSlot($templateSlot1_1);
         $block1_1->setTemplate($template1);
-        $block1_1->setHtmlSource('<div class="item" data-block-id="{{block_data.id}}" data-block-type="'.BlockTemplate::TYPE_FIXED.'" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"> <h1 class="title"><span data-key="full_name" data-placeholder="John" data-required="true">{{full_name}}</span> </h1> <h3 class="subtitle" data-key="title" data-placeholder="Your title" data-required="true">{{title}}</h3></div>');
+        $block1_1->setHtmlSource('<div class="item" data-block-id="{{block_data.id}}" data-block-type="'.BlockTemplate::TYPE_FIXED.'" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"> <h1 class="title"><span data-key="full_name" data-placeholder="John" data-required="true">{{full_name}}</span> </h1> <h3 class="subtitle" data-html="no" data-key="title" data-placeholder="Your title" data-required="true">{{title}}</h3></div>');
         $block1_1->setAvailableFields(json_encode(array(
                 'full_name' => '',
                 'title' => ''
@@ -180,7 +180,7 @@ class LoadAllData implements FixtureInterface
         $block1_4_1->setTitle('Education entry');
         $block1_4_1->setType(BlockTemplate::TYPE_EDUCATION_INNER);
         $block1_4_1->setTemplate($template1);
-        $block1_4_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-placeholder="Date from" data-key="date_from">{{ date_from }}</span> <span class="date-divider">-</span> <span data-placeholder="Date to" data-key="date_to">{{ date_to }}</span></div><h3 class="subtitle" data-placeholder="University/College name" data-key="company">{{ company }}</h3><h3 class="position" data-placeholder="Course name" data-key="position">{{ position }}</h3><h4 data-placeholder="Description" data-key="description">{{ description }}</h4></div></li>');
+        $block1_4_1->setHtmlSource('<li><div class="icon"></div><div class="content"><div class="date"><span data-placeholder="Date from" data-key="date_from">{{ date_from }}</span> <span class="date-divider">-</span> <span data-placeholder="Date to" data-key="date_to">{{ date_to }}</span></div><h3 class="subtitle" data-placeholder="University/College name" data-key="company">{{ company }}</h3><h3 class="position" data-placeholder="Certificate name" data-key="position">{{ position }}</h3><h4 data-placeholder="Description" data-key="description">{{ description }}</h4></div></li>');
         $block1_4_1->setAvailableFields(
             json_encode($this->getDefaultFields(TemplatType::TYPE_EDUCATION_INNER))
         );
@@ -601,7 +601,7 @@ class LoadAllData implements FixtureInterface
         $block1_1->setType(BlockTemplate::TYPE_FIXED);
         $block1_1->setSlot($templateSlot1);
         $block1_1->setTemplate($template1);
-        $block1_1->setHtmlSource('<div class="person" class="item" data-block-id="{{block_data.id}}" data-block-type="0" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"> <div class="photo">{% if photo is not empty %}<img src="{{absolute_url(asset(photo))}}" alt=""/>{% else %}<img src="{{absolute_url(asset(\'img/photo-placeholder.png\'))}}" alt=""/>{% endif %}</div><div><span class="btn btn-default btn-file"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload photo<input data-key="photo" type="file"></span></div><div class="name" data-key="full_name" data-placeholder="John">{{full_name}}</div><div class="statusquo" data-key="title" data-placeholder="UI/UX designer">{{title}}</div></div>');
+        $block1_1->setHtmlSource('<div class="person" class="item" data-block-id="{{block_data.id}}" data-block-type="0" data-is-draggable="false" data-is-editable="true" data-is-deletable="false"> <div class="photo">{% if photo is not empty %}<img src="{{absolute_url(asset(photo))}}" alt=""/>{% else %}<img src="{{absolute_url(asset(\'img/photo-placeholder.png\'))}}" alt=""/>{% endif %}</div><div><span class="btn btn-default btn-file"><i class="fa fa-picture-o" aria-hidden="true"></i>Upload photo<input data-key="photo" type="file"></span></div><div class="name" data-key="full_name" data-placeholder="John">{{full_name}}</div><div class="statusquo" data-html="no" data-key="title" data-placeholder="UI/UX designer">{{title}}</div></div>');
         $block1_1->setAvailableFields(json_encode(array(
             'full_name' => '',
             'title' => '',
@@ -634,7 +634,7 @@ class LoadAllData implements FixtureInterface
         $block1_3_1->setTitle('Experience entry');
         $block1_3_1->setType(BlockTemplate::TYPE_EXPERIENCE_INNER);
         $block1_3_1->setTemplate($template1);
-        $block1_3_1->setHtmlSource('<div class="row"> <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 date"> <span data-key="date_from" data-placeholder="Date from">{{date_from}}</span> <span class="date-divider">-</span> <span data-key="date_to" data-placeholder="Date to">{{date_to}}</span> </div><div class="col-lg-9 col-md-9 col-sm-9 col-xs-12"> <div class="title" data-key="position" data-placeholder="Position">{{position}}</div><div class="company" data-key="company" data-placeholder="Company" data-is-child="true">{{company}}</div><div class="description" data-placeholder="Description - use this area to describe your daily tasks, responsibilities, etc." data-key="description">{{description}}</div></div></div>');
+        $block1_3_1->setHtmlSource('<div class="row"> <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 date"> <span data-key="date_from" data-placeholder="Date from">{{date_from}}</span> <span class="date-divider">-</span> <span data-key="date_to" data-placeholder="Date to">{{date_to}}</span> </div><div class="col-lg-9 col-md-9 col-sm-9 col-xs-12"> <div class="company title" data-key="company" data-placeholder="Company" data-is-child="true">{{company}}</div><div data-key="position" data-placeholder="Position">{{position}}</div><div class="description" data-placeholder="Description - use this area to describe your daily tasks, responsibilities, etc." data-key="description">{{description}}</div></div></div>');
         $block1_3_1->setAvailableFields(
             json_encode($this->getDefaultFields(TemplatType::TYPE_EXPERIENCE_INNER)));
         $manager->persist($block1_3_1);
@@ -654,7 +654,7 @@ class LoadAllData implements FixtureInterface
         $block1_4_1->setTitle('Education entry');
         $block1_4_1->setType(BlockTemplate::TYPE_EDUCATION_INNER);
         $block1_4_1->setTemplate($template1);
-        $block1_4_1->setHtmlSource('<div class="row"> <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 date"> <div data-key="date_from" data-placeholder="Date from">{{date_from}}</div> <span class="date-divider">-</span> <div data-key="date_to" data-placeholder="Date to">{{date_to}}</div> </div><div class="col-lg-9 col-md-9 col-sm-9 col-xs-12"> <div class="title" data-key="position" data-placeholder="Course name">{{position}}</div><div class="company" data-key="company" data-placeholder="University/College name" data-is-child="true">{{company}}</div><div class="description" data-placeholder="Description" data-key="description">{{description}}</div></div></div>');
+        $block1_4_1->setHtmlSource('<div class="row"> <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 date"> <div data-key="date_from" data-placeholder="Date from">{{date_from}}</div> <span class="date-divider">-</span> <div data-key="date_to" data-placeholder="Date to">{{date_to}}</div> </div><div class="col-lg-9 col-md-9 col-sm-9 col-xs-12"> <div class="company title" data-key="company" data-placeholder="University/College name" data-is-child="true">{{company}}</div><div data-key="position" data-placeholder="Certificate name">{{position}}</div><div class="description" data-placeholder="Description" data-key="description">{{description}}</div></div></div>');
         $block1_4_1->setAvailableFields(
             json_encode($this->getDefaultFields(TemplatType::TYPE_EDUCATION_INNER)));
         $manager->persist($block1_4_1);

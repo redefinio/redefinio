@@ -822,7 +822,7 @@ var Block = function () {
                         for (var j = 0; j < keysCount.length / sameKeysCount.length; j++) {
                             var dataValue = editableElements[i + j].getAttribute('data-value') ? editableElements[i + j].getAttribute('data-value') : editableElements[i + j].innerHTML;
                             var dataKey = editableElements[i + j].getAttribute('data-key');
-                            obj[dataKey] = this.stripTags(dataValue);
+                            obj[dataKey] = this.stripTags(dataValue, false);
                         }
 
                         i += keysCount.length / sameKeysCount.length - 1;
@@ -838,7 +838,11 @@ var Block = function () {
                             });
                         })();
                     } else {
-                        data['fields'][editableElements[i].getAttribute('data-key')] = this.stripTags(editableElements[i].innerHTML);
+                        if (data['fields'][editableElements[i].getAttribute('data-html')] === "no") {
+                            data['fields'][editableElements[i].getAttribute('data-key')] = this.stripTags(editableElements[i].innerHTML, false);
+                        } else {
+                            data['fields'][editableElements[i].getAttribute('data-key')] = this.stripTags(editableElements[i].innerHTML, true);
+                        }
                     }
                 } else {
                     data['fields']['blocks'] = [];
@@ -867,8 +871,12 @@ var Block = function () {
         }
     }, {
         key: "stripTags",
-        value: function stripTags(html) {
-            var regex = /(<([^>]+)>)/ig;
+        value: function stripTags(html, breakLine) {
+            if (breakLine) {
+                var regex = /<(?!\s*br\s*\/?)[^>]+>/gi;
+            } else {
+                var regex = /(<([^>]+)>)/ig;
+            }
             html = html.replace(regex, "");
             regex = /&(.*?);/ig;
             html = html.replace(regex, "");
