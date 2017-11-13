@@ -15,9 +15,12 @@ body {
 }
 
 .container--footer {
-    margin-top: 40px;
     font-size: 14px;
     background: none;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    text-align: right;
 }
 .muted {
     color: #8b8b8b;
@@ -27,7 +30,7 @@ body {
 }
 
 .container--footer img {
-    width: 15%;
+    width: 120px;
     margin: 0 10px;
     vertical-align: middle;
 }
