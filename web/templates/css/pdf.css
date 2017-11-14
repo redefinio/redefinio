@@ -48,3 +48,9 @@ body {
 .standart-sidebar {
     height: 100%;
 }
+
+@media print {
+    .item {
+        page-break-inside: avoid;
+    }
+}
