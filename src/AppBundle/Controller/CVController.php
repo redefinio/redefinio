@@ -168,6 +168,10 @@ class CVController extends Controller
 
             $filePath = "upload/pdf/".$cv->getUrl().".pdf";
 
+            $footerHtml = $this->render("templates/footer.twig");
+
+            $pdf->setOption("footer-html", $footerHtml);
+
             $pdf->generateFromHtml($cv->getPdfHtml(), $filePath, array(), true);
 
             $cv->setPdfPath($filePath);
