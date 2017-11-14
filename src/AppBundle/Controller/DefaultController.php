@@ -44,4 +44,12 @@ class DefaultController extends Controller
 
         return $response;
     }
+
+
+    /**
+     * @Route("/footer", name="default_footer")
+     */
+    public function footerHtml(Request $request) {
+        return $this->render("templates/footer.twig");
+    }
 }

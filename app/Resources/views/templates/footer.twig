@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: 'Open Sans', Helvetica, sans-serif;
+            font-size: 14px;
+            text-align: right;
+            font-size: 14px;
+            bottom: 15px;
+        }
+        span {
+            line-height: 2;
+        }
+        img {
+            width: 120px;
+            margin: 0 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+<div class="container--footer">
+    <div class="row">
+        <p>Created with
+            <a class="topbar-logo" href="{{ path('cv_index') }}">
+                <img alt="Redefin.io" src="{{ absolute_url(asset('/img/logo-blue.png')) }}" srcset="{{ absolute_url(asset('/img/logo-blue@2x.png')) }}">
+            </a>
+        </p>
+    </div>
+</div>
+</body>
+</html>
