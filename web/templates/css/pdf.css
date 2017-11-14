@@ -17,10 +17,9 @@ body {
 .container--footer {
     font-size: 14px;
     background: none;
-    position: relative;
+    position: absolute;
     bottom: 15px;
     right: 15px;
-    margin-top: 15px;
     text-align: right;
 
 }
