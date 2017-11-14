@@ -7,6 +7,7 @@ body {
 
 #main-wrap {
     min-height: 842px;
+    position: relative;
 }
 
 .container {
@@ -19,7 +20,7 @@ body {
     background: none;
     position: absolute;
     bottom: 15px;
-    right: 15px;
+    right: 30px;
     text-align: right;
 
 }
