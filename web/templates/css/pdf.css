@@ -17,10 +17,12 @@ body {
 .container--footer {
     font-size: 14px;
     background: none;
-    position: absolute;
+    position: relative;
     bottom: 15px;
     right: 15px;
+    margin-top: 15px;
     text-align: right;
+
 }
 .muted {
     color: #8b8b8b;
