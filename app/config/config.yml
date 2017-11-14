@@ -99,7 +99,7 @@ fos_user:
 knp_snappy:
     pdf:
         enabled: true
-        binary:  wkhtmltopdf --print-media-type --margin-top 0 --margin-bottom 0 --margin-left 0 --margin-right 0 --page-size A4 --viewport-size 1280x1024 --no-outline
+        binary:  wkhtmltopdf --print-media-type --margin-top 0 --margin-left 0 --page-size A4 --viewport-size 1280x1024 --no-outline
         options:
           lowquality: false
 
