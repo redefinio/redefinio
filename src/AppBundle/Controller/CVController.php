@@ -168,9 +168,7 @@ class CVController extends Controller
 
             $filePath = "upload/pdf/".$cv->getUrl().".pdf";
 
-            $footerHtml = $this->render("templates/footer.twig");
-
-            $pdf->setOption("footer-html", $footerHtml);
+            $pdf->setOption("footer-html", "https://app.redefin.io/footer");
 
             $pdf->generateFromHtml($cv->getPdfHtml(), $filePath, array(), true);
 
