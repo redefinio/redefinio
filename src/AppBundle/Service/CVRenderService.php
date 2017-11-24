@@ -106,4 +106,14 @@ class CVRenderService {
     private function decodeString($json) {
         return json_decode($json, true);
     }
+
+
+    public function getFooterHtml($relations) {
+        $template = $relations->getTemplate();
+        $theme = $relations->getTheme();
+
+        $renderTempalte = "templates/footer_".$template->getTemplatePath().".twig";
+
+        return $this->twig->render($renderTempalte, array("theme" => $theme));
+    }
 }

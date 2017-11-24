@@ -168,7 +168,7 @@ class CVController extends Controller
 
             $filePath = "upload/pdf/".$cv->getUrl().".pdf";
 
-            $pdf->setOption("footer-html", "https://app.redefin.io/footer");
+            $pdf->setOption("footer-html", $this->get(CVRenderService::class)->getFooterHtml($service->getRelations($this->getUser())));
 
             $pdf->generateFromHtml($cv->getPdfHtml(), $filePath, array(), true);
 
