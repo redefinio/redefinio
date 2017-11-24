@@ -50,6 +50,15 @@ class DefaultController extends Controller
      * @Route("/footer", name="default_footer")
      */
     public function footerHtml(Request $request) {
-        return $this->render("templates/footer.twig");
+        $em = $this->getDoctrine()->getManager();
+        $cv = $this->get(CvService::class)->getUserCv($this->getUser());
+        $service = $this->get(CvService::class);
+
+        $template = $cv->getTemplate();
+        $theme = $service->getRelations($this->getUser())->getTheme();
+
+        $renderTempalte = "templates/footer_".$template->getTemplatePath().".twig";
+
+        return $this->render($renderTempalte, array("theme" => $theme));
     }
 }

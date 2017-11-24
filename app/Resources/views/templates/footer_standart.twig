@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+        body {
+            font-family: 'Open Sans', Helvetica, sans-serif;
+            font-size: 14px;
+            text-align: right;
+            font-size: 14px;
+            bottom: 15px;
+        }
+        span {
+            line-height: 2;
+        }
+        img {
+            width: 120px;
+            margin: 0 10px;
+            vertical-align: middle;
+        }
+        .left {
+            float: left;
+            background: #{{ theme.getBackgroundColor() }};
+            width: 370px;
+            height: 60px;
+        }
+        .right {
+            float: right;
+        }
+        .clear {
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+<div class="container--footer">
+    <div class="row">
+        <div class="left">
+
+        </div>
+        <div class="right">
+            <p>
+                <a class="topbar-logo" href="{{ path('homepage') }}">
+                    <img alt="Redefin.io" src="{{ absolute_url(asset('/img/logo-blue.png')) }}" srcset="{{ absolute_url(asset('/img/logo-blue@2x.png')) }}">
+                </a>
+            </p>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+</body>
+</html>
