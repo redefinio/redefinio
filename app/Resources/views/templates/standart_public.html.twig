@@ -9,6 +9,7 @@
     <link href="{{ absolute_url(asset('less/app.less')) }}?v=3.1" rel="stylesheet/less">
     <script src="{{ absolute_url(asset('js/less.min.js')) }}"></script>
     <link href="{{ absolute_url(asset('templates/standart/' ~ theme.getCssSource())) }}" rel="stylesheet">
+
 </head>
 
 <body>
@@ -43,5 +44,10 @@
         <p class="muted">No credit card required</p>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementsByClassName('standart-sidebar')[0].style.height = document.getElementById('main-wrap').clientHeight + "px";
+    });
+</script>
 </body>
 </html>
